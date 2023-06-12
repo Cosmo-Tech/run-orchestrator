@@ -1,0 +1,85 @@
+site_name: Doc template
+repo_url: https://github.com/Cosmo-Tech/python_with_doc_template
+repo_name: Cosmo-Tech/python_with_doc_template
+
+theme:
+  name: material
+  logo: assets/logo.png
+  font:
+    code: Fira Mono
+  palette:
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  features:
+    - content.code.copy
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.expand
+    - navigation.top
+    - navigation.indexes
+    - navigation.instant
+    - navigation.footer
+  custom_dir: overrides
+  icon:
+    repo: fontawesome/brands/github
+
+extra_css:
+  - stylesheets/extra.css
+
+extra:
+  version:
+    provider: mike
+
+nav:
+  - Home: 'index.md'
+  - Getting started:
+    - Dependencies: 'dependencies.md'
+  - References: references/
+
+markdown_extensions:
+    - admonition
+    - attr_list
+    - footnotes
+    - md_in_html
+    - tables
+    - def_list
+    - pymdownx.details
+    - pymdownx.snippets
+    - pymdownx.superfences
+    - pymdownx.critic
+    - pymdownx.caret
+    - pymdownx.keys
+    - pymdownx.mark
+    - pymdownx.tilde
+    - pymdownx.tabbed:
+        alternate_style: true
+    - pymdownx.emoji:
+        emoji_index: !!python/name:materialx.emoji.twemoji
+        emoji_generator: !!python/name:materialx.emoji.to_svg
+
+plugins:
+    - search
+    - mkdocstrings:
+        default_handler: python
+        handlers:
+          python:
+            options:
+              docstring_style: sphinx
+              line_lenth: 120
+    - gen-files:
+        scripts:
+          - scripts/generate_references.py
+          - scripts/generate_dependencies_markdown.py
+          - scripts/generate_index.py
+    - literate-nav
+    - mike

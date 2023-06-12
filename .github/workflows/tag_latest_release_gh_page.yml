@@ -1,0 +1,24 @@
+name: tag_latest_release_gh_page
+on:
+  release:
+    types: [released]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - run: pip install -e .
+      - name: Extract version
+        shell: bash
+        run: python -c 'from src import VERSION; print(f"version={VERSION}")' >> $GITHUB_OUTPUT
+        id: version
+      - name: Configure Git user
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      - run: mike deploy --push --update-aliases ${{ steps.version.outputs.version }} latest
