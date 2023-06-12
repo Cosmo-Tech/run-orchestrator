@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cosmotech.com/run_template.schema.json",
+  "title": "Run Template",
+  "description": "A run template description",
+  "type": "object",
+  "properties": {
+    "commandTemplates": {
+      "description": "A list of Commands Templates",
+      "type": "array",
+      "items": {
+        "description": "A Command Template describe a single executable with default properties",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The Id of the Command Template"
+          },
+          "command": {
+            "type": "string",
+            "description": "The root bash command necessary to execute the template"
+          },
+          "arguments": {
+            "type": "array",
+            "description": "The list of default arguments passed to the command",
+            "items": {
+              "type": "string"
+            }
+          },
+          "environment": {
+            "type": "object",
+            "description": "The default list of Environment Variables required for the command",
+            "patternProperties": {
+              ".+": {
+                "$ref": "#/$defs/environmentVariable"
+              }
+            },
+            "minProperties": 1
+          }
+        },
+        "required": [
+          "id",
+          "command"
+        ]
+      }
+    },
+    "steps": {
+      "description": "A list of Steps descriptors",
+      "type": "array",
+      "items": {
+        "description": "A Step is a single instance of a Command that is scheduled to be run, can use an existing command or define its own",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The Id of the Step"
+          },
+          "commandId": {
+            "type": "string",
+            "description": "An Id for an existing command"
+          },
+          "command": {
+            "type": "string",
+            "description": "The root bash command necessary to execute the command"
+          },
+          "arguments": {
+            "type": "array",
+            "description": "The list of arguments passed to the command (replace the default one)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "environment": {
+            "type": "object",
+            "description": "The list of Environment Variables defined for the command (replace the default one)",
+            "patternProperties": {
+              ".+": {
+                "$ref": "#/$defs/environmentVariable"
+              }
+            },
+            "minProperties": 1
+          },
+          "precedents": {
+            "type": "array",
+            "description": "A list of steps that have to be run before this one",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "oneOf": [
+          {
+            "required": [
+              "id",
+              "command"
+            ]
+          },
+          {
+            "required": [
+              "id",
+              "commandId"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "steps"
+  ],
+  "$defs": {
+    "environmentVariable": {
+      "type": "object",
+      "description": "A environment variable descriptor",
+      "properties": {
+        "defaultValue": {
+          "type": "string",
+          "description": "The default value of the required variable, if not set, the variable has to be set in the system"
+        },
+        "value": {
+          "type": "string",
+          "description": "The effective value of the required variable, will override any system value"
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the required Environment Variable for documentation reasons"
+        }
+      }
+    }
+  }
+}
+
