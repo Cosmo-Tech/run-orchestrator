@@ -1,17 +1,17 @@
 
 from setuptools import setup, find_packages
-from src import VERSION
+from run_template_orchestrator import VERSION
 
 with open('requirements.txt') as f:
     required = f.read().splitlines()
 
 setup(
-    name='Documentation Template',
+    name='Run Template Orchestrator',
     version=VERSION,
     author='Alexis Fossart',
     author_email='alexis.fossart@cosmotech.com',
     url="https://github.com/Cosmo-Tech/Babylon",
-    description='Template repository for python with automated documentation',
+    description='Simple orchestrator for Cosmotech Solutions',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,

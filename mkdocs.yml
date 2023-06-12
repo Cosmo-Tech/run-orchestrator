@@ -1,6 +1,6 @@
-site_name: Doc template
-repo_url: https://github.com/Cosmo-Tech/python_with_doc_template
-repo_name: Cosmo-Tech/python_with_doc_template
+site_name: Run Template Orchestrator
+repo_url: https://github.com/Cosmo-Tech/run_template_orchestrator
+repo_name: Cosmo-Tech/run_template_orchestrator
 
 theme:
   name: material
@@ -42,9 +42,6 @@ extra:
 
 nav:
   - Home: 'index.md'
-  - Getting started:
-    - Dependencies: 'dependencies.md'
-  - References: references/
 
 markdown_extensions:
     - admonition
@@ -78,8 +75,6 @@ plugins:
               line_lenth: 120
     - gen-files:
         scripts:
-          - scripts/generate_references.py
-          - scripts/generate_dependencies_markdown.py
           - scripts/generate_index.py
     - literate-nav
     - mike

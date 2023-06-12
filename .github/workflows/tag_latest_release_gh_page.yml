@@ -15,7 +15,7 @@ jobs:
       - run: pip install -e .
       - name: Extract version
         shell: bash
-        run: python -c 'from src import VERSION; print(f"version={VERSION}")' >> $GITHUB_OUTPUT
+        run: python -c 'from run_template_orchestrator import VERSION; print(f"version={VERSION}")' >> $GITHUB_OUTPUT
         id: version
       - name: Configure Git user
         run: |
