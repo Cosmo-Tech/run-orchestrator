@@ -1,3 +1,11 @@
+# Cosmotech dependencies
+cosmotech-acceleration-library
+cosmotech-api
+
+# Command dependencies
+click
+rich-click
+
 # Documentation generation requirements
 mkdocs
 mkdocs-gen-files

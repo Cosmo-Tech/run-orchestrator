@@ -16,4 +16,9 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=required,
+    entry_points={
+        'console_scripts': [
+            'cosmotech_scenario_downloader=run_template_orchestrator.console_scripts.scenario_data_downloader:main'
+        ]
+    },
 )
