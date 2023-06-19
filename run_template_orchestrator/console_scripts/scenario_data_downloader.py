@@ -6,14 +6,23 @@ import os
 import pathlib
 from distutils.dir_util import copy_tree
 
-from CosmoTech_Acceleration_Library.Accelerators.scenario_download.scenario_downloader import ScenarioDownloader
-
+import click_log
 import rich_click as click
+from CosmoTech_Acceleration_Library.Accelerators.scenario_download.scenario_downloader import ScenarioDownloader
+from rich.logging import RichHandler
+
 from run_template_orchestrator.utils.decorators import require_env
 
 click.rich_click.USE_MARKDOWN = True
-logging.basicConfig()
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger("scenario_data_downloader")
+logging.basicConfig(
+    format="%(message)s",
+    datefmt="[%Y/%m/%d-%X]",
+    handlers=[RichHandler(rich_tracebacks=True,
+                          omit_repeated_times=False,
+                          show_path=False,
+                          markup=True)])
+LOGGER.setLevel(logging.INFO)
 
 
 def download_scenario_data(
@@ -28,16 +37,16 @@ def download_scenario_data(
     :param parameter_folder: a local folder where all parameters will be downloaded
     :return: Nothing
     """
-    logger.info("Starting connector")
+    LOGGER.info("Starting connector")
     dl = ScenarioDownloader(workspace_id=workspace_id,
                             organization_id=organization_id,
                             read_files=False)
-    logger.info("Initialized downloader")
+    LOGGER.info("Initialized downloader")
     content = dict()
     content['datasets'] = dl.get_all_datasets(scenario_id=scenario_id)
 
     content['parameters'] = dl.get_all_parameters(scenario_id=scenario_id)
-    logger.info("Downloaded content")
+    LOGGER.info("Downloaded content")
     dataset_paths = dict()
 
     dataset_dir = dataset_folder
@@ -47,7 +56,7 @@ def download_scenario_data(
         if k not in content['parameters'].values():
             copy_tree(dataset_paths[k], dataset_dir)
 
-    logger.info("Stored datasets")
+    LOGGER.info("Stored datasets")
     tmp_parameter_dir = parameter_folder
 
     tmp_parameter_file = os.path.join(tmp_parameter_dir, "parameters.json")
@@ -77,7 +86,7 @@ def download_scenario_data(
 
     with open(tmp_parameter_file, "w") as _file:
         json.dump(parameters, _file)
-    logger.info("Generated parameters.json")
+    LOGGER.info("Generated parameters.json")
 
 
 @click.command()
@@ -111,6 +120,10 @@ def download_scenario_data(
               show_envvar=True,
               help="A local folder to store the parameters content",
               required=True)
+@click_log.simple_verbosity_option(LOGGER,
+                                   "--log-level",
+                                   envvar="LOG_LEVEL",
+                                   show_envvar=True)
 @require_env('CSM_API_SCOPE', "The identification scope of a cosmotech api")
 @require_env('CSM_API_URL', "The url to a cosmotech api")
 def main(
@@ -122,8 +135,6 @@ Requires a valid Azure connection either with:
 - The AZ cli command: **az login**
 - A triplet of env var `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`
     """
-    logger.setLevel(logging.INFO)
-
     download_scenario_data(organization_id, workspace_id, scenario_id, dataset_absolute_path, parameters_absolute_path)
 
 
