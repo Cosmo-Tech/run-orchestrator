@@ -42,6 +42,8 @@ extra:
 
 nav:
   - Home: 'index.md'
+  - Scripts:
+      - Simulation to ADX: "scripts/simulation_to_adx.md"
 
 markdown_extensions:
     - admonition

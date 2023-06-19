@@ -1,4 +1,3 @@
-
 from setuptools import setup, find_packages
 from run_template_orchestrator import VERSION
 
@@ -18,7 +17,8 @@ setup(
     install_requires=required,
     entry_points={
         'console_scripts': [
-            'cosmotech_scenario_downloader=run_template_orchestrator.console_scripts.scenario_data_downloader:main'
+            'cosmotech_scenario_downloader=run_template_orchestrator.console_scripts.scenario_data_downloader:main',
+            'cosmotech_simulation_to_adx_connector=run_template_orchestrator.console_scripts.adx_scenario_connector:main'
         ]
     },
 )

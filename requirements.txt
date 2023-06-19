@@ -5,11 +5,14 @@ cosmotech-api
 # Command dependencies
 click
 rich-click
+click-log
+rich
 
 # Documentation generation requirements
 mkdocs
 mkdocs-gen-files
 mkdocs-material
+mkdocs-click
 mkdocstrings[python]
 mkdocs-literate-nav
 mike
