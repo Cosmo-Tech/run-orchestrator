@@ -18,7 +18,8 @@ setup(
     entry_points={
         'console_scripts': [
             'cosmotech_scenario_downloader=run_template_orchestrator.console_scripts.scenario_data_downloader:main',
-            'cosmotech_simulation_to_adx_connector=run_template_orchestrator.console_scripts.adx_scenario_connector:main'
+            'cosmotech_simulation_to_adx_connector=run_template_orchestrator.console_scripts.adx_scenario_connector:main',
+            'cosmotech_run_step=run_template_orchestrator.console_scripts.run_step:main'
         ]
     },
 )
