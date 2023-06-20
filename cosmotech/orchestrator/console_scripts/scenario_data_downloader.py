@@ -11,7 +11,7 @@ import rich_click as click
 from CosmoTech_Acceleration_Library.Accelerators.scenario_download.scenario_downloader import ScenarioDownloader
 from rich.logging import RichHandler
 
-from run_template_orchestrator.utils.decorators import require_env
+from cosmotech.orchestrator.utils.decorators import require_env
 
 click.rich_click.USE_MARKDOWN = True
 LOGGER = logging.getLogger("scenario_data_downloader")
