@@ -50,7 +50,7 @@ def download_scenario_data(
     dataset_paths = dict()
 
     dataset_dir = dataset_folder
-
+    pathlib.Path(dataset_dir).mkdir(parents=True, exist_ok=True)
     for k in content['datasets'].keys():
         dataset_paths[k] = dl.dataset_to_file(k, content['datasets'][k])
         if k not in content['parameters'].values():
@@ -58,6 +58,7 @@ def download_scenario_data(
 
     LOGGER.info("Stored datasets")
     tmp_parameter_dir = parameter_folder
+    pathlib.Path(tmp_parameter_dir).mkdir(parents=True, exist_ok=True)
 
     tmp_parameter_file = os.path.join(tmp_parameter_dir, "parameters.json")
 
