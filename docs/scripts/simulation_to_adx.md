@@ -4,7 +4,7 @@ hide:
 ---
 # Simulation to ADX connector
 
-??? info "Help command"
+!!! info "Help command"
     ```text
     └▶ cosmotech_simulation_to_adx_connector --help
     Usage: cosmotech_simulation_to_adx_connector [OPTIONS]                                                      
@@ -49,17 +49,3 @@ hide:
     │    --help                                          Show this message and exit.                            │
     ╰───────────────────────────────────────────────────────────────────────────────────────────────────────────╯
     ```
-
-!!! notes "Env var list"
-    | Environment variable | Parameter | Description |
-    | ---- | ---- | ---- |
-    | `CSM_DATASET_ABSOLUTE_PATH` | `--dataset-absolute-path` | A local folder to store the main dataset content |
-    | `CSM_PARAMETERS_ABSOLUTE_PATH` | `--parameters-absolute-path` | A local folder to store the parameters content |
-    | `CSM_SIMULATION_ID` | `--simulation-id` | the Simulation ID to add to records |
-    | `AZURE_DATA_EXPLORER_RESOURCE_URI` | `--adx-uri` |  the ADX cluster path (URI info can be found into ADX cluster page) |
-    | `AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI` | `--adx-ingest-uri ` | The ADX cluster ingest path (URI info can be found into ADX cluster page) |
-    | `AZURE_DATA_EXPLORER_DATABASE_NAME` | `--database-name` | The targeted database name |
-    | `CSM_SEND_DATAWAREHOUSE_PARAMETERS` | `--send-parameters/--no-send-parameters` | whether to send parameters |
-    | `CSM_SEND_DATAWAREHOUSE_DATASETS` | `--send-datasets/--no-send-datasets` | whether to send datasets |
-    | `WAIT_FOR_INGESTION` | `--wait/--no-wait` | Toggle waiting for the ingestion results |
-    | `LOG_LEVEL` | `--log-level` | Either CRITICAL, ERROR, WARNING, INFO or DEBUG |
