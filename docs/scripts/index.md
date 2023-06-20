@@ -3,7 +3,10 @@ hide:
   - path
   - toc
 ---
-  
+# Console Scripts
+
+The following console scripts are made available to you after installation of the orchestrator
+
 <main class="grid" markdown>
 
 <article markdown>
@@ -18,6 +21,21 @@ A script allowing to download dataset and parameters from a scenario
 [:octicons-arrow-right-24: Data downloader](./scenario_data_downloader.md)
 </footer>
 </div>
+</article>
+
+<article markdown>
+<div class="text" markdown>
+:material-download: __Download Cloud based Steps__
+
+---
+A script used to download Run Template Handlers sourced in the cloud using the Cosmotech API
+
+---
+<footer markdown>
+[:octicons-arrow-right-24: Download Cloud Steps](./download_cloud_steps.md)
+</footer>
+</div>
+
 </article>
 
 <article markdown>

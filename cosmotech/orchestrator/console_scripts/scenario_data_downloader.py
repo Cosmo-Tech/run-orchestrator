@@ -124,8 +124,8 @@ def download_scenario_data(
                                    "--log-level",
                                    envvar="LOG_LEVEL",
                                    show_envvar=True)
-@require_env('CSM_API_SCOPE', "The identification scope of a cosmotech api")
-@require_env('CSM_API_URL', "The url to a cosmotech api")
+@require_env('CSM_API_SCOPE', "The identification scope of a Cosmotech API")
+@require_env('CSM_API_URL', "The URL to a Cosmotech API")
 def main(
     scenario_id: str, workspace_id: str, organization_id: str, dataset_absolute_path: str, parameters_absolute_path: str
 ):
