@@ -89,9 +89,10 @@ Requires a valid Azure connection either with:
         LOGGER.info("Loading Workspace information to get Solution ID")
         try:
             r_data: Workspace = api_w.find_workspace_by_id(organization_id=organization_id, workspace_id=workspace_id)
-        except ServiceException:
+        except ServiceException as e:
             LOGGER.error(f"Workspace [green bold]{workspace_id}[/] was not found "
                          f"in Organization [green bold]{organization_id}[/]")
+            LOGGER.debug(e.body)
             return 1
         solution_id = r_data.solution.solution_id
 
@@ -107,11 +108,12 @@ Requires a valid Azure connection either with:
                                                                solution_id=solution_id,
                                                                run_template_id=run_template_id,
                                                                handler_id=handler_id)
-            except ServiceException:
+            except ServiceException as e:
                 LOGGER.error(
                     f"Handler [green bold]{handler_id}[/] was not found "
                     f"for Run Template [green bold]{run_template_id}[/] "
                     f"in Solution [green bold]{solution_id}[/]")
+                LOGGER.debug(e.body)
                 continue
             LOGGER.info(f"Extracting handler to {handler_path.absolute()}")
             handler_path.mkdir(parents=True, exist_ok=True)
