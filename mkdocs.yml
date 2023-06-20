@@ -43,6 +43,7 @@ extra:
 nav:
   - Home: 'index.md'
   - Scripts:
+      - "scripts/index.md"
       - Scenario data download: "scripts/scenario_data_downloader.md"
       - Run Python Step: "scripts/run_step.md"
       - Simulation to ADX: "scripts/simulation_to_adx.md"
