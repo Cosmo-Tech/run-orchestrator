@@ -249,6 +249,8 @@
           
             
               
+                
+              
               <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -429,7 +431,9 @@
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -464,6 +468,12 @@
 
  Usage: cosmotech_download_cloud_steps [OPTIONS]                                               
 
+ Uses environment variables to download cloud based Template steps Requires a valid Azure      
+ connection either with:                                                                       
+
+  • The AZ cli command: az login                                                               
+  • A triplet of env var AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET                 
+
 ╭─ Options ───────────────────────────────────────────────────────────────────────────────────╮
 │    --log-level          LVL                  Either CRITICAL, ERROR, WARNING, INFO or DEBUG │
 │                                              [env var: LOG_LEVEL]                           │
@@ -494,6 +504,8 @@
 
 
 
+  
+
 
 
                 
@@ -513,6 +525,8 @@
         <footer class="md-footer">
   
     
+      
+        
       
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
