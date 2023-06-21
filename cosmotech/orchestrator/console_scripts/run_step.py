@@ -1,12 +1,13 @@
-import importlib.util
 import logging
 import os
 import pathlib
+import subprocess
 import sys
 
 import click_log
 import rich_click as click
 from rich.logging import RichHandler
+import venv
 
 click.rich_click.USE_MARKDOWN = True
 click.rich_click.SHOW_ARGUMENTS = True
@@ -38,7 +39,7 @@ def main(template, steps):
     - defaults to `CSMDOCKER` which represent the legacy order: `parameters_handler` - `validator` - `prerun` - `engine` - `postrun`
 
 Known limitations:
-- The template MUST contain a main.py file with a main() function
+- The template MUST contain an executable main.py file
 - The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine
 """
     project = pathlib.Path(".")
@@ -88,7 +89,6 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
 
     for s in _steps:
         if s == "engine" and use_main_engine:
-            import subprocess
             if not (simulation := os.environ.get('CSM_SIMULATION')):
                 LOGGER.error("To use direct main simulation (no engine step in python) "
                              "you need to set the environment variable CSM_SIMULATION "
@@ -98,30 +98,25 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
                                executable="Generated/Build/Bin/main")
             continue
         main_path = template_path / s
-        added_modules = []
-        for py_file in main_path.glob('*.py'):
-            n = py_file.name[:-3]
-            if n == "main":
-                continue
-            LOGGER.debug(f"Loading {py_file} as {n}")
-            _spec = importlib.util.spec_from_file_location(n, str(py_file.absolute().resolve()))
-            _mod = importlib.util.module_from_spec(_spec)
-            sys.modules[n] = _mod
-            added_modules.append(n)
-            _spec.loader.exec_module(_mod)
 
-        spec = importlib.util.spec_from_file_location(f"runstep.{s}", str(main_path.absolute().resolve() / "main.py"))
-        LOGGER.debug(f"Loading {main_path / 'main.py'} as 'runstep.{s}'")
-        mainmod = importlib.util.module_from_spec(spec)
-        sys.modules[f"runstep.{s}"] = mainmod
-        spec.loader.exec_module(mainmod)
-        LOGGER.debug(f"Running step {s}")
-        try:
-            mainmod.main()
-        except SystemExit as e:
+        executable = sys.executable
+        if (req_path := main_path / "requirements.txt").exists():
+            LOGGER.info(f"Found {req_path}, setting a venv to install it")
+            reqs = subprocess.check_output([executable, '-m', 'pip', 'freeze']).decode(sys.stdout.encoding).strip()
+            venv_path = main_path / '.venv'
+            if not venv_path.exists():
+                venv.create(venv_path, with_pip=True)
+            executable = str(venv_path / "bin/python")
+            subprocess.run([executable, '-m', 'pip', 'install'] + reqs.split("\n"))
+            subprocess.run([executable, '-m', 'pip', 'install', '-r', str(req_path)])
+
+        LOGGER.info(f"Running {s} step")
+        p = subprocess.run([executable, str(main_path.absolute() / "main.py")])
+        if p.returncode != 0:
             LOGGER.error(f"Issue while running step {s} please check your logs")
             break
         LOGGER.debug(f"Finished running step {s}")
+
     else:
         LOGGER.info("Template run finished")
 
