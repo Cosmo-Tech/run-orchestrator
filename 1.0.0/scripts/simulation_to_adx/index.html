@@ -463,64 +463,64 @@
 <div class="admonition info">
 <p class="admonition-title">Help command</p>
 <div class="highlight"><pre><span></span><code>&gt; cosmotech_simulation_to_adx_connector --help
-[1m                                                                                [0m
-[1m [0m[1;33mUsage: [0m[1mcosmotech_simulation_to_adx_connector [[0m[1;36mOPTIONS[0m[1m][0m[1m                        [0m[1m [0m
-[1m                                                                                [0m
+
+ Usage: cosmotech_simulation_to_adx_connector [OPTIONS]                         
+
  Uses environment variables to send content of CSV files to ADX Requires a      
  valid Azure connection either with:                                            
 
- [1;33m • [0mThe AZ cli command: [1maz login[0m                                                
- [1;33m • [0mA triplet of env var [1;36;40mAZURE_TENANT_ID[0m, [1;36;40mAZURE_CLIENT_ID[0m, [1;36;40mAZURE_CLIENT_SECRET[0m  
+  • The AZ cli command: az login                                                
+  • A triplet of env var AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET  
 
-[2m╭─[0m[2m Options [0m[2m───────────────────────────────────────────────────────────────────[0m[2m─╮[0m
-[2m│[0m [31m*[0m  [1;36m-[0m[1;36m-dataset[0m[1;36m-absolute-path[0m            [1;33mPATH[0m  A local folder to store the main [2m│[0m
-[2m│[0m                                             dataset content                  [2m│[0m
-[2m│[0m                                             [2;33m[env var:                       [0m [2m│[0m
-[2m│[0m                                             [2;33mCSM_DATASET_ABSOLUTE_PATH]      [0m [2m│[0m
-[2m│[0m                                             [2;31m[required]                      [0m [2m│[0m
-[2m│[0m [31m*[0m  [1;36m-[0m[1;36m-parameters[0m[1;36m-absolute-path[0m         [1;33mPATH[0m  A local folder to store the      [2m│[0m
-[2m│[0m                                             parameters content               [2m│[0m
-[2m│[0m                                             [2;33m[env var:                       [0m [2m│[0m
-[2m│[0m                                             [2;33mCSM_PARAMETERS_ABSOLUTE_PATH]   [0m [2m│[0m
-[2m│[0m                                             [2;31m[required]                      [0m [2m│[0m
-[2m│[0m [31m*[0m  [1;36m-[0m[1;36m-simulation[0m[1;36m-id[0m                    [1;33mUUID[0m  the Simulation Id to add to      [2m│[0m
-[2m│[0m                                             records                          [2m│[0m
-[2m│[0m                                             [2;33m[env var: CSM_SIMULATION_ID]    [0m [2m│[0m
-[2m│[0m                                             [2;31m[required]                      [0m [2m│[0m
-[2m│[0m [31m*[0m  [1;36m-[0m[1;36m-adx[0m[1;36m-uri[0m                          [1;33mURI [0m  the ADX cluster path (URI info   [2m│[0m
-[2m│[0m                                             can be found into ADX cluster    [2m│[0m
-[2m│[0m                                             page)                            [2m│[0m
-[2m│[0m                                             [2;33m[env var:                       [0m [2m│[0m
-[2m│[0m                                             [2;33mAZURE_DATA_EXPLORER_RESOURCE_UR…[0m [2m│[0m
-[2m│[0m                                             [2;31m[required]                      [0m [2m│[0m
-[2m│[0m [31m*[0m  [1;36m-[0m[1;36m-adx[0m[1;36m-ingest-uri[0m                   [1;33mURI [0m  The ADX cluster ingest path (URI [2m│[0m
-[2m│[0m                                             info can be found into ADX       [2m│[0m
-[2m│[0m                                             cluster page)                    [2m│[0m
-[2m│[0m                                             [2;33m[env var:                       [0m [2m│[0m
-[2m│[0m                                             [2;33mAZURE_DATA_EXPLORER_RESOURCE_IN…[0m [2m│[0m
-[2m│[0m                                             [2;31m[required]                      [0m [2m│[0m
-[2m│[0m [31m*[0m  [1;36m-[0m[1;36m-database[0m[1;36m-name[0m                    [1;33mNAME[0m  The targeted database name       [2m│[0m
-[2m│[0m                                             [2;33m[env var:                       [0m [2m│[0m
-[2m│[0m                                             [2;33mAZURE_DATA_EXPLORER_DATABASE_NA…[0m [2m│[0m
-[2m│[0m                                             [2;31m[required]                      [0m [2m│[0m
-[2m│[0m    [1;36m-[0m[1;36m-send[0m[1;36m-parameters[0m/[1;36m-[0m[1;36m-no[0m[1;36m-send-pa…[0m    [1;33m    [0m  whether or not to send           [2m│[0m
-[2m│[0m                                             parameters (parameters path is   [2m│[0m
-[2m│[0m                                             mandatory then)                  [2m│[0m
-[2m│[0m                                             [2;33m[env var:                       [0m [2m│[0m
-[2m│[0m                                             [2;33mCSM_SEND_DATAWAREHOUSE_PARAMETE…[0m [2m│[0m
-[2m│[0m    [1;36m-[0m[1;36m-send[0m[1;36m-datasets[0m/[1;36m-[0m[1;36m-no[0m[1;36m-send-data…[0m    [1;33m    [0m  whether or not to send datasets  [2m│[0m
-[2m│[0m                                             (parameters path is mandatory    [2m│[0m
-[2m│[0m                                             then)                            [2m│[0m
-[2m│[0m                                             [2;33m[env var:                       [0m [2m│[0m
-[2m│[0m                                             [2;33mCSM_SEND_DATAWAREHOUSE_DATASETS][0m [2m│[0m
-[2m│[0m    [1;36m-[0m[1;36m-wait[0m/[1;36m-[0m[1;36m-no[0m[1;36m-wait[0m                   [1;33m    [0m  Toggle waiting for the ingestion [2m│[0m
-[2m│[0m                                             results                          [2m│[0m
-[2m│[0m                                             [2;33m[env var: WAIT_FOR_INGESTION]   [0m [2m│[0m
-[2m│[0m    [1;36m-[0m[1;36m-log[0m[1;36m-level[0m                        [1;33mLVL [0m  Either CRITICAL, ERROR, WARNING, [2m│[0m
-[2m│[0m                                             INFO or DEBUG                    [2m│[0m
-[2m│[0m                                             [2;33m[env var: LOG_LEVEL]            [0m [2m│[0m
-[2m│[0m    [1;36m-[0m[1;36m-help[0m                             [1;33m    [0m  Show this message and exit.      [2m│[0m
-[2m╰──────────────────────────────────────────────────────────────────────────────╯[0m
+╭─ Options ────────────────────────────────────────────────────────────────────╮
+│ *  --dataset-absolute-path            PATH  A local folder to store the main │
+│                                             dataset content                  │
+│                                             [env var:                        │
+│                                             CSM_DATASET_ABSOLUTE_PATH]       │
+│                                             [required]                       │
+│ *  --parameters-absolute-path         PATH  A local folder to store the      │
+│                                             parameters content               │
+│                                             [env var:                        │
+│                                             CSM_PARAMETERS_ABSOLUTE_PATH]    │
+│                                             [required]                       │
+│ *  --simulation-id                    UUID  the Simulation Id to add to      │
+│                                             records                          │
+│                                             [env var: CSM_SIMULATION_ID]     │
+│                                             [required]                       │
+│ *  --adx-uri                          URI   the ADX cluster path (URI info   │
+│                                             can be found into ADX cluster    │
+│                                             page)                            │
+│                                             [env var:                        │
+│                                             AZURE_DATA_EXPLORER_RESOURCE_UR… │
+│                                             [required]                       │
+│ *  --adx-ingest-uri                   URI   The ADX cluster ingest path (URI │
+│                                             info can be found into ADX       │
+│                                             cluster page)                    │
+│                                             [env var:                        │
+│                                             AZURE_DATA_EXPLORER_RESOURCE_IN… │
+│                                             [required]                       │
+│ *  --database-name                    NAME  The targeted database name       │
+│                                             [env var:                        │
+│                                             AZURE_DATA_EXPLORER_DATABASE_NA… │
+│                                             [required]                       │
+│    --send-parameters/--no-send-pa…          whether or not to send           │
+│                                             parameters (parameters path is   │
+│                                             mandatory then)                  │
+│                                             [env var:                        │
+│                                             CSM_SEND_DATAWAREHOUSE_PARAMETE… │
+│    --send-datasets/--no-send-data…          whether or not to send datasets  │
+│                                             (parameters path is mandatory    │
+│                                             then)                            │
+│                                             [env var:                        │
+│                                             CSM_SEND_DATAWAREHOUSE_DATASETS] │
+│    --wait/--no-wait                         Toggle waiting for the ingestion │
+│                                             results                          │
+│                                             [env var: WAIT_FOR_INGESTION]    │
+│    --log-level                        LVL   Either CRITICAL, ERROR, WARNING, │
+│                                             INFO or DEBUG                    │
+│                                             [env var: LOG_LEVEL]             │
+│    --help                                   Show this message and exit.      │
+╰──────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>
 
