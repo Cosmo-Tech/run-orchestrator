@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+env:
+  TERMINAL_WIDTH: "120"
 jobs:
   deploy:
     runs-on: ubuntu-latest

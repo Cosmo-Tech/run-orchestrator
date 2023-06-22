@@ -2,6 +2,8 @@ name: tag_latest_release_gh_page
 on:
   release:
     types: [released]
+env:
+  TERMINAL_WIDTH: "120"
 jobs:
   deploy:
     runs-on: ubuntu-latest
