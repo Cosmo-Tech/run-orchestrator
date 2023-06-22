@@ -466,31 +466,29 @@
 <p class="admonition-title">Help command</p>
 <div class="highlight"><pre><span></span><code>&gt; cosmotech_run_step --help
 
- Usage: cosmotech_run_step [OPTIONS] TEMPLATE [STEPS]...                        
+ Usage: mkdocs build [OPTIONS] TEMPLATE [STEPS]...                                                                      
 
- Runs a list of steps of a run template in a CosmoTech project                  
+ Runs a list of steps of a run template in a CosmoTech project                                                          
 
-  • TEMPLATE refer to a folder contained in code/run_templates                  
-  • STEPS is a list of Steps definer in the TEMPLATE folder that will be        
-    executed                                                                    
-     • defaults to CSMDOCKER which represent the legacy order:                  
-       parameters_handler - validator - prerun - engine - postrun               
+  • TEMPLATE refer to a folder contained in code/run_templates                                                          
+  • STEPS is a list of Steps definer in the TEMPLATE folder that will be executed                                       
+     • defaults to CSMDOCKER which represent the legacy order: parameters_handler - validator - prerun - engine -       
+       postrun                                                                                                          
 
- Known limitations:                                                             
+ Known limitations:                                                                                                     
 
-  • The template MUST contain an executable main.py file                        
-  • The engine step requires to set the env var CSM_SIMULATION if you have a    
-    run without a python engine                                                 
+  • The template MUST contain an executable main.py file                                                                
+  • The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine                
 
-╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-│ *  TEMPLATE    TEXT  [required]                                              │
-│    STEPS       TEXT                                                          │
-╰──────────────────────────────────────────────────────────────────────────────╯
-╭─ Options ────────────────────────────────────────────────────────────────────╮
-│ --log-level    LVL  Either CRITICAL, ERROR, WARNING, INFO or DEBUG           │
-│                     [env var: LOG_LEVEL]                                     │
-│ --help              Show this message and exit.                              │
-╰──────────────────────────────────────────────────────────────────────────────╯
+╭─ Arguments ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  TEMPLATE    TEXT  [required]                                                                                      │
+│    STEPS       TEXT                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --log-level      LVL  Either CRITICAL, ERROR, WARNING, INFO or DEBUG                                                 │
+│                       [env var: LOG_LEVEL]                                                                           │
+│ --help       -h       Show this message and exit.                                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>
 
