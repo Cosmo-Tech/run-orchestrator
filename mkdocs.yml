@@ -82,5 +82,6 @@ plugins:
     - gen-files:
         scripts:
           - scripts/generate_index.py
+          - scripts/generate_helps.py
     - literate-nav
     - mike
