@@ -464,43 +464,48 @@
 <h1 id="scenario-data-download">Scenario Data Download</h1>
 <div class="admonition info">
 <p class="admonition-title">Help command</p>
-<div class="highlight"><pre><span></span><code>└▶ cosmotech_scenario_downloader --help
+<div class="highlight"><pre><span></span><code>&gt; cosmotech_scenario_downloader --help
+[1m                                                                                [0m
+[1m [0m[1;33mUsage: [0m[1mcosmotech_scenario_downloader [[0m[1;36mOPTIONS[0m[1m][0m[1m                                [0m[1m [0m
+[1m                                                                                [0m
+ Uses environment variables to call the download_scenario_data function         
+ Requires a valid Azure connection either with:                                 
 
- Usage: cosmotech_scenario_downloader [OPTIONS]                                                
+ [1;33m • [0mThe AZ cli command: [1maz login[0m                                                
+ [1;33m • [0mA triplet of env var [1;36;40mAZURE_TENANT_ID[0m, [1;36;40mAZURE_CLIENT_ID[0m, [1;36;40mAZURE_CLIENT_SECRET[0m  
 
- Uses environment variables to call the download_scenario_data function Requires a valid Azure 
- connection either with:                                                                       
+ Requires env var [1;36;40mCSM_API_URL    [0m [3mThe URL to a Cosmotech API[0m                    
+ Requires env var [1;36;40mCSM_API_SCOPE  [0m [3mThe identification scope of a Cosmotech API[0m   
 
-  • The AZ cli command: az login                                                               
-  • A triplet of env var AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET                 
-
- Requires env var CSM_API_URL     The url to a cosmotech api                                   
- Requires env var CSM_API_SCOPE   The identification scope of a cosmotech api                  
-
-╭─ Options ───────────────────────────────────────────────────────────────────────────────────╮
-│ *  --organization-id             o-##########  The id of an organization in the cosmotech   │
-│                                                api                                          │
-│                                                [env var: CSM_ORGANIZATION_ID]               │
-│                                                [required]                                   │
-│ *  --workspace-id                w-##########  The id of a workspace in the cosmotech api   │
-│                                                [env var: CSM_WORKSPACE_ID]                  │
-│                                                [required]                                   │
-│ *  --scenario-id                 s-##########  The id of a scenario in the cosmotech api    │
-│                                                [env var: CSM_SCENARIO_ID]                   │
-│                                                [required]                                   │
-│ *  --dataset-absolute-path       PATH          A local folder to store the main dataset     │
-│                                                content                                      │
-│                                                [env var: CSM_DATASET_ABSOLUTE_PATH]         │
-│                                                [required]                                   │
-│ *  --parameters-absolute-path    PATH          A local folder to store the parameters       │
-│                                                content                                      │
-│                                                [env var: CSM_PARAMETERS_ABSOLUTE_PATH]      │
-│                                                [required]                                   │
-│    --log-level                   LVL           Either CRITICAL, ERROR, WARNING, INFO or     │
-│                                                DEBUG                                        │
-│                                                [env var: LOG_LEVEL]                         │
-│    --help                                      Show this message and exit.                  │
-╰─────────────────────────────────────────────────────────────────────────────────────────────╯
+[2m╭─[0m[2m Options [0m[2m───────────────────────────────────────────────────────────────────[0m[2m─╮[0m
+[2m│[0m [31m*[0m  [1;36m-[0m[1;36m-organization[0m[1;36m-id[0m             [1;33mo-##########[0m  The id of an organization in  [2m│[0m
+[2m│[0m                                                the cosmotech api             [2m│[0m
+[2m│[0m                                                [2;33m[env var:                    [0m [2m│[0m
+[2m│[0m                                                [2;33mCSM_ORGANIZATION_ID]         [0m [2m│[0m
+[2m│[0m                                                [2;31m[required]                   [0m [2m│[0m
+[2m│[0m [31m*[0m  [1;36m-[0m[1;36m-workspace[0m[1;36m-id[0m                [1;33mw-##########[0m  The id of a workspace in the  [2m│[0m
+[2m│[0m                                                cosmotech api                 [2m│[0m
+[2m│[0m                                                [2;33m[env var: CSM_WORKSPACE_ID]  [0m [2m│[0m
+[2m│[0m                                                [2;31m[required]                   [0m [2m│[0m
+[2m│[0m [31m*[0m  [1;36m-[0m[1;36m-scenario[0m[1;36m-id[0m                 [1;33ms-##########[0m  The id of a scenario in the   [2m│[0m
+[2m│[0m                                                cosmotech api                 [2m│[0m
+[2m│[0m                                                [2;33m[env var: CSM_SCENARIO_ID]   [0m [2m│[0m
+[2m│[0m                                                [2;31m[required]                   [0m [2m│[0m
+[2m│[0m [31m*[0m  [1;36m-[0m[1;36m-dataset[0m[1;36m-absolute-path[0m       [1;33mPATH        [0m  A local folder to store the   [2m│[0m
+[2m│[0m                                                main dataset content          [2m│[0m
+[2m│[0m                                                [2;33m[env var:                    [0m [2m│[0m
+[2m│[0m                                                [2;33mCSM_DATASET_ABSOLUTE_PATH]   [0m [2m│[0m
+[2m│[0m                                                [2;31m[required]                   [0m [2m│[0m
+[2m│[0m [31m*[0m  [1;36m-[0m[1;36m-parameters[0m[1;36m-absolute-path[0m    [1;33mPATH        [0m  A local folder to store the   [2m│[0m
+[2m│[0m                                                parameters content            [2m│[0m
+[2m│[0m                                                [2;33m[env var:                    [0m [2m│[0m
+[2m│[0m                                                [2;33mCSM_PARAMETERS_ABSOLUTE_PATH][0m [2m│[0m
+[2m│[0m                                                [2;31m[required]                   [0m [2m│[0m
+[2m│[0m    [1;36m-[0m[1;36m-log[0m[1;36m-level[0m                   [1;33mLVL         [0m  Either CRITICAL, ERROR,       [2m│[0m
+[2m│[0m                                                WARNING, INFO or DEBUG        [2m│[0m
+[2m│[0m                                                [2;33m[env var: LOG_LEVEL]         [0m [2m│[0m
+[2m│[0m    [1;36m-[0m[1;36m-help[0m                        [1;33m            [0m  Show this message and exit.   [2m│[0m
+[2m╰──────────────────────────────────────────────────────────────────────────────╯[0m
 </code></pre></div>
 </div>
 
