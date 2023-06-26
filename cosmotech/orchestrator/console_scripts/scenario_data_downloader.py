@@ -11,7 +11,6 @@ import click_log
 import rich_click as click
 from CosmoTech_Acceleration_Library.Accelerators.scenario_download.scenario_downloader import ScenarioDownloader
 from rich.console import Console
-from rich.style import Style
 from rich.logging import RichHandler
 
 from cosmotech.orchestrator.utils.decorators import require_env
@@ -24,14 +23,18 @@ logging.basicConfig(
     handlers=[RichHandler(rich_tracebacks=True,
                           omit_repeated_times=False,
                           show_path=False,
-                          markup=True,
-                          console=Console(width=150))])
+                          markup=True)])
 LOGGER.setLevel(logging.INFO)
 
 
 def download_scenario_data(
-    organization_id: str, workspace_id: str, scenario_id: str, dataset_folder: str, parameter_folder: str,
-    write_json: bool, write_csv: bool
+    organization_id: str,
+    workspace_id: str,
+    scenario_id: str,
+    dataset_folder: str,
+    parameter_folder: str,
+    write_json: bool,
+    write_csv: bool
 ) -> None:
     """
     Download the datas from a scenario from the CosmoTech API to the local file system
@@ -40,6 +43,8 @@ def download_scenario_data(
     :param workspace_id: The id of the Workspace as defined in the CosmoTech API
     :param dataset_folder: a local folder where the main dataset of the scenario will be downloaded
     :param parameter_folder: a local folder where all parameters will be downloaded
+    :param write_json: should parameters be written as json file
+    :param write_csv: should parameters be written as csv file
     :return: Nothing
     """
     LOGGER.info("Starting connector")
@@ -49,7 +54,6 @@ def download_scenario_data(
 
     LOGGER.info("Load scenario data")
     scenario_data = dl.get_scenario_data(scenario_id=scenario_id)
-
     LOGGER.info("Download datasets")
     datasets = dl.get_all_datasets(scenario_id=scenario_id)
     datasets_parameters_ids = {param.get('value'): param.get('parameter_id')
@@ -62,14 +66,14 @@ def download_scenario_data(
     LOGGER.info("Store datasets")
     pathlib.Path(dataset_dir).mkdir(parents=True, exist_ok=True)
     for k in datasets.keys():
-        if k not in datasets_parameters_ids.keys():
+        if k in scenario_data.get('dataset_list', ()):
             copy_tree(dl.dataset_to_file(k, datasets[k]), dataset_dir)
-            LOGGER.debug(f"  - Stored {dataset_dir} ({k})")
-        else:
+            LOGGER.debug(f"  - [yellow]{dataset_dir}[/] ([green]{k}[/])")
+        if k in datasets_parameters_ids.keys():
             param_dir = os.path.join(tmp_parameter_dir, datasets_parameters_ids[k])
             pathlib.Path(param_dir).mkdir(exist_ok=True, parents=True)
             copy_tree(dl.dataset_to_file(k, datasets[k]), param_dir)
-            LOGGER.debug(f"  - Stored {param_dir} ({k})")
+            LOGGER.debug(f"  - [yellow]{datasets_parameters_ids[k]}[/] ([green]{k}[/])")
 
     pathlib.Path(tmp_parameter_dir).mkdir(parents=True, exist_ok=True)
 
@@ -80,6 +84,8 @@ def download_scenario_data(
         return
 
     parameters = []
+    max_name_size = max(map(lambda r: len(r.get('parameter_id')), scenario_data['parameters_values']))
+    max_type_size = max(map(lambda r: len(r.get('var_type')), scenario_data['parameters_values']))
     for parameter_data in scenario_data['parameters_values']:
         parameter_name = parameter_data.get('parameter_id')
         value = parameter_data.get('value')
@@ -91,7 +97,8 @@ def download_scenario_data(
             "varType": var_type,
             "isInherited": is_inherited
         })
-        LOGGER.debug(f"  - Prepared {parameter_name} : \"{value}\" (type: {var_type} - is_inherited: {is_inherited})")
+        LOGGER.debug(f"  - [yellow]{parameter_name:<{max_name_size}}[/] [cyan]{var_type:<{max_type_size}}[/] "
+                     f"\"{value}\"{' [red bold]inherited[/]' if is_inherited else ''}")
 
     if write_csv:
         tmp_parameter_file = os.path.join(tmp_parameter_dir, "parameters.csv")
@@ -156,9 +163,13 @@ def download_scenario_data(
 @require_env('CSM_API_SCOPE', "The identification scope of a Cosmotech API")
 @require_env('CSM_API_URL', "The URL to a Cosmotech API")
 def main(
-    scenario_id: str, workspace_id: str, organization_id: str, dataset_absolute_path: str,
+    scenario_id: str,
+    workspace_id: str,
+    organization_id: str,
+    dataset_absolute_path: str,
     parameters_absolute_path: str,
-    write_json: bool, write_csv: bool
+    write_json: bool,
+    write_csv: bool
 ):
     """
 Uses environment variables to call the download_scenario_data function
