@@ -1,7 +1,6 @@
 # Copyright (c) Cosmo Tech corporation.
 # Licensed under the MIT license.
 import json
-import logging
 import os
 import pathlib
 from csv import DictWriter
@@ -10,21 +9,11 @@ from distutils.dir_util import copy_tree
 import click_log
 import rich_click as click
 from CosmoTech_Acceleration_Library.Accelerators.scenario_download.scenario_downloader import ScenarioDownloader
-from rich.console import Console
-from rich.logging import RichHandler
 
 from cosmotech.orchestrator.utils.decorators import require_env
+from cosmotech.orchestrator.utils.logger import LOGGER
 
 click.rich_click.USE_MARKDOWN = True
-LOGGER = logging.getLogger("scenario_data_downloader")
-logging.basicConfig(
-    format="%(message)s",
-    datefmt="[%Y/%m/%d-%X]",
-    handlers=[RichHandler(rich_tracebacks=True,
-                          omit_repeated_times=False,
-                          show_path=False,
-                          markup=True)])
-LOGGER.setLevel(logging.INFO)
 
 
 def download_scenario_data(

@@ -1,27 +1,18 @@
-import logging
 import os
 import pathlib
 import subprocess
 import sys
+import venv
 
 import click_log
 import rich_click as click
-from rich.logging import RichHandler
-import venv
+
+from cosmotech.orchestrator.utils.logger import LOGGER
 
 click.rich_click.USE_MARKDOWN = True
 click.rich_click.SHOW_ARGUMENTS = True
 click.rich_click.GROUP_ARGUMENTS_OPTIONS = False
 
-LOGGER = logging.getLogger("csm_executor")
-logging.basicConfig(
-    format="%(message)s",
-    datefmt="[%Y/%m/%d-%X]",
-    handlers=[RichHandler(rich_tracebacks=True,
-                          omit_repeated_times=False,
-                          show_path=False,
-                          markup=True)])
-LOGGER.setLevel(logging.INFO)
 
 
 @click.command()

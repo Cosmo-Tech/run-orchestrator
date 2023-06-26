@@ -1,28 +1,22 @@
 # Copyright (c) Cosmo Tech corporation.
 # Licensed under the MIT license.
-import logging
+
+import pathlib
+from zipfile import BadZipfile
+from zipfile import ZipFile
 
 import click_log
-import rich_click as click
-from rich.logging import RichHandler
 import cosmotech_api
+import rich_click as click
 from azure.identity import DefaultAzureCredential
 from cosmotech_api.api.solution_api import SolutionApi
-from cosmotech_api.api.workspace_api import WorkspaceApi, Workspace
+from cosmotech_api.api.workspace_api import Workspace
+from cosmotech_api.api.workspace_api import WorkspaceApi
 from cosmotech_api.exceptions import ServiceException
-import pathlib
-from zipfile import ZipFile, BadZipfile
+
+from cosmotech.orchestrator.utils.logger import LOGGER
 
 click.rich_click.USE_MARKDOWN = True
-LOGGER = logging.getLogger("scenario_data_downloader")
-logging.basicConfig(
-    format="%(message)s",
-    datefmt="[%Y/%m/%d-%X]",
-    handlers=[RichHandler(rich_tracebacks=True,
-                          omit_repeated_times=False,
-                          show_path=False,
-                          markup=True)])
-LOGGER.setLevel(logging.INFO)
 
 
 @click.command()

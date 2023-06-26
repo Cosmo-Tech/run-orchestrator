@@ -1,8 +1,8 @@
 # Copyright (c) Cosmo Tech corporation.
 # Licensed under the MIT license.
-import logging
 import pathlib
 import time
+from collections import defaultdict
 
 import click_log
 import rich_click as click
@@ -15,19 +15,10 @@ from azure.kusto.ingest import IngestionMappingKind
 from azure.kusto.ingest import IngestionProperties
 from azure.kusto.ingest import IngestionResult
 from azure.kusto.ingest import ReportLevel
-from rich.logging import RichHandler
-from collections import defaultdict
+
+from cosmotech.orchestrator.utils.logger import LOGGER
 
 click.rich_click.USE_MARKDOWN = True
-LOGGER = logging.getLogger("adx_scenario_connector")
-logging.basicConfig(
-    format="%(message)s",
-    datefmt="[%Y/%m/%d-%X]",
-    handlers=[RichHandler(rich_tracebacks=True,
-                          omit_repeated_times=False,
-                          show_path=False,
-                          markup=True)])
-LOGGER.setLevel(logging.INFO)
 
 
 @click.command()
