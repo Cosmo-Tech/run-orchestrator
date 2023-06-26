@@ -11,7 +11,7 @@ from cosmotech_api.api.solution_api import SolutionApi
 from cosmotech_api.api.workspace_api import WorkspaceApi, Workspace
 from cosmotech_api.exceptions import ServiceException
 import pathlib
-from zipfile import ZipFile
+from zipfile import ZipFile, BadZipfile
 
 click.rich_click.USE_MARKDOWN = True
 LOGGER = logging.getLogger("scenario_data_downloader")
@@ -83,6 +83,7 @@ Requires a valid Azure connection either with:
     )
     LOGGER.info("Configuration to the api set")
 
+    has_errors = False
     with cosmotech_api.ApiClient(configuration) as api_client:
         api_w = WorkspaceApi(api_client)
 
@@ -114,12 +115,20 @@ Requires a valid Azure connection either with:
                     f"for Run Template [green bold]{run_template_id}[/] "
                     f"in Solution [green bold]{solution_id}[/]")
                 LOGGER.debug(e.body)
+                has_errors = True
                 continue
             LOGGER.info(f"Extracting handler to {handler_path.absolute()}")
             handler_path.mkdir(parents=True, exist_ok=True)
 
-            with ZipFile(r_data) as _zip:
-                _zip.extractall(handler_path)
+            try:
+                with ZipFile(r_data) as _zip:
+                    _zip.extractall(handler_path)
+            except BadZipfile:
+                LOGGER.error(f"Handler [green bold]{handler_id}[/] is not a [blue]zip file[/]")
+                has_errors = True
+        if has_errors:
+            LOGGER.error("Issues were met during run, please check the previous logs")
+            return 2
 
 
 if __name__ == "__main__":
