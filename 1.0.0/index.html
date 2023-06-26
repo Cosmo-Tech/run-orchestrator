@@ -296,9 +296,40 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         Home
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -439,6 +470,21 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -454,6 +500,36 @@
 
 <h1 id="run-template-orchestrator">Run Template Orchestrator <img alt="1.0.0" src="https://img.shields.io/badge/1.0.0-2e303e?style=for-the-badge" /></h1>
 <p>This repository contains the new Run Template Orchestrator used in the latest Cosmotech Solutions</p>
+<h2 id="installation">Installation</h2>
+<p>You need to add the orchestrator to the environment you want to use it on.</p>
+<p>The following guide will suppose you have a CosmoTech Project called <code>MyProject</code> which is in the folder <code>~/MyProject</code></p>
+<p>It will also suppose you have a build version of the CosmoTech SDK in the folder <code>~/Cosmotech/Studio</code></p>
+<div class="admonition info">
+<p class="admonition-title">Create a virtual environment and add dependencies (in bash)</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># First move to your project folder</span>
+<span class="nb">cd</span><span class="w"> </span>~/MyProject
+<span class="c1"># Next create and activate a venv (here .venv)</span>
+python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<span class="c1"># Update your python path with the bindings from the sdk</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/Cosmotech/Studio/lib/python/site-packages
+<span class="c1"># Add the local wrappers for your solution to the python path</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/MyProject/Generated/Build/Wrapping:~/MyProject/Generated/Build/Lib
+<span class="c1"># Finally install the dependencies for your project (they should be in code/requirements.txt)</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>code/requirements.txt
+</code></pre></div>
+<details class="note">
+<summary>Note</summary>
+<p>If you use the Cosmotech CLI <code>csmcli</code> you can replace the use of the <code>PYTHONPATH</code> environment variable by calls to <code>csm exec</code></p>
+</details>
+</div>
+<p>After all those commands you environment should be ready for a test, but first let's install the repository</p>
+<div class="admonition info">
+<p class="admonition-title">Install the orchestrator</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>git+ssh://git@github.com/Cosmo-Tech/run_template_orchestrator.git
+</code></pre></div>
+</div>
+<p>After installation a few commands are made available, documentation for each is available on the <a href="./scripts">scripts documentation page</a></p>
 
 
 
