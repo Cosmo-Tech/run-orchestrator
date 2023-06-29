@@ -329,6 +329,8 @@
         
           
         
+          
+        
       
       
         
@@ -417,6 +419,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orchestrator/" class="md-nav__link">
+        Orchestrator
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -473,16 +489,17 @@
   • The step MUST contain an executable main.py file                                                                    
   • The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine                
 
-╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ *  --template     TEXT  refer to a folder contained in code/run_templates                                            │
-│                         [env var: CSM_RUN_TEMPLATE_ID]                                                               │
+│                         ENV: CSM_RUN_TEMPLATE_ID                                                                     │
 │                         [required]                                                                                   │
 │    --steps        TEXT  A list of Steps definer in the TEMPLATE folder that will be executed (comma-separated).      │
-│                         Defaults to CSMDOCKER which represent the legacy order:                                      │
-│                         [green]parameters_handler,validator,prerun,engine,postrun[/]                                 │
-│                         [env var: CSM_CONTAINER_MODE]                                                                │
+│                         Defaults to CSMDOCKER equivalent to parameters_handler,validator,prerun,engine,postrun (the  │
+│                         legacy order)                                                                                │
+│                         ENV: CSM_CONTAINER_MODE                                                                      │
+│                         DEFAULT: CSMDOCKER                                                                           │
 │    --log-level    LVL   Either CRITICAL, ERROR, WARNING, INFO or DEBUG                                               │
-│                         [env var: LOG_LEVEL]                                                                         │
+│                         ENV: LOG_LEVEL                                                                               │
 │    --help               Show this message and exit.                                                                  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>

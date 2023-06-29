@@ -329,6 +329,8 @@
         
           
         
+          
+        
       
       
         
@@ -417,6 +419,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orchestrator/" class="md-nav__link">
+        Orchestrator
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -476,28 +492,30 @@
  Requires env var CSM_API_URL     The URL to a Cosmotech API                                                            
  Requires env var CSM_API_SCOPE   The identification scope of a Cosmotech API                                           
 
-╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ *  --organization-id               o-##########  The id of an organization in the cosmotech api                      │
-│                                                  [env var: CSM_ORGANIZATION_ID]                                      │
+│                                                  ENV: CSM_ORGANIZATION_ID                                            │
 │                                                  [required]                                                          │
 │ *  --workspace-id                  w-##########  The id of a workspace in the cosmotech api                          │
-│                                                  [env var: CSM_WORKSPACE_ID]                                         │
+│                                                  ENV: CSM_WORKSPACE_ID                                               │
 │                                                  [required]                                                          │
 │ *  --scenario-id                   s-##########  The id of a scenario in the cosmotech api                           │
-│                                                  [env var: CSM_SCENARIO_ID]                                          │
+│                                                  ENV: CSM_SCENARIO_ID                                                │
 │                                                  [required]                                                          │
 │ *  --dataset-absolute-path         PATH          A local folder to store the main dataset content                    │
-│                                                  [env var: CSM_DATASET_ABSOLUTE_PATH]                                │
+│                                                  ENV: CSM_DATASET_ABSOLUTE_PATH                                      │
 │                                                  [required]                                                          │
 │ *  --parameters-absolute-path      PATH          A local folder to store the parameters content                      │
-│                                                  [env var: CSM_PARAMETERS_ABSOLUTE_PATH]                             │
+│                                                  ENV: CSM_PARAMETERS_ABSOLUTE_PATH                                   │
 │                                                  [required]                                                          │
 │    --write-json/--no-write-json                  Toggle writing of parameters in json format                         │
-│                                                  [env var: WRITE_JSON]                                               │
+│                                                  ENV: WRITE_JSON                                                     │
+│                                                  DEFAULT: no-write-json                                              │
 │    --write-csv/--no-write-csv                    Toggle writing of parameters in csv format                          │
-│                                                  [env var: WRITE_CSV]                                                │
+│                                                  ENV: WRITE_CSV                                                      │
+│                                                  DEFAULT: write-csv                                                  │
 │    --log-level                     LVL           Either CRITICAL, ERROR, WARNING, INFO or DEBUG                      │
-│                                                  [env var: LOG_LEVEL]                                                │
+│                                                  ENV: LOG_LEVEL                                                      │
 │    --help                                        Show this message and exit.                                         │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
