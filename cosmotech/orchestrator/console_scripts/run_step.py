@@ -5,12 +5,9 @@ import sys
 import venv
 
 import click_log
-import rich_click as click
 
+from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.logger import LOGGER
-
-click.rich_click.USE_MARKDOWN = True
-click.rich_click.USE_RICH_MARKUP = True
 
 
 @click.command()
@@ -23,9 +20,10 @@ click.rich_click.USE_RICH_MARKUP = True
               envvar="CSM_CONTAINER_MODE",
               default="CSMDOCKER",
               show_envvar=True,
+              show_default=True,
               help="\bA list of Steps definer in the `TEMPLATE` folder that will be executed (comma-separated).  \n"
-                   "Defaults to `CSMDOCKER` which represent the legacy order: "
-                   "[green]parameters_handler,validator,prerun,engine,postrun[/]")
+                   "Defaults to `CSMDOCKER` equivalent to "
+                   "`parameters_handler,validator,prerun,engine,postrun` (the legacy order)")
 @click_log.simple_verbosity_option(LOGGER,
                                    "--log-level",
                                    envvar="LOG_LEVEL",

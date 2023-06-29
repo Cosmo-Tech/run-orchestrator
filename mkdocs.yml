@@ -48,6 +48,7 @@ nav:
       - Download cloud Steps: "scripts/download_cloud_steps.md"
       - Run Python Steps: "scripts/run_step.md"
       - Simulation to ADX: "scripts/simulation_to_adx.md"
+      - Orchestrator: "scripts/orchestrator.md"
 
 markdown_extensions:
     - admonition

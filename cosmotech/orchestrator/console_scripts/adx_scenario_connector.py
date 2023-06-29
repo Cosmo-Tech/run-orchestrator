@@ -5,7 +5,6 @@ import time
 from collections import defaultdict
 
 import click_log
-import rich_click as click
 from CosmoTech_Acceleration_Library.Accelerators.adx_wrapper import ADXQueriesWrapper
 from CosmoTech_Acceleration_Library.Accelerators.adx_wrapper import IngestionStatus
 from azure.kusto.data.response import KustoResponseDataSet
@@ -16,9 +15,8 @@ from azure.kusto.ingest import IngestionProperties
 from azure.kusto.ingest import IngestionResult
 from azure.kusto.ingest import ReportLevel
 
+from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.logger import LOGGER
-
-click.rich_click.USE_MARKDOWN = True
 
 
 @click.command()
@@ -63,17 +61,20 @@ click.rich_click.USE_MARKDOWN = True
               envvar="CSM_SEND_DATAWAREHOUSE_PARAMETERS",
               show_envvar=True,
               default=False,
+              show_default=True,
               help="whether or not to send parameters (parameters path is mandatory then)")
 @click.option("--send-datasets/--no-send-datasets",
               type=bool,
               envvar="CSM_SEND_DATAWAREHOUSE_DATASETS",
               show_envvar=True,
               default=False,
+              show_default=True,
               help="whether or not to send datasets (parameters path is mandatory then)")
 @click.option("--wait/--no-wait",
               envvar="WAIT_FOR_INGESTION",
               show_envvar=True,
               default=False,
+              show_default=True,
               help="Toggle waiting for the ingestion results")
 @click_log.simple_verbosity_option(LOGGER,
                                    "--log-level",

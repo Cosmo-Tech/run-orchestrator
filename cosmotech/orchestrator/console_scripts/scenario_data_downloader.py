@@ -7,13 +7,11 @@ from csv import DictWriter
 from distutils.dir_util import copy_tree
 
 import click_log
-import rich_click as click
 from CosmoTech_Acceleration_Library.Accelerators.scenario_download.scenario_downloader import ScenarioDownloader
 
+from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import require_env
 from cosmotech.orchestrator.utils.logger import LOGGER
-
-click.rich_click.USE_MARKDOWN = True
 
 
 def download_scenario_data(
@@ -139,11 +137,13 @@ def download_scenario_data(
               envvar="WRITE_JSON",
               show_envvar=True,
               default=False,
+              show_default=True,
               help="Toggle writing of parameters in json format")
 @click.option("--write-csv/--no-write-csv",
               envvar="WRITE_CSV",
               show_envvar=True,
               default=True,
+              show_default=True,
               help="Toggle writing of parameters in csv format")
 @click_log.simple_verbosity_option(LOGGER,
                                    "--log-level",

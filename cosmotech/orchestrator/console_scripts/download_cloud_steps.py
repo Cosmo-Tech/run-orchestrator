@@ -7,7 +7,6 @@ from zipfile import ZipFile
 
 import click_log
 import cosmotech_api
-import rich_click as click
 from azure.identity import DefaultAzureCredential
 from cosmotech_api.api.solution_api import SolutionApi
 from cosmotech_api.api.workspace_api import Workspace
@@ -15,8 +14,7 @@ from cosmotech_api.api.workspace_api import WorkspaceApi
 from cosmotech_api.exceptions import ServiceException
 
 from cosmotech.orchestrator.utils.logger import LOGGER
-
-click.rich_click.USE_MARKDOWN = True
+from cosmotech.orchestrator.utils.click import click
 
 
 @click.command()

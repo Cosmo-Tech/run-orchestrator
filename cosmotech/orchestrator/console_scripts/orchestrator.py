@@ -1,8 +1,7 @@
-from cosmotech.orchestrator.classes import Orchestrator
-
 import click_log
-import rich_click as click
 
+from cosmotech.orchestrator.classes import Orchestrator
+from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.logger import LOGGER
 
 
@@ -12,15 +11,17 @@ from cosmotech.orchestrator.utils.logger import LOGGER
                                    "--log-level",
                                    envvar="LOG_LEVEL",
                                    show_envvar=True)
-@click.option("-n", "--dry-run/--no-dry-run",
+@click.option("--dry-run/--no-dry-run", "-n",
               envvar="DRY_RUN",
               show_envvar=True,
               default=False,
+              show_default=True,
               help="Use dry-run mode")
 @click.option("--display-env/--no-display-env",
               envvar="DISPLAY_ENVIRONMENT",
               show_envvar=True,
               default=False,
+              show_default=True,
               help="List all required environment variables and their documentation")
 def main(template: str, dry_run: bool, display_env: bool):
     """Runs the given TEMPLATE file"""
