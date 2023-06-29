@@ -10,32 +10,34 @@ import rich_click as click
 from cosmotech.orchestrator.utils.logger import LOGGER
 
 click.rich_click.USE_MARKDOWN = True
-click.rich_click.SHOW_ARGUMENTS = True
-click.rich_click.GROUP_ARGUMENTS_OPTIONS = False
-
+click.rich_click.USE_RICH_MARKUP = True
 
 
 @click.command()
-@click.argument("template", nargs=1)
-@click.argument("steps", nargs=-1)
+@click.option("--template",
+              envvar="CSM_RUN_TEMPLATE_ID",
+              required=True,
+              show_envvar=True,
+              help="refer to a folder contained in `code/run_templates`")
+@click.option("--steps",
+              envvar="CSM_CONTAINER_MODE",
+              default="CSMDOCKER",
+              show_envvar=True,
+              help="\bA list of Steps definer in the `TEMPLATE` folder that will be executed (comma-separated).  \n"
+                   "Defaults to `CSMDOCKER` which represent the legacy order: "
+                   "[green]parameters_handler,validator,prerun,engine,postrun[/]")
 @click_log.simple_verbosity_option(LOGGER,
                                    "--log-level",
                                    envvar="LOG_LEVEL",
                                    show_envvar=True)
-def main(template, steps):
+def main(template: str, steps: str):
     """Runs a list of steps of a run template in a CosmoTech project
-
-- `TEMPLATE` refer to a folder contained in `code/run_templates`
-- `STEPS` is a list of Steps definer in the `TEMPLATE` folder that will be executed
-    - defaults to `CSMDOCKER` which represent the legacy order: `parameters_handler` - `validator` - `prerun` - `engine` - `postrun`
-
 Known limitations:
-- The template MUST contain an executable main.py file
+- The step MUST contain an executable main.py file
 - The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine
 """
     project = pathlib.Path(".")
-    if not len(steps):
-        steps = ["CSMDOCKER", ]
+    steps = steps.split(",")
     if not project.exists() or not (project / "project.csm").exists():
         LOGGER.error(f"{project} is not the root directory of a Cosmo project.")
         return 1
