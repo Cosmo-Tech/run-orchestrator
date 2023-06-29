@@ -2,6 +2,10 @@
 cosmotech-acceleration-library
 cosmotech-api
 
+# Orchestrator Dependencies
+flowpipe
+jsonschema
+
 # Command dependencies
 click
 rich-click

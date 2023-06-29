@@ -20,7 +20,8 @@ setup(
             'cosmotech_scenario_downloader=cosmotech.orchestrator.console_scripts.scenario_data_downloader:main',
             'cosmotech_simulation_to_adx_connector=cosmotech.orchestrator.console_scripts.adx_scenario_connector:main',
             'cosmotech_run_step=cosmotech.orchestrator.console_scripts.run_step:main',
-            'cosmotech_download_cloud_steps=cosmotech.orchestrator.console_scripts.download_cloud_steps:main'
+            'cosmotech_download_cloud_steps=cosmotech.orchestrator.console_scripts.download_cloud_steps:main',
+            'cosmotech_orchestrator=cosmotech.orchestrator.console_scripts.orchestrator:main'
         ]
     },
 )

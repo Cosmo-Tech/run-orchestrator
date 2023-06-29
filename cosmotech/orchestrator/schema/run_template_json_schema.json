@@ -38,6 +38,7 @@
             "minProperties": 1
           }
         },
+        "additionalProperties": false,
         "required": [
           "id",
           "command"
@@ -88,6 +89,7 @@
             }
           }
         },
+        "additionalProperties": false,
         "oneOf": [
           {
             "required": [
@@ -125,7 +127,8 @@
           "type": "string",
           "description": "A description of the required Environment Variable for documentation reasons"
         }
-      }
+      },
+      "additionalProperties": false
     }
   }
 }
