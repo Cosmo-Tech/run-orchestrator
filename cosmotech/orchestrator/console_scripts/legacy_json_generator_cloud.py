@@ -77,7 +77,6 @@ def main(workspace_id, organization_id, run_template_id, api_scope, api_url, out
 
         api_sol = SolutionApi(api_client)
         sol: Solution = api_sol.find_solution_by_id(organization_id=organization_id, solution_id=solution_id)
-
         if _t := [t for t in sol.run_templates if t.id == run_template_id]:
             template: RunTemplate = _t[0]
         else:
@@ -89,7 +88,7 @@ def main(workspace_id, organization_id, run_template_id, api_scope, api_url, out
         previous = None
         if template.fetch_datasets is not False or template.fetch_scenario_parameters:
             _s = Step(id="Fetch Scenario Parameter",
-                      command="cosmotech_scenario_data_downloader",
+                      command="cosmotech_scenario_downloader",
                       environment={
                           "CSM_ORGANIZATION_ID": {
                               "description": "The id of an organization in the cosmotech api"
@@ -99,6 +98,12 @@ def main(workspace_id, organization_id, run_template_id, api_scope, api_url, out
                           },
                           "CSM_SCENARIO_ID": {
                               "description": "The id of a scenario in the cosmotech api"
+                          },
+                          "CSM_API_URL": {
+                              "description": "The url to a Cosmotech API"
+                          },
+                          "CSM_API_SCOPE": {
+                              "description": "The identification scope of a Cosmotech API"
                           },
                           "CSM_DATASET_ABSOLUTE_PATH": {
                               "description": "A local folder to store the main dataset content"
@@ -129,8 +134,7 @@ def main(workspace_id, organization_id, run_template_id, api_scope, api_url, out
             previous = "Fetch Scenario Parameter"
             steps.append(_s)
 
-        def run_template_phase(name, condition, _previous):
-            source = f"{condition}_source"
+        def run_template_phase(name, condition, source, _previous):
             _steps = []
             if template.get(condition) is not False:
                 if template.get(source) == "cloud":
@@ -158,10 +162,10 @@ def main(workspace_id, organization_id, run_template_id, api_scope, api_url, out
                                               "CSM_API_SCOPE": {
                                                   "description": "The identification scope of a Cosmotech API"
                                               },
-                                              "AZURE_TENANT_ID,": {
+                                              "AZURE_TENANT_ID": {
                                                   "description": "An Azure Tenant ID"
                                               },
-                                              "AZURE_CLIENT_ID,": {
+                                              "AZURE_CLIENT_ID": {
                                                   "description": "An Azure Client ID having access to the Cosmotech API"
                                               },
                                               "AZURE_CLIENT_SECRET": {
@@ -200,10 +204,10 @@ def main(workspace_id, organization_id, run_template_id, api_scope, api_url, out
                                      "CSM_API_SCOPE": {
                                          "description": "The identification scope of a Cosmotech API"
                                      },
-                                     "AZURE_TENANT_ID,": {
+                                     "AZURE_TENANT_ID": {
                                          "description": "An Azure Tenant ID"
                                      },
-                                     "AZURE_CLIENT_ID,": {
+                                     "AZURE_CLIENT_ID": {
                                          "description": "An Azure Client ID having access to the Cosmotech API"
                                      },
                                      "AZURE_CLIENT_SECRET": {
@@ -212,6 +216,10 @@ def main(workspace_id, organization_id, run_template_id, api_scope, api_url, out
                                      "LOG_LEVEL": {
                                          "description": "Either CRITICAL, ERROR, WARNING, INFO or DEBUG",
                                          "defaultValue": "INFO"
+                                     },
+                                     "PYTHONPATH": {
+                                         "description": "A list of folder to add to the python path",
+                                         "defaultValue": ""
                                      },
                                      "CSM_DATASET_ABSOLUTE_PATH": {
                                          "description": "A local folder to store the main dataset content"
@@ -238,18 +246,18 @@ def main(workspace_id, organization_id, run_template_id, api_scope, api_url, out
                 _steps.append(_run_step)
             return _previous, _steps
 
-        previous, new_steps = run_template_phase("handle-parameters", "parameters_handler", previous)
+        previous, new_steps = run_template_phase("parameters_handler", "apply_parameters", "parameters_handler_source", previous)
         steps.extend(new_steps)
-        previous, new_steps = run_template_phase("validator", "validator", previous)
+        previous, new_steps = run_template_phase("validator", "validator", "validator_source", previous)
         steps.extend(new_steps)
         if template.send_datasets_to_data_warehouse is True or template.send_input_parameters_to_data_warehouse is True:
             _send_to_adx_step = Step(id="Send to ADX",
                                      command="cosmotech_simulation_to_adx_connector",
                                      environment={
-                                         "AZURE_TENANT_ID,": {
+                                         "AZURE_TENANT_ID": {
                                              "description": "An Azure Tenant ID"
                                          },
-                                         "AZURE_CLIENT_ID,": {
+                                         "AZURE_CLIENT_ID": {
                                              "description": "An Azure Client ID having access to the Cosmotech API"
                                          },
                                          "AZURE_CLIENT_SECRET": {
@@ -292,15 +300,15 @@ def main(workspace_id, organization_id, run_template_id, api_scope, api_url, out
                                              "defaultValue": "false"
                                          },
                                      })
-        previous, new_steps = run_template_phase("prerun", "pre_run", previous)
+        previous, new_steps = run_template_phase("prerun", "pre_run", "pre_run_source", previous)
         steps.extend(new_steps)
-        previous, new_steps = run_template_phase("engine", "engine", previous)
+        previous, new_steps = run_template_phase("engine", "run", "run_source", previous)
         steps.extend(new_steps)
-        previous, new_steps = run_template_phase("postrun", "post_run", previous)
+        previous, new_steps = run_template_phase("postrun", "post_run", "post_run_source", previous)
         steps.extend(new_steps)
 
         LOGGER.debug(json.dumps({"steps": steps}, cls=CustomJSONEncoder, indent=2))
-        json.dump({"steps": steps}, open(output, "w"), cls=CustomJSONEncoder)
+        json.dump({"steps": steps}, open(output, "w"), cls=CustomJSONEncoder, indent=2)
 
 
 if __name__ == "__main__":

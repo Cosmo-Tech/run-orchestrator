@@ -39,7 +39,7 @@ Known limitations:
     if not project.exists() or not (project / "project.csm").exists():
         LOGGER.error(f"{project} is not the root directory of a Cosmo project.")
         return 1
-    executor(project, template, steps)
+    return executor(project, template, steps)
 
 
 def executor(project: pathlib.Path, template: str, steps: list[str]):
@@ -51,7 +51,7 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
         LOGGER.warning("Existing run templates")
         for t in template_list:
             LOGGER.warning(f"\t- {t}")
-        return
+        return 1
     template_path = project / "code/run_templates" / target_template
     available_steps = list(template_path.glob('*'))
     csmdocker = False
@@ -76,7 +76,7 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
         LOGGER.warning("Available steps")
         for s in available_steps:
             LOGGER.warning(f"\t- {s.name}")
-        return
+        return 1
 
     for s in _steps:
         if s == "engine" and use_main_engine:
@@ -105,7 +105,7 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
         p = subprocess.run([executable, str(main_path.absolute() / "main.py")])
         if p.returncode != 0:
             LOGGER.error(f"Issue while running step {s} please check your logs")
-            break
+            return 1
         LOGGER.debug(f"Finished running step {s}")
 
     else:
