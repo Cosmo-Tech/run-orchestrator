@@ -331,6 +331,8 @@
         
           
         
+          
+        
       
       
         
@@ -433,6 +435,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../legacy_json_generator_cloud/" class="md-nav__link">
+        Legacy Generator
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -493,30 +509,33 @@
  Requires env var CSM_API_SCOPE   The identification scope of a Cosmotech API                                           
 
 ╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *  --organization-id               o-##########  The id of an organization in the cosmotech api                      │
-│                                                  ENV: CSM_ORGANIZATION_ID                                            │
-│                                                  [required]                                                          │
-│ *  --workspace-id                  w-##########  The id of a workspace in the cosmotech api                          │
-│                                                  ENV: CSM_WORKSPACE_ID                                               │
-│                                                  [required]                                                          │
-│ *  --scenario-id                   s-##########  The id of a scenario in the cosmotech api                           │
-│                                                  ENV: CSM_SCENARIO_ID                                                │
-│                                                  [required]                                                          │
-│ *  --dataset-absolute-path         PATH          A local folder to store the main dataset content                    │
-│                                                  ENV: CSM_DATASET_ABSOLUTE_PATH                                      │
-│                                                  [required]                                                          │
-│ *  --parameters-absolute-path      PATH          A local folder to store the parameters content                      │
-│                                                  ENV: CSM_PARAMETERS_ABSOLUTE_PATH                                   │
-│                                                  [required]                                                          │
-│    --write-json/--no-write-json                  Toggle writing of parameters in json format                         │
-│                                                  ENV: WRITE_JSON                                                     │
-│                                                  DEFAULT: no-write-json                                              │
-│    --write-csv/--no-write-csv                    Toggle writing of parameters in csv format                          │
-│                                                  ENV: WRITE_CSV                                                      │
-│                                                  DEFAULT: write-csv                                                  │
-│    --log-level                     LVL           Either CRITICAL, ERROR, WARNING, INFO or DEBUG                      │
-│                                                  ENV: LOG_LEVEL                                                      │
-│    --help                                        Show this message and exit.                                         │
+│ *  --organization-id                     o-##########  The id of an organization in the cosmotech api                │
+│                                                        ENV: CSM_ORGANIZATION_ID                                      │
+│                                                        [required]                                                    │
+│ *  --workspace-id                        w-##########  The id of a workspace in the cosmotech api                    │
+│                                                        ENV: CSM_WORKSPACE_ID                                         │
+│                                                        [required]                                                    │
+│ *  --scenario-id                         s-##########  The id of a scenario in the cosmotech api                     │
+│                                                        ENV: CSM_SCENARIO_ID                                          │
+│                                                        [required]                                                    │
+│ *  --dataset-absolute-path               PATH          A local folder to store the main dataset content              │
+│                                                        ENV: CSM_DATASET_ABSOLUTE_PATH                                │
+│                                                        [required]                                                    │
+│ *  --parameters-absolute-path            PATH          A local folder to store the parameters content                │
+│                                                        ENV: CSM_PARAMETERS_ABSOLUTE_PATH                             │
+│                                                        [required]                                                    │
+│    --write-json/--no-write-json                        Toggle writing of parameters in json format                   │
+│                                                        ENV: WRITE_JSON                                               │
+│                                                        DEFAULT: no-write-json                                        │
+│    --write-csv/--no-write-csv                          Toggle writing of parameters in csv format                    │
+│                                                        ENV: WRITE_CSV                                                │
+│                                                        DEFAULT: write-csv                                            │
+│    --fetch-dataset/--no-fetch-dataset                  Toggle fetching datasets                                      │
+│                                                        ENV: FETCH_DATASET                                            │
+│                                                        DEFAULT: fetch-dataset                                        │
+│    --log-level                           LVL           Either CRITICAL, ERROR, WARNING, INFO or DEBUG                │
+│                                                        ENV: LOG_LEVEL                                                │
+│    --help                                              Show this message and exit.                                   │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>

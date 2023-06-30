@@ -9,17 +9,15 @@
       
       
       
-        <link rel="prev" href="../scenario_data_downloader/">
+        <link rel="prev" href="../orchestrator/">
       
-      
-        <link rel="next" href="../run_step/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.17">
     
     
       
-        <title>Download cloud Steps - Run Template Orchestrator</title>
+        <title>Legacy Generator - Run Template Orchestrator</title>
       
     
     
@@ -75,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#download-steps-from-cloud" class="md-skip">
+        <a href="#generate-legacy-run-template-json-file" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Download cloud Steps
+              Legacy Generator
             
           </span>
         </div>
@@ -373,21 +371,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../download_cloud_steps/" class="md-nav__link">
         Download cloud Steps
       </a>
-      
     </li>
   
 
@@ -439,11 +427,21 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../legacy_json_generator_cloud/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Legacy Generator
       </a>
+      
     </li>
   
 
@@ -493,40 +491,37 @@
   
 
 
-<h1 id="download-steps-from-cloud">Download Steps from cloud</h1>
+<h1 id="generate-legacy-run-template-json-file">Generate legacy run template json file</h1>
 <div class="admonition info">
-<p class="admonition-title">Command help</p>
-<div class="highlight"><pre><span></span><code>&gt; cosmotech_download_cloud_steps --help
+<p class="admonition-title">Help command</p>
+<div class="highlight"><pre><span></span><code>&gt; cosmotech_gen_legacy_cloud --help
 
- Usage: cosmotech_download_cloud_steps [OPTIONS]                                                                        
+ Usage: cosmotech_gen_legacy_cloud [OPTIONS] OUTPUT                                                                     
 
- Uses environment variables to download cloud based Template steps Requires a valid Azure connection either with:       
+ Connect to the cosmotech API to download a run template and generate an orchestrator file at OUTPUT                    
 
-  • The AZ cli command: az login                                                                                        
-  • A triplet of env var AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET                                          
-
+╭─ Arguments ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  OUTPUT    FILE  [required]                                                                                        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│    --log-level          LVL                  Either CRITICAL, ERROR, WARNING, INFO or DEBUG                          │
-│                                              ENV: LOG_LEVEL                                                          │
-│ *  --organization-id    o-##########         The id of an organization in the cosmotech api                          │
-│                                              ENV: CSM_ORGANIZATION_ID                                                │
-│                                              [required]                                                              │
-│ *  --workspace-id       w-##########         The id of a solution in the cosmotech api                               │
-│                                              ENV: CSM_WORKSPACE_ID                                                   │
-│                                              [required]                                                              │
-│ *  --run-template-id    NAME                 The name of the run template in the cosmotech api                       │
-│                                              ENV: CSM_RUN_TEMPLATE_ID                                                │
-│                                              [required]                                                              │
-│ *  --handler-list       HANDLER,...,HANDLER  A list of handlers to download (comma separated)                        │
-│                                              ENV: CSM_CONTAINER_MODE                                                 │
-│                                              [required]                                                              │
-│ *  --api-url            URL                  The url to a Cosmotech API                                              │
-│                                              ENV: CSM_API_URL                                                        │
-│                                              [required]                                                              │
-│ *  --api-scope          URI                  The identification scope of a Cosmotech API                             │
-│                                              ENV: CSM_API_SCOPE                                                      │
-│                                              [required]                                                              │
-│    --help                                    Show this message and exit.                                             │
+│    --log-level          LVL           Either CRITICAL, ERROR, WARNING, INFO or DEBUG                                 │
+│                                       ENV: LOG_LEVEL                                                                 │
+│ *  --api-url            URL           The url to a Cosmotech API                                                     │
+│                                       ENV: CSM_API_URL                                                               │
+│                                       [required]                                                                     │
+│ *  --api-scope          URI           The identification scope of a Cosmotech API                                    │
+│                                       ENV: CSM_API_SCOPE                                                             │
+│                                       [required]                                                                     │
+│ *  --organization-id    o-##########  The id of an organization in the cosmotech api                                 │
+│                                       ENV: CSM_ORGANIZATION_ID                                                       │
+│                                       [required]                                                                     │
+│ *  --workspace-id       w-##########  The id of a solution in the cosmotech api                                      │
+│                                       ENV: CSM_WORKSPACE_ID                                                          │
+│                                       [required]                                                                     │
+│ *  --run-template-id    NAME          The name of the run template in the cosmotech api                              │
+│                                       ENV: CSM_RUN_TEMPLATE_ID                                                       │
+│                                       [required]                                                                     │
+│    --help                             Show this message and exit.                                                    │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>
@@ -560,7 +555,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../scenario_data_downloader/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Scenario data download" rel="prev">
+          <a href="../orchestrator/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Orchestrator" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -569,26 +564,11 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Scenario data download
+                Orchestrator
               </div>
             </div>
           </a>
         
-        
-          
-          <a href="../run_step/" class="md-footer__link md-footer__link--next" aria-label="Next: Run Python Steps" rel="next">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Run Python Steps
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-            </div>
-          </a>
         
       </nav>
     
