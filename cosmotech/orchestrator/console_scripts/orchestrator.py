@@ -24,7 +24,9 @@ from cosmotech.orchestrator.utils.logger import LOGGER
               show_default=True,
               help="List all required environment variables and their documentation")
 def main(template: str, dry_run: bool, display_env: bool):
-    """Runs the given TEMPLATE file"""
+    """Runs the given TEMPLATE file  
+Commands are run as subprocess using `bash -c "<command> <arguments>"`.  
+In case you are in a python venv, the venv is activated before any command is run."""
     f = Orchestrator()
     try:
         c, s, g = f.load_json_file(template, dry_run, display_env)

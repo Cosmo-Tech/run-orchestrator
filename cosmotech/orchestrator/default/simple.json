@@ -1,0 +1,58 @@
+{
+  "commandTemplates": [
+    {
+      "id": "TEMPLATE_ID",
+      "command": "echo",
+      "arguments": [
+        "list",
+        "of",
+        "arguments",
+        "$ENV_VALUE"
+      ],
+      "environment": {
+        "ENV_VALUE": {
+          "defaultValue": "DEFAULT",
+          "description": "An environment variable with a default value"
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "UseTemplate",
+      "commandId": "TEMPLATE_ID"
+    },
+    {
+      "id": "OverrideTemplate",
+      "commandId": "TEMPLATE_ID",
+      "arguments": [
+        "Added",
+        "arguments"
+      ],
+      "environment": {
+        "ENV_VALUE": {
+          "value": "OVERRIDE",
+          "description": "An environment variable with a forced value"
+        }
+      },
+      "precedents": [
+        "UseTemplate"
+      ]
+    },
+    {
+      "id": "NewCommand",
+      "command": "echo",
+      "arguments": [
+        "$NO_EXIST"
+      ],
+      "environment": {
+        "NO_EXIST": {
+          "description": "An environment variable with no value"
+        }
+      },
+      "precedents": [
+        "OverrideTemplate"
+      ]
+    }
+  ]
+}

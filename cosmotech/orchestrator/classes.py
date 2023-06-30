@@ -2,6 +2,7 @@ import json
 import os
 import pathlib
 import subprocess
+import sys
 from dataclasses import dataclass
 from dataclasses import field
 from typing import Union
@@ -135,8 +136,21 @@ class Step:
                 else:
                     _e = self._effective_env()
                     try:
-                        r = subprocess.run([self.command, ] + self.arguments,
-                                           env=_e, check=True)
+                        executable = pathlib.Path(sys.executable)
+                        venv = (executable.parent / "activate")
+                        cmd_line = list()
+                        cmd_line.append("bash -c")
+                        sub_command = list()
+                        if venv.exists():
+                            sub_command.append(f"source {str(venv)};")
+                        sub_command.append(self.command)
+                        sub_command.extend(self.arguments)
+                        cmd_line.append("\"" + " ".join(sub_command) + "\"")
+                        LOGGER.info(" ".join(cmd_line))
+                        r = subprocess.run(" ".join(cmd_line),
+                                           shell=True,
+                                           env=_e,
+                                           check=True)
                         self.status = "Done"
                         LOGGER.info(f"Done running step [green bold]{self.id}[/]")
                     except subprocess.CalledProcessError:
@@ -157,10 +171,13 @@ class Step:
         r = list()
         r.append(f"Step {self.id}")
         r.append(f"Command: {self.command}" + ("" if not self.arguments else " " + " ".join(self.arguments)))
-        if _e := self._effective_env():
+        if self.environment:
             r.append("Environment:")
-            for k, v in _e.items():
-                r.append(f"- {k}: {v}")
+            for k, v in self.environment.items():
+                if v.description:
+                    r.append(f"- {k}: {v.description}")
+                else:
+                    r.append(f"- {k}")
         r.append(f"Status: {self.status}")
         return "\n".join(r)
 
