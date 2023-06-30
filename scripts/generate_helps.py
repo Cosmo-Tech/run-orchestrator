@@ -10,6 +10,7 @@ from cosmotech.orchestrator.console_scripts.download_cloud_steps import main as 
 from cosmotech.orchestrator.console_scripts.run_step import main as run_step_command
 from cosmotech.orchestrator.console_scripts.scenario_data_downloader import main as scenario_data_dl_command
 from cosmotech.orchestrator.console_scripts.orchestrator import main as orchestrator_command
+from cosmotech.orchestrator.console_scripts.legacy_json_generator_cloud import main as legacy_gen_command
 
 ansi_escape = re.compile(r'(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]')
 commands = {
@@ -18,6 +19,7 @@ commands = {
     "cosmotech_scenario_downloader": scenario_data_dl_command,
     "cosmotech_simulation_to_adx_connector": adx_scenario_connector_command,
     "cosmotech_orchestrator": orchestrator_command,
+    "cosmotech_gen_legacy_cloud": legacy_gen_command
 }
 help_folder = pathlib.Path("docs/scripts_help")
 help_folder.mkdir(parents=True, exist_ok=True)

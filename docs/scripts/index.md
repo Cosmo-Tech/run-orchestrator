@@ -81,4 +81,18 @@ The main CosmoTech Orchestrator command
 </footer>
 </div>
 </article>
+
+<article markdown>
+<div class="text" markdown>
+:fontawesome-solid-wand-magic: __Legacy generator__
+
+---
+A helper command to generate new run template json files from the Cosmotech API old format
+
+---
+<footer markdown>
+[:octicons-arrow-right-24: Legacy generator](./legacy_json_generator_cloud.md)
+</footer>
+</div>
+</article>
 </main>

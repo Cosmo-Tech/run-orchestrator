@@ -43,6 +43,16 @@ class EnvironmentVariable:
         self.value = self.value or other.value
         self.description = self.description or other.description
 
+    def serialize(self):
+        r = {}
+        if self.value:
+            r['value'] = self.value
+        if self.defaultValue:
+            r['defaultValue'] = self.defaultValue
+        if self.description:
+            r['description'] = self.description
+        return r
+
 
 @dataclass
 class CommandTemplate:
@@ -56,6 +66,18 @@ class CommandTemplate:
         for k, v in self.environment.items():
             tmp_env[k] = EnvironmentVariable(k, **v)
         self.environment = tmp_env
+
+    def serialize(self):
+        r = {
+            "id": self.id,
+        }
+        if self.command:
+            r["command"] = self.command
+        if self.arguments:
+            r["arguments"] = self.arguments
+        if self.environment:
+            r["environment"] = self.environment
+        return r
 
 
 @dataclass
@@ -87,20 +109,6 @@ class Step:
             else:
                 self.environment[_env_key] = _env
 
-    def link_precedents(self, available_steps, node):
-        _precedents = []
-        LOGGER.debug(f"Looking previous steps for [green bold]{self.id}[/]")
-        for _p in self.precedents:
-            if isinstance(_p, str):
-                if _p not in available_steps:
-                    self.status = "Error"
-                    raise ValueError(f"Step {_p} does not exists")
-                s, n = available_steps.get(_p)
-                _precedents.append(s)
-                n.outputs['status'].connect(node.inputs['previous'][_p])
-                LOGGER.debug(f" - Found [green bold]{_p}[/]")
-        self.precedents = _precedents
-
     def __post_init__(self):
         if not bool(self.command) ^ bool(self.commandId):
             self.status = "Error"
@@ -113,6 +121,22 @@ class Step:
         self.environment = tmp_env
         self.status = "Init"
 
+    def serialize(self):
+        r = {
+            "id": self.id,
+        }
+        if self.command:
+            r["command"] = self.command
+        if self.commandId:
+            r["commandId"] = self.commandId
+        if self.arguments:
+            r["arguments"] = self.arguments
+        if self.environment:
+            r["environment"] = self.environment
+        if self.precedents:
+            r["precedents"] = self.precedents
+        return r
+
     def _effective_env(self):
         _env = dict()
         for k, v in self.environment.items():
@@ -122,43 +146,42 @@ class Step:
             _env[k] = _v
         return _env
 
-    def run(self, dry: bool = False):
-        @flowpipe.Node(outputs=["status"])
-        def f(previous):
-            LOGGER.info(f"Starting step [green bold]{self.id}[/]")
-            self.status = "Ready"
-            if isinstance(previous, dict) and any(map(lambda a: a not in ['Done', 'DryRun'], previous.values())):
-                LOGGER.warning(f"Skipping step [green bold]{self.id}[/] due to previous errors")
-                self.status = "Skipped"
-            if self.status == "Ready":
-                if dry:
-                    self.status = "DryRun"
-                else:
-                    _e = self._effective_env()
-                    try:
-                        executable = pathlib.Path(sys.executable)
-                        venv = (executable.parent / "activate")
-                        cmd_line = list()
-                        cmd_line.append("bash -c")
-                        sub_command = list()
-                        if venv.exists():
-                            sub_command.append(f"source {str(venv)};")
-                        sub_command.append(self.command)
-                        sub_command.extend(self.arguments)
-                        cmd_line.append("\"" + " ".join(sub_command) + "\"")
-                        LOGGER.info(" ".join(cmd_line))
-                        r = subprocess.run(" ".join(cmd_line),
-                                           shell=True,
-                                           env=_e,
-                                           check=True)
-                        self.status = "Done"
-                        LOGGER.info(f"Done running step [green bold]{self.id}[/]")
-                    except subprocess.CalledProcessError:
-                        LOGGER.error(f"Error during step [green bold]{self.id}[/]")
-                        self.status = "RunError"
-            return {'status': self.status}
+    def run(self, dry: bool = False, previous=None):
+        if previous is None:
+            previous = dict()
 
-        return f
+        LOGGER.info(f"Starting step [green bold]{self.id}[/]")
+        self.status = "Ready"
+        if isinstance(previous, dict) and any(map(lambda a: a not in ['Done', 'DryRun'], previous.values())):
+            LOGGER.warning(f"Skipping step [green bold]{self.id}[/] due to previous errors")
+            self.status = "Skipped"
+        if self.status == "Ready":
+            if dry:
+                self.status = "DryRun"
+            else:
+                _e = self._effective_env()
+                try:
+                    executable = pathlib.Path(sys.executable)
+                    venv = (executable.parent / "activate")
+                    cmd_line = list()
+                    cmd_line.append("bash -c")
+                    sub_command = list()
+                    if venv.exists():
+                        sub_command.append(f"source {str(venv)};")
+                    sub_command.append(self.command)
+                    sub_command.extend(self.arguments)
+                    cmd_line.append("\"" + " ".join(sub_command) + "\"")
+                    LOGGER.info(" ".join(cmd_line))
+                    r = subprocess.run(" ".join(cmd_line),
+                                       shell=True,
+                                       env=_e,
+                                       check=True)
+                    self.status = "Done"
+                    LOGGER.info(f"Done running step [green bold]{self.id}[/]")
+                except subprocess.CalledProcessError:
+                    LOGGER.error(f"Error during step [green bold]{self.id}[/]")
+                    self.status = "RunError"
+        return self.status
 
     def check_env(self):
         r = dict()
@@ -180,6 +203,28 @@ class Step:
                     r.append(f"- {k}")
         r.append(f"Status: {self.status}")
         return "\n".join(r)
+
+
+class Runner(flowpipe.INode):
+
+    def __init__(self, step: Step, dry_run: bool, **kwargs):
+        super(Runner, self).__init__(**kwargs)
+        flowpipe.InputPlug("step", self, step)
+        flowpipe.InputPlug("previous", self)
+        flowpipe.InputPlug("dry_run", self, dry_run)
+        flowpipe.OutputPlug("status", self)
+
+    def compute(self, step: Step, dry_run: bool, previous: dict):
+        return {
+            'status': step.run(dry=dry_run, previous=previous)
+        }
+
+
+class CustomJSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, Step) or isinstance(o, CommandTemplate) or isinstance(o, EnvironmentVariable):
+            return o.serialize()
+        return json.JSONEncoder.default(self, o)
 
 
 class Orchestrator(metaclass=Singleton):
@@ -221,13 +266,24 @@ class Orchestrator(metaclass=Singleton):
         for step in l.get("steps", list()):
             id = step.get('id')
             s = self.load_step(steps, **step)
-            node = s.run(dry)(graph=g, name=id)
-            steps[id] = (s, node)
             s.load_command(commands)
+            node = Runner(graph=g, name=id, step=s, dry_run=dry)
+            steps[id] = (s, node)
         missing_env = dict()
-        for s, n in steps.values():
-            s.link_precedents(steps, node=n)
-            missing_env.update(s.check_env())
+        for _step, _node in steps.values():
+            if _step.precedents:
+                LOGGER.debug(f"Dependencies of [green bold]{_step.id}[/]:")
+            else:
+                LOGGER.debug(f"No dependencies for [green bold]{_step.id}[/]")
+            for _precedent in _step.precedents:
+                if isinstance(_precedent, str):
+                    if _precedent not in steps:
+                        _step.status = "Error"
+                        raise ValueError(f"Step {_precedent} does not exists")
+                    _prec_step, _prec_node = steps.get(_precedent)
+                    _prec_node.outputs['status'].connect(_node.inputs['previous'][_precedent])
+                    LOGGER.debug(f" - Found [green bold]{_precedent}[/]")
+            missing_env.update(_step.check_env())
         if display_env:
             _env: dict[str, set] = dict()
             for s, n in steps.values():

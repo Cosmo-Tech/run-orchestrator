@@ -21,7 +21,8 @@ def download_scenario_data(
     dataset_folder: str,
     parameter_folder: str,
     write_json: bool,
-    write_csv: bool
+    write_csv: bool,
+    fetch_dataset: bool
 ) -> None:
     """
     Download the datas from a scenario from the CosmoTech API to the local file system
@@ -42,27 +43,27 @@ def download_scenario_data(
     LOGGER.info("Load scenario data")
     scenario_data = dl.get_scenario_data(scenario_id=scenario_id)
     LOGGER.info("Download datasets")
-    datasets = dl.get_all_datasets(scenario_id=scenario_id)
-    datasets_parameters_ids = {param.get('value'): param.get('parameter_id')
-                               for param in scenario_data.get('parameters_values')
-                               if param.get('var_type') == "%DATASETID%"}
+    if fetch_dataset:
+        datasets = dl.get_all_datasets(scenario_id=scenario_id)
+        datasets_parameters_ids = {param.get('value'): param.get('parameter_id')
+                                   for param in scenario_data.get('parameters_values')
+                                   if param.get('var_type') == "%DATASETID%"}
 
-    dataset_dir = dataset_folder
-    tmp_parameter_dir = parameter_folder
+        LOGGER.info("Store datasets")
+        pathlib.Path(dataset_folder).mkdir(parents=True, exist_ok=True)
+        for k in datasets.keys():
+            if k in scenario_data.get('dataset_list', ()):
+                copy_tree(dl.dataset_to_file(k, datasets[k]), dataset_folder)
+                LOGGER.debug(f"  - [yellow]{dataset_folder}[/] ([green]{k}[/])")
+            if k in datasets_parameters_ids.keys():
+                param_dir = os.path.join(parameter_folder, datasets_parameters_ids[k])
+                pathlib.Path(param_dir).mkdir(exist_ok=True, parents=True)
+                copy_tree(dl.dataset_to_file(k, datasets[k]), param_dir)
+                LOGGER.debug(f"  - [yellow]{datasets_parameters_ids[k]}[/] ([green]{k}[/])")
+    else:
+        LOGGER.info("No dataset write asked, skipping")
 
-    LOGGER.info("Store datasets")
-    pathlib.Path(dataset_dir).mkdir(parents=True, exist_ok=True)
-    for k in datasets.keys():
-        if k in scenario_data.get('dataset_list', ()):
-            copy_tree(dl.dataset_to_file(k, datasets[k]), dataset_dir)
-            LOGGER.debug(f"  - [yellow]{dataset_dir}[/] ([green]{k}[/])")
-        if k in datasets_parameters_ids.keys():
-            param_dir = os.path.join(tmp_parameter_dir, datasets_parameters_ids[k])
-            pathlib.Path(param_dir).mkdir(exist_ok=True, parents=True)
-            copy_tree(dl.dataset_to_file(k, datasets[k]), param_dir)
-            LOGGER.debug(f"  - [yellow]{datasets_parameters_ids[k]}[/] ([green]{k}[/])")
-
-    pathlib.Path(tmp_parameter_dir).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(parameter_folder).mkdir(parents=True, exist_ok=True)
 
     LOGGER.info("Prepare parameters")
 
@@ -88,7 +89,7 @@ def download_scenario_data(
                      f"\"{value}\"{' [red bold]inherited[/]' if is_inherited else ''}")
 
     if write_csv:
-        tmp_parameter_file = os.path.join(tmp_parameter_dir, "parameters.csv")
+        tmp_parameter_file = os.path.join(parameter_folder, "parameters.csv")
         LOGGER.info(f"Generating {tmp_parameter_file}")
         with open(tmp_parameter_file, "w") as _file:
             _w = DictWriter(_file, fieldnames=["parameterId", "value", "varType", "isInherited"])
@@ -96,7 +97,7 @@ def download_scenario_data(
             _w.writerows(parameters)
 
     if write_json:
-        tmp_parameter_file = os.path.join(tmp_parameter_dir, "parameters.json")
+        tmp_parameter_file = os.path.join(parameter_folder, "parameters.json")
         LOGGER.info(f"Generating {tmp_parameter_file}")
         with open(tmp_parameter_file, "w") as _file:
             json.dump(parameters, _file)
@@ -145,6 +146,12 @@ def download_scenario_data(
               default=True,
               show_default=True,
               help="Toggle writing of parameters in csv format")
+@click.option("--fetch-dataset/--no-fetch-dataset",
+              envvar="FETCH_DATASET",
+              show_envvar=True,
+              default=True,
+              show_default=True,
+              help="Toggle fetching datasets")
 @click_log.simple_verbosity_option(LOGGER,
                                    "--log-level",
                                    envvar="LOG_LEVEL",
@@ -158,7 +165,8 @@ def main(
     dataset_absolute_path: str,
     parameters_absolute_path: str,
     write_json: bool,
-    write_csv: bool
+    write_csv: bool,
+    fetch_dataset: bool
 ):
     """
 Uses environment variables to call the download_scenario_data function
@@ -167,7 +175,7 @@ Requires a valid Azure connection either with:
 - A triplet of env var `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`
     """
     return download_scenario_data(organization_id, workspace_id, scenario_id, dataset_absolute_path,
-                                  parameters_absolute_path, write_json, write_csv)
+                                  parameters_absolute_path, write_json, write_csv, fetch_dataset)
 
 
 if __name__ == "__main__":
