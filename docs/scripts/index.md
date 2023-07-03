@@ -91,7 +91,7 @@ A helper command to generate new run template json files from the Cosmotech API 
 
 ---
 <footer markdown>
-[:octicons-arrow-right-24: Legacy generator](./legacy_json_generator_cloud.md)
+[:octicons-arrow-right-24: Legacy generator](./legacy_json_generator.md)
 </footer>
 </div>
 </article>

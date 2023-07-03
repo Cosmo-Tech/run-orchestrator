@@ -5,6 +5,7 @@ cosmotech-api
 # Orchestrator Dependencies
 flowpipe
 jsonschema
+pyyaml
 
 # Command dependencies
 click

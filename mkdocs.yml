@@ -49,7 +49,7 @@ nav:
       - Run Python Steps: "scripts/run_step.md"
       - Simulation to ADX: "scripts/simulation_to_adx.md"
       - Orchestrator: "scripts/orchestrator.md"
-      - Legacy Generator: "scripts/legacy_json_generator_cloud.md"
+      - Legacy Generator: "scripts/legacy_json_generator.md"
 
 markdown_extensions:
     - admonition
