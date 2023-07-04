@@ -72,21 +72,22 @@ def download_scenario_data(
         return
 
     parameters = []
-    max_name_size = max(map(lambda r: len(r.get('parameter_id')), scenario_data['parameters_values']))
-    max_type_size = max(map(lambda r: len(r.get('var_type')), scenario_data['parameters_values']))
-    for parameter_data in scenario_data['parameters_values']:
-        parameter_name = parameter_data.get('parameter_id')
-        value = parameter_data.get('value')
-        var_type = parameter_data.get('var_type')
-        is_inherited = parameter_data.get('is_inherited')
-        parameters.append({
-            "parameterId": parameter_name,
-            "value": value,
-            "varType": var_type,
-            "isInherited": is_inherited
-        })
-        LOGGER.debug(f"  - [yellow]{parameter_name:<{max_name_size}}[/] [cyan]{var_type:<{max_type_size}}[/] "
-                     f"\"{value}\"{' [red bold]inherited[/]' if is_inherited else ''}")
+    if scenario_data['parameters_values']:
+        max_name_size = max(map(lambda r: len(r.get('parameter_id')), scenario_data['parameters_values']))
+        max_type_size = max(map(lambda r: len(r.get('var_type')), scenario_data['parameters_values']))
+        for parameter_data in scenario_data['parameters_values']:
+            parameter_name = parameter_data.get('parameter_id')
+            value = parameter_data.get('value')
+            var_type = parameter_data.get('var_type')
+            is_inherited = parameter_data.get('is_inherited')
+            parameters.append({
+                "parameterId": parameter_name,
+                "value": value,
+                "varType": var_type,
+                "isInherited": is_inherited
+            })
+            LOGGER.debug(f"  - [yellow]{parameter_name:<{max_name_size}}[/] [cyan]{var_type:<{max_type_size}}[/] "
+                         f"\"{value}\"{' [red bold]inherited[/]' if is_inherited else ''}")
 
     if write_csv:
         tmp_parameter_file = os.path.join(parameter_folder, "parameters.csv")

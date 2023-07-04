@@ -150,6 +150,7 @@ def generate_from_solution(sol: Solution, run_template_id, output: str, describe
 def generate_from_template(template: RunTemplate, output: str):
     steps = []
     previous = None
+    LOGGER.debug(template)
     if template.fetch_datasets is not False or template.fetch_scenario_parameters:
         LOGGER.info("- [green]fetch_scenario_parameters[/] step found")
         _s = Step(id="fetch_scenario_parameters",

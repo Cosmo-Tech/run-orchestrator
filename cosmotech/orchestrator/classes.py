@@ -171,13 +171,17 @@ class Step:
                     sub_command.append(self.command)
                     sub_command.extend(self.arguments)
                     cmd_line.append("\"" + " ".join(sub_command) + "\"")
-                    LOGGER.info(" ".join(cmd_line))
+                    LOGGER.debug("Running:" + " ".join(cmd_line))
                     r = subprocess.run(" ".join(cmd_line),
                                        shell=True,
                                        env=_e,
                                        check=True)
-                    self.status = "Done"
-                    LOGGER.info(f"Done running step [green bold]{self.id}[/]")
+                    if r.returncode != 0:
+                        LOGGER.error(f"Error during step [green bold]{self.id}[/]")
+                        self.status = "RunError"
+                    else:
+                        LOGGER.info(f"Done running step [green bold]{self.id}[/]")
+                        self.status = "Done"
                 except subprocess.CalledProcessError:
                     LOGGER.error(f"Error during step [green bold]{self.id}[/]")
                     self.status = "RunError"
