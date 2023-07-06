@@ -333,6 +333,8 @@
         
           
         
+          
+        
       
       
         
@@ -480,6 +482,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parameters_generation.md" class="md-nav__link">
+        Initialize Parameters folder
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -554,18 +570,20 @@
 │ *  TEMPLATE    FILE  [required]                                                                                      │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --log-level                         LVL   Either CRITICAL, ERROR, WARNING, INFO or DEBUG                             │
-│                                           ENV: LOG_LEVEL                                                             │
-│ --dry-run/--no-dry-run          -n        Use dry-run mode                                                           │
-│                                           ENV: DRY_RUN                                                               │
-│                                           DEFAULT: no-dry-run                                                        │
-│ --display-env/--no-display-env            List all required environment variables and their documentation            │
-│                                           ENV: DISPLAY_ENVIRONMENT                                                   │
-│                                           DEFAULT: no-display-env                                                    │
-│ --gen-env-target                    TEXT  Generate a .env file with all env vars to be filed when display-env is     │
-│                                           called                                                                     │
-│                                           ENV: GENERATE_ENVIRONMENT                                                  │
-│ --help                                    Show this message and exit.                                                │
+│ --log-level                         LVL      Either CRITICAL, ERROR, WARNING, INFO or DEBUG                          │
+│                                              ENV: LOG_LEVEL                                                          │
+│ --dry-run/--no-dry-run          -n           Use dry-run mode                                                        │
+│                                              ENV: DRY_RUN                                                            │
+│                                              DEFAULT: no-dry-run                                                     │
+│ --display-env/--no-display-env               List all required environment variables and their documentation         │
+│                                              ENV: DISPLAY_ENVIRONMENT                                                │
+│                                              DEFAULT: no-display-env                                                 │
+│ --gen-env-target                    PATH     Generate a .env file with all env vars to be filed when display-env is  │
+│                                              called                                                                  │
+│                                              ENV: GENERATE_ENVIRONMENT                                               │
+│ --skip-step                         STEP_ID  Define a list of steps to be skipped during this run                    │
+│                                              ENV: CSM_SKIP_STEPS                                                     │
+│ --help                                       Show this message and exit.                                             │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>
@@ -588,7 +606,8 @@
 <span class="w">        </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">          </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The Id of the Command Template&quot;</span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The Id of the Command Template&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;pattern&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;^\\S*$&quot;</span>
 <span class="w">          </span><span class="p">},</span>
 <span class="w">          </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
@@ -628,7 +647,8 @@
 <span class="w">        </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">          </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The Id of the Step&quot;</span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The Id of the Step&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;pattern&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;^\\S*$&quot;</span>
 <span class="w">          </span><span class="p">},</span>
 <span class="w">          </span><span class="nt">&quot;commandId&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>

@@ -9,17 +9,13 @@
       
       
       
-        <link rel="prev" href="../run_step/">
-      
-      
-        <link rel="next" href="../orchestrator/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
     
     
       
-        <title>Simulation to ADX - Run Template Orchestrator</title>
+        <title>Initialize Parameters Folder - Run Template Orchestrator</title>
       
     
     
@@ -75,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#simulation-to-adx-connector" class="md-skip">
+        <a href="#initialize-parameters-folder" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Simulation to ADX
+              Initialize Parameters Folder
             
           </span>
         </div>
@@ -217,15 +213,13 @@
         
   
   
-    
-  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../" class="md-tabs__link md-tabs__link--active">
+      <a href="../" class="md-tabs__link">
         Scripts
       </a>
     </li>
@@ -304,16 +298,16 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
       
       
         
@@ -348,7 +342,7 @@
           
         </div>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           Scripts
@@ -403,21 +397,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../simulation_to_adx/" class="md-nav__link">
         Simulation to ADX
       </a>
-      
     </li>
   
 
@@ -509,53 +493,86 @@
   
 
 
-<h1 id="simulation-to-adx-connector">Simulation to ADX connector</h1>
+<h1 id="initialize-parameters-folder">Initialize Parameters Folder</h1>
 <div class="admonition info">
 <p class="admonition-title">Help command</p>
-<div class="highlight"><pre><span></span><code>&gt; cosmotech_simulation_to_adx_connector --help
+<div class="highlight"><pre><span></span><code>&gt; cosmotech_init_parameters --help
 
- Usage: cosmotech_simulation_to_adx_connector [OPTIONS]                                                                 
+ Usage: cosmotech_init_parameters [OPTIONS] COMMAND [ARGS]...                                                           
 
- Uses environment variables to send content of CSV files to ADX Requires a valid Azure connection either with:          
+ Base command to initialize parameter folders                                                                           
+ Will create:                                                                                                           
 
-  • The AZ cli command: az login                                                                                        
-  • A triplet of env var AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET                                          
+  • A parameters.json/parameters.csv in the folder with all parameters                                                  
+  • A folder per %DATASETID% datasets with the name of the parameter                                                    
+    Check the help of the sub commands for more information:                                                            
+  • cloud requires access to a fully deployed solution                                                                  
+  • solution requires a Solution.yaml file                                                                              
 
 ╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *  --dataset-absolute-path                   PATH  A local folder to store the main dataset content                  │
-│                                                    ENV: CSM_DATASET_ABSOLUTE_PATH                                    │
-│                                                    [required]                                                        │
-│ *  --parameters-absolute-path                PATH  A local folder to store the parameters content                    │
-│                                                    ENV: CSM_PARAMETERS_ABSOLUTE_PATH                                 │
-│                                                    [required]                                                        │
-│ *  --simulation-id                           UUID  the Simulation Id to add to records                               │
-│                                                    ENV: CSM_SIMULATION_ID                                            │
-│                                                    [required]                                                        │
-│ *  --adx-uri                                 URI   the ADX cluster path (URI info can be found into ADX cluster      │
-│                                                    page)                                                             │
-│                                                    ENV: AZURE_DATA_EXPLORER_RESOURCE_URI                             │
-│                                                    [required]                                                        │
-│ *  --adx-ingest-uri                          URI   The ADX cluster ingest path (URI info can be found into ADX       │
-│                                                    cluster page)                                                     │
-│                                                    ENV: AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI                      │
-│                                                    [required]                                                        │
-│ *  --database-name                           NAME  The targeted database name                                        │
-│                                                    ENV: AZURE_DATA_EXPLORER_DATABASE_NAME                            │
-│                                                    [required]                                                        │
-│    --send-parameters/--no-send-parameters          whether or not to send parameters (parameters path is mandatory   │
-│                                                    then)                                                             │
-│                                                    ENV: CSM_SEND_DATAWAREHOUSE_PARAMETERS                            │
-│                                                    DEFAULT: no-send-parameters                                       │
-│    --send-datasets/--no-send-datasets              whether or not to send datasets (parameters path is mandatory     │
-│                                                    then)                                                             │
-│                                                    ENV: CSM_SEND_DATAWAREHOUSE_DATASETS                              │
-│                                                    DEFAULT: no-send-datasets                                         │
-│    --wait/--no-wait                                Toggle waiting for the ingestion results                          │
-│                                                    ENV: WAIT_FOR_INGESTION                                           │
-│                                                    DEFAULT: no-wait                                                  │
-│    --log-level                               LVL   Either CRITICAL, ERROR, WARNING, INFO or DEBUG                    │
-│                                                    ENV: LOG_LEVEL                                                    │
-│    --help                                          Show this message and exit.                                       │
+│ --log-level    LVL  Either CRITICAL, ERROR, WARNING, INFO or DEBUG                                                   │
+│                     ENV: LOG_LEVEL                                                                                   │
+│ --help              Show this message and exit.                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ cloud     Initialize parameter folder for given run template from CosmoTech cloud API                                │
+│ solution  Initialize parameter folder for given run template from a Solution yaml file                               │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+</code></pre></div>
+<div class="highlight"><span class="filename">Initialize using Soluton.yaml</span><pre><span></span><code>&gt; cosmotech_init_parameters solution --help
+
+ Usage: cosmotech_init_parameters solution [OPTIONS] SOLUTION_FILE                                                      
+                                           OUTPUT_FOLDER RUN_TEMPLATE_ID                                                
+
+ Initialize parameter folder for given run template from a Solution yaml file                                           
+
+╭─ Arguments ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  SOLUTION_FILE      FILE  [required]                                                                               │
+│ *  OUTPUT_FOLDER      PATH  [required]                                                                               │
+│ *  RUN_TEMPLATE_ID    TEXT  [required]                                                                               │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --write-json/--no-write-json      Toggle writing of parameters in json format                                        │
+│                                   ENV: WRITE_JSON                                                                    │
+│                                   DEFAULT: no-write-json                                                             │
+│ --write-csv/--no-write-csv        Toggle writing of parameters in csv format                                         │
+│                                   ENV: WRITE_CSV                                                                     │
+│                                   DEFAULT: write-csv                                                                 │
+│ --help                            Show this message and exit.                                                        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+</code></pre></div>
+<div class="highlight"><span class="filename">Initialize using CosmoTech API</span><pre><span></span><code>&gt; cosmotech_init_parameters cloud --help
+
+ Usage: cosmotech_init_parameters cloud [OPTIONS] OUTPUT_FOLDER                                                         
+
+ Initialize parameter folder for given run template from CosmoTech cloud API                                            
+
+╭─ Arguments ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  OUTPUT_FOLDER    PATH  [required]                                                                                 │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  --api-url                       URL           The url to a Cosmotech API                                          │
+│                                                  ENV: CSM_API_URL                                                    │
+│                                                  [required]                                                          │
+│ *  --api-scope                     URI           The identification scope of a Cosmotech API                         │
+│                                                  ENV: CSM_API_SCOPE                                                  │
+│                                                  [required]                                                          │
+│ *  --organization-id               o-##########  The id of an organization in the cosmotech api                      │
+│                                                  ENV: CSM_ORGANIZATION_ID                                            │
+│                                                  [required]                                                          │
+│ *  --workspace-id                  w-##########  The id of a solution in the cosmotech api                           │
+│                                                  ENV: CSM_WORKSPACE_ID                                               │
+│                                                  [required]                                                          │
+│ *  --run-template-id               NAME          The name of the run template in the cosmotech api                   │
+│                                                  ENV: CSM_RUN_TEMPLATE_ID                                            │
+│                                                  [required]                                                          │
+│    --write-json/--no-write-json                  Toggle writing of parameters in json format                         │
+│                                                  ENV: WRITE_JSON                                                     │
+│                                                  DEFAULT: no-write-json                                              │
+│    --write-csv/--no-write-csv                    Toggle writing of parameters in csv format                          │
+│                                                  ENV: WRITE_CSV                                                      │
+│                                                  DEFAULT: write-csv                                                  │
+│    --help                                        Show this message and exit.                                         │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>
@@ -582,44 +599,6 @@
       
         <footer class="md-footer">
   
-    
-      
-        
-      
-      <nav class="md-footer__inner md-grid" aria-label="Footer" >
-        
-          
-          <a href="../run_step/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Run Python Steps" rel="prev">
-            <div class="md-footer__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-            </div>
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              <div class="md-ellipsis">
-                Run Python Steps
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="../orchestrator/" class="md-footer__link md-footer__link--next" aria-label="Next: Orchestrator" rel="next">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Orchestrator
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
     
   
   <div class="md-footer-meta md-typeset">
