@@ -1,8 +1,6 @@
 import pathlib
 from typing import Optional
 
-import click_log
-
 from cosmotech.orchestrator.core.orchestrator import Orchestrator
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.logger import LOGGER
@@ -10,10 +8,6 @@ from cosmotech.orchestrator.utils.logger import LOGGER
 
 @click.command()
 @click.argument("template", type=click.Path(exists=True, file_okay=True, dir_okay=False, readable=True), nargs=1)
-@click_log.simple_verbosity_option(LOGGER,
-                                   "--log-level",
-                                   envvar="LOG_LEVEL",
-                                   show_envvar=True)
 @click.option("--dry-run/--no-dry-run", "-n",
               envvar="DRY_RUN",
               show_envvar=True,

@@ -1,23 +1,18 @@
 import json
 
-import click_log
 from cosmotech_api.api.solution_api import RunTemplate
 from cosmotech_api.api.solution_api import Solution
 
-from cosmotech.orchestrator.utils.json import CustomJSONEncoder
 from cosmotech.orchestrator.core.orchestrator import Orchestrator
 from cosmotech.orchestrator.core.step import Step
 from cosmotech.orchestrator.utils.api import get_solution
 from cosmotech.orchestrator.utils.api import read_solution_file
 from cosmotech.orchestrator.utils.click import click
+from cosmotech.orchestrator.utils.json import CustomJSONEncoder
 from cosmotech.orchestrator.utils.logger import LOGGER
 
 
 @click.group()
-@click_log.simple_verbosity_option(LOGGER,
-                                   "--log-level",
-                                   envvar="LOG_LEVEL",
-                                   show_envvar=True)
 def main():
     """Base command for the json generator using legacy files  
 Check the help of the sub commands for more information:  
@@ -120,7 +115,8 @@ def generate_from_template(template: RunTemplate, output: str):
     if template.fetch_datasets is not False or template.fetch_scenario_parameters:
         LOGGER.info("- [green]fetch_scenario_parameters[/] step found")
         _s = Step(id="fetch_scenario_parameters",
-                  command="cosmotech_scenario_downloader",
+                  command="csm-run-orchestrator",
+                  arguments=["fetch-scenariorun-data"],
                   environment={
                       "CSM_ORGANIZATION_ID": {
                           "description": "The id of an organization in the cosmotech api"
@@ -174,7 +170,8 @@ def generate_from_template(template: RunTemplate, output: str):
                 LOGGER.info(f"- [green]{name}_cloud[/] step found")
                 _name = f"{name}_cloud"
                 _step_dl_cloud = Step(id=_name,
-                                      command="cosmotech_download_cloud_steps",
+                                      command="csm-run-orchestrator",
+                                      arguments=["fetch-cloud-steps"],
                                       environment={
                                           "CSM_ORGANIZATION_ID": {
                                               "description": "The id of an organization in the cosmotech api"
@@ -217,7 +214,8 @@ def generate_from_template(template: RunTemplate, output: str):
                 _steps.append(_step_dl_cloud)
             LOGGER.info(f"- [green]{name}[/] step found")
             _run_step = Step(id=name,
-                             command="cosmotech_run_step",
+                             command="csm-run-orchestrator",
+                             arguments=["run-step"],
                              environment={
                                  "CSM_ORGANIZATION_ID": {
                                      "description": "The id of an organization in the cosmotech api"
@@ -294,7 +292,8 @@ def generate_from_template(template: RunTemplate, output: str):
     if template.send_datasets_to_data_warehouse is True or template.send_input_parameters_to_data_warehouse is True:
         LOGGER.info("- [green]send_to_adx[/] step found")
         _send_to_adx_step = Step(id="send_to_adx",
-                                 command="cosmotech_simulation_to_adx_connector",
+                                 command="csm-run-orchestrator",
+                                 arguments=["send-to-adx"],
                                  environment={
                                      "AZURE_TENANT_ID": {
                                          "description": "An Azure Tenant ID"

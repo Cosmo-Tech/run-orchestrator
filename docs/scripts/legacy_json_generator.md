@@ -6,14 +6,14 @@ hide:
 
 !!! info "Help command"
     ```text
-    --8<-- "docs/scripts_help/cosmotech_gen_legacy.txt"
+    --8<-- "docs/scripts_help/csm-run-orchestrator_gen-from-legacy.txt"
     ```
 
     ```text title="Generate json from Soluton.yaml"
-    --8<-- "docs/scripts_help/cosmotech_gen_legacy_solution.txt"
+    --8<-- "docs/scripts_help/csm-run-orchestrator_gen-from-legacy_solution.txt"
     ```
 
     ```text title="Generate json from CosmoTech API"
-    --8<-- "docs/scripts_help/cosmotech_gen_legacy_cloud.txt"
+    --8<-- "docs/scripts_help/csm-run-orchestrator_gen-from-legacy_cloud.txt"
     ```
 

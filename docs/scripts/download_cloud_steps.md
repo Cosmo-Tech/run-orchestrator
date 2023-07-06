@@ -6,5 +6,5 @@ hide:
 
 !!! info "Command help"
     ```text
-    --8<-- "docs/scripts_help/cosmotech_download_cloud_steps.txt"
+    --8<-- "docs/scripts_help/csm-run-orchestrator_fetch-cloud-steps.txt"
     ```

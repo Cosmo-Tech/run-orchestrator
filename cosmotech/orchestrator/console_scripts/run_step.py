@@ -4,8 +4,6 @@ import subprocess
 import sys
 import venv
 
-import click_log
-
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.logger import LOGGER
 
@@ -24,10 +22,6 @@ from cosmotech.orchestrator.utils.logger import LOGGER
               help="\bA list of Steps definer in the `TEMPLATE` folder that will be executed (comma-separated).  \n"
                    "Defaults to `CSMDOCKER` equivalent to "
                    "`parameters_handler,validator,prerun,engine,postrun` (the legacy order)")
-@click_log.simple_verbosity_option(LOGGER,
-                                   "--log-level",
-                                   envvar="LOG_LEVEL",
-                                   show_envvar=True)
 def main(template: str, steps: str):
     """Runs a list of steps of a run template in a CosmoTech project
 Known limitations:

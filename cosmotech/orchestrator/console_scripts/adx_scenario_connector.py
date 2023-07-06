@@ -4,7 +4,6 @@ import pathlib
 import time
 from collections import defaultdict
 
-import click_log
 from CosmoTech_Acceleration_Library.Accelerators.adx_wrapper import ADXQueriesWrapper
 from CosmoTech_Acceleration_Library.Accelerators.adx_wrapper import IngestionStatus
 from azure.kusto.data.response import KustoResponseDataSet
@@ -76,10 +75,6 @@ from cosmotech.orchestrator.utils.logger import LOGGER
               default=False,
               show_default=True,
               help="Toggle waiting for the ingestion results")
-@click_log.simple_verbosity_option(LOGGER,
-                                   "--log-level",
-                                   envvar="LOG_LEVEL",
-                                   show_envvar=True)
 def main(
     send_parameters: bool,
     send_datasets: bool,

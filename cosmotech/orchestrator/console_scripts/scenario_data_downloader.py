@@ -6,7 +6,6 @@ import pathlib
 from csv import DictWriter
 from distutils.dir_util import copy_tree
 
-import click_log
 from CosmoTech_Acceleration_Library.Accelerators.scenario_download.scenario_downloader import ScenarioDownloader
 
 from cosmotech.orchestrator.utils.click import click
@@ -156,10 +155,6 @@ def write_parameters(parameter_folder, parameters, write_csv, write_json):
               default=True,
               show_default=True,
               help="Toggle fetching datasets")
-@click_log.simple_verbosity_option(LOGGER,
-                                   "--log-level",
-                                   envvar="LOG_LEVEL",
-                                   show_envvar=True)
 @require_env('CSM_API_SCOPE', "The identification scope of a Cosmotech API")
 @require_env('CSM_API_URL', "The URL to a Cosmotech API")
 def main(

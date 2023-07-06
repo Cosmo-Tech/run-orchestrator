@@ -6,5 +6,5 @@ hide:
 
 !!! info "Help command"
     ```text
-    --8<-- "docs/scripts_help/cosmotech_simulation_to_adx_connector.txt"
+    --8<-- "docs/scripts_help/csm-run-orchestrator_send-to-adx.txt"
     ```

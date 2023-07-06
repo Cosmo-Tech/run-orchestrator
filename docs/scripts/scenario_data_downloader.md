@@ -6,5 +6,5 @@ hide:
 
 !!! info "Help command"
     ```text
-    --8<-- "docs/scripts_help/cosmotech_scenario_downloader.txt"
+    --8<-- "docs/scripts_help/csm-run-orchestrator_fetch-scenariorun-data.txt"
     ```

@@ -1,6 +1,5 @@
 import pathlib
 
-import click_log
 from cosmotech_api.api.solution_api import RunTemplate
 from cosmotech_api.api.solution_api import Solution
 
@@ -12,10 +11,6 @@ from cosmotech.orchestrator.utils.logger import LOGGER
 
 
 @click.group()
-@click_log.simple_verbosity_option(LOGGER,
-                                   "--log-level",
-                                   envvar="LOG_LEVEL",
-                                   show_envvar=True)
 def main():
     """Base command to initialize parameter folders  
 Will create:    

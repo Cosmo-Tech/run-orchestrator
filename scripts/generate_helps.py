@@ -19,17 +19,17 @@ from cosmotech.orchestrator.console_scripts.parameters_generation import solutio
 
 ansi_escape = re.compile(r'(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]')
 commands = {
-    "cosmotech_run_step": run_step_command,
-    "cosmotech_download_cloud_steps": dl_cloud_steps_command,
-    "cosmotech_scenario_downloader": scenario_data_dl_command,
-    "cosmotech_simulation_to_adx_connector": adx_scenario_connector_command,
-    "cosmotech_orchestrator": orchestrator_command,
-    "cosmotech_gen_legacy": legacy_gen_command,
-    "cosmotech_gen_legacy solution": legacy_gen_command_sol,
-    "cosmotech_gen_legacy cloud": legacy_gen_command_cloud,
-    "cosmotech_init_parameters": parameters_generation_command,
-    "cosmotech_init_parameters solution": parameters_generation_command_sol,
-    "cosmotech_init_parameters cloud": parameters_generation_command_cloud
+    "csm-run-orchestrator run-step": run_step_command,
+    "csm-run-orchestrator fetch-cloud-steps": dl_cloud_steps_command,
+    "csm-run-orchestrator fetch-scenariorun-data": scenario_data_dl_command,
+    "csm-run-orchestrator send-to-adx": adx_scenario_connector_command,
+    "csm-run-orchestrator orchestrator": orchestrator_command,
+    "csm-run-orchestrator gen-from-legacy": legacy_gen_command,
+    "csm-run-orchestrator gen-from-legacy solution": legacy_gen_command_sol,
+    "csm-run-orchestrator gen-from-legacy cloud": legacy_gen_command_cloud,
+    "csm-run-orchestrator init-parameters": parameters_generation_command,
+    "csm-run-orchestrator init-parameters solution": parameters_generation_command_sol,
+    "csm-run-orchestrator init-parameters cloud": parameters_generation_command_cloud
 }
 help_folder = pathlib.Path("docs/scripts_help")
 help_folder.mkdir(parents=True, exist_ok=True)
