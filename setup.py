@@ -22,7 +22,8 @@ setup(
             'cosmotech_run_step=cosmotech.orchestrator.console_scripts.run_step:main',
             'cosmotech_download_cloud_steps=cosmotech.orchestrator.console_scripts.download_cloud_steps:main',
             'cosmotech_orchestrator=cosmotech.orchestrator.console_scripts.orchestrator:main',
-            'cosmotech_gen_legacy=cosmotech.orchestrator.console_scripts.legacy_json_generator:main'
+            'cosmotech_gen_legacy=cosmotech.orchestrator.console_scripts.legacy_json_generator:main',
+            'cosmotech_init_parameters=cosmotech.orchestrator.console_scripts.parameters_generation:main'
         ]
     },
 )

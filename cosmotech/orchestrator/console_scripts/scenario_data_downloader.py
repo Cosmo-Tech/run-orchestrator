@@ -88,7 +88,10 @@ def download_scenario_data(
             })
             LOGGER.debug(f"  - [yellow]{parameter_name:<{max_name_size}}[/] [cyan]{var_type:<{max_type_size}}[/] "
                          f"\"{value}\"{' [red bold]inherited[/]' if is_inherited else ''}")
+            write_parameters(parameter_folder, parameters, write_csv, write_json)
 
+
+def write_parameters(parameter_folder, parameters, write_csv, write_json):
     if write_csv:
         tmp_parameter_file = os.path.join(parameter_folder, "parameters.csv")
         LOGGER.info(f"Generating {tmp_parameter_file}")
@@ -101,7 +104,7 @@ def download_scenario_data(
         tmp_parameter_file = os.path.join(parameter_folder, "parameters.json")
         LOGGER.info(f"Generating {tmp_parameter_file}")
         with open(tmp_parameter_file, "w") as _file:
-            json.dump(parameters, _file)
+            json.dump(parameters, _file, indent=2)
 
 
 @click.command()

@@ -1,20 +1,14 @@
 import json
-import pathlib
 
 import click_log
-import cosmotech_api
-import yaml
-from azure.identity import DefaultAzureCredential
 from cosmotech_api.api.solution_api import RunTemplate
 from cosmotech_api.api.solution_api import Solution
-from cosmotech_api.api.solution_api import SolutionApi
-from cosmotech_api.api.workspace_api import Workspace
-from cosmotech_api.api.workspace_api import WorkspaceApi
-from cosmotech_api.exceptions import ServiceException
 
 from cosmotech.orchestrator.classes import CustomJSONEncoder
 from cosmotech.orchestrator.classes import Orchestrator
 from cosmotech.orchestrator.classes import Step
+from cosmotech.orchestrator.utils.api import get_solution
+from cosmotech.orchestrator.utils.api import read_solution_file
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.logger import LOGGER
 
@@ -48,18 +42,9 @@ Check the help of the sub commands for more information:
               help="Show a description of the generated template after generation")
 def solution(solution_file, run_template_id, output, describe):
     """Read SOLUTION_FILE to get a RUN_TEMPLATE_ID and generate an orchestrator file at OUTPUT"""
-    solution_path = pathlib.Path(solution_file)
-    if not solution_path.suffix == ".yaml":
-        LOGGER.error(f"{solution_file} is not a `.yaml` file")
-        return 1
-    with solution_path.open() as _sf:
-        solution_yaml = yaml.safe_load(_sf)
-    LOGGER.info(f"Loaded {solution_path.absolute()}")
-    _solution = Solution(_configuration=cosmotech_api.Configuration(discard_unknown_keys=True),
-                         _spec_property_naming=True,
-                         **solution_yaml)
-    LOGGER.debug(json.dumps(_solution.to_dict(), indent=2))
-    return generate_from_solution(sol=_solution, run_template_id=run_template_id, output=output, describe=describe)
+    if _solution := read_solution_file(solution_file):
+        return generate_from_solution(sol=_solution, run_template_id=run_template_id, output=output, describe=describe)
+    return 1
 
 
 @main.command()
@@ -102,32 +87,13 @@ def solution(solution_file, run_template_id, output, describe):
               help="Show a description of the generated template after generation")
 def cloud(workspace_id, organization_id, run_template_id, api_scope, api_url, output, describe):
     """Connect to the cosmotech API to download a run template and generate an orchestrator file at OUTPUT"""
-    credentials = DefaultAzureCredential()
-    token = credentials.get_token(api_scope)
 
-    configuration = cosmotech_api.Configuration(
-        host=api_url,
-        discard_unknown_keys=True,
-        access_token=token.token
-    )
-    LOGGER.info("Configuration to the api set")
-
-    with cosmotech_api.ApiClient(configuration) as api_client:
-        api_w = WorkspaceApi(api_client)
-
-        LOGGER.info("Loading Workspace information to get Solution ID")
-        try:
-            r_data: Workspace = api_w.find_workspace_by_id(organization_id=organization_id, workspace_id=workspace_id)
-        except ServiceException as e:
-            LOGGER.error(f"Workspace [green bold]{workspace_id}[/] was not found "
-                         f"in Organization [green bold]{organization_id}[/]")
-            LOGGER.debug(e.body)
-            return 1
-        solution_id = r_data.solution.solution_id
-
-        api_sol = SolutionApi(api_client)
-        sol: Solution = api_sol.find_solution_by_id(organization_id=organization_id, solution_id=solution_id)
+    if sol := get_solution(api_scope=api_scope,
+                           api_url=api_url,
+                           organization_id=organization_id,
+                           workspace_id=workspace_id):
         return generate_from_solution(sol=sol, run_template_id=run_template_id, output=output, describe=describe)
+    return 1
 
 
 def generate_from_solution(sol: Solution, run_template_id, output: str, describe: bool = False):

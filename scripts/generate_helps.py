@@ -13,6 +13,9 @@ from cosmotech.orchestrator.console_scripts.legacy_json_generator import solutio
 from cosmotech.orchestrator.console_scripts.orchestrator import main as orchestrator_command
 from cosmotech.orchestrator.console_scripts.run_step import main as run_step_command
 from cosmotech.orchestrator.console_scripts.scenario_data_downloader import main as scenario_data_dl_command
+from cosmotech.orchestrator.console_scripts.parameters_generation import cloud as parameters_generation_command_cloud
+from cosmotech.orchestrator.console_scripts.parameters_generation import main as parameters_generation_command
+from cosmotech.orchestrator.console_scripts.parameters_generation import solution as parameters_generation_command_sol
 
 ansi_escape = re.compile(r'(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]')
 commands = {
@@ -23,7 +26,10 @@ commands = {
     "cosmotech_orchestrator": orchestrator_command,
     "cosmotech_gen_legacy": legacy_gen_command,
     "cosmotech_gen_legacy solution": legacy_gen_command_sol,
-    "cosmotech_gen_legacy cloud": legacy_gen_command_cloud
+    "cosmotech_gen_legacy cloud": legacy_gen_command_cloud,
+    "cosmotech_init_parameters": parameters_generation_command,
+    "cosmotech_init_parameters solution": parameters_generation_command_sol,
+    "cosmotech_init_parameters cloud": parameters_generation_command_cloud
 }
 help_folder = pathlib.Path("docs/scripts_help")
 help_folder.mkdir(parents=True, exist_ok=True)

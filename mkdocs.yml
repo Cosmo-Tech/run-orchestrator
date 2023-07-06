@@ -50,6 +50,7 @@ nav:
       - Simulation to ADX: "scripts/simulation_to_adx.md"
       - Orchestrator: "scripts/orchestrator.md"
       - Legacy Generator: "scripts/legacy_json_generator.md"
+      - Initialize Parameters folder: "scripts/parameters_generator.md"
 
 markdown_extensions:
     - admonition

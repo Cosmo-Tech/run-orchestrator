@@ -90,6 +90,7 @@ class Step:
     precedents: list[Union[str, 'Step']] = field(default_factory=list)
     loaded = False
     status = None
+    skipped = False
 
     def load_command(self, available_commands):
         if not self.commandId or self.loaded:
@@ -156,7 +157,10 @@ class Step:
             LOGGER.warning(f"Skipping step [green bold]{self.id}[/] due to previous errors")
             self.status = "Skipped"
         if self.status == "Ready":
-            if dry:
+            if self.skipped:
+                LOGGER.info(f"Skipping step [green bold]{self.id}[/] as required")
+                self.status = "Done"
+            elif dry:
                 self.status = "DryRun"
             else:
                 _e = self._effective_env()
@@ -189,9 +193,10 @@ class Step:
 
     def check_env(self):
         r = dict()
-        for k, v in self.environment.items():
-            if v.effective_value() is None:
-                r[k] = v.description
+        if not self.skipped:
+            for k, v in self.environment.items():
+                if v.effective_value() is None:
+                    r[k] = v.description
         return r
 
     def __repr__(self):
@@ -205,6 +210,8 @@ class Step:
                     r.append(f"- {k}: {v.description}")
                 else:
                     r.append(f"- {k}")
+        if self.skipped:
+            r.append("[red]Skipped by user[/]")
         r.append(f"Status: {self.status}")
         return "\n".join(r)
 
@@ -256,20 +263,27 @@ class Orchestrator(metaclass=Singleton):
                                 type_msg="Step",
                                 **step)
 
-    def load_json_file(self, json_file_path, dry: bool = False, display_env: bool = False):
+    def load_json_file(
+        self, json_file_path,
+        dry: bool = False,
+        display_env: bool = False,
+        skipped_steps: list[str] = ()
+    ):
         _path = pathlib.Path(json_file_path)
         g = flowpipe.Graph(name=json_file_path)
         steps: dict[str, (Step, flowpipe.Node)] = dict()
         commands: dict[str, CommandTemplate] = dict()
-        l = json.load(open(_path))
+        _run_content = json.load(open(_path))
         schema_path = pathlib.Path(__file__).parent / "schema/run_template_json_schema.json"
         schema = json.load(open(schema_path))
-        jsonschema.validate(l, schema)
-        for tmpl in l.get("commandTemplates", list()):
+        jsonschema.validate(_run_content, schema)
+        for tmpl in _run_content.get("commandTemplates", list()):
             self.load_command(commands, **tmpl)
-        for step in l.get("steps", list()):
+        for step in _run_content.get("steps", list()):
             id = step.get('id')
             s = self.load_step(steps, **step)
+            if id in skipped_steps:
+                s.skipped = True
             s.load_command(commands)
             node = Runner(graph=g, name=id, step=s, dry_run=dry)
             steps[id] = (s, node)

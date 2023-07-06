@@ -2,6 +2,7 @@
 hide:
   - path
   - toc
+  - navigation
 ---
 # Console Scripts
 
@@ -84,7 +85,7 @@ The main CosmoTech Orchestrator command
 
 <article markdown>
 <div class="text" markdown>
-:fontawesome-solid-wand-magic: __Legacy generator__
+:material-file-move-outline: __Legacy generator__
 
 ---
 A helper command to generate new run template json files from the Cosmotech API old format
@@ -92,6 +93,20 @@ A helper command to generate new run template json files from the Cosmotech API 
 ---
 <footer markdown>
 [:octicons-arrow-right-24: Legacy generator](./legacy_json_generator.md)
+</footer>
+</div>
+</article>
+
+<article markdown>
+<div class="text" markdown>
+:simple-addthis: __Parameter folder initialization__
+
+---
+A helper command to initialize Parameters folder for local runs
+
+---
+<footer markdown>
+[:octicons-arrow-right-24: Parameter Initialization](./parameters_generator.md)
 </footer>
 </div>
 </article>

@@ -14,7 +14,8 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "The Id of the Command Template"
+            "description": "The Id of the Command Template",
+            "pattern": "^\\S*$"
           },
           "command": {
             "type": "string",
@@ -54,7 +55,8 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "The Id of the Step"
+            "description": "The Id of the Step",
+            "pattern": "^\\S*$"
           },
           "commandId": {
             "type": "string",
