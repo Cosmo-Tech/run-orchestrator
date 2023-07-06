@@ -1,3 +1,10 @@
+# Copyright (C) - 2023 - 2023 - Cosmo Tech
+# This document and all information contained herein is the exclusive property -
+# including all intellectual property rights pertaining thereto - of Cosmo Tech.
+# Any use, reproduction, translation, broadcasting, transmission, distribution,
+# etc., to any person is prohibited unless it has been previously and
+# specifically authorized by written means by Cosmo Tech.
+
 import contextlib
 import io
 import pathlib
@@ -11,11 +18,11 @@ from cosmotech.orchestrator.console_scripts.legacy_json_generator import cloud a
 from cosmotech.orchestrator.console_scripts.legacy_json_generator import main as legacy_gen_command
 from cosmotech.orchestrator.console_scripts.legacy_json_generator import solution as legacy_gen_command_sol
 from cosmotech.orchestrator.console_scripts.orchestrator import main as orchestrator_command
-from cosmotech.orchestrator.console_scripts.run_step import main as run_step_command
-from cosmotech.orchestrator.console_scripts.scenario_data_downloader import main as scenario_data_dl_command
 from cosmotech.orchestrator.console_scripts.parameters_generation import cloud as parameters_generation_command_cloud
 from cosmotech.orchestrator.console_scripts.parameters_generation import main as parameters_generation_command
 from cosmotech.orchestrator.console_scripts.parameters_generation import solution as parameters_generation_command_sol
+from cosmotech.orchestrator.console_scripts.run_step import main as run_step_command
+from cosmotech.orchestrator.console_scripts.scenario_data_downloader import main as scenario_data_dl_command
 
 ansi_escape = re.compile(r'(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]')
 commands = {

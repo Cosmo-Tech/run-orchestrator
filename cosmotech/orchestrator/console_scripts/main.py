@@ -1,11 +1,11 @@
-import pathlib
-from zipfile import BadZipfile
-from zipfile import ZipFile
+# Copyright (C) - 2023 - 2023 - Cosmo Tech
+# This document and all information contained herein is the exclusive property -
+# including all intellectual property rights pertaining thereto - of Cosmo Tech.
+# Any use, reproduction, translation, broadcasting, transmission, distribution,
+# etc., to any person is prohibited unless it has been previously and
+# specifically authorized by written means by Cosmo Tech.
 
 import click_log
-
-from cosmotech.orchestrator.utils.logger import LOGGER
-from cosmotech.orchestrator.utils.click import click
 
 from cosmotech.orchestrator.console_scripts.adx_scenario_connector import main as adx_cmd
 from cosmotech.orchestrator.console_scripts.download_cloud_steps import main as dl_cloud_cmd
@@ -14,6 +14,8 @@ from cosmotech.orchestrator.console_scripts.orchestrator import main as orchestr
 from cosmotech.orchestrator.console_scripts.parameters_generation import main as parameters_cmd
 from cosmotech.orchestrator.console_scripts.run_step import main as run_cmd
 from cosmotech.orchestrator.console_scripts.scenario_data_downloader import main as scenario_dl_cmd
+from cosmotech.orchestrator.utils.click import click
+from cosmotech.orchestrator.utils.logger import LOGGER
 
 
 @click.group("csm-run-orchestrator")

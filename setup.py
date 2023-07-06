@@ -1,4 +1,13 @@
-from setuptools import setup, find_namespace_packages
+# Copyright (C) - 2023 - 2023 - Cosmo Tech
+# This document and all information contained herein is the exclusive property -
+# including all intellectual property rights pertaining thereto - of Cosmo Tech.
+# Any use, reproduction, translation, broadcasting, transmission, distribution,
+# etc., to any person is prohibited unless it has been previously and
+# specifically authorized by written means by Cosmo Tech.
+
+from setuptools import find_namespace_packages
+from setuptools import setup
+
 from cosmotech.orchestrator import VERSION
 
 with open('requirements.txt') as f:

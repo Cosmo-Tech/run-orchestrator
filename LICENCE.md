@@ -1,9 +1,14 @@
-MIT License
+Copyright - 2023 - 2023 - Cosmo Tech
 
-Copyright 2021 Cosmo Tech
+You are authorized to use this Cosmo Tech software following the execution of a specific agreement with Cosmo Tech or with an authorized licensee of Cosmo Tech.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Accordingly you should refer to this specific agreement for the purpose of the extent of the use that is permitted. This use shall mainly consist in using, displaying and executing the Cosmo Tech software for your own needs.
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+Except otherwise provided in the above-mentioned specific agreement:
+- you are not allowed to use this Cosmo Tech software for commercial purpose or to redistribute it without prior authorization from Cosmo Tech;
+- you are not allowed to copy, duplicate, modify, adapt and translate this Cosmo Tech software except as authorized under section L122-6-1 of the French Intellectual Property Code or specifically under the specific agreement with Cosmo Tech;
+- you must not remove this notice or any mention related to the copyright of Cosmo Tech;
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+This Cosmo Tech software is provided 'as is', without any express or implied warranty towards the users.
+
+Any software generated through the use of this Cosmo Tech software shall be your own property to the extent this software does not contain any part of Cosmo Tech software source code.
