@@ -4,9 +4,9 @@ import click_log
 from cosmotech_api.api.solution_api import RunTemplate
 from cosmotech_api.api.solution_api import Solution
 
-from cosmotech.orchestrator.classes import CustomJSONEncoder
-from cosmotech.orchestrator.classes import Orchestrator
-from cosmotech.orchestrator.classes import Step
+from cosmotech.orchestrator.utils.json import CustomJSONEncoder
+from cosmotech.orchestrator.core.orchestrator import Orchestrator
+from cosmotech.orchestrator.core.step import Step
 from cosmotech.orchestrator.utils.api import get_solution
 from cosmotech.orchestrator.utils.api import read_solution_file
 from cosmotech.orchestrator.utils.click import click

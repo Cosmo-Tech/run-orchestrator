@@ -3,7 +3,7 @@ from typing import Optional
 
 import click_log
 
-from cosmotech.orchestrator.classes import Orchestrator
+from cosmotech.orchestrator.core.orchestrator import Orchestrator
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.logger import LOGGER
 

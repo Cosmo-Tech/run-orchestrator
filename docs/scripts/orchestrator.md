@@ -17,8 +17,8 @@ hide:
     ```
 
 ??? example "Example json file"
-    ```json title="example.json"
-    --8<-- "cosmotech/orchestrator/default/simple.json"
+    ```json title="simple_example.json"
+    --8<-- "examples/simple.json"
     ```
 
 ??? note "Run command with json file"
