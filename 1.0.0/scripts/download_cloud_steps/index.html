@@ -512,9 +512,9 @@
 <h1 id="download-steps-from-cloud">Download Steps from cloud</h1>
 <div class="admonition info">
 <p class="admonition-title">Command help</p>
-<div class="highlight"><pre><span></span><code>&gt; cosmotech_download_cloud_steps --help
+<div class="highlight"><pre><span></span><code>&gt; csm-run-orchestrator fetch-cloud-steps --help
 
- Usage: cosmotech_download_cloud_steps [OPTIONS]                                                                        
+ Usage: csm-run-orchestrator fetch-cloud-steps [OPTIONS]                                                                
 
  Uses environment variables to download cloud based Template steps Requires a valid Azure connection either with:       
 
@@ -522,8 +522,6 @@
   • A triplet of env var AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET                                          
 
 ╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│    --log-level          LVL                  Either CRITICAL, ERROR, WARNING, INFO or DEBUG                          │
-│                                              ENV: LOG_LEVEL                                                          │
 │ *  --organization-id    o-##########         The id of an organization in the cosmotech api                          │
 │                                              ENV: CSM_ORGANIZATION_ID                                                │
 │                                              [required]                                                              │

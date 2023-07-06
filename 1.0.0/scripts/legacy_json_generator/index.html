@@ -512,9 +512,9 @@
 <h1 id="generate-legacy-run-template-json-file">Generate legacy run template json file</h1>
 <div class="admonition info">
 <p class="admonition-title">Help command</p>
-<div class="highlight"><pre><span></span><code>&gt; cosmotech_gen_legacy --help
+<div class="highlight"><pre><span></span><code>&gt; csm-run-orchestrator gen-from-legacy --help
 
- Usage: cosmotech_gen_legacy [OPTIONS] COMMAND [ARGS]...                                                                
+ Usage: csm-run-orchestrator gen-from-legacy [OPTIONS] COMMAND [ARGS]...                                                
 
  Base command for the json generator using legacy files                                                                 
  Check the help of the sub commands for more information:                                                               
@@ -523,19 +523,17 @@
   • solution requires a Solution.yaml file                                                                              
 
 ╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --log-level    LVL  Either CRITICAL, ERROR, WARNING, INFO or DEBUG                                                   │
-│                     ENV: LOG_LEVEL                                                                                   │
-│ --help              Show this message and exit.                                                                      │
+│ --help      Show this message and exit.                                                                              │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ cloud     Connect to the cosmotech API to download a run template and generate an orchestrator file at OUTPUT        │
 │ solution  Read SOLUTION_FILE to get a RUN_TEMPLATE_ID and generate an orchestrator file at OUTPUT                    │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
-<div class="highlight"><span class="filename">Generate json from Soluton.yaml</span><pre><span></span><code>&gt; cosmotech_gen_legacy solution --help
+<div class="highlight"><span class="filename">Generate json from Soluton.yaml</span><pre><span></span><code>&gt; csm-run-orchestrator gen-from-legacy solution --help
 
- Usage: cosmotech_gen_legacy solution [OPTIONS] SOLUTION_FILE OUTPUT                                                    
-                                      RUN_TEMPLATE_ID                                                                   
+ Usage: csm-run-orchestrator gen-from-legacy solution [OPTIONS] SOLUTION_FILE                                           
+                                                      OUTPUT RUN_TEMPLATE_ID                                            
 
  Read SOLUTION_FILE to get a RUN_TEMPLATE_ID and generate an orchestrator file at OUTPUT                                
 
@@ -550,9 +548,9 @@
 │ --help                        Show this message and exit.                                                            │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
-<div class="highlight"><span class="filename">Generate json from CosmoTech API</span><pre><span></span><code>&gt; cosmotech_gen_legacy cloud --help
+<div class="highlight"><span class="filename">Generate json from CosmoTech API</span><pre><span></span><code>&gt; csm-run-orchestrator gen-from-legacy cloud --help
 
- Usage: cosmotech_gen_legacy cloud [OPTIONS] OUTPUT                                                                     
+ Usage: csm-run-orchestrator gen-from-legacy cloud [OPTIONS] OUTPUT                                                     
 
  Connect to the cosmotech API to download a run template and generate an orchestrator file at OUTPUT                    
 

@@ -558,9 +558,9 @@
 <h1 id="orchestrator">Orchestrator</h1>
 <div class="admonition info">
 <p class="admonition-title">Help command</p>
-<div class="highlight"><pre><span></span><code>&gt; cosmotech_orchestrator --help
+<div class="highlight"><pre><span></span><code>&gt; csm-run-orchestrator orchestrator --help
 
- Usage: cosmotech_orchestrator [OPTIONS] TEMPLATE                                                                       
+ Usage: csm-run-orchestrator orchestrator [OPTIONS] TEMPLATE                                                            
 
  Runs the given TEMPLATE file                                                                                           
  Commands are run as subprocess using bash -c &quot;&lt;command&gt; &lt;arguments&gt;&quot;.                                                  
@@ -570,8 +570,6 @@
 │ *  TEMPLATE    FILE  [required]                                                                                      │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --log-level                         LVL      Either CRITICAL, ERROR, WARNING, INFO or DEBUG                          │
-│                                              ENV: LOG_LEVEL                                                          │
 │ --dry-run/--no-dry-run          -n           Use dry-run mode                                                        │
 │                                              ENV: DRY_RUN                                                            │
 │                                              DEFAULT: no-dry-run                                                     │

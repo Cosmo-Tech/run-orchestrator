@@ -512,9 +512,9 @@
 <h1 id="scenario-data-download">Scenario Data Download</h1>
 <div class="admonition info">
 <p class="admonition-title">Help command</p>
-<div class="highlight"><pre><span></span><code>&gt; cosmotech_scenario_downloader --help
+<div class="highlight"><pre><span></span><code>&gt; csm-run-orchestrator fetch-scenariorun-data --help
 
- Usage: cosmotech_scenario_downloader [OPTIONS]                                                                         
+ Usage: csm-run-orchestrator fetch-scenariorun-data [OPTIONS]                                                           
 
  Uses environment variables to call the download_scenario_data function Requires a valid Azure connection either with:  
 
@@ -549,8 +549,6 @@
 │    --fetch-dataset/--no-fetch-dataset                  Toggle fetching datasets                                      │
 │                                                        ENV: FETCH_DATASET                                            │
 │                                                        DEFAULT: fetch-dataset                                        │
-│    --log-level                           LVL           Either CRITICAL, ERROR, WARNING, INFO or DEBUG                │
-│                                                        ENV: LOG_LEVEL                                                │
 │    --help                                              Show this message and exit.                                   │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>

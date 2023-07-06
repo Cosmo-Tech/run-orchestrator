@@ -510,9 +510,9 @@
 <h1 id="initialize-parameters-folder">Initialize Parameters Folder</h1>
 <div class="admonition info">
 <p class="admonition-title">Help command</p>
-<div class="highlight"><pre><span></span><code>&gt; cosmotech_init_parameters --help
+<div class="highlight"><pre><span></span><code>&gt; csm-run-orchestrator init-parameters --help
 
- Usage: cosmotech_init_parameters [OPTIONS] COMMAND [ARGS]...                                                           
+ Usage: csm-run-orchestrator init-parameters [OPTIONS] COMMAND [ARGS]...                                                
 
  Base command to initialize parameter folders                                                                           
  Will create:                                                                                                           
@@ -524,19 +524,18 @@
   • solution requires a Solution.yaml file                                                                              
 
 ╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --log-level    LVL  Either CRITICAL, ERROR, WARNING, INFO or DEBUG                                                   │
-│                     ENV: LOG_LEVEL                                                                                   │
-│ --help              Show this message and exit.                                                                      │
+│ --help      Show this message and exit.                                                                              │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ cloud     Initialize parameter folder for given run template from CosmoTech cloud API                                │
 │ solution  Initialize parameter folder for given run template from a Solution yaml file                               │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
-<div class="highlight"><span class="filename">Initialize using Soluton.yaml</span><pre><span></span><code>&gt; cosmotech_init_parameters solution --help
+<div class="highlight"><span class="filename">Initialize using Soluton.yaml</span><pre><span></span><code>&gt; csm-run-orchestrator init-parameters solution --help
 
- Usage: cosmotech_init_parameters solution [OPTIONS] SOLUTION_FILE                                                      
-                                           OUTPUT_FOLDER RUN_TEMPLATE_ID                                                
+ Usage: csm-run-orchestrator init-parameters solution [OPTIONS] SOLUTION_FILE                                           
+                                                      OUTPUT_FOLDER                                                     
+                                                      RUN_TEMPLATE_ID                                                   
 
  Initialize parameter folder for given run template from a Solution yaml file                                           
 
@@ -555,9 +554,9 @@
 │ --help                            Show this message and exit.                                                        │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
-<div class="highlight"><span class="filename">Initialize using CosmoTech API</span><pre><span></span><code>&gt; cosmotech_init_parameters cloud --help
+<div class="highlight"><span class="filename">Initialize using CosmoTech API</span><pre><span></span><code>&gt; csm-run-orchestrator init-parameters cloud --help
 
- Usage: cosmotech_init_parameters cloud [OPTIONS] OUTPUT_FOLDER                                                         
+ Usage: csm-run-orchestrator init-parameters cloud [OPTIONS] OUTPUT_FOLDER                                              
 
  Initialize parameter folder for given run template from CosmoTech cloud API                                            
 

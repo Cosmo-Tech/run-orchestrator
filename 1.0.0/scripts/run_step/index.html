@@ -512,9 +512,9 @@
 <h1 id="run-template-step">Run Template Step</h1>
 <div class="admonition info">
 <p class="admonition-title">Help command</p>
-<div class="highlight"><pre><span></span><code>&gt; cosmotech_run_step --help
+<div class="highlight"><pre><span></span><code>&gt; csm-run-orchestrator run-step --help
 
- Usage: cosmotech_run_step [OPTIONS]                                                                                    
+ Usage: csm-run-orchestrator run-step [OPTIONS]                                                                         
 
  Runs a list of steps of a run template in a CosmoTech project Known limitations:                                       
 
@@ -522,17 +522,15 @@
   • The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine                
 
 ╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *  --template     TEXT  refer to a folder contained in code/run_templates                                            │
-│                         ENV: CSM_RUN_TEMPLATE_ID                                                                     │
-│                         [required]                                                                                   │
-│    --steps        TEXT  A list of Steps definer in the TEMPLATE folder that will be executed (comma-separated).      │
-│                         Defaults to CSMDOCKER equivalent to parameters_handler,validator,prerun,engine,postrun (the  │
-│                         legacy order)                                                                                │
-│                         ENV: CSM_CONTAINER_MODE                                                                      │
-│                         DEFAULT: CSMDOCKER                                                                           │
-│    --log-level    LVL   Either CRITICAL, ERROR, WARNING, INFO or DEBUG                                               │
-│                         ENV: LOG_LEVEL                                                                               │
-│    --help               Show this message and exit.                                                                  │
+│ *  --template    TEXT  refer to a folder contained in code/run_templates                                             │
+│                        ENV: CSM_RUN_TEMPLATE_ID                                                                      │
+│                        [required]                                                                                    │
+│    --steps       TEXT  A list of Steps definer in the TEMPLATE folder that will be executed (comma-separated).       │
+│                        Defaults to CSMDOCKER equivalent to parameters_handler,validator,prerun,engine,postrun (the   │
+│                        legacy order)                                                                                 │
+│                        ENV: CSM_CONTAINER_MODE                                                                       │
+│                        DEFAULT: CSMDOCKER                                                                            │
+│    --help              Show this message and exit.                                                                   │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>
