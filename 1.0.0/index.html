@@ -573,11 +573,26 @@ pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </s
 </div>
 <p>After all those commands you environment should be ready for a test, but first let's install the repository</p>
 <div class="admonition info">
-<p class="admonition-title">Install the orchestrator</p>
+<p class="admonition-title">Install the orchestrator from git sources</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>git+ssh://git@github.com/Cosmo-Tech/run_template_orchestrator.git
 </code></pre></div>
 </div>
+<div class="admonition info">
+<p class="admonition-title">Install the orchestrator from local sources</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>ssh://git@github.com/Cosmo-Tech/run_template_orchestrator.git
+pip<span class="w"> </span>install<span class="w"> </span>./run_template_orchestrator
+</code></pre></div>
+</div>
 <p>After installation a few commands are made available, documentation for each is available on the <a href="./scripts">scripts documentation page</a></p>
+<div class="admonition info">
+<p class="admonition-title">Autocompletion</p>
+<p>Run the following command
+<div class="highlight"><pre><span></span><code><span class="nv">_CSM_RUN_ORCHESTRATOR_COMPLETE</span><span class="o">=</span>bash_source<span class="w"> </span>csm-run-orchestrator<span class="w"> </span>&gt;<span class="w"> </span>~/.csm-run-orchestrator-complete.bash
+</code></pre></div>
+then add the following line at the end of your <code>.bashrc</code> file
+<div class="highlight"><pre><span></span><code>.<span class="w"> </span>~/.csm-run-orchestrator-complete.bash
+</code></pre></div></p>
+</div>
 
 
 
