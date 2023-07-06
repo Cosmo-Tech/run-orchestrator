@@ -18,7 +18,7 @@ setup(
     version=VERSION,
     author='Alexis Fossart',
     author_email='alexis.fossart@cosmotech.com',
-    url="https://github.com/Cosmo-Tech/Babylon",
+    url="https://github.com/Cosmo-Tech/run_template_orchestrator",
     description='Orchestration suite for Cosmotech Run Templates',
     packages=find_namespace_packages(include=["cosmotech.*"]),
     include_package_data=True,
