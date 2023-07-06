@@ -29,9 +29,25 @@ It will also suppose you have a build version of the CosmoTech SDK in the folder
 
 After all those commands you environment should be ready for a test, but first let's install the repository
 
-!!! info "Install the orchestrator"
+!!! info "Install the orchestrator from git sources"
     ```bash
     pip install git+ssh://git@github.com/Cosmo-Tech/run_template_orchestrator.git
     ```
 
+!!! info "Install the orchestrator from local sources"
+    ```bash
+    git clone ssh://git@github.com/Cosmo-Tech/run_template_orchestrator.git
+    pip install ./run_template_orchestrator
+    ```
+
 After installation a few commands are made available, documentation for each is available on the [scripts documentation page](./scripts)
+
+!!! info "Autocompletion"
+    Run the following command
+    ```bash
+    _CSM_RUN_ORCHESTRATOR_COMPLETE=bash_source csm-run-orchestrator > ~/.csm-run-orchestrator-complete.bash
+    ```
+    then add the following line at the end of your `.bashrc` file
+    ```bash
+    . ~/.csm-run-orchestrator-complete.bash
+    ```
