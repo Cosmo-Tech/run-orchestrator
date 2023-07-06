@@ -33,5 +33,5 @@ hide:
     ```
     The following works too
     ```bash title="run with EnvVar for run only"
-    NO_EXISTS="This value exists" cosmotech_orchestrator example.json
+    NO_EXIST="This value exists" cosmotech_orchestrator example.json
     ```

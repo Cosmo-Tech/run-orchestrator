@@ -15,7 +15,8 @@ class Orchestrator(metaclass=Singleton):
 
     @staticmethod
     def __load_item(container, object_type, override, type_msg, **item):
-        _id = item.get('_id')
+        _id = item.get('id')
+        LOGGER.debug(f"Loading [green bold]{_id}[/] of type [yellow bold]{object_type.__name__}[/]")
         if _id in container and not override:
             raise ValueError(f"{type_msg} {_id} is already defined")
         _item = object_type(**item)
@@ -47,7 +48,7 @@ class Orchestrator(metaclass=Singleton):
         steps: dict[str, (Step, flowpipe.Node)] = dict()
         commands: dict[str, CommandTemplate] = dict()
         _run_content = json.load(open(_path))
-        schema_path = pathlib.Path(__file__).parent / "schema/run_template_json_schema.json"
+        schema_path = pathlib.Path(__file__).parent.parent / "schema/run_template_json_schema.json"
         schema = json.load(open(schema_path))
         jsonschema.validate(_run_content, schema)
         for tmpl in _run_content.get("commandTemplates", list()):
