@@ -4,9 +4,9 @@ hide:
   - toc
   - navigation
 ---
-# Console Scripts
+# Commands
 
-The following console scripts are made available to you after installation of the orchestrator
+The following commands are made available to you after installation of the orchestrator
 
 <main class="grid" markdown>
 

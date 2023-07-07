@@ -38,10 +38,10 @@ commands = {
     "csm-run-orchestrator init-parameters solution": parameters_generation_command_sol,
     "csm-run-orchestrator init-parameters cloud": parameters_generation_command_cloud
 }
-help_folder = pathlib.Path("docs/scripts_help")
+help_folder = pathlib.Path("docs/commands_help")
 help_folder.mkdir(parents=True, exist_ok=True)
 for command, cmd in commands.items():
-    with open(f"docs/scripts_help/{command}.txt".replace(" ", "_"), "w") as _md_file:
+    with open(f"docs/commands_help/{command}.txt".replace(" ", "_"), "w") as _md_file:
         _md_file.write(f"> {command} --help\n")
         f = io.StringIO()
         with click.Context(cmd, info_name=command) as ctx:

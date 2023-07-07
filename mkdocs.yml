@@ -42,15 +42,15 @@ extra:
 
 nav:
   - Home: 'index.md'
-  - Scripts:
-      - "scripts/index.md"
-      - Scenario data download: "scripts/scenario_data_downloader.md"
-      - Download cloud Steps: "scripts/download_cloud_steps.md"
-      - Run Python Steps: "scripts/run_step.md"
-      - Simulation to ADX: "scripts/simulation_to_adx.md"
-      - Orchestrator: "scripts/orchestrator.md"
-      - Legacy Generator: "scripts/legacy_json_generator.md"
-      - Initialize Parameters folder: "scripts/parameters_generator.md"
+  - Commands:
+      - "commands/index.md"
+      - Scenario data download: "commands/scenario_data_downloader.md"
+      - Download cloud Steps: "commands/download_cloud_steps.md"
+      - Run Python Steps: "commands/run_step.md"
+      - Simulation to ADX: "commands/simulation_to_adx.md"
+      - Orchestrator: "commands/orchestrator.md"
+      - Legacy Generator: "commands/legacy_json_generator.md"
+      - Initialize Parameters folder: "commands/parameters_generator.md"
 
 markdown_extensions:
     - admonition
