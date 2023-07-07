@@ -4,3 +4,5 @@
 *.pyc
 site/
 *.env
+build/
+dist/

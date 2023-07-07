@@ -51,10 +51,18 @@ class Orchestrator(metaclass=Singleton):
         skipped_steps: list[str] = ()
     ):
         _path = pathlib.Path(json_file_path)
+        _run_content = json.load(open(_path))
+        return self._load_from_json_content(json_file_path, _run_content, dry, display_env, skipped_steps)
+
+    def _load_from_json_content(
+        self, json_file_path, _run_content,
+        dry: bool = False,
+        display_env: bool = False,
+        skipped_steps: list[str] = ()
+    ):
         g = flowpipe.Graph(name=json_file_path)
         steps: dict[str, (Step, flowpipe.Node)] = dict()
         commands: dict[str, CommandTemplate] = dict()
-        _run_content = json.load(open(_path))
         schema_path = pathlib.Path(__file__).parent.parent / "schema/run_template_json_schema.json"
         schema = json.load(open(schema_path))
         jsonschema.validate(_run_content, schema)
