@@ -1,2 +1,4 @@
 graft cosmotech/orchestrator/schema
 graft requirements.txt
+include README.md
+include LICENSE

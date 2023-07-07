@@ -29,16 +29,23 @@ It will also suppose you have a build version of the CosmoTech SDK in the folder
 
 After all those commands you environment should be ready for a test, but first let's install the repository
 
-!!! info "Install the orchestrator from git sources"
-    ```bash
-    pip install git+ssh://git@github.com/Cosmo-Tech/run_template_orchestrator.git
-    ```
+=== "Install from sources"
+    !!! info "Install the orchestrator from git sources"
+        ```bash
+        pip install git+ssh://git@github.com/Cosmo-Tech/run_template_orchestrator.git
+        ```
+    
+    !!! info "Install the orchestrator from local sources"
+        ```bash
+        git clone ssh://git@github.com/Cosmo-Tech/run_template_orchestrator.git
+        pip install ./run_template_orchestrator
+        ```
 
-!!! info "Install the orchestrator from local sources"
-    ```bash
-    git clone ssh://git@github.com/Cosmo-Tech/run_template_orchestrator.git
-    pip install ./run_template_orchestrator
-    ```
+=== "Install using Pypi"
+    !!! info "Install using pip"
+        ```bash
+        pip install cosmotech-run-orchestrator
+        ```
 
 After installation a few commands are made available, documentation for each is available on the [scripts documentation page](./scripts)
 

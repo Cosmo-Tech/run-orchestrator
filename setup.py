@@ -10,6 +10,10 @@ from setuptools import setup
 
 from cosmotech.orchestrator import VERSION
 
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
+
 with open('requirements.txt') as f:
     required = f.read().splitlines()
 
@@ -23,6 +27,9 @@ setup(
     packages=find_namespace_packages(include=["cosmotech.*"]),
     include_package_data=True,
     zip_safe=False,
+    long_description=long_description,
+    long_description_type="text/markdown",
+    license_files=("LICENSE",),
     install_requires=required,
     entry_points={
         'console_scripts': [
