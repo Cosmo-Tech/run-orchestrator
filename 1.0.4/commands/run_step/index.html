@@ -9,17 +9,17 @@
       
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../download_cloud_steps/">
       
       
-        <link rel="next" href="../download_cloud_steps/">
+        <link rel="next" href="../simulation_to_adx/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
     
     
       
-        <title>Scenario data download - Run Template Orchestrator</title>
+        <title>Run Python Steps - Run Template Orchestrator</title>
       
     
     
@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#scenario-data-download" class="md-skip">
+        <a href="#run-template-step" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Scenario data download
+              Run Python Steps
             
           </span>
         </div>
@@ -226,7 +226,7 @@
   
     <li class="md-tabs__item">
       <a href="../" class="md-tabs__link md-tabs__link--active">
-        Scripts
+        Commands
       </a>
     </li>
   
@@ -340,7 +340,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../">Scripts</a>
+          <a href="../">Commands</a>
           
             <label for="__nav_2">
               <span class="md-nav__icon md-icon"></span>
@@ -351,7 +351,7 @@
       <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
-          Scripts
+          Commands
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -361,21 +361,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../scenario_data_downloader/" class="md-nav__link">
         Scenario data download
       </a>
-      
     </li>
   
 
@@ -399,11 +389,21 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../run_step/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Run Python Steps
       </a>
+      
     </li>
   
 
@@ -509,47 +509,28 @@
   
 
 
-<h1 id="scenario-data-download">Scenario Data Download</h1>
+<h1 id="run-template-step">Run Template Step</h1>
 <div class="admonition info">
 <p class="admonition-title">Help command</p>
-<div class="highlight"><pre><span></span><code>&gt; csm-run-orchestrator fetch-scenariorun-data --help
+<div class="highlight"><pre><span></span><code>&gt; csm-run-orchestrator run-step --help
 
- Usage: csm-run-orchestrator fetch-scenariorun-data [OPTIONS]                                                           
+ Usage: csm-run-orchestrator run-step [OPTIONS]                                                                         
 
- Uses environment variables to call the download_scenario_data function Requires a valid Azure connection either with:  
+ Runs a list of steps of a run template in a CosmoTech project Known limitations:                                       
 
-  • The AZ cli command: az login                                                                                        
-  • A triplet of env var AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET                                          
-
- Requires env var CSM_API_URL     The URL to a Cosmotech API                                                            
- Requires env var CSM_API_SCOPE   The identification scope of a Cosmotech API                                           
+  • The step MUST contain an executable main.py file                                                                    
+  • The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine                
 
 ╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *  --organization-id                     o-##########  The id of an organization in the cosmotech api                │
-│                                                        ENV: CSM_ORGANIZATION_ID                                      │
-│                                                        [required]                                                    │
-│ *  --workspace-id                        w-##########  The id of a workspace in the cosmotech api                    │
-│                                                        ENV: CSM_WORKSPACE_ID                                         │
-│                                                        [required]                                                    │
-│ *  --scenario-id                         s-##########  The id of a scenario in the cosmotech api                     │
-│                                                        ENV: CSM_SCENARIO_ID                                          │
-│                                                        [required]                                                    │
-│ *  --dataset-absolute-path               PATH          A local folder to store the main dataset content              │
-│                                                        ENV: CSM_DATASET_ABSOLUTE_PATH                                │
-│                                                        [required]                                                    │
-│ *  --parameters-absolute-path            PATH          A local folder to store the parameters content                │
-│                                                        ENV: CSM_PARAMETERS_ABSOLUTE_PATH                             │
-│                                                        [required]                                                    │
-│    --write-json/--no-write-json                        Toggle writing of parameters in json format                   │
-│                                                        ENV: WRITE_JSON                                               │
-│                                                        DEFAULT: no-write-json                                        │
-│    --write-csv/--no-write-csv                          Toggle writing of parameters in csv format                    │
-│                                                        ENV: WRITE_CSV                                                │
-│                                                        DEFAULT: write-csv                                            │
-│    --fetch-dataset/--no-fetch-dataset                  Toggle fetching datasets                                      │
-│                                                        ENV: FETCH_DATASET                                            │
-│                                                        DEFAULT: fetch-dataset                                        │
-│    --help                                              Show this message and exit.                                   │
+│ *  --template    TEXT  refer to a folder contained in code/run_templates                                             │
+│                        ENV: CSM_RUN_TEMPLATE_ID                                                                      │
+│                        [required]                                                                                    │
+│    --steps       TEXT  A list of Steps definer in the TEMPLATE folder that will be executed (comma-separated).       │
+│                        Defaults to CSMDOCKER equivalent to parameters_handler,validator,prerun,engine,postrun (the   │
+│                        legacy order)                                                                                 │
+│                        ENV: CSM_CONTAINER_MODE                                                                       │
+│                        DEFAULT: CSMDOCKER                                                                            │
+│    --help              Show this message and exit.                                                                   │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>
@@ -583,7 +564,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Console Scripts" rel="prev">
+          <a href="../download_cloud_steps/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Download cloud Steps" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -592,20 +573,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Console Scripts
+                Download cloud Steps
               </div>
             </div>
           </a>
         
         
           
-          <a href="../download_cloud_steps/" class="md-footer__link md-footer__link--next" aria-label="Next: Download cloud Steps" rel="next">
+          <a href="../simulation_to_adx/" class="md-footer__link md-footer__link--next" aria-label="Next: Simulation to ADX" rel="next">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Download cloud Steps
+                Simulation to ADX
               </div>
             </div>
             <div class="md-footer__button md-icon">
