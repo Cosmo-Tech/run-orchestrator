@@ -1,0 +1,22 @@
+> csm-run-orchestrator init-parameters solution --help
+                                                                                                                                                                                                                  
+ Usage: csm-run-orchestrator init-parameters solution [OPTIONS] SOLUTION_FILE                                                                                                                                     
+                                                      OUTPUT_FOLDER                                                                                                                                               
+                                                      RUN_TEMPLATE_ID                                                                                                                                             
+                                                                                                                                                                                                                  
+ Initialize parameter folder for given run template from a Solution yaml file                                                                                                                                     
+                                                                                                                                                                                                                  
+╭─ Arguments ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  SOLUTION_FILE      FILE  [required]                                                                                                                                                                         │
+│ *  OUTPUT_FOLDER      PATH  [required]                                                                                                                                                                         │
+│ *  RUN_TEMPLATE_ID    TEXT  [required]                                                                                                                                                                         │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ OPTIONS ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --write-json/--no-write-json      Toggle writing of parameters in json format                                                                                                                                  │
+│                                   ENV: WRITE_JSON                                                                                                                                                              │
+│                                   DEFAULT: no-write-json                                                                                                                                                       │
+│ --write-csv/--no-write-csv        Toggle writing of parameters in csv format                                                                                                                                   │
+│                                   ENV: WRITE_CSV                                                                                                                                                               │
+│                                   DEFAULT: write-csv                                                                                                                                                           │
+│ --help                            Show this message and exit.                                                                                                                                                  │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯

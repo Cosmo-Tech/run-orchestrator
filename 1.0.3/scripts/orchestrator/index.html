@@ -15,7 +15,7 @@
         <link rel="next" href="../legacy_json_generator/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.16">
     
     
       
@@ -560,29 +560,28 @@
 <p class="admonition-title">Help command</p>
 <div class="highlight"><pre><span></span><code>&gt; csm-run-orchestrator orchestrator --help
 
- Usage: csm-run-orchestrator orchestrator [OPTIONS] TEMPLATE                                                            
+ Usage: csm-run-orchestrator orchestrator [OPTIONS] TEMPLATE                                                                                                                                                      
 
- Runs the given TEMPLATE file                                                                                           
- Commands are run as subprocess using bash -c &quot;&lt;command&gt; &lt;arguments&gt;&quot;.                                                  
- In case you are in a python venv, the venv is activated before any command is run.                                     
+ Runs the given TEMPLATE file                                                                                                                                                                                     
+ Commands are run as subprocess using bash -c &quot;&lt;command&gt; &lt;arguments&gt;&quot;.                                                                                                                                            
+ In case you are in a python venv, the venv is activated before any command is run.                                                                                                                               
 
-╭─ Arguments ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *  TEMPLATE    FILE  [required]                                                                                      │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --dry-run/--no-dry-run          -n           Use dry-run mode                                                        │
-│                                              ENV: DRY_RUN                                                            │
-│                                              DEFAULT: no-dry-run                                                     │
-│ --display-env/--no-display-env               List all required environment variables and their documentation         │
-│                                              ENV: DISPLAY_ENVIRONMENT                                                │
-│                                              DEFAULT: no-display-env                                                 │
-│ --gen-env-target                    PATH     Generate a .env file with all env vars to be filed when display-env is  │
-│                                              called                                                                  │
-│                                              ENV: GENERATE_ENVIRONMENT                                               │
-│ --skip-step                         STEP_ID  Define a list of steps to be skipped during this run                    │
-│                                              ENV: CSM_SKIP_STEPS                                                     │
-│ --help                                       Show this message and exit.                                             │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Arguments ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  TEMPLATE    FILE  [required]                                                                                                                                                                                │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ OPTIONS ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --dry-run/--no-dry-run          -n           Use dry-run mode                                                                                                                                                  │
+│                                              ENV: DRY_RUN                                                                                                                                                      │
+│                                              DEFAULT: no-dry-run                                                                                                                                               │
+│ --display-env/--no-display-env               List all required environment variables and their documentation                                                                                                   │
+│                                              ENV: DISPLAY_ENVIRONMENT                                                                                                                                          │
+│                                              DEFAULT: no-display-env                                                                                                                                           │
+│ --gen-env-target                    PATH     Generate a .env file with all env vars to be filed when display-env is called                                                                                     │
+│                                              ENV: GENERATE_ENVIRONMENT                                                                                                                                         │
+│ --skip-step                         STEP_ID  Define a list of steps to be skipped during this run                                                                                                              │
+│                                              ENV: CSM_SKIP_STEPS                                                                                                                                               │
+│ --help                                       Show this message and exit.                                                                                                                                       │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>
 <h2 id="examples">Examples</h2>
@@ -883,10 +882,10 @@ The following works too
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.footer"], "search": "../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.footer"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.220ee61c.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a51614de.min.js"></script>
       
     
   </body>

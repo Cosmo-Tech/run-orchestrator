@@ -15,7 +15,7 @@
         <link rel="next" href="../simulation_to_adx/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.16">
     
     
       
@@ -514,24 +514,23 @@
 <p class="admonition-title">Help command</p>
 <div class="highlight"><pre><span></span><code>&gt; csm-run-orchestrator run-step --help
 
- Usage: csm-run-orchestrator run-step [OPTIONS]                                                                         
+ Usage: csm-run-orchestrator run-step [OPTIONS]                                                                                                                                                                   
 
- Runs a list of steps of a run template in a CosmoTech project Known limitations:                                       
+ Runs a list of steps of a run template in a CosmoTech project Known limitations:                                                                                                                                 
 
-  • The step MUST contain an executable main.py file                                                                    
-  • The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine                
+  • The step MUST contain an executable main.py file                                                                                                                                                              
+  • The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine                                                                                                          
 
-╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *  --template    TEXT  refer to a folder contained in code/run_templates                                             │
-│                        ENV: CSM_RUN_TEMPLATE_ID                                                                      │
-│                        [required]                                                                                    │
-│    --steps       TEXT  A list of Steps definer in the TEMPLATE folder that will be executed (comma-separated).       │
-│                        Defaults to CSMDOCKER equivalent to parameters_handler,validator,prerun,engine,postrun (the   │
-│                        legacy order)                                                                                 │
-│                        ENV: CSM_CONTAINER_MODE                                                                       │
-│                        DEFAULT: CSMDOCKER                                                                            │
-│    --help              Show this message and exit.                                                                   │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ OPTIONS ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  --template    TEXT  refer to a folder contained in code/run_templates                                                                                                                                       │
+│                        ENV: CSM_RUN_TEMPLATE_ID                                                                                                                                                                │
+│                        [required]                                                                                                                                                                              │
+│    --steps       TEXT  A list of Steps definer in the TEMPLATE folder that will be executed (comma-separated).                                                                                                 │
+│                        Defaults to CSMDOCKER equivalent to parameters_handler,validator,prerun,engine,postrun (the legacy order)                                                                               │
+│                        ENV: CSM_CONTAINER_MODE                                                                                                                                                                 │
+│                        DEFAULT: CSMDOCKER                                                                                                                                                                      │
+│    --help              Show this message and exit.                                                                                                                                                             │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>
 
@@ -616,10 +615,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.footer"], "search": "../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.footer"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.220ee61c.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a51614de.min.js"></script>
       
     
   </body>
