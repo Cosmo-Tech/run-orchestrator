@@ -1,6 +1,6 @@
 site_name: Run Template Orchestrator
-repo_url: https://github.com/Cosmo-Tech/run_template_orchestrator
-repo_name: Cosmo-Tech/run_template_orchestrator
+repo_url: https://github.com/Cosmo-Tech/run-orchestrator
+repo_name: Cosmo-Tech/run-orchestrator
 
 theme:
   name: material

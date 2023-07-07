@@ -8,6 +8,6 @@ If you are interested in using it, please contact [Cosmo Tech](https://cosmotech
 ## Installation
 
 Documentation on the installation is available on
-our [GitHub Page](https://cosmo-tech.github.io/run_template_orchestrator/)
+our [GitHub Page](https://cosmo-tech.github.io/run-orchestrator/)
 
 Once installed you will have access to the `csm-run-orchestrator` CLI and all its commands.

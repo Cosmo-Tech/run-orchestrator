@@ -32,13 +32,13 @@ After all those commands you environment should be ready for a test, but first l
 === "Install from sources"
     !!! info "Install the orchestrator from git sources"
         ```bash
-        pip install git+ssh://git@github.com/Cosmo-Tech/run_template_orchestrator.git
+        pip install git+ssh://git@github.com/Cosmo-Tech/run-orchestrator.git
         ```
     
     !!! info "Install the orchestrator from local sources"
         ```bash
-        git clone ssh://git@github.com/Cosmo-Tech/run_template_orchestrator.git
-        pip install ./run_template_orchestrator
+        git clone ssh://git@github.com/Cosmo-Tech/run-orchestrator.git
+        pip install ./run-orchestrator
         ```
 
 === "Install using Pypi"
