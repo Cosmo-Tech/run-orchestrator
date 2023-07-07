@@ -28,7 +28,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     long_description=long_description,
-    long_description_type="text/markdown",
+    long_description_content_type="text/markdown",
     license_files=("LICENSE",),
     install_requires=required,
     entry_points={
