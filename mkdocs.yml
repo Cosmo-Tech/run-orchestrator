@@ -41,9 +41,11 @@ extra:
     provider: mike
 
 nav:
-  - Home: 'index.md'
+  - Home: 
+    - Cosmo Tech Run Orchestrator: 'index.md'
+    - License: 'License.md'
   - Commands:
-      - "commands/index.md"
+      - Commands list: "commands/index.md"
       - Scenario data download: "commands/scenario_data_downloader.md"
       - Download cloud Steps: "commands/download_cloud_steps.md"
       - Run Python Steps: "commands/run_step.md"
