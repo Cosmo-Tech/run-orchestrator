@@ -98,6 +98,7 @@ class Orchestrator(metaclass=Singleton):
                     _env.setdefault(k, set())
                     if v.description:
                         _env[k].add(v.description)
+            _path = pathlib.Path(json_file_path)
             LOGGER.info(f"Environment variable defined for {_path.name}")
             for k, v in sorted(_env.items(), key=lambda a: a[0]):
                 desc = (":\n  - " + "\n  - ".join(v)) if len(v) > 1 else (": " + list(v)[0] if len(v) else "")

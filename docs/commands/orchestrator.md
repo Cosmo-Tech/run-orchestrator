@@ -24,14 +24,14 @@ hide:
 ??? note "Run command with json file"
     The following code won't run by itself because `example.json` requires the EnvVar `NO_EXIST` to be set by the system
     ```bash title="run without complementary EnvVar"
-    cosmotech_orchestrator example.json
+    csm-run-orchestrator orchestrator example.json
     ```
     You could do the following to have it work
     ```bash title="set EnvVar with export"
     export NO_EXIST="This value exists"
-    cosmotech_orchestrator example.json
+    csm-run-orchestrator orchestrator example.json
     ```
     The following works too
     ```bash title="run with EnvVar for run only"
-    NO_EXIST="This value exists" cosmotech_orchestrator example.json
+    NO_EXIST="This value exists" csm-run-orchestrator orchestrator example.json
     ```
