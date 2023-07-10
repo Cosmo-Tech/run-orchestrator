@@ -12,6 +12,7 @@ import sys
 import venv
 
 from cosmotech.orchestrator.utils.click import click
+from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
 
 
@@ -29,6 +30,7 @@ from cosmotech.orchestrator.utils.logger import LOGGER
               help="\bA list of Steps definer in the `TEMPLATE` folder that will be executed (comma-separated).  \n"
                    "Defaults to `CSMDOCKER` equivalent to "
                    "`parameters_handler,validator,prerun,engine,postrun` (the legacy order)")
+@web_help("commands/run_step")
 def main(template: str, steps: str):
     """Runs a list of steps of a run template in a CosmoTech project
 Known limitations:

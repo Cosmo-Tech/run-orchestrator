@@ -14,10 +14,12 @@ from cosmotech.orchestrator.console_scripts.scenario_data_downloader import writ
 from cosmotech.orchestrator.utils.api import get_solution
 from cosmotech.orchestrator.utils.api import read_solution_file
 from cosmotech.orchestrator.utils.click import click
+from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
 
 
 @click.group()
+@web_help("commands/parameters_generator")
 def main():
     """Base command to initialize parameter folders  
 Will create:    
@@ -53,6 +55,7 @@ Check the help of the sub commands for more information:
               default=True,
               show_default=True,
               help="Toggle writing of parameters in csv format")
+@web_help("commands/parameters_generator")
 def solution(
     solution_file: str,
     run_template_id: str,
@@ -114,6 +117,7 @@ def solution(
               default=True,
               show_default=True,
               help="Toggle writing of parameters in csv format")
+@web_help("commands/parameters_generator")
 def cloud(
     workspace_id: str,
     organization_id: str,

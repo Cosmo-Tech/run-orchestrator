@@ -10,6 +10,7 @@ from typing import Optional
 
 from cosmotech.orchestrator.core.orchestrator import Orchestrator
 from cosmotech.orchestrator.utils.click import click
+from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
 
 
@@ -42,6 +43,7 @@ from cosmotech.orchestrator.utils.logger import LOGGER
               multiple=True,
               metavar="STEP_ID",
               help="Define a list of steps to be skipped during this run")
+@web_help("commands/orchestrator")
 def main(template: str, dry_run: bool, display_env: bool, gen_env_target: Optional[str], skipped_steps: list[str]):
     """Runs the given `TEMPLATE` file  
 Commands are run as subprocess using `bash -c "<command> <arguments>"`.  

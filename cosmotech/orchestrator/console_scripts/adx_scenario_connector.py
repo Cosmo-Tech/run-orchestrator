@@ -20,6 +20,7 @@ from azure.kusto.ingest import IngestionResult
 from azure.kusto.ingest import ReportLevel
 
 from cosmotech.orchestrator.utils.click import click
+from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
 
 
@@ -80,6 +81,7 @@ from cosmotech.orchestrator.utils.logger import LOGGER
               default=False,
               show_default=True,
               help="Toggle waiting for the ingestion results")
+@web_help("commands/simulation_to_adx")
 def main(
     send_parameters: bool,
     send_datasets: bool,

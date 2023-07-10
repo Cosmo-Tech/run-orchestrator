@@ -15,6 +15,7 @@ from cosmotech.orchestrator.console_scripts.parameters_generation import main as
 from cosmotech.orchestrator.console_scripts.run_step import main as run_cmd
 from cosmotech.orchestrator.console_scripts.scenario_data_downloader import main as scenario_dl_cmd
 from cosmotech.orchestrator.utils.click import click
+from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
 
 
@@ -23,6 +24,7 @@ from cosmotech.orchestrator.utils.logger import LOGGER
                                    "--log-level",
                                    envvar="LOG_LEVEL",
                                    show_envvar=True)
+@web_help(None)
 def main():
     """Cosmotech Run Orchestrator
     

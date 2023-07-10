@@ -15,11 +15,13 @@ from cosmotech.orchestrator.core.step import Step
 from cosmotech.orchestrator.utils.api import get_solution
 from cosmotech.orchestrator.utils.api import read_solution_file
 from cosmotech.orchestrator.utils.click import click
+from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.json import CustomJSONEncoder
 from cosmotech.orchestrator.utils.logger import LOGGER
 
 
 @click.group()
+@web_help("commands/legacy_json_generator")
 def main():
     """Base command for the json generator using legacy files  
 Check the help of the sub commands for more information:  
@@ -42,6 +44,7 @@ Check the help of the sub commands for more information:
 @click.option("--describe/--no-describe",
               show_default=True, default=False,
               help="Show a description of the generated template after generation")
+@web_help("commands/legacy_json_generator")
 def solution(solution_file, run_template_id, output, describe):
     """Read SOLUTION_FILE to get a RUN_TEMPLATE_ID and generate an orchestrator file at OUTPUT"""
     if _solution := read_solution_file(solution_file):
@@ -87,6 +90,7 @@ def solution(solution_file, run_template_id, output, describe):
 @click.option("--describe/--no-describe",
               show_default=True, default=False,
               help="Show a description of the generated template after generation")
+@web_help("commands/legacy_json_generator")
 def cloud(workspace_id, organization_id, run_template_id, api_scope, api_url, output, describe):
     """Connect to the cosmotech API to download a run template and generate an orchestrator file at OUTPUT"""
 

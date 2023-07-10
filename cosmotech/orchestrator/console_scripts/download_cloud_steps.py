@@ -17,6 +17,7 @@ from cosmotech_api.api.workspace_api import WorkspaceApi
 from cosmotech_api.exceptions import ServiceException
 
 from cosmotech.orchestrator.utils.click import click
+from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
 
 
@@ -57,6 +58,7 @@ from cosmotech.orchestrator.utils.logger import LOGGER
               help="The identification scope of a Cosmotech API",
               metavar="URI",
               required=True)
+@web_help("commands/download_cloud_steps")
 def main(workspace_id, organization_id, run_template_id, handler_list, api_scope, api_url):
     """
 Uses environment variables to download cloud based Template steps

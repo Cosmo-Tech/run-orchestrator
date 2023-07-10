@@ -15,6 +15,7 @@ from CosmoTech_Acceleration_Library.Accelerators.scenario_download.scenario_down
 
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import require_env
+from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
 
 
@@ -162,6 +163,7 @@ def write_parameters(parameter_folder, parameters, write_csv, write_json):
               help="Toggle fetching datasets")
 @require_env('CSM_API_SCOPE', "The identification scope of a Cosmotech API")
 @require_env('CSM_API_URL', "The URL to a Cosmotech API")
+@web_help("commands/scenario_data_downloader")
 def main(
     scenario_id: str,
     workspace_id: str,
