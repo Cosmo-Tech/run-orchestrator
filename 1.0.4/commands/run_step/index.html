@@ -578,16 +578,16 @@
   • The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine                
 
 ╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *  --template        TEXT  refer to a folder contained in code/run_templates                                         │
-│                            ENV: CSM_RUN_TEMPLATE_ID                                                                  │
-│                            [required]                                                                                │
-│    --steps           TEXT  A list of Steps definer in the TEMPLATE folder that will be executed (comma-separated).   │
-│                            Defaults to CSMDOCKER equivalent to parameters_handler,validator,prerun,engine,postrun    │
-│                            (the legacy order)                                                                        │
-│                            ENV: CSM_CONTAINER_MODE                                                                   │
-│                            DEFAULT: CSMDOCKER                                                                        │
-│    --web/--no-web          Open the web documentation                                                                │
-│    --help                  Show this message and exit.                                                               │
+│ *  --template    TEXT  refer to a folder contained in code/run_templates                                             │
+│                        ENV: CSM_RUN_TEMPLATE_ID                                                                      │
+│                        [required]                                                                                    │
+│    --steps       TEXT  A list of Steps definer in the TEMPLATE folder that will be executed (comma-separated).       │
+│                        Defaults to CSMDOCKER equivalent to parameters_handler,validator,prerun,engine,postrun (the   │
+│                        legacy order)                                                                                 │
+│                        ENV: CSM_CONTAINER_MODE                                                                       │
+│                        DEFAULT: CSMDOCKER                                                                            │
+│    --web-help          Open the web documentation                                                                    │
+│    --help              Show this message and exit.                                                                   │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>
