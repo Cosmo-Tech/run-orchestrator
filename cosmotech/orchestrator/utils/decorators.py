@@ -44,14 +44,15 @@ def web_help(documentation_target):
 
     def wrap_function(func):
         @wraps(func)
-        @click.option("--web/--no-web",
-                      default=False,
+        @click.option("--web-help",
+                      is_flag=True,
                       help="Open the web documentation",
                       is_eager=True,
                       callback=open_documentation)
         def f(*args, **kwargs):
-            if kwargs['web']:
+            if kwargs.get('web_help'):
                 return
+            del kwargs['web_help']
             return func(*args, **kwargs)
 
         return f
