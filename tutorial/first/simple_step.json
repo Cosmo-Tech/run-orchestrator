@@ -1,0 +1,9 @@
+{
+  "steps": [
+    {
+      "id": "echo-foo-bar",
+      "command": "echo",
+      "arguments": [ "foo", "bar" ]
+    }
+  ]
+}

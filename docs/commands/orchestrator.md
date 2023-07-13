@@ -6,7 +6,7 @@ hide:
 
 !!! info "Help command"
     ```text
-    --8<-- "docs/commands_help/csm-run-orchestrator_orchestrator.txt"
+    --8<-- "generated/commands_help/csm-run-orchestrator_orchestrator.txt"
     ```
 
 ## Examples

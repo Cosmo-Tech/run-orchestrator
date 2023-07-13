@@ -1,0 +1,15 @@
+{
+  "steps": [
+    {
+      "id": "run-fibo",
+      "command": "python",
+      "arguments": [ "fibonacci.py", "10", "fib.txt" ]
+    },
+    {
+      "id": "run-display",
+      "command": "python",
+      "arguments": [ "display_file.py", "fib.txt" ],
+      "precedents": [ "run-fibo" ]
+    }
+  ]
+}
