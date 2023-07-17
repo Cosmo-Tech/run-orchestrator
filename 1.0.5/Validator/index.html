@@ -9,17 +9,17 @@
       
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../tutorial/second/">
       
       
-        <link rel="next" href="../tutorial/">
+        <link rel="next" href="../commands/">
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
     
     
       
-        <title>License - Run Template Orchestrator</title>
+        <title>Semantic Validator - Run Template Orchestrator</title>
       
     
     
@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#license" class="md-skip">
+        <a href="#semantic-validator" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              License
+              Semantic Validator
             
           </span>
         </div>
@@ -205,15 +205,13 @@
         
   
   
-    
-  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href=".." class="md-tabs__link md-tabs__link--active">
+      <a href=".." class="md-tabs__link">
         Home
       </a>
     </li>
@@ -239,10 +237,12 @@
         
   
   
+    
+  
 
 
   <li class="md-tabs__item">
-    <a href="../Validator/" class="md-tabs__link">
+    <a href="./" class="md-tabs__link md-tabs__link--active">
       Semantic Validator
     </a>
   </li>
@@ -321,16 +321,16 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
       
       
         
@@ -353,7 +353,7 @@
           
         </div>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_1">
           <span class="md-nav__icon md-icon"></span>
           Home
@@ -366,21 +366,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../License/" class="md-nav__link">
         License
       </a>
-      
     </li>
   
 
@@ -481,11 +471,21 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../Validator/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Semantic Validator
       </a>
+      
     </li>
   
 
@@ -691,17 +691,232 @@
   
 
 
-<h1 id="license">License</h1>
+<h1 id="semantic-validator">Semantic Validator</h1>
+<p>Simple semantic validator,</p>
+<p>Paste your orchestration file in <code>text</code> mode and it will be semantically validated</p>
+<div id="jsoneditor"></div>
+
+<script type="module" markdown>
+      import { JSONEditor, createAjvValidator } from 'https://cdn.jsdelivr.net/npm/vanilla-jsoneditor/index.js'
+
+      const schema = {
+  "$id": "https://cosmotech.com/run_template.schema.json",
+  "title": "Run Template",
+  "description": "A run template description",
+  "type": "object",
+  "properties": {
+    "commandTemplates": {
+      "description": "A list of Commands Templates",
+      "type": "array",
+      "items": {
+        "description": "A Command Template describe a single executable with default properties",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The Id of the Command Template",
+            "pattern": "^\\S*$"
+          },
+          "command": {
+            "type": "string",
+            "description": "The root bash command necessary to execute the template"
+          },
+          "arguments": {
+            "type": "array",
+            "description": "The list of default arguments passed to the command",
+            "items": {
+              "type": "string"
+            }
+          },
+          "environment": {
+            "type": "object",
+            "description": "The default list of Environment Variables required for the command",
+            "patternProperties": {
+              ".+": {
+                "$ref": "#/$defs/environmentVariable"
+              }
+            },
+            "minProperties": 1
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "command"
+        ]
+      }
+    },
+    "steps": {
+      "description": "A list of Steps descriptors",
+      "type": "array",
+      "items": {
+        "description": "A Step is a single instance of a Command that is scheduled to be run, can use an existing command or define its own",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The Id of the Step",
+            "pattern": "^\\S*$"
+          },
+          "commandId": {
+            "type": "string",
+            "description": "An Id for an existing command"
+          },
+          "command": {
+            "type": "string",
+            "description": "The root bash command necessary to execute the command"
+          },
+          "arguments": {
+            "type": "array",
+            "description": "The list of arguments passed to the command (replace the default one)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "environment": {
+            "type": "object",
+            "description": "The list of Environment Variables defined for the command (replace the default one)",
+            "patternProperties": {
+              ".+": {
+                "$ref": "#/$defs/environmentVariable"
+              }
+            },
+            "minProperties": 1
+          },
+          "precedents": {
+            "type": "array",
+            "description": "A list of steps that have to be run before this one",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "oneOf": [
+          {
+            "required": [
+              "id",
+              "command"
+            ]
+          },
+          {
+            "required": [
+              "id",
+              "commandId"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "steps"
+  ],
+  "$defs": {
+    "environmentVariable": {
+      "type": "object",
+      "description": "A environment variable descriptor",
+      "properties": {
+        "defaultValue": {
+          "type": "string",
+          "description": "The default value of the required variable, if not set, the variable has to be set in the system"
+        },
+        "value": {
+          "type": "string",
+          "description": "The effective value of the required variable, will override any system value"
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the required Environment Variable for documentation reasons"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+      }
+
+      const schemaDefinitions = {
+
+      }
+
+      const content = {
+        json:
+{
+  "commandTemplates": [
+    {
+      "id": "TEMPLATE_ID",
+      "command": "echo",
+      "arguments": [
+        "list",
+        "of",
+        "arguments",
+        "$ENV_VALUE"
+      ],
+      "environment": {
+        "ENV_VALUE": {
+          "defaultValue": "DEFAULT",
+          "description": "An environment variable with a default value"
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "UseTemplate",
+      "commandId": "TEMPLATE_ID"
+    },
+    {
+      "id": "OverrideTemplate",
+      "commandId": "TEMPLATE_ID",
+      "arguments": [
+        "Added",
+        "arguments"
+      ],
+      "environment": {
+        "ENV_VALUE": {
+          "value": "OVERRIDE",
+          "description": "An environment variable with a forced value"
+        }
+      },
+      "precedents": [
+        "UseTemplate"
+      ]
+    },
+    {
+      "id": "NewCommand",
+      "command": "echo",
+      "arguments": [
+        "$NO_EXIST"
+      ],
+      "environment": {
+        "NO_EXIST": {
+          "description": "An environment variable with no value"
+        }
+      },
+      "precedents": [
+        "OverrideTemplate"
+      ]
+    }
+  ]
+}
+,
+        text: undefined
+      }
+
+      // create the editor
+      const target = document.getElementById('jsoneditor')
+      const editor = new JSONEditor({
+        target: document.getElementById('jsoneditor'),
+        props: {
+          content,
+          onChange: (update) => console.log('onChange', update),
+          validator: createAjvValidator({ schema, schemaDefinitions })
+        }
+      })
+    </script>
+
 <blockquote>
-<p>Copyright - 2023 - 2023 - Cosmo Tech</p>
-<p>You are authorized to use this Cosmo Tech software following the execution of a specific agreement with Cosmo Tech or with an authorized licensee of Cosmo Tech.</p>
-<p>Accordingly you should refer to this specific agreement for the purpose of the extent of the use that is permitted. This use shall mainly consist in using, displaying and executing the Cosmo Tech software for your own needs.</p>
-<p>Except otherwise provided in the above-mentioned specific agreement:<br />
-- you are not allowed to use this Cosmo Tech software for commercial purpose or to redistribute it without prior authorization from Cosmo Tech;<br />
-- you are not allowed to copy, duplicate, modify, adapt and translate this Cosmo Tech software except as authorized under section L122-6-1 of the French Intellectual Property Code or specifically under the specific agreement with Cosmo Tech;<br />
-- you must not remove this notice or any mention related to the copyright of Cosmo Tech;</p>
-<p>This Cosmo Tech software is provided 'as is', without any express or implied warranty towards the users.</p>
-<p>Any software generated through the use of this Cosmo Tech software shall be your own property to the extent this software does not contain any part of Cosmo Tech software source code.</p>
+<p>Page made with <a href="https://github.com/josdejong/svelte-jsoneditor">https://github.com/josdejong/svelte-jsoneditor</a></p>
 </blockquote>
 
 
@@ -733,7 +948,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Cosmo Tech Run Orchestrator" rel="prev">
+          <a href="../tutorial/second/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Concerning Configuration" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -742,20 +957,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Cosmo Tech Run Orchestrator
+                Concerning Configuration
               </div>
             </div>
           </a>
         
         
           
-          <a href="../tutorial/" class="md-footer__link md-footer__link--next" aria-label="Next: List of tutorials" rel="next">
+          <a href="../commands/" class="md-footer__link md-footer__link--next" aria-label="Next: Commands list" rel="next">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                List of tutorials
+                Commands list
               </div>
             </div>
             <div class="md-footer__button md-icon">
