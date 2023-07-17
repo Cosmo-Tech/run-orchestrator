@@ -48,6 +48,7 @@ nav:
   - Tutorials:
       - List of tutorials: "tutorial/index.md"
       - My First Orchestrator: "tutorial/first.md"
+      - Concerning Configuration: "tutorial/second.md"
   - Commands:
       - Commands list: "commands/index.md"
       - Scenario data download: "commands/scenario_data_downloader.md"

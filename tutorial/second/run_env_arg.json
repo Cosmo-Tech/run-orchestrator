@@ -1,0 +1,28 @@
+{
+  "steps": [
+    {
+      "id": "run-fibo",
+      "command": "python",
+      "arguments": [ "fibonacci.py", "$FIBO_COUNT" ],
+      "environment": {
+        "FIBO_FILE_PATH": {
+          "description": "A file run-fibo will write to"
+        },
+        "FIBO_COUNT": {
+          "description": "The rank of the fibonacci sequence run-fibo will write to",
+          "defaultValue": "10"
+        }
+      }
+    },
+    {
+      "id": "run-display",
+      "command": "python",
+      "arguments": [ "display_file.py" ],
+      "precedents": [ "run-fibo" ],
+      "environment": {
+        "FIBO_FILE_PATH": {
+          "description": "A file run-display will read and print to stdout"}
+      }
+    }
+  ]
+}
