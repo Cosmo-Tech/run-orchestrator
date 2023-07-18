@@ -38,4 +38,18 @@ Now that we know how to run commands we want to configure them
 </div>
 </article>
 
+<article markdown>
+<div class="text" markdown>
+:material-graph: __Brewery__
+
+---
+A more in depth use of the orchestrator in conjunction with a CosmoTech Simulator
+
+---
+<footer markdown>
+[:octicons-arrow-right-24: Brewery](./brewery.md)
+</footer>
+</div>
+</article>
+
 </main>

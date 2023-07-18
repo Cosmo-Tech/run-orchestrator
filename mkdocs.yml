@@ -49,6 +49,7 @@ nav:
       - List of tutorials: "tutorial/index.md"
       - My First Orchestrator: "tutorial/first.md"
       - Concerning Configuration: "tutorial/second.md"
+      - Brewery: "tutorial/brewery.md"
   - Semantic Validator: "Validator.md"
   - Commands:
       - Commands list: "commands/index.md"
@@ -70,6 +71,8 @@ markdown_extensions:
     - pymdownx.details
     - pymdownx.snippets
     - pymdownx.superfences
+    - pymdownx.highlight
+    - pymdownx.inlinehilite
     - pymdownx.critic
     - pymdownx.caret
     - pymdownx.keys

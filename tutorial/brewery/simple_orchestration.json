@@ -1,0 +1,40 @@
+{
+  "steps": [
+    {
+      "id": "parameter-handler",
+      "command": "csm-run-orchestrator",
+      "arguments": [
+        "run-step", "--template",
+        "what_if", "--steps",
+        "parameters_handler"
+      ],
+      "environment": {
+        "CSM_DATASET_ABSOLUTE_PATH": {
+          "description": "A folder containing our dataset"
+        },
+        "CSM_PARAMETERS_ABSOLUTE_PATH": {
+          "description": "A folder containing our parameters"
+        }
+      }
+    },
+    {
+      "id": "engine",
+      "command": "bash",
+      "arguments": [
+        "tutorial/run_engine.sh"
+      ],
+      "environment": {
+        "CSM_DATASET_ABSOLUTE_PATH": {
+          "description": "A folder containing our dataset"
+        },
+        "CSM_SIMULATION": {
+          "description": "The simulation file to run",
+          "defaultValue": "BusinessApp_Simulation"
+        }
+      },
+      "precedents": [
+        "parameter-handler"
+      ]
+    }
+  ]
+}

@@ -36,6 +36,7 @@ def main(template: str, steps: str):
 Known limitations:
 - The step MUST contain an executable main.py file
 - The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine
+- QT consumer in the simulator breaks the engine step when orchestrating
 """
     project = pathlib.Path(".")
     steps = steps.split(",")
@@ -89,8 +90,7 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
                              "you need to set the environment variable CSM_SIMULATION "
                              "with the name of the simulation file to be run")
             else:
-                subprocess.run(["-i", simulation],
-                               executable="Generated/Build/Bin/main")
+                subprocess.run(" ".join(["Generated/Build/Bin/main", "-i", simulation]), shell=True)
             continue
         main_path = template_path / s
 

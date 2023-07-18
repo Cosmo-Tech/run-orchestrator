@@ -9,6 +9,8 @@ hide:
     --8<-- "generated/commands_help/csm-run-orchestrator_orchestrator.txt"
     ```
 
+--8<-- "docs/partials/orchestrator_known_issues.md"
+
 ## Examples
 
 ??? info "JSON Schema"
