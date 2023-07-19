@@ -821,7 +821,7 @@
 <div class="admonition warning">
 <p class="admonition-title">Potential Issues</p>
 <p>A known issue exists with graphical commands.<br />
-Some environment variables are passed to the commands to try to mitigate it, let us know if you find some other issues.</p>
+Setting <code>useSystemEnvironment</code> to <code>true</code> in the orchestration file can help during local runs.</p>
 </div>
 <h2 id="create-a-new-orchestration-file-for-a-run-template">Create a new orchestration file for a Run Template</h2>
 <p>In this first part we will look at creating a new orchestration file from scratch.</p>
@@ -983,6 +983,7 @@ we are ready to write our orchestration file.</p>
 <span class="w">        </span><span class="s2">&quot;what_if&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--steps&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;parameters_handler&quot;</span>
 <span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Apply the \&quot;what-if\&quot; parameter handler&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A folder containing our dataset&quot;</span>
@@ -998,6 +999,8 @@ we are ready to write our orchestration file.</p>
 <span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="s2">&quot;tutorial/run_engine.sh&quot;</span>
 <span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Run the simulation targeted by CSM_SIMULATION&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;useSystemEnvironment&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A folder containing our dataset&quot;</span>
@@ -1014,10 +1017,17 @@ we are ready to write our orchestration file.</p>
 <span class="w">  </span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In the <code>engine</code> step we set the field <code class="highlight"><span class="nt">&quot;useSystemEnvironment&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span></code>, 
+it allows to use the system environment variables that are set for graphical interfaces.
+Without it (or if set to <code class="highlight"><span class="kc">false</span></code>) we would have crashes with the simulator when using the QT Consumers locally.</p>
+<p><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/26a0.svg" title=":warning:" /> In a docker environment we won't have access to a graphical interface, so even with this field the QT Consumers will crash.</p>
+</div>
 <p>We can then easily run this file :</p>
 <div class="highlight"><span class="filename">run simple_orchestration.json</span><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CSM_DATASET_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;tutorial/dataset&quot;</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">CSM_PARAMETERS_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;tutorial/parameters&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">CSM_SIMULATION</span><span class="o">=</span><span class="s2">&quot;BusinessApp_Simulation&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">CSM_SIMULATION</span><span class="o">=</span><span class="s2">&quot;CSV_Simulation&quot;</span>
 csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>tutorial/simple_orchestration.json
 </code></pre></div>
 
