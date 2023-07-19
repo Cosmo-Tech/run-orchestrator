@@ -818,10 +818,10 @@
 <li>You need a local version of the "Brewery" solution (available <a href="https://github.com/Cosmo-Tech/onboarding-brewery-solution">here</a>)</li>
 </ul>
 </div>
-<div class="admonition danger">
-<p class="admonition-title">Known Issues</p>
-<p>A known issue exists with simulator having QT consumers and the orchestrator, due to QT and X shenanigans we can't forward the current X server info to the simulator resulting in QT consumers crashing.<br />
-You can suppose that any script running through the orchestrator won't have access to a graphical interface since they should be able to run on docker containers in the cloud.</p>
+<div class="admonition warning">
+<p class="admonition-title">Potential Issues</p>
+<p>A known issue exists with graphical commands.<br />
+Some environment variables are passed to the commands to try to mitigate it, let us know if you find some other issues.</p>
 </div>
 <h2 id="create-a-new-orchestration-file-for-a-run-template">Create a new orchestration file for a Run Template</h2>
 <p>In this first part we will look at creating a new orchestration file from scratch.</p>
