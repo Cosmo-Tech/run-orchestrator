@@ -733,6 +733,10 @@
             "description": "The Id of the Command Template",
             "pattern": "^\\S*$"
           },
+          "description": {
+            "type": "string",
+            "description": "A description of the command template"
+          },
           "command": {
             "type": "string",
             "description": "The root bash command necessary to execute the template"
@@ -743,6 +747,10 @@
             "items": {
               "type": "string"
             }
+          },
+          "useSystemEnvironment": {
+            "type": "boolean",
+            "description": "Should the system environment be fully passed to the command ?"
           },
           "environment": {
             "type": "object",
@@ -774,6 +782,10 @@
             "description": "The Id of the Step",
             "pattern": "^\\S*$"
           },
+          "description": {
+            "type": "string",
+            "description": "A description of the step (override command template description)"
+          },
           "commandId": {
             "type": "string",
             "description": "An Id for an existing command"
@@ -788,6 +800,10 @@
             "items": {
               "type": "string"
             }
+          },
+          "useSystemEnvironment": {
+            "type": "boolean",
+            "description": "Should the system environment be fully passed to the command ?"
           },
           "environment": {
             "type": "object",
@@ -833,22 +849,6 @@
       "type": "object",
       "description": "A environment variable descriptor",
       "properties": {
-        "defaultValue": {
-          "type": "string",
-          "description": "The default value of the required variable, if not set, the variable has to be set in the system"
-        },
-        "value": {
-          "type": "string",
-          "description": "The effective value of the required variable, will override any system value"
-        },
-        "description": {
-          "type": "string",
-          "description": "A description of the required Environment Variable for documentation reasons"
-        }
-      },
-      "additionalProperties": false
-    }
-  }
       }
 
       const schemaDefinitions = {
