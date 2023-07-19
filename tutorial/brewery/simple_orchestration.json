@@ -8,6 +8,7 @@
         "what_if", "--steps",
         "parameters_handler"
       ],
+      "description": "Apply the \"what-if\" parameter handler",
       "environment": {
         "CSM_DATASET_ABSOLUTE_PATH": {
           "description": "A folder containing our dataset"
@@ -23,6 +24,8 @@
       "arguments": [
         "tutorial/run_engine.sh"
       ],
+      "description": "Run the simulation targeted by CSM_SIMULATION",
+      "useSystemEnvironment": true,
       "environment": {
         "CSM_DATASET_ABSOLUTE_PATH": {
           "description": "A folder containing our dataset"

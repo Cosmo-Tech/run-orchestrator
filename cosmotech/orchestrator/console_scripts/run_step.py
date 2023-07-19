@@ -90,7 +90,6 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
                              "you need to set the environment variable CSM_SIMULATION "
                              "with the name of the simulation file to be run")
             else:
-                _e = dict()
                 args = ["-i",
                         simulation]
                 subprocess.run(args=args,

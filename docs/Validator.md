@@ -16,8 +16,7 @@ Paste your orchestration file in `text` mode and it will be semantically validat
       import { JSONEditor, createAjvValidator } from 'https://cdn.jsdelivr.net/npm/vanilla-jsoneditor/index.js'
 
       const schema = {
---8<-- "cosmotech/orchestrator/schema/run_template_json_schema.json:3:135"
-      }
+--8<-- "cosmotech/orchestrator/schema/run_template_json_schema.json:3"
 
       const schemaDefinitions = {
 

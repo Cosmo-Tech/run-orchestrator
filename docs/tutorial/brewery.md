@@ -124,11 +124,19 @@ Following the previous tutorials it is easy to write a simple orchestration file
 --8<-- "tutorial/brewery/simple_orchestration.json"
 ```
 
+!!! warning
+    In the `engine` step we set the field `#!json "useSystemEnvironment": true`, 
+    it allows to use the system environment variables that are set for graphical interfaces.
+    Without it (or if set to `#!json false`) we would have crashes with the simulator when using the QT Consumers locally.
+    
+    :warning: In a docker environment we won't have access to a graphical interface, so even with this field the QT Consumers will crash.
+
+
 We can then easily run this file :
 
 ```bash title="run simple_orchestration.json" 
 export CSM_DATASET_ABSOLUTE_PATH="tutorial/dataset"
 export CSM_PARAMETERS_ABSOLUTE_PATH="tutorial/parameters"
-export CSM_SIMULATION="BusinessApp_Simulation"
+export CSM_SIMULATION="CSV_Simulation"
 csm-run-orchestrator orchestrator tutorial/simple_orchestration.json
 ```

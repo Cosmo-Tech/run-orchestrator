@@ -16,8 +16,10 @@ from cosmotech.orchestrator.core.environment import EnvironmentVariable
 class CommandTemplate:
     id: str = field()
     command: str = field()
+    description: str = field(default=None)
     arguments: list[str] = field(default_factory=list)
     environment: dict[str, Union[EnvironmentVariable, dict]] = field(default_factory=dict)
+    useSystemEnvironment: bool = field(default=False)
 
     def __post_init__(self):
         tmp_env = dict()
@@ -35,4 +37,8 @@ class CommandTemplate:
             r["arguments"] = self.arguments
         if self.environment:
             r["environment"] = self.environment
+        if self.description:
+            r["description"] = self.description
+        if self.useSystemEnvironment:
+            r["useSystemEnvironment"] = self.useSystemEnvironment
         return r

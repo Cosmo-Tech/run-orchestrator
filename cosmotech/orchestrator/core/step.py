@@ -14,6 +14,7 @@ from typing import Union
 
 import os
 
+from cosmotech.orchestrator.core.command_template import CommandTemplate
 from cosmotech.orchestrator.core.environment import EnvironmentVariable
 from cosmotech.orchestrator.utils.logger import LOGGER
 
@@ -23,9 +24,11 @@ class Step:
     id: str = field()
     commandId: str = field(default=None)
     command: str = field(default=None)
+    description: str = field(default=None)
     arguments: list[str] = field(default_factory=list)
     environment: dict[str, Union[EnvironmentVariable, dict]] = field(default_factory=dict)
     precedents: list[Union[str, 'Step']] = field(default_factory=list)
+    useSystemEnvironment: bool = field(default=False)
     loaded = False
     status = None
     skipped = False
@@ -38,10 +41,13 @@ class Step:
             self.status = "Error"
             LOGGER.error(f"[green bold]{self.id}[/] asks for a non existing template [cyan bold]{self.commandId}[/]")
             raise ValueError(f"Command Template {self.commandId} is not available")
-        command = available_commands[self.commandId]
+        command: CommandTemplate = available_commands[self.commandId]
         LOGGER.debug(f"[green bold]{self.id}[/] loads template [cyan bold]{self.commandId}[/]")
         self.command = command.command
         self.arguments = command.arguments[:] + self.arguments
+        self.useSystemEnvironment = self.useSystemEnvironment or command.useSystemEnvironment
+        if self.description is None:
+            self.description = command.description
         for _env_key, _env in command.environment.items():
             if _env_key in self.environment:
                 self.environment[_env_key].join(_env)
@@ -74,6 +80,10 @@ class Step:
             r["environment"] = self.environment
         if self.precedents:
             r["precedents"] = self.precedents
+        if self.description:
+            r["description"] = self.description
+        if self.useSystemEnvironment:
+            r["useSystemEnvironment"] = self.useSystemEnvironment
         return r
 
     def _effective_env(self):
@@ -102,18 +112,8 @@ class Step:
                 self.status = "DryRun"
             else:
                 _e = self._effective_env()
-                x_environ = dict()
-                # Add some system environment variables to ensure graphical compatibility
-                system_env_items = [
-                    'XAUTHORITY',
-                    'XMODIFIERS',
-                    'DISPLAY',
-                    'HOME',
-                    'PATH'
-                ]
-                for k in os.environ.keys():
-                    if k.startswith("XDG_") or k in system_env_items:
-                        x_environ[k] = os.environ[k]
+                if self.useSystemEnvironment:
+                    _e = {**os.environ, **_e}
                 try:
                     executable = pathlib.Path(sys.executable)
                     venv = (executable.parent / "activate")
@@ -128,7 +128,7 @@ class Step:
                     LOGGER.debug("Running:" + " ".join(cmd_line))
                     r = subprocess.run(" ".join(cmd_line),
                                        shell=True,
-                                       env=x_environ | _e,
+                                       env=_e,
                                        check=True)
                     if r.returncode != 0:
                         LOGGER.error(f"Error during step [green bold]{self.id}[/]")
@@ -153,6 +153,9 @@ class Step:
         r = list()
         r.append(f"Step {self.id}")
         r.append(f"Command: {self.command}" + ("" if not self.arguments else " " + " ".join(self.arguments)))
+        if self.description:
+            r.append("Description:")
+            r.append(f"  {self.description}")
         if self.environment:
             r.append("Environment:")
             for k, v in self.environment.items():
@@ -160,6 +163,8 @@ class Step:
                     r.append(f"- {k}: {v.description}")
                 else:
                     r.append(f"- {k}")
+        if self.useSystemEnvironment:
+            r.append("[yellow]Use system environment variables[/]")
         if self.skipped:
             r.append("[red]Skipped by user[/]")
         r.append(f"Status: {self.status}")
