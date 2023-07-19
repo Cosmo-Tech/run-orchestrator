@@ -90,20 +90,11 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
                              "you need to set the environment variable CSM_SIMULATION "
                              "with the name of the simulation file to be run")
             else:
-                r = subprocess.run("xhost >/dev/null 2>&1", shell=True)
                 _e = dict()
                 args = ["-i",
                         simulation]
-                if r.returncode != 0:
-                    # Inject QT_QPA_PLATFORM env var to deactivate displays
-                    _e["QT_QPA_PLATFORM"] = "offscreen"
-                    args.append("--force-close")
-                    subprocess.run(args=args,
-                                   executable="Generated/Build/Bin/main",
-                                   env=_e)
-                else:
-                    subprocess.run(args=args,
-                                   executable="Generated/Build/Bin/main")
+                subprocess.run(args=args,
+                               executable="Generated/Build/Bin/main")
             continue
         main_path = template_path / s
 
