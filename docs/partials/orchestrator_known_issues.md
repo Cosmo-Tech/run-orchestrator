@@ -1,3 +1,3 @@
-!!! danger "Known Issues"
-    A known issue exists with simulator having QT consumers and the orchestrator, due to QT and X shenanigans we can't forward the current X server info to the simulator resulting in QT consumers crashing.  
-    You can suppose that any script running through the orchestrator won't have access to a graphical interface since they should be able to run on docker containers in the cloud.
+!!! warning "Potential Issues"
+    A known issue exists with graphical commands.  
+    Some environment variables are passed to the commands to try to mitigate it, let us know if you find some other issues.

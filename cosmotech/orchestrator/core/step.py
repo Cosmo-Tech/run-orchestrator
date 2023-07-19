@@ -12,6 +12,8 @@ from dataclasses import dataclass
 from dataclasses import field
 from typing import Union
 
+import os
+
 from cosmotech.orchestrator.core.environment import EnvironmentVariable
 from cosmotech.orchestrator.utils.logger import LOGGER
 
@@ -100,6 +102,18 @@ class Step:
                 self.status = "DryRun"
             else:
                 _e = self._effective_env()
+                x_environ = dict()
+                # Add some system environment variables to ensure graphical compatibility
+                system_env_items = [
+                    'XAUTHORITY',
+                    'XMODIFIERS',
+                    'DISPLAY',
+                    'HOME',
+                    'PATH'
+                ]
+                for k in os.environ.keys():
+                    if k.startswith("XDG_") or k in system_env_items:
+                        x_environ[k] = os.environ[k]
                 try:
                     executable = pathlib.Path(sys.executable)
                     venv = (executable.parent / "activate")
@@ -114,7 +128,7 @@ class Step:
                     LOGGER.debug("Running:" + " ".join(cmd_line))
                     r = subprocess.run(" ".join(cmd_line),
                                        shell=True,
-                                       env=_e,
+                                       env=x_environ | _e,
                                        check=True)
                     if r.returncode != 0:
                         LOGGER.error(f"Error during step [green bold]{self.id}[/]")
