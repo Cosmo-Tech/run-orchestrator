@@ -22,7 +22,7 @@
       "id": "engine",
       "command": "bash",
       "arguments": [
-        "tutorial/run_engine.sh"
+        "code/tutorial/run_engine.sh"
       ],
       "description": "Run the simulation targeted by CSM_SIMULATION",
       "useSystemEnvironment": true,

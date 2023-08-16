@@ -28,7 +28,7 @@ csm-run-orchestrator init-parameters solution API/Solution.yaml tutorial/paramet
 
 After running this command we have a folder `tutorial` initialized with our `parameters` folder and a `parameters.json` file
 
-```json title="tutorial/parameters/parameters.json" linenums="1"
+```json title="code/tutorial/parameters/parameters.json" linenums="1"
 --8<-- "tutorial/brewery/parameters/parameters_init.json"
 ```
 
@@ -63,9 +63,9 @@ We previously created the content of our `tutorial` folder we will be using it t
 One last step will be to copy the content of our dataset in the folder.
 
 ```bash title="run parameter handler step"
-cp Simulation/Resource/scenariorun-data/* tutorial/dataset
-export CSM_DATASET_ABSOLUTE_PATH="tutorial/dataset"
-export CSM_PARAMETERS_ABSOLUTE_PATH="tutorial/parameters"
+cp Simulation/Resource/scenariorun-data/* code/tutorial/dataset
+export CSM_DATASET_ABSOLUTE_PATH="code/tutorial/dataset"
+export CSM_PARAMETERS_ABSOLUTE_PATH="code/tutorial/parameters"
 csm-run-orchestrator run-step --template what_if --steps parameters_handler
 ```
 
@@ -109,7 +109,7 @@ csm-run-orchestrator run-step --template what_if --steps engine
 Using those 3 commands we are now able to run a local simulation and set back our state.
 
 Everything can be run in a single action with the following script
-```bash title="tutorial/run_engine.sh"
+```bash title="code/tutorial/run_engine.sh"
 --8<-- "tutorial/brewery/run_engine.sh"
 ```
 
@@ -120,7 +120,7 @@ we are ready to write our orchestration file.
 
 Following the previous tutorials it is easy to write a simple orchestration file :
 
-```json title="tutorial/simple_orchestration.json" 
+```json title="code/tutorial/simple_orchestration.json" 
 --8<-- "tutorial/brewery/simple_orchestration.json"
 ```
 
@@ -135,8 +135,8 @@ Following the previous tutorials it is easy to write a simple orchestration file
 We can then easily run this file :
 
 ```bash title="run simple_orchestration.json" 
-export CSM_DATASET_ABSOLUTE_PATH="tutorial/dataset"
-export CSM_PARAMETERS_ABSOLUTE_PATH="tutorial/parameters"
+export CSM_DATASET_ABSOLUTE_PATH="code/tutorial/dataset"
+export CSM_PARAMETERS_ABSOLUTE_PATH="code/tutorial/parameters"
 export CSM_SIMULATION="CSV_Simulation"
-csm-run-orchestrator orchestrator tutorial/simple_orchestration.json
+csm-run-orchestrator orchestrator code/tutorial/simple_orchestration.json
 ```
