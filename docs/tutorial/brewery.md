@@ -8,7 +8,7 @@
     + You need to have completed the "Brewery" onboarding for CosmoTech projects
     + You need a local version of the "Brewery" solution (available [here](https://github.com/Cosmo-Tech/onboarding-brewery-solution))
 
---8<-- "docs/partials/orchestrator_known_issues.md"
+--8<-- "partials/orchestrator_known_issues.md"
 
 ## Create a new orchestration file for a Run Template
 

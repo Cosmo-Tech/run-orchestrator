@@ -53,13 +53,15 @@ nav:
   - Semantic Validator: "Validator.md"
   - Commands:
       - Commands list: "commands/index.md"
-      - Scenario data download: "commands/scenario_data_downloader.md"
-      - Download cloud Steps: "commands/download_cloud_steps.md"
-      - Run Python Steps: "commands/run_step.md"
-      - Simulation to ADX: "commands/simulation_to_adx.md"
       - Orchestrator: "commands/orchestrator.md"
-      - Legacy Generator: "commands/legacy_json_generator.md"
-      - Initialize Parameters folder: "commands/parameters_generator.md"
+      - Legacy help:
+        - Scenario data download: "commands/scenario_data_downloader.md"
+        - Download cloud Steps: "commands/download_cloud_steps.md"
+        - Run Python Steps: "commands/run_step.md"
+        - Simulation to ADX: "commands/simulation_to_adx.md"
+        - Legacy Generator: "commands/legacy_json_generator.md"
+      - Helpers:
+        - Initialize Parameters folder: "commands/parameters_generator.md"
 
 markdown_extensions:
     - admonition
