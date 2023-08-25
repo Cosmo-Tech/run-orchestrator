@@ -1,0 +1,21 @@
+> csm-run-orchestrator init-parameters --help
+                                                                                                                                                                                                                  
+ Usage: csm-run-orchestrator init-parameters [OPTIONS] COMMAND [ARGS]...                                                                                                                                          
+                                                                                                                                                                                                                  
+ Base command to initialize parameter folders                                                                                                                                                                     
+ Will create:                                                                                                                                                                                                     
+                                                                                                                                                                                                                  
+  • A parameters.json/parameters.csv in the folder with all parameters                                                                                                                                            
+  • A folder per %DATASETID% datasets with the name of the parameter                                                                                                                                              
+    Check the help of the sub commands for more information:                                                                                                                                                      
+  • cloud requires access to a fully deployed solution                                                                                                                                                            
+  • solution requires a Solution.yaml file                                                                                                                                                                        
+                                                                                                                                                                                                                  
+╭─ OPTIONS ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --web-help      Open the web documentation                                                                                                                                                                     │
+│ --help          Show this message and exit.                                                                                                                                                                    │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ cloud     Initialize parameter folder for given run template from CosmoTech cloud API                                                                                                                          │
+│ solution  Initialize parameter folder for given run template from a Solution yaml file                                                                                                                         │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
