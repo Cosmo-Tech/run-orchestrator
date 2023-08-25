@@ -47,7 +47,7 @@ After all those commands you environment should be ready for a test, but first l
         pip install cosmotech-run-orchestrator
         ```
 
-After installation a few commands are made available, documentation for each is available on the [commands documentation page](./commands)
+After installation a few commands are made available, documentation for each is available on the [commands documentation page](./commands/index.md)
 
 !!! info "Autocompletion"
     Run the following command

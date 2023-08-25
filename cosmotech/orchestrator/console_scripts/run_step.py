@@ -67,12 +67,18 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
     _steps = []
     for s in steps:
         if template_path / s in available_steps:
-            _steps.append(s)
+            if _steps is not None:
+                _steps.append(s)
             continue
-        if s == "engine" and (project / "Generated/Build/Bin/main").exists():
-            use_main_engine = True
-            _steps.append(s)
-            continue
+        if s == "engine":
+            if (project / "Generated/Build/Bin/main").exists():
+                use_main_engine = True
+                _steps.append(s)
+                continue
+            else:
+                LOGGER.error('No engine exists for step "engine"')
+                _steps = None
+                continue
         if not csmdocker:
             LOGGER.error(f"{s} is not a valid step")
             _steps = None
