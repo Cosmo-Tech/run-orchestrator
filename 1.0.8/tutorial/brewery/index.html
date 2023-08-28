@@ -1176,12 +1176,12 @@ The loader targets the folder <code>Simulation/Resource/scenariorun-data</code> 
 thus we will back it up to keep our original dataset replace the content with our new data and run the simulation 
 before replacing the back-up in its original folder.</p>
 </div>
-<div class="highlight"><span class="filename">Back up scenariorun-data</span><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-L<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<div class="highlight"><span class="filename">code/run_templates/orchestrator_tutorial/replace_scenariorun_data.sh</span><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-L<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">  </span>mv<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>Simulation/Resource/scenariorun-data.back
 <span class="k">fi</span><span class="w"> </span>
 ln<span class="w"> </span>-s<span class="w"> </span><span class="k">$(</span>realpath<span class="w"> </span><span class="nv">$CSM_DATASET_ABSOLUTE_PATH</span><span class="k">)</span><span class="w"> </span>Simulation/Resource/scenariorun-data
 </code></pre></div>
-<div class="highlight"><span class="filename">restore scenariorun-data</span><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-L<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<div class="highlight"><span class="filename">code/run_templates/orchestrator_tutorial/restore_scenariorun_data.sh</span><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-L<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">  </span>rm<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>
 <span class="w">  </span>mv<span class="w"> </span>Simulation/Resource/scenariorun-data.back<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>
 <span class="k">fi</span>
@@ -1191,17 +1191,6 @@ ln<span class="w"> </span>-s<span class="w"> </span><span class="k">$(</span>rea
 csm-run-orchestrator<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>what_if<span class="w"> </span>--steps<span class="w"> </span>engine
 </code></pre></div>
 <p>Using those 3 commands we are now able to run a local simulation and set back our state.</p>
-<p>Everything can be run in a single action with the following script
-<div class="highlight"><span class="filename">code/run_templates//orchestrator_tutorial/run_engine.sh</span><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-L<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span>mv<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>Simulation/Resource/scenariorun-data.back
-<span class="k">fi</span><span class="w"> </span>
-ln<span class="w"> </span>-s<span class="w"> </span><span class="k">$(</span>realpath<span class="w"> </span><span class="nv">$CSM_DATASET_ABSOLUTE_PATH</span><span class="k">)</span><span class="w"> </span>Simulation/Resource/scenariorun-data
-csm-run-orchestrator<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>what_if<span class="w"> </span>--steps<span class="w"> </span>engine
-<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-L<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span>rm<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>
-<span class="w">  </span>mv<span class="w"> </span>Simulation/Resource/scenariorun-data.back<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>
-<span class="k">fi</span>
-</code></pre></div></p>
 <p>We now have been able to apply our parameter handler and then run our simulation using 3 environment variables, 
 we are ready to write our orchestration file.</p>
 <h3 id="writing-the-orchestration-file">Writing the orchestration file</h3>
@@ -1227,24 +1216,50 @@ we are ready to write our orchestration file.</p>
 <span class="w">      </span><span class="p">}</span>
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;engine&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;replace-data&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bash&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;code/run_templates/tutorial/run_engine.sh&quot;</span>
+<span class="w">        </span><span class="s2">&quot;code/run_templates/orchestrator_tutorial/replace_scenariorun_data.sh&quot;</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Replace exisiting scenariorun-data with our dataset&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A folder containing our dataset&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;precedents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;parameter-handler&quot;</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;engine&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;csm-run-orchestrator&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;run-step&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--template&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;what_if&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--steps&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;engine&quot;</span>
 <span class="w">      </span><span class="p">],</span>
 <span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Run the simulation targeted by CSM_SIMULATION&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;useSystemEnvironment&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A folder containing our dataset&quot;</span>
-<span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="nt">&quot;CSM_SIMULATION&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The simulation file to run&quot;</span><span class="p">,</span>
 <span class="w">          </span><span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BusinessApp_Simulation&quot;</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">      </span><span class="p">},</span>
 <span class="w">      </span><span class="nt">&quot;precedents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;parameter-handler&quot;</span>
+<span class="w">        </span><span class="s2">&quot;replace-data&quot;</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;restore-data&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bash&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;code/run_templates/orchestrator_tutorial/restore_scenariorun_data.sh&quot;</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Restore scenariorun-data if it was existing before the run&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;precedents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;engine&quot;</span>
 <span class="w">      </span><span class="p">]</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">]</span>
