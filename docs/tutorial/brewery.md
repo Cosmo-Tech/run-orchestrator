@@ -97,18 +97,12 @@ Then we will copy our dataset in the now empty folder.
     thus we will back it up to keep our original dataset replace the content with our new data and run the simulation 
     before replacing the back-up in its original folder.
 
-```bash title="Back up scenariorun-data"
-if [ -e "Simulation/Resource/scenariorun-data" ] || [ -L "Simulation/Resource/scenariorun-data" ]; then
-  mv Simulation/Resource/scenariorun-data Simulation/Resource/scenariorun-data.back
-fi 
-ln -s $(realpath $CSM_DATASET_ABSOLUTE_PATH) Simulation/Resource/scenariorun-data
+```bash title="code/run_templates/orchestrator_tutorial/replace_scenariorun_data.sh"
+--8<-- "tutorial/brewery/replace_scenariorun_data.sh"
 ```
 
-```bash title="restore scenariorun-data"
-if [ -e "Simulation/Resource/scenariorun-data.back" ] || [ -L "Simulation/Resource/scenariorun-data.back" ]; then
-  rm Simulation/Resource/scenariorun-data 
-  mv Simulation/Resource/scenariorun-data.back Simulation/Resource/scenariorun-data 
-fi
+```bash title="code/run_templates/orchestrator_tutorial/restore_scenariorun_data.sh"
+--8<-- "tutorial/brewery/restore_scenariorun_data.sh"
 ```
 
 Using the environment variable `CSM_Simulation` we can control which simulation to run.
@@ -119,11 +113,6 @@ csm-run-orchestrator run-step --template what_if --steps engine
 ```
 
 Using those 3 commands we are now able to run a local simulation and set back our state.
-
-Everything can be run in a single action with the following script
-```bash title="code/run_templates//orchestrator_tutorial/run_engine.sh"
---8<-- "tutorial/brewery/run_engine.sh"
-```
 
 We now have been able to apply our parameter handler and then run our simulation using 3 environment variables, 
 we are ready to write our orchestration file.

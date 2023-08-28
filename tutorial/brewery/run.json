@@ -19,24 +19,50 @@
       }
     },
     {
-      "id": "engine",
+      "id": "replace-data",
       "command": "bash",
       "arguments": [
-        "code/run_templates/tutorial/run_engine.sh"
+        "code/run_templates/orchestrator_tutorial/replace_scenariorun_data.sh"
+      ],
+      "description": "Replace exisiting scenariorun-data with our dataset",
+      "environment": {
+        "CSM_DATASET_ABSOLUTE_PATH": {
+          "description": "A folder containing our dataset"
+        }
+      },
+      "precedents": [
+        "parameter-handler"
+      ]
+    },
+    {
+      "id": "engine",
+      "command": "csm-run-orchestrator",
+      "arguments": [
+        "run-step", "--template",
+        "what_if", "--steps",
+        "engine"
       ],
       "description": "Run the simulation targeted by CSM_SIMULATION",
       "useSystemEnvironment": true,
       "environment": {
-        "CSM_DATASET_ABSOLUTE_PATH": {
-          "description": "A folder containing our dataset"
-        },
         "CSM_SIMULATION": {
           "description": "The simulation file to run",
           "defaultValue": "BusinessApp_Simulation"
         }
       },
       "precedents": [
-        "parameter-handler"
+        "replace-data"
+      ]
+    },
+    {
+      "id": "restore-data",
+      "command": "bash",
+      "arguments": [
+        "code/run_templates/orchestrator_tutorial/restore_scenariorun_data.sh"
+      ],
+      "description": "Restore scenariorun-data if it was existing before the run",
+      "precedents": [
+        "engine"
       ]
     }
   ]
