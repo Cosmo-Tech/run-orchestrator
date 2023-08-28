@@ -1048,14 +1048,21 @@ Setting <code>useSystemEnvironment</code> to <code>true</code> in the orchestrat
 </div>
 <h2 id="create-a-new-orchestration-file-for-a-run-template">Create a new orchestration file for a Run Template</h2>
 <p>In this first part we will look at creating a new orchestration file from scratch.</p>
+<p>We will first initialize our run template folder</p>
+<div class="highlight"><span class="filename">create tutorial run template folder</span><pre><span></span><code>mkdir<span class="w"> </span>code/run_templates/tutorial
+</code></pre></div>
+<details class="info">
+<summary>Info</summary>
+<p>By creating it inside the <code>code/run_templates</code> folder we will make it packaged in future docker images</p>
+</details>
 <h3 id="write-a-parameters-file">Write a <code>parameters</code> file</h3>
 <p>We will create a set of parameters, make them available for the <code>what_if</code> parameter handler defined during the onboarding and then run our simulator.</p>
 <p>To initialize our parameters, we will use a helper command of <code>csm-run-orchestrator</code> : <code>init-parameters</code></p>
 <p>During the onboarding we created the file <code>API/Solution.yaml</code> that contains the API definition of the Solution and the parameters we will be using it to initialize our parameters file. </p>
-<div class="highlight"><span class="filename">Initialize parameters.json</span><pre><span></span><code>csm-run-orchestrator<span class="w"> </span>init-parameters<span class="w"> </span>solution<span class="w"> </span>API/Solution.yaml<span class="w"> </span>tutorial/parameters<span class="w"> </span>what_if<span class="w"> </span>--no-write-csv<span class="w"> </span>--write-json
+<div class="highlight"><span class="filename">Initialize parameters.json</span><pre><span></span><code>csm-run-orchestrator<span class="w"> </span>init-parameters<span class="w"> </span>solution<span class="w"> </span>API/Solution.yaml<span class="w"> </span>code/run_templates/tutorial/parameters<span class="w"> </span>what_if<span class="w"> </span>--no-write-csv<span class="w"> </span>--write-json
 </code></pre></div>
 <p>After running this command we have a folder <code>tutorial</code> initialized with our <code>parameters</code> folder and a <code>parameters.json</code> file</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">code/tutorial/parameters/parameters.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">code/run_templates/tutorial/parameters/parameters.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
 <span class="normal"> 4</span>
@@ -1137,21 +1144,24 @@ Setting <code>useSystemEnvironment</code> to <code>true</code> in the orchestrat
 <span class="p">]</span>
 </code></pre></div></td></tr></table></div>
 <p>Before moving on we will create a folder <code>dataset</code> in the <code>tutorial</code> folder for future use</p>
-<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>tutorial/dataset
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>code/run_templates/tutorial/dataset
 </code></pre></div>
 <p>Now that we have a <code>tutorial</code> folder ready to be used we can start working on our orchestration file.</p>
 <h3 id="define-our-set-of-commands">Define our set of commands</h3>
 <p>But first we will define which commands we want to run before orchestrating them.</p>
 <p>For simplicity, we will be using helper commands made available with <code>csm-run-orchestrator</code> again so that we can keep commands close to the cloud environment.</p>
 <p>To run our steps we will make use of the <code>run-step</code> command</p>
-<p>The <code>parameters_handler</code> part make use of 2 environment variables (defined in its code) : 
-- <code>CSM_DATASET_ABSOLUTE_PATH</code> : a path to our dataset
-- <code>CSM_PARAMETERS_ABSOLUTE_PATH</code> : a path to our parameters</p>
+<p>In the onboarding of the brewery you create a run template called <code>what_if</code> we will be making use of its code with no modification.</p>
+<p>The <code>parameters_handler</code> part make use of 2 environment variables (defined in its code) :</p>
+<ul>
+<li><code>CSM_DATASET_ABSOLUTE_PATH</code> : a path to our dataset  </li>
+<li><code>CSM_PARAMETERS_ABSOLUTE_PATH</code> : a path to our parameters</li>
+</ul>
 <p>We previously created the content of our <code>tutorial</code> folder we will be using it there to make our data available.</p>
 <p>One last step will be to copy the content of our dataset in the folder.</p>
-<div class="highlight"><span class="filename">run parameter handler step</span><pre><span></span><code>cp<span class="w"> </span>Simulation/Resource/scenariorun-data/*<span class="w"> </span>code/tutorial/dataset
-<span class="nb">export</span><span class="w"> </span><span class="nv">CSM_DATASET_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;code/tutorial/dataset&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">CSM_PARAMETERS_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;code/tutorial/parameters&quot;</span>
+<div class="highlight"><span class="filename">run parameter handler step</span><pre><span></span><code>cp<span class="w"> </span>Simulation/Resource/scenariorun-data/*<span class="w"> </span>code/run_templates/tutorial/dataset
+<span class="nb">export</span><span class="w"> </span><span class="nv">CSM_DATASET_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;code/run_templates/tutorial/dataset&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">CSM_PARAMETERS_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;code/run_templates/tutorial/parameters&quot;</span>
 csm-run-orchestrator<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>what_if<span class="w"> </span>--steps<span class="w"> </span>parameters_handler
 </code></pre></div>
 <p>By taking a look at the values of the <code>tutorial/dataset/Bar.csv</code> file we can see that our <code>parameters_handler</code> worked.</p>
@@ -1166,13 +1176,13 @@ The loader targets the folder <code>Simulation/Resource/scenariorun-data</code> 
 thus we will back it up to keep our original dataset replace the content with our new data and run the simulation 
 before replacing the back-up in its original folder.</p>
 </div>
-<div class="highlight"><span class="filename">Back up scenariorun-data</span><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data/&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span>mv<span class="w"> </span>Simulation/Resource/scenariorun-data/<span class="w"> </span>Simulation/Resource/scenariorun-data.back
-<span class="k">fi</span>
-cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$CSM_DATASET_ABSOLUTE_PATH</span>/*<span class="w"> </span>Simulation/Resource/scenariorun-data/
+<div class="highlight"><span class="filename">Back up scenariorun-data</span><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-L<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>mv<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>Simulation/Resource/scenariorun-data.back
+<span class="k">fi</span><span class="w"> </span>
+ln<span class="w"> </span>-s<span class="w"> </span><span class="k">$(</span>realpath<span class="w"> </span><span class="nv">$CSM_DATASET_ABSOLUTE_PATH</span><span class="k">)</span><span class="w"> </span>Simulation/Resource/scenariorun-data
 </code></pre></div>
-<div class="highlight"><span class="filename">restore scenariorun-data</span><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back/&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span>rm<span class="w"> </span>-rf<span class="w"> </span>Simulation/Resource/scenariorun-data/<span class="w"> </span>
+<div class="highlight"><span class="filename">restore scenariorun-data</span><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-L<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>rm<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>
 <span class="w">  </span>mv<span class="w"> </span>Simulation/Resource/scenariorun-data.back<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>
 <span class="k">fi</span>
 </code></pre></div>
@@ -1182,13 +1192,13 @@ csm-run-orchestrator<span class="w"> </span>run-step<span class="w"> </span>--te
 </code></pre></div>
 <p>Using those 3 commands we are now able to run a local simulation and set back our state.</p>
 <p>Everything can be run in a single action with the following script
-<div class="highlight"><span class="filename">code/tutorial/run_engine.sh</span><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span>mv<span class="w"> </span>Simulation/Resource/scenariorun-data/<span class="w"> </span>Simulation/Resource/scenariorun-data.back
-<span class="k">fi</span>
-cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$CSM_DATASET_ABSOLUTE_PATH</span><span class="w"> </span>Simulation/Resource/scenariorun-data
+<div class="highlight"><span class="filename">code/run_templates//tutorial/run_engine.sh</span><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-L<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>mv<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>Simulation/Resource/scenariorun-data.back
+<span class="k">fi</span><span class="w"> </span>
+ln<span class="w"> </span>-s<span class="w"> </span><span class="k">$(</span>realpath<span class="w"> </span><span class="nv">$CSM_DATASET_ABSOLUTE_PATH</span><span class="k">)</span><span class="w"> </span>Simulation/Resource/scenariorun-data
 csm-run-orchestrator<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>what_if<span class="w"> </span>--steps<span class="w"> </span>engine
-<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span>rm<span class="w"> </span>-rf<span class="w"> </span>Simulation/Resource/scenariorun-data/<span class="w"> </span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-L<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>rm<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>
 <span class="w">  </span>mv<span class="w"> </span>Simulation/Resource/scenariorun-data.back<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>
 <span class="k">fi</span>
 </code></pre></div></p>
@@ -1196,7 +1206,7 @@ csm-run-orchestrator<span class="w"> </span>run-step<span class="w"> </span>--te
 we are ready to write our orchestration file.</p>
 <h3 id="writing-the-orchestration-file">Writing the orchestration file</h3>
 <p>Following the previous tutorials it is easy to write a simple orchestration file :</p>
-<div class="highlight"><span class="filename">code/tutorial/simple_orchestration.json</span><pre><span></span><code><span class="p">{</span>
+<div class="highlight"><span class="filename">code/run_templates/tutorial/simple_orchestration.json</span><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;parameter-handler&quot;</span><span class="p">,</span>
@@ -1220,7 +1230,7 @@ we are ready to write our orchestration file.</p>
 <span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;engine&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bash&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;code/tutorial/run_engine.sh&quot;</span>
+<span class="w">        </span><span class="s2">&quot;code/run_templates/tutorial/run_engine.sh&quot;</span>
 <span class="w">      </span><span class="p">],</span>
 <span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Run the simulation targeted by CSM_SIMULATION&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;useSystemEnvironment&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
@@ -1248,10 +1258,10 @@ Without it (or if set to <code class="highlight"><span class="kc">false</span></
 <p><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/26a0.svg" title=":warning:" /> In a docker environment we won't have access to a graphical interface, so even with this field the QT Consumers will crash.</p>
 </div>
 <p>We can then easily run this file :</p>
-<div class="highlight"><span class="filename">run simple_orchestration.json</span><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CSM_DATASET_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;code/tutorial/dataset&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">CSM_PARAMETERS_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;code/tutorial/parameters&quot;</span>
+<div class="highlight"><span class="filename">run simple_orchestration.json</span><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CSM_DATASET_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;code/run_templates/tutorial/dataset&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">CSM_PARAMETERS_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;code/run_templates/tutorial/parameters&quot;</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">CSM_SIMULATION</span><span class="o">=</span><span class="s2">&quot;CSV_Simulation&quot;</span>
-csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>code/tutorial/simple_orchestration.json
+csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>code/run_templates/tutorial/simple_orchestration.json
 </code></pre></div>
 
 
