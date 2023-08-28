@@ -60,7 +60,8 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
     template_path = project / "code/run_templates" / target_template
     available_steps = list(template_path.glob('*'))
     csmdocker = False
-    use_main_engine = False
+    engine_possible_paths = [project / "Generated/Build/Bin/main", pathlib.Path("/pkg/bin/main")]
+    engine_path = None
     if "CSMDOCKER" in steps:
         steps = ["parameters_handler", "validator", "prerun", "engine", "postrun"]
         csmdocker = True
@@ -71,14 +72,15 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
                 _steps.append(s)
             continue
         if s == "engine":
-            if (project / "Generated/Build/Bin/main").exists():
-                use_main_engine = True
-                _steps.append(s)
-                continue
+            for possible_engine in engine_possible_paths:
+                if possible_engine.exists():
+                    engine_path = possible_engine
+                    _steps.append(s)
+                    break
             else:
                 LOGGER.error('No engine exists for step "engine"')
                 _steps = None
-                continue
+            continue
         if not csmdocker:
             LOGGER.error(f"{s} is not a valid step")
             _steps = None
@@ -90,7 +92,7 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
         return 1
 
     for s in _steps:
-        if s == "engine" and use_main_engine:
+        if s == "engine" and engine_path is not None:
             if not (simulation := os.environ.get('CSM_SIMULATION')):
                 LOGGER.error("To use direct main simulation (no engine step in python) "
                              "you need to set the environment variable CSM_SIMULATION "
@@ -99,7 +101,7 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
                 args = ["-i",
                         simulation]
                 subprocess.run(args=args,
-                               executable="Generated/Build/Bin/main")
+                               executable=str(engine_path.absolute()))
             continue
         main_path = template_path / s
 
