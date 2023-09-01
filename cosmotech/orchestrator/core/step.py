@@ -10,6 +10,7 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from dataclasses import field
+import tempfile
 from typing import Union
 
 import os
@@ -117,19 +118,19 @@ class Step:
                 try:
                     executable = pathlib.Path(sys.executable)
                     venv = (executable.parent / "activate")
-                    cmd_line = list()
-                    cmd_line.append("bash -c")
-                    sub_command = list()
+                    tmp_file = tempfile.NamedTemporaryFile("w", delete=False)
+                    tmp_file_content = []
                     if venv.exists():
-                        sub_command.append(f"source {str(venv)};")
-                    sub_command.append(self.command)
-                    sub_command.extend(self.arguments)
-                    cmd_line.append("\"" + " ".join(sub_command) + "\"")
-                    LOGGER.debug("Running:" + " ".join(cmd_line))
-                    r = subprocess.run(" ".join(cmd_line),
-                                       shell=True,
+                        tmp_file_content.append(f"source {str(venv)}")
+                    tmp_file_content.append(f"""{self.command} {" ".join(f'"{a}"' for a in self.arguments)}""")
+                    tmp_file.write("\n".join(tmp_file_content))
+                    LOGGER.debug("Running:" + ";".join(tmp_file_content))
+                    tmp_file.close()
+                    r = subprocess.run(executable="/bin/bash",
+                                       args=["-c", tmp_file.name],
                                        env=_e,
                                        check=True)
+                    os.remove(tmp_file.name)
                     if r.returncode != 0:
                         LOGGER.error(f"Error during step [green bold]{self.id}[/]")
                         self.status = "RunError"
