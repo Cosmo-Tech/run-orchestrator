@@ -12,6 +12,7 @@ from cosmotech.orchestrator.core.orchestrator import Orchestrator
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
+from cosmotech.orchestrator import VERSION
 
 
 @click.command()
@@ -43,17 +44,26 @@ from cosmotech.orchestrator.utils.logger import LOGGER
               multiple=True,
               metavar="STEP_ID",
               help="Define a list of steps to be skipped during this run")
+@click.option("--validate-only/--no-validate-only", "validate_only",
+              envvar="CSM_ORCHESTRATOR_VALIDATE_ONLY",
+              show_envvar=True,
+              default=False,
+              help="Run only a sematic validation of the orchestrator file")
 @web_help("commands/orchestrator")
-def main(template: str, dry_run: bool, display_env: bool, gen_env_target: Optional[str], skipped_steps: list[str]):
+def main(template: str, dry_run: bool, display_env: bool, gen_env_target: Optional[str], skipped_steps: list[str], 
+         validate_only: bool):
     """Runs the given `TEMPLATE` file  
 Commands are run as subprocess using `bash -c "<command> <arguments>"`.  
 In case you are in a python venv, the venv is activated before any command is run."""
+    LOGGER.info(f"Starting run orchestrator version {VERSION}")
     f = Orchestrator()
     try:
-        c, s, g = f.load_json_file(template, dry_run, display_env, skipped_steps)
+        c, s, g = f.load_json_file(template, dry_run, display_env, skipped_steps, validate_only)
     except ValueError as e:
         LOGGER.error(e)
     else:
+        if g is None:
+            return
         if not display_env:
             LOGGER.info("===      Run     ===")
             g.evaluate(mode="threading")

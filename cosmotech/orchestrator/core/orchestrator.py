@@ -48,10 +48,17 @@ class Orchestrator(metaclass=Singleton):
         self, json_file_path,
         dry: bool = False,
         display_env: bool = False,
-        skipped_steps: list[str] = ()
+        skipped_steps: list[str] = (),
+        validate_only: bool = False
     ):
         _path = pathlib.Path(json_file_path)
         _run_content = json.load(open(_path))
+        schema_path = pathlib.Path(__file__).parent.parent / "schema/run_template_json_schema.json"
+        schema = json.load(open(schema_path))
+        jsonschema.validate(_run_content, schema)
+        if validate_only:
+            LOGGER.info(f"[green bold]{_path}[/] is a valid orchestration file")
+            return None, None, None
         return self._load_from_json_content(json_file_path, _run_content, dry, display_env, skipped_steps)
 
     def _load_from_json_content(
@@ -63,9 +70,6 @@ class Orchestrator(metaclass=Singleton):
         g = flowpipe.Graph(name=json_file_path)
         steps: dict[str, (Step, flowpipe.Node)] = dict()
         commands: dict[str, CommandTemplate] = dict()
-        schema_path = pathlib.Path(__file__).parent.parent / "schema/run_template_json_schema.json"
-        schema = json.load(open(schema_path))
-        jsonschema.validate(_run_content, schema)
         for tmpl in _run_content.get("commandTemplates", list()):
             self.load_command(commands, **tmpl)
         for step in _run_content.get("steps", list()):
