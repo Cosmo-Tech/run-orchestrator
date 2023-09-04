@@ -286,7 +286,7 @@ def run_direct_simulator():
         else:
             logging.warning("No Control plane topic")
     else:
-        args = sys.argv[1:]
+        args = sys.argv[2:]
         logging.debug(f"main arguments: {args}")
 
     subprocess.check_call([CSM_MAIN] + args)
@@ -383,29 +383,35 @@ def run_entrypoint():
         handle_mode(mode)
 
 
-@click.command(hidden="True")
+@click.command(hidden="True", context_settings=dict(ignore_unknown_options=True, allow_extra_args=True))
 def main():
     """Docker entrypoint
     
     This command is used in CosmoTech docker containers only"""
-    if os.environ.get("CSM_ENTRYPOINT_LEGACY", "true").lower() == "true":
-        run_entrypoint()
-    else:
-        if importlib.util.find_spec("cosmotech") is None or importlib.util.find_spec("cosmotech.orchestrator") is None:
-            raise EntrypointException("You need to install the library `cosmotech-run-orchestrator` in your container. "
-                                      "Check if you set it in your requirements.txt.")
-        get_env()
-        project_root = Path("/pkg/share")
-        template_id = os.environ.get("CSM_RUN_TEMPLATE_ID")
-        if template_id is None:
-            raise EntrypointException("No run template id defined in environment variable \"CSM_RUN_TEMPLATE_ID\"")
-        orchestrator_json = project_root / "code/run_templates" / template_id / "run.json"
-        if not orchestrator_json.is_file():
-            raise EntrypointException(f"No \"run.json\" defined for the run template {template_id}")
-        _env = os.environ.copy()
-        subprocess.check_call(["csm-run-orchestrator", "orchestrator", str(orchestrator_json.absolute())],
-                              cwd=project_root,
-                              env=_env)
+    try:
+        if os.environ.get("CSM_ENTRYPOINT_LEGACY", "true").lower() == "true":
+            run_entrypoint()
+        else:
+            if importlib.util.find_spec("cosmotech") is None or importlib.util.find_spec(
+                    "cosmotech.orchestrator") is None:
+                raise EntrypointException(
+                    "You need to install the library `cosmotech-run-orchestrator` in your container. "
+                    "Check if you set it in your requirements.txt.")
+            get_env()
+            project_root = Path("/pkg/share")
+            template_id = os.environ.get("CSM_RUN_TEMPLATE_ID")
+            if template_id is None:
+                raise EntrypointException("No run template id defined in environment variable \"CSM_RUN_TEMPLATE_ID\"")
+            orchestrator_json = project_root / "code/run_templates" / template_id / "run.json"
+            if not orchestrator_json.is_file():
+                raise EntrypointException(f"No \"run.json\" defined for the run template {template_id}")
+            _env = os.environ.copy()
+            subprocess.check_call(["csm-run-orchestrator", "orchestrator", str(orchestrator_json.absolute())],
+                                  cwd=project_root,
+                                  env=_env)
+    except subprocess.CalledProcessError:
+        logging.error("Error while running the entrypoint - check your logs")
+        exit(1)
 
 
 if __name__ == "__main__":
