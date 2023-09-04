@@ -52,7 +52,8 @@ def web_help(documentation_target):
         def f(*args, **kwargs):
             if kwargs.get('web_help'):
                 return
-            del kwargs['web_help']
+            if 'web_help' in kwargs:
+                del kwargs['web_help']
             return func(*args, **kwargs)
 
         return f

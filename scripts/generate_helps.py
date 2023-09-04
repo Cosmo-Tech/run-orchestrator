@@ -17,7 +17,7 @@ from cosmotech.orchestrator.console_scripts.download_cloud_steps import main as 
 from cosmotech.orchestrator.console_scripts.legacy_json_generator import cloud as legacy_gen_command_cloud
 from cosmotech.orchestrator.console_scripts.legacy_json_generator import main as legacy_gen_command
 from cosmotech.orchestrator.console_scripts.legacy_json_generator import solution as legacy_gen_command_sol
-from cosmotech.orchestrator.console_scripts.orchestrator import main as orchestrator_command
+from cosmotech.orchestrator.console_scripts.run import main as orchestrator_run_command
 from cosmotech.orchestrator.console_scripts.parameters_generation import cloud as parameters_generation_command_cloud
 from cosmotech.orchestrator.console_scripts.parameters_generation import main as parameters_generation_command
 from cosmotech.orchestrator.console_scripts.parameters_generation import solution as parameters_generation_command_sol
@@ -26,17 +26,17 @@ from cosmotech.orchestrator.console_scripts.scenario_data_downloader import main
 
 ansi_escape = re.compile(r'(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]')
 commands = {
-    "csm-run-orchestrator run-step": run_step_command,
-    "csm-run-orchestrator fetch-cloud-steps": dl_cloud_steps_command,
-    "csm-run-orchestrator fetch-scenariorun-data": scenario_data_dl_command,
-    "csm-run-orchestrator send-to-adx": adx_scenario_connector_command,
-    "csm-run-orchestrator orchestrator": orchestrator_command,
-    "csm-run-orchestrator gen-from-legacy": legacy_gen_command,
-    "csm-run-orchestrator gen-from-legacy solution": legacy_gen_command_sol,
-    "csm-run-orchestrator gen-from-legacy cloud": legacy_gen_command_cloud,
-    "csm-run-orchestrator init-parameters": parameters_generation_command,
-    "csm-run-orchestrator init-parameters solution": parameters_generation_command_sol,
-    "csm-run-orchestrator init-parameters cloud": parameters_generation_command_cloud
+    "csm-orc run-step": run_step_command,
+    "csm-orc fetch-cloud-steps": dl_cloud_steps_command,
+    "csm-orc fetch-scenariorun-data": scenario_data_dl_command,
+    "csm-orc send-to-adx": adx_scenario_connector_command,
+    "csm-orc run": orchestrator_run_command,
+    "csm-orc gen-from-legacy": legacy_gen_command,
+    "csm-orc gen-from-legacy solution": legacy_gen_command_sol,
+    "csm-orc gen-from-legacy cloud": legacy_gen_command_cloud,
+    "csm-orc init-parameters": parameters_generation_command,
+    "csm-orc init-parameters solution": parameters_generation_command_sol,
+    "csm-orc init-parameters cloud": parameters_generation_command_cloud
 }
 help_folder = pathlib.Path("generated/commands_help")
 help_folder.mkdir(parents=True, exist_ok=True)

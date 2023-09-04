@@ -126,7 +126,7 @@ def generate_from_template(template: RunTemplate, output: str):
     if template.fetch_datasets is not False or template.fetch_scenario_parameters:
         LOGGER.info("- [green]fetch_scenario_parameters[/] step found")
         _s = Step(id="fetch_scenario_parameters",
-                  command="csm-run-orchestrator",
+                  command="csm-orc",
                   arguments=["fetch-scenariorun-data"],
                   environment={
                       "CSM_ORGANIZATION_ID": {
@@ -181,7 +181,7 @@ def generate_from_template(template: RunTemplate, output: str):
                 LOGGER.info(f"- [green]{name}_cloud[/] step found")
                 _name = f"{name}_cloud"
                 _step_dl_cloud = Step(id=_name,
-                                      command="csm-run-orchestrator",
+                                      command="csm-orc",
                                       arguments=["fetch-cloud-steps"],
                                       environment={
                                           "CSM_ORGANIZATION_ID": {
@@ -225,7 +225,7 @@ def generate_from_template(template: RunTemplate, output: str):
                 _steps.append(_step_dl_cloud)
             LOGGER.info(f"- [green]{name}[/] step found")
             _run_step = Step(id=name,
-                             command="csm-run-orchestrator",
+                             command="csm-orc",
                              arguments=["run-step"],
                              environment={
                                  "CSM_ORGANIZATION_ID": {
@@ -303,7 +303,7 @@ def generate_from_template(template: RunTemplate, output: str):
     if template.send_datasets_to_data_warehouse is True or template.send_input_parameters_to_data_warehouse is True:
         LOGGER.info("- [green]send_to_adx[/] step found")
         _send_to_adx_step = Step(id="send_to_adx",
-                                 command="csm-run-orchestrator",
+                                 command="csm-orc",
                                  arguments=["send-to-adx"],
                                  environment={
                                      "AZURE_TENANT_ID": {

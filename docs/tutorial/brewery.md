@@ -27,12 +27,12 @@ mkdir code/run_templates/orchestrator_tutorial
 
 We will create a set of parameters, make them available for the `what_if` parameter handler defined during the onboarding and then run our simulator.
 
-To initialize our parameters, we will use a helper command of `csm-run-orchestrator` : `init-parameters`
+To initialize our parameters, we will use a helper command of `csm-orc` : `init-parameters`
 
 During the onboarding we created the file `API/Solution.yaml` that contains the API definition of the Solution and the parameters we will be using it to initialize our parameters file. 
 
 ```bash title="Initialize parameters.json"
-csm-run-orchestrator init-parameters solution API/Solution.yaml code/run_templates/orchestrator_tutorial/parameters what_if --no-write-csv --write-json
+csm-orc init-parameters solution API/Solution.yaml code/run_templates/orchestrator_tutorial/parameters what_if --no-write-csv --write-json
 ```
 
 After running this command we have a folder `orchestrator_tutorial` initialized with our `parameters` folder and a `parameters.json` file
@@ -59,7 +59,7 @@ Now that we have a `orchestrator_tutorial` folder ready to be used we can start 
 
 But first we will define which commands we want to run before orchestrating them.
 
-For simplicity, we will be using helper commands made available with `csm-run-orchestrator` again so that we can keep commands close to the cloud environment.
+For simplicity, we will be using helper commands made available with `csm-orc` again so that we can keep commands close to the cloud environment.
 
 To run our steps we will make use of the `run-step` command
 
@@ -78,7 +78,7 @@ One last step will be to copy the content of our dataset in the folder.
 cp Simulation/Resource/scenariorun-data/* code/run_templates/orchestrator_tutorial/dataset
 export CSM_DATASET_ABSOLUTE_PATH="code/run_templates/orchestrator_tutorial/dataset"
 export CSM_PARAMETERS_ABSOLUTE_PATH="code/run_templates/orchestrator_tutorial/parameters"
-csm-run-orchestrator run-step --template what_if --steps parameters_handler
+csm-orc run-step --template what_if --steps parameters_handler
 ```
 
 By taking a look at the values of the `code/run_templates/orchestrator_tutorial/dataset/Bar.csv` file we can see that our `parameters_handler` worked.
@@ -109,7 +109,7 @@ Using the environment variable `CSM_Simulation` we can control which simulation 
 
 ```bash title="run simulation"
 export CSM_SIMULATION="CSV_Simulation"
-csm-run-orchestrator run-step --template what_if --steps engine
+csm-orc run-step --template what_if --steps engine
 ```
 
 Using those 3 commands we are now able to run a local simulation and set back our state.
@@ -139,5 +139,5 @@ We can then easily run this file :
 export CSM_DATASET_ABSOLUTE_PATH="code/run_templates/orchestrator_tutorial/dataset"
 export CSM_PARAMETERS_ABSOLUTE_PATH="code/run_templates/orchestrator_tutorial/parameters"
 export CSM_SIMULATION="CSV_Simulation"
-csm-run-orchestrator orchestrator code/run_templates/orchestrator_tutorial/run.json
+csm-orc run code/run_templates/orchestrator_tutorial/run.json
 ```

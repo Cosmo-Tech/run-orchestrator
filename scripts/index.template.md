@@ -52,9 +52,9 @@ After installation a few commands are made available, documentation for each is 
 !!! info "Autocompletion"
     Run the following command
     ```bash
-    _CSM_RUN_ORCHESTRATOR_COMPLETE=bash_source csm-run-orchestrator > ~/.csm-run-orchestrator-complete.bash
+    _CSM_ORC_COMPLETE=bash_source csm-orc > ~/.csm-orc-complete.bash
     ```
     then add the following line at the end of your `.bashrc` file
     ```bash
-    . ~/.csm-run-orchestrator-complete.bash
+    . ~/.csm-orc-complete.bash
     ```

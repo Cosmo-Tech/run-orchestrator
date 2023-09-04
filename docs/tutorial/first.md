@@ -7,7 +7,7 @@
 
 ## Setting up our project
 
-During this tutorial we will start from a clean installation of `csm-run-orchestrator` and work our way to an
+During this tutorial we will start from a clean installation of `csm-orc` and work our way to an
 orchestrated solution.
 
 ```bash title="Set up our project"
@@ -22,7 +22,7 @@ python -m venv .venv
 # Now we can install the orchestrator using pip
 pip install cosmotech-run-orchestrator
 # We can check that our installation worked by running the orchestrator help
-csm-run-orchestrator --help
+csm-orc --help
 ```
 
 After all that our project is ready to start
@@ -98,7 +98,7 @@ This orchestration file is valid following the JSON schema as we have at least 1
 We can run this orchestration file with the following command :
 
 ```bash title="run simple_step.json" linenums="1"
-csm-run-orchestrator orchestrator simple_step.json
+csm-orc run simple_step.json
 # [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===
 # [YYYY/MM/DD-HH:mm:SS] INFO     Starting step echo-foo-bar
 # foo bar
@@ -119,7 +119,7 @@ Now using this basis we will write our commands in an orchestration file using t
     ```
     Now we can run our file using the orchestrator
     ```bash title="run our first orchestration"
-    csm-run-orchestrator orchestrator run.json
+    csm-orc run run.json
     ```
 
 In the example `run.json` you can see on line 12 the apparition of the key-words `precedents`, 

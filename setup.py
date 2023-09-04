@@ -33,7 +33,7 @@ setup(
     install_requires=required,
     entry_points={
         'console_scripts': [
-            'csm-run-orchestrator=cosmotech.orchestrator.console_scripts.main:main',
+            'csm-orc=cosmotech.orchestrator.console_scripts.main:main',
         ]
     },
 )

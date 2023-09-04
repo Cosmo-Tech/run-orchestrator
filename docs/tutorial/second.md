@@ -62,7 +62,7 @@ We added 2 definitions of our `FIBO_FILE_PATH` to the steps, so we can try to ru
 ```bash title="Run the orchestrator without the environment variable"
 # First we remove the definition of FIBO_FILE_PATH from the environment for the example
 unset FIBO_FILE_PATH
-csm-run-orchestrator orchestrator run_env.json
+csm-orc run run_env.json
 # [YYYY/MM/DD-HH:mm:SS] ERROR    Missing environment values
 # [YYYY/MM/DD-HH:mm:SS] ERROR     - FIBO_FILE_PATH 
 # [YYYY/MM/DD-HH:mm:SS] ERROR    Missing environment variables, check the logs
@@ -73,7 +73,7 @@ We can see that without defining our environment variable issues are displayed b
 If we wanted to know which environment variables are required for our orchestration script we can do the following
 
 ```bash title="Getting information about environment variables"
-csm-run-orchestrator orchestrator run_env.json --display-env
+csm-orc run run_env.json --display-env
 # [YYYY/MM/DD-HH:mm:SS] INFO     Environment variable defined for run_env.json
 # [YYYY/MM/DD-HH:mm:SS] INFO      - FIBO_FILE_PATH:
 #                                   - A file run-fibo will write to
@@ -85,7 +85,7 @@ We can see that all descriptions of a variable are made available.
 Let's give a value to `FIBO_FILE_PATH` and run our command
 
 ```bash title="Run the orchestrator with the environment variable"
-FIBO_FILE_PATH=fib_second.txt csm-run-orchestrator orchestrator run_env.json
+FIBO_FILE_PATH=fib_second.txt csm-orc run run_env.json
 # [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===
 # [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo
 # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-fibo
@@ -132,7 +132,7 @@ ensuring that even if the environment variable is not defined a default value is
 === "Run without the new variable"
     ```bash title="Run as previously"
     export FIBO_FILE_PATH=fib_second.txt
-    csm-run-orchestrator orchestrator run_env_arg.json
+    csm-orc run run_env_arg.json
     # [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===
     # [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo
     # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-fibo
@@ -165,7 +165,7 @@ ensuring that even if the environment variable is not defined a default value is
     ```bash title="Run the orchestrator with the new environment variable"
     export FIBO_FILE_PATH=fib_second.txt
     export FIBO_COUNT=8
-    csm-run-orchestrator orchestrator run_env_arg.json
+    csm-orc run run_env_arg.json
     # [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===
     # [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo
     # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-fibo
@@ -209,7 +209,7 @@ Now we can call the new file as previously
 ```bash title="Run the orchestrator with a command template"
 export FIBO_FILE_PATH=fib_second.txt
 export FIBO_COUNT=8 
-csm-run-orchestrator orchestrator run_with_template.json
+csm-orc run run_with_template.json
 # [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===
 # [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo
 # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-fibo

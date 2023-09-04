@@ -6,5 +6,5 @@ hide:
 
 !!! info "Command help"
     ```text
-    --8<-- "generated/commands_help/csm-run-orchestrator_fetch-cloud-steps.txt"
+    --8<-- "generated/commands_help/csm-orc_fetch-cloud-steps.txt"
     ```

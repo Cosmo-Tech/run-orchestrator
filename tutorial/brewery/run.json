@@ -2,7 +2,7 @@
   "steps": [
     {
       "id": "parameter-handler",
-      "command": "csm-run-orchestrator",
+      "command": "csm-orc",
       "arguments": [
         "run-step", "--template",
         "what_if", "--steps",
@@ -36,7 +36,7 @@
     },
     {
       "id": "engine",
-      "command": "csm-run-orchestrator",
+      "command": "csm-orc",
       "arguments": [
         "run-step", "--template",
         "what_if", "--steps",

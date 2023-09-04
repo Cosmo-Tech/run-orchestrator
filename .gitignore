@@ -6,3 +6,4 @@ site/
 *.env
 build/
 dist/
+generated/
