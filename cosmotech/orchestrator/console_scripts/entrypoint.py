@@ -406,7 +406,7 @@ def main():
             if not orchestrator_json.is_file():
                 raise EntrypointException(f"No \"run.json\" defined for the run template {template_id}")
             _env = os.environ.copy()
-            subprocess.check_call(["csm-run-orchestrator", "orchestrator", str(orchestrator_json.absolute())],
+            subprocess.check_call(["csm-orc", "run", str(orchestrator_json.absolute())],
                                   cwd=project_root,
                                   env=_env)
     except subprocess.CalledProcessError:
