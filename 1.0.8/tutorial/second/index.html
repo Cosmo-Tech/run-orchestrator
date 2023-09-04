@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.6">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.7">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.0e669242.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
@@ -1155,14 +1155,14 @@ Both ways should display the following lines
 <p>We added 2 definitions of our <code>FIBO_FILE_PATH</code> to the steps, so we can try to run our script</p>
 <div class="highlight"><span class="filename">Run the orchestrator without the environment variable</span><pre><span></span><code><span class="c1"># First we remove the definition of FIBO_FILE_PATH from the environment for the example</span>
 <span class="nb">unset</span><span class="w"> </span>FIBO_FILE_PATH
-csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>run_env.json
+csm-orc<span class="w"> </span>run<span class="w"> </span>run_env.json
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] ERROR    Missing environment values</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] ERROR     - FIBO_FILE_PATH </span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] ERROR    Missing environment variables, check the logs</span>
 </code></pre></div>
 <p>We can see that without defining our environment variable issues are displayed before the run.</p>
 <p>If we wanted to know which environment variables are required for our orchestration script we can do the following</p>
-<div class="highlight"><span class="filename">Getting information about environment variables</span><pre><span></span><code>csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>run_env.json<span class="w"> </span>--display-env
+<div class="highlight"><span class="filename">Getting information about environment variables</span><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>run_env.json<span class="w"> </span>--display-env
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Environment variable defined for run_env.json</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO      - FIBO_FILE_PATH:</span>
 <span class="c1">#                                   - A file run-fibo will write to</span>
@@ -1170,7 +1170,7 @@ csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>
 </code></pre></div>
 <p>We can see that all descriptions of a variable are made available.</p>
 <p>Let's give a value to <code>FIBO_FILE_PATH</code> and run our command</p>
-<div class="highlight"><span class="filename">Run the orchestrator with the environment variable</span><pre><span></span><code><span class="nv">FIBO_FILE_PATH</span><span class="o">=</span>fib_second.txt<span class="w"> </span>csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>run_env.json
+<div class="highlight"><span class="filename">Run the orchestrator with the environment variable</span><pre><span></span><code><span class="nv">FIBO_FILE_PATH</span><span class="o">=</span>fib_second.txt<span class="w"> </span>csm-orc<span class="w"> </span>run<span class="w"> </span>run_env.json
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-fibo</span>
@@ -1237,7 +1237,7 @@ ensuring that even if the environment variable is not defined a default value is
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><span class="filename">Run as previously</span><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">FIBO_FILE_PATH</span><span class="o">=</span>fib_second.txt
-csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>run_env_arg.json
+csm-orc<span class="w"> </span>run<span class="w"> </span>run_env_arg.json
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-fibo</span>
@@ -1269,7 +1269,7 @@ csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>
 <div class="tabbed-block">
 <div class="highlight"><span class="filename">Run the orchestrator with the new environment variable</span><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">FIBO_FILE_PATH</span><span class="o">=</span>fib_second.txt
 <span class="nb">export</span><span class="w"> </span><span class="nv">FIBO_COUNT</span><span class="o">=</span><span class="m">8</span>
-csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>run_env_arg.json
+csm-orc<span class="w"> </span>run<span class="w"> </span>run_env_arg.json
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-fibo</span>
@@ -1339,7 +1339,7 @@ then replaced the <code>command</code> of our steps by its <code>commandId</code
 <p>Now we can call the new file as previously</p>
 <div class="highlight"><span class="filename">Run the orchestrator with a command template</span><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">FIBO_FILE_PATH</span><span class="o">=</span>fib_second.txt
 <span class="nb">export</span><span class="w"> </span><span class="nv">FIBO_COUNT</span><span class="o">=</span><span class="m">8</span><span class="w"> </span>
-csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>run_with_template.json
+csm-orc<span class="w"> </span>run<span class="w"> </span>run_with_template.json
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-fibo</span>
@@ -1451,7 +1451,7 @@ csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.footer"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
     
   </body>

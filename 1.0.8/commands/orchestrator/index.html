@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.6">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.7">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.0e669242.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#orchestrator" class="md-skip">
+        <a href="#run" class="md-skip">
           Skip to content
         </a>
       
@@ -976,12 +976,12 @@
   
 
 
-<h1 id="orchestrator">Orchestrator</h1>
+<h1 id="run">Run</h1>
 <div class="admonition info">
 <p class="admonition-title">Help command</p>
-<div class="highlight"><pre><span></span><code>&gt; csm-run-orchestrator orchestrator --help
+<div class="highlight"><pre><span></span><code>&gt; csm-orc run --help
 
- Usage: csm-run-orchestrator orchestrator [OPTIONS] TEMPLATE                                                            
+ Usage: csm-orc run [OPTIONS] TEMPLATE                                                                                  
 
  Runs the given TEMPLATE file                                                                                           
  Commands are run as subprocess using bash -c &quot;&lt;command&gt; &lt;arguments&gt;&quot;.                                                  
@@ -1236,14 +1236,14 @@ Setting <code>useSystemEnvironment</code> to <code>true</code> in the orchestrat
 <details class="note">
 <summary>Run command with json file</summary>
 <p>The following code won't run by itself because <code>example.json</code> requires the EnvVar <code>NO_EXIST</code> to be set by the system
-<div class="highlight"><span class="filename">run without complementary EnvVar</span><pre><span></span><code>csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>example.json
+<div class="highlight"><span class="filename">run without complementary EnvVar</span><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>example.json
 </code></pre></div>
 You could do the following to have it work
 <div class="highlight"><span class="filename">set EnvVar with export</span><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NO_EXIST</span><span class="o">=</span><span class="s2">&quot;This value exists&quot;</span>
-csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>example.json
+csm-orc<span class="w"> </span>run<span class="w"> </span>example.json
 </code></pre></div>
 The following works too
-<div class="highlight"><span class="filename">run with EnvVar for run only</span><pre><span></span><code><span class="nv">NO_EXIST</span><span class="o">=</span><span class="s2">&quot;This value exists&quot;</span><span class="w"> </span>csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>example.json
+<div class="highlight"><span class="filename">run with EnvVar for run only</span><pre><span></span><code><span class="nv">NO_EXIST</span><span class="o">=</span><span class="s2">&quot;This value exists&quot;</span><span class="w"> </span>csm-orc<span class="w"> </span>run<span class="w"> </span>example.json
 </code></pre></div></p>
 </details>
 
@@ -1334,7 +1334,7 @@ The following works too
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.footer"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
     
   </body>

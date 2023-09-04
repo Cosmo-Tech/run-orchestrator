@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.6">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.7">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.0e669242.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
@@ -1036,7 +1036,7 @@
 </ul>
 </div>
 <h2 id="setting-up-our-project">Setting up our project</h2>
-<p>During this tutorial we will start from a clean installation of <code>csm-run-orchestrator</code> and work our way to an
+<p>During this tutorial we will start from a clean installation of <code>csm-orc</code> and work our way to an
 orchestrated solution.</p>
 <div class="highlight"><span class="filename">Set up our project</span><pre><span></span><code><span class="c1"># First we will create a new folder for our project</span>
 mkdir<span class="w"> </span>MyFirstOrchestrationProject
@@ -1049,7 +1049,7 @@ python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </s
 <span class="c1"># Now we can install the orchestrator using pip</span>
 pip<span class="w"> </span>install<span class="w"> </span>cosmotech-run-orchestrator
 <span class="c1"># We can check that our installation worked by running the orchestrator help</span>
-csm-run-orchestrator<span class="w"> </span>--help
+csm-orc<span class="w"> </span>--help
 </code></pre></div>
 <p>After all that our project is ready to start</p>
 <h2 id="creating-our-first-scripts">Creating our first scripts</h2>
@@ -1502,7 +1502,7 @@ that runs the command <code>echo</code> with the arguments <code>foo</code> and 
 <span class="normal">6</span>
 <span class="normal">7</span>
 <span class="normal">8</span>
-<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code>csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>simple_step.json
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>simple_step.json
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Starting step echo-foo-bar</span>
 <span class="c1"># foo bar</span>
@@ -1547,7 +1547,7 @@ that runs the command <code>echo</code> with the arguments <code>foo</code> and 
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 Now we can run our file using the orchestrator
-<div class="highlight"><span class="filename">run our first orchestration</span><pre><span></span><code>csm-run-orchestrator<span class="w"> </span>orchestrator<span class="w"> </span>run.json
+<div class="highlight"><span class="filename">run our first orchestration</span><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>run.json
 </code></pre></div></p>
 </div>
 <p>In the example <code>run.json</code> you can see on line 12 the apparition of the key-words <code>precedents</code>, 
@@ -1640,7 +1640,7 @@ In the next tutorial we will look at how to use CommandTemplates to re-use possi
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.footer"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
     
   </body>
