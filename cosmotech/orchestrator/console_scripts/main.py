@@ -10,6 +10,7 @@ import click_log
 from cosmotech.orchestrator import VERSION
 from cosmotech.orchestrator.console_scripts.adx_scenario_connector import main as adx_cmd
 from cosmotech.orchestrator.console_scripts.download_cloud_steps import main as dl_cloud_cmd
+from cosmotech.orchestrator.console_scripts.entrypoint import main as entrypoint_cmd
 from cosmotech.orchestrator.console_scripts.legacy_json_generator import main as legacy_gen_cmd
 from cosmotech.orchestrator.console_scripts.run import main as run_cmd
 from cosmotech.orchestrator.console_scripts.parameters_generation import main as parameters_cmd
@@ -48,6 +49,7 @@ Command toolkit allowing to run Cosmotech Run Templates"""
 
 main.add_command(adx_cmd, "send-to-adx")
 main.add_command(dl_cloud_cmd, "fetch-cloud-steps")
+main.add_command(entrypoint_cmd, "entrypoint")
 main.add_command(legacy_gen_cmd, "gen-from-legacy")
 main.add_command(run_cmd, "run")
 main.add_command(parameters_cmd, "init-parameters")
