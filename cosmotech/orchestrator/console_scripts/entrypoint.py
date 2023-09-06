@@ -384,12 +384,19 @@ def run_entrypoint():
 
 
 @click.command(hidden="True", context_settings=dict(ignore_unknown_options=True, allow_extra_args=True))
-def main():
+@click.option("--legacy",
+              envvar="CSM_ENTRYPOINT_LEGACY",
+              show_envvar=True,
+              default=False,
+              show_default=True,
+              is_flag=True,
+              help="Use legacy entrypoint")
+def main(legacy: bool):
     """Docker entrypoint
     
     This command is used in CosmoTech docker containers only"""
     try:
-        if os.environ.get("CSM_ENTRYPOINT_LEGACY", "true").lower() == "true":
+        if legacy:
             run_entrypoint()
         else:
             if importlib.util.find_spec("cosmotech") is None or importlib.util.find_spec(
