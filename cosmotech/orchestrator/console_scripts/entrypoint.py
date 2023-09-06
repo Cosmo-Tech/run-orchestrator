@@ -399,6 +399,12 @@ def main(legacy: bool):
         if legacy:
             run_entrypoint()
         else:
+            template_id = os.environ.get("CSM_RUN_TEMPLATE_ID")
+            if template_id is None:
+                logging.info("No run template id defined in environment variable \"CSM_RUN_TEMPLATE_ID\" "
+                             "running direct simulator mode")
+                run_direct_simulator()
+                return
             if importlib.util.find_spec("cosmotech") is None or importlib.util.find_spec(
                     "cosmotech.orchestrator") is None:
                 raise EntrypointException(
@@ -406,9 +412,6 @@ def main(legacy: bool):
                     "Check if you set it in your requirements.txt.")
             get_env()
             project_root = Path("/pkg/share")
-            template_id = os.environ.get("CSM_RUN_TEMPLATE_ID")
-            if template_id is None:
-                raise EntrypointException("No run template id defined in environment variable \"CSM_RUN_TEMPLATE_ID\"")
             orchestrator_json = project_root / "code/run_templates" / template_id / "run.json"
             if not orchestrator_json.is_file():
                 raise EntrypointException(f"No \"run.json\" defined for the run template {template_id}")
