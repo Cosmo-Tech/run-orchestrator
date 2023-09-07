@@ -286,7 +286,12 @@ def run_direct_simulator():
         else:
             logging.warning("No Control plane topic")
     else:
-        args = sys.argv[2:]
+        # Check added for use of legacy entrypoint.py name - to be removed when legacy stack is removed
+        if "entrypoint.py" in sys.argv[0]:
+            args = sys.argv[1:]
+        else:
+            args = sys.argv[2:]
+        print(args)
         logging.debug(f"main arguments: {args}")
 
     subprocess.check_call([CSM_MAIN] + args)

@@ -34,6 +34,7 @@ setup(
     entry_points={
         'console_scripts': [
             'csm-orc=cosmotech.orchestrator.console_scripts.main:main',
+            'entrypoint.py=cosmotech.orchestrator.console_scripts.entrypoint:main',
         ]
     },
 )
