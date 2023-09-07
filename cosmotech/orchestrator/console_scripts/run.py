@@ -64,6 +64,7 @@ In case you are in a python venv, the venv is activated before any command is ru
     else:
         if g is None:
             return
+        success = True
         if not display_env:
             LOGGER.info("===      Run     ===")
             g.evaluate(mode="threading")
@@ -71,6 +72,10 @@ In case you are in a python venv, the venv is activated before any command is ru
             LOGGER.debug(g)
             for k, v in s.items():
                 LOGGER.info(v[0])
+                if v[0].status == "RunError":
+                    success = False
+            if not success:
+                exit(1)
         elif gen_env_target is not None:
             _fp = pathlib.Path(gen_env_target)
             _fp.parent.mkdir(parents=True, exist_ok=True)
