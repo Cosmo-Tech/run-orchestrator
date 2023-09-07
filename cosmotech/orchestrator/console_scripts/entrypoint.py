@@ -291,7 +291,6 @@ def run_direct_simulator():
             args = sys.argv[1:]
         else:
             args = sys.argv[2:]
-        print(args)
         logging.debug(f"main arguments: {args}")
 
     subprocess.check_call([CSM_MAIN] + args)
