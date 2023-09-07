@@ -375,8 +375,6 @@ def handle_mode(mode):
 
 
 def run_entrypoint():
-    logging.info("Phoenix Entry Point")
-    get_env()
     modes = get_mode()
     smodes = modes.split(",")
     for mode in smodes:
@@ -396,7 +394,9 @@ def main(legacy: bool):
     
     This command is used in CosmoTech docker containers only"""
     try:
+        get_env()
         if legacy:
+            logging.info("Phoenix Entry Point")
             run_entrypoint()
         else:
             template_id = os.environ.get("CSM_RUN_TEMPLATE_ID")
@@ -405,12 +405,12 @@ def main(legacy: bool):
                              "running direct simulator mode")
                 run_direct_simulator()
                 return
+            logging.info("Csm-orc Entry Point")
             if importlib.util.find_spec("cosmotech") is None or importlib.util.find_spec(
                     "cosmotech.orchestrator") is None:
                 raise EntrypointException(
                     "You need to install the library `cosmotech-run-orchestrator` in your container. "
                     "Check if you set it in your requirements.txt.")
-            get_env()
             project_root = Path("/pkg/share")
             orchestrator_json = project_root / "code/run_templates" / template_id / "run.json"
             if not orchestrator_json.is_file():
