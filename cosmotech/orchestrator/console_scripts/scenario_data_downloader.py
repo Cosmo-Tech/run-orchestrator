@@ -93,7 +93,7 @@ def download_scenario_data(
             })
             LOGGER.debug(f"  - [yellow]{parameter_name:<{max_name_size}}[/] [cyan]{var_type:<{max_type_size}}[/] "
                          f"\"{value}\"{' [red bold]inherited[/]' if is_inherited else ''}")
-            write_parameters(parameter_folder, parameters, write_csv, write_json)
+        write_parameters(parameter_folder, parameters, write_csv, write_json)
 
 
 def write_parameters(parameter_folder, parameters, write_csv, write_json):
