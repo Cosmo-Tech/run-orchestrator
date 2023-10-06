@@ -6,6 +6,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Cosmo Tech ORC helps with defining and running commands DAG">
+      
       
       
       
@@ -53,6 +55,32 @@
       
 
     
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Cosmo Tech Run Orchestrator - Run Template Orchestrator" >
+      
+        <meta  property="og:description"  content="Cosmo Tech ORC helps with defining and running commands DAG" >
+      
+        <meta  property="og:image"  content="./assets/images/social/index.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="None" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Cosmo Tech Run Orchestrator - Run Template Orchestrator" >
+      
+        <meta  name="twitter:description"  content="Cosmo Tech ORC helps with defining and running commands DAG" >
+      
+        <meta  name="twitter:image"  content="./assets/images/social/index.png" >
+      
     
     
   </head>
@@ -947,25 +975,37 @@
 <p>It will also suppose you have a build version of the CosmoTech SDK in the folder <code>~/Cosmotech/Studio</code></p>
 <div class="admonition info">
 <p class="admonition-title">Create a virtual environment and add dependencies (in bash)</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># First move to your project folder</span>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># First move to your project folder</span>
 <span class="nb">cd</span><span class="w"> </span>~/MyProject
 <span class="c1"># Next create and activate a venv (here .venv)</span>
 python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
 <span class="nb">source</span><span class="w"> </span>.venv/bin/activate
-<span class="c1"># Update your python path with the bindings from the sdk</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/Cosmotech/Studio/lib/python/site-packages
-<span class="c1"># Add the local wrappers for your solution to the python path</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/MyProject/Generated/Build/Wrapping:~/MyProject/Generated/Build/Lib
 <span class="c1"># Finally install the dependencies for your project (they should be in code/requirements.txt)</span>
 pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>code/requirements.txt
 </code></pre></div>
-<details class="note">
-<summary>Note</summary>
-<p>If you use the Cosmotech CLI <code>csmcli</code> you can replace the use of the <code>PYTHONPATH</code> environment variable by calls to <code>csm exec</code></p>
-</details>
+To add python wrappers of the Cosmo Tech simulators you need to update your <code>PYTHONPATH</code> before running commands</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Use <code>PYTHONPATH</code> for Simulators wrapping</label><label for="__tabbed_1_2">Use <code>csmcli</code> </label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="c1"># Update your python path with the bindings from the sdk</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/Cosmotech/Studio/lib/python/site-packages
+<span class="c1"># Add the local wrappers for your solution to the python path</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/MyProject/Generated/Build/Wrapping:~/MyProject/Generated/Build/Lib
+<span class="c1"># Now further commands will have the PYTHONPATH correctly set</span>
+csm-orc<span class="w"> </span>run<span class="w"> </span>...
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>If you use the Cosmotech CLI <code>csmcli</code> you can replace the use of the <code>PYTHONPATH</code> environment variable by calls to <code>csm exec</code>
+<div class="highlight"><pre><span></span><code><span class="c1"># prepending your command by using csm exec will fully set your environment with complementary variables</span>
+csm<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>csm-orc<span class="w"> </span>run<span class="w"> </span>...
+</code></pre></div></p>
+</div>
+</div>
+</div>
 </div>
 <p>After all those commands you environment should be ready for a test, but first let's install the repository</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Install from sources</label><label for="__tabbed_1_2">Install using Pypi</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Install from sources</label><label for="__tabbed_2_2">Install using Pypi</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="admonition info">

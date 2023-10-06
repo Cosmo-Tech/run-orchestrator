@@ -6,6 +6,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Simple tutorial to combine csm-orc and a Cosmo Tech Simulator">
+      
       
       
       
@@ -55,6 +57,32 @@
       
 
     
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Brewery - Run Template Orchestrator" >
+      
+        <meta  property="og:description"  content="Simple tutorial to combine csm-orc and a Cosmo Tech Simulator" >
+      
+        <meta  property="og:image"  content="./assets/images/social/tutorial/brewery.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="None" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Brewery - Run Template Orchestrator" >
+      
+        <meta  name="twitter:description"  content="Simple tutorial to combine csm-orc and a Cosmo Tech Simulator" >
+      
+        <meta  name="twitter:image"  content="./assets/images/social/tutorial/brewery.png" >
+      
     
     
   </head>
@@ -581,36 +609,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-a-new-orchestration-file-for-a-run-template" class="md-nav__link">
-    Create a new orchestration file for a Run Template
-  </a>
-  
-    <nav class="md-nav" aria-label="Create a new orchestration file for a Run Template">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#write-a-parameters-file" class="md-nav__link">
-    Write a parameters file
+  <a href="#reminder-model-project" class="md-nav__link">
+    Reminder : Model + Project
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#define-our-set-of-commands" class="md-nav__link">
-    Define our set of commands
+      
+        <li class="md-nav__item">
+  <a href="#define-a-set-of-parameters-to-apply" class="md-nav__link">
+    Define a set of parameters to apply
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#writing-the-orchestration-file" class="md-nav__link">
-    Writing the orchestration file
+      
+        <li class="md-nav__item">
+  <a href="#apply-our-parameters" class="md-nav__link">
+    Apply our parameters
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#run-a-simulation-with-our-updated-parameters" class="md-nav__link">
+    Run a simulation with our updated parameters
+  </a>
   
 </li>
       
@@ -994,36 +1016,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-a-new-orchestration-file-for-a-run-template" class="md-nav__link">
-    Create a new orchestration file for a Run Template
-  </a>
-  
-    <nav class="md-nav" aria-label="Create a new orchestration file for a Run Template">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#write-a-parameters-file" class="md-nav__link">
-    Write a parameters file
+  <a href="#reminder-model-project" class="md-nav__link">
+    Reminder : Model + Project
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#define-our-set-of-commands" class="md-nav__link">
-    Define our set of commands
+      
+        <li class="md-nav__item">
+  <a href="#define-a-set-of-parameters-to-apply" class="md-nav__link">
+    Define a set of parameters to apply
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#writing-the-orchestration-file" class="md-nav__link">
-    Writing the orchestration file
+      
+        <li class="md-nav__item">
+  <a href="#apply-our-parameters" class="md-nav__link">
+    Apply our parameters
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#run-a-simulation-with-our-updated-parameters" class="md-nav__link">
+    Run a simulation with our updated parameters
+  </a>
   
 </li>
       
@@ -1049,254 +1065,264 @@
 <div class="admonition abstract">
 <p class="admonition-title">Objective</p>
 <ul>
-<li>Create an orchestration file for a CosmoTech Simulator</li>
-<li>Use existing Solution info to generate an orchestration file and run it locally</li>
+<li>Combine previous tutorials and Cosmo Tech Simulator to be able to apply changes to a simulation instance</li>
 </ul>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Prerequisites</p>
 <ul>
 <li>You need to have completed the "Brewery" onboarding for CosmoTech projects</li>
-<li>You need a local version of the "Brewery" solution (available <a href="https://github.com/Cosmo-Tech/onboarding-brewery-solution">here</a>)</li>
+<li>You need a local version of the "Brewery" solution (full code available <a href="https://github.com/Cosmo-Tech/onboarding-brewery-solution">here</a>)</li>
 </ul>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Potential Issues</p>
 <p>A known issue exists with graphical commands.<br />
-Setting <code>useSystemEnvironment</code> to <code>true</code> in the orchestration file can help during local runs.</p>
+Adding the Environment Variable <code>PATH</code> and <code>PYTHONPATH</code> (or set <code>useSystemEnvironment</code> to <code>true</code>) to a step 
+using a Cosmo Tech Simulator is required for the Simulator to run </p>
 </div>
-<h2 id="create-a-new-orchestration-file-for-a-run-template">Create a new orchestration file for a Run Template</h2>
-<p>In this first part we will look at creating a new orchestration file from scratch.</p>
-<p>We will first initialize our run template folder</p>
-<div class="highlight"><span class="filename">create orchestrator_tutorial run template folder</span><pre><span></span><code>mkdir<span class="w"> </span>code/run_templates/orchestrator_tutorial
+<h2 id="reminder-model-project">Reminder : Model + Project</h2>
+<p>The full simulator files can be found with the tag 
+<a href="https://github.com/Cosmo-Tech/onboarding-brewery-solution/releases/tag/Complete-model">Complete-model</a>
+on the repository.</p>
+<p>Online view: <a href="https://github.com/Cosmo-Tech/onboarding-brewery-solution/blob/Complete-model/ConceptualModel/MyBrewery.csm.xml">here</a></p>
+<div class="highlight"><span class="filename">Project files</span><pre><span></span><code>MyBrewery/                           |
+├─ ConceptualModel/                  |
+|  └─ MyBrewery.csm.xml              | CoSML Conceptual Model
+├─ Simulation/                       | Simulation instances
+|  └─ Resource/                      | 
+|     └─ scenariorun-data/           | Example dataset in CSV
+|        └─ arc_to_Customer.csv      |
+|        └─ Bar.csv                  |
+|        └─ Customer.csv             |
+|     └─ Brewery.ist.xml             | Model instance in XML
+|     └─ CSV_Brewery.ist.xml         | Model instance using CSVs
+|     └─ InstanceCalibration.ini.xml | Initialize an entity using XML
+|  └─ BusinessApp_Simulation.sml.xml | CSV files -&gt; CSV outputs
+|  └─ CSV_Simulation.sml.xml         | CSV files -&gt; graphical results
+|  └─ XML_Simulation.sml.xml         | XML instantiation -&gt; graphical results
+├─ Simulator/                        | 
+|  └─ Simulator.sor.xml              | CoSML Simulator
+└─ project.csm                       | Information on your project
 </code></pre></div>
-<details class="info">
-<summary>Info</summary>
-<p>By creating it inside the <code>code/run_templates</code> folder we will make it packaged in future docker images</p>
-</details>
-<h3 id="write-a-parameters-file">Write a <code>parameters</code> file</h3>
-<p>We will create a set of parameters, make them available for the <code>what_if</code> parameter handler defined during the onboarding and then run our simulator.</p>
-<p>To initialize our parameters, we will use a helper command of <code>csm-orc</code> : <code>init-parameters</code></p>
-<p>During the onboarding we created the file <code>API/Solution.yaml</code> that contains the API definition of the Solution and the parameters we will be using it to initialize our parameters file. </p>
-<div class="highlight"><span class="filename">Initialize parameters.json</span><pre><span></span><code>csm-orc<span class="w"> </span>init-parameters<span class="w"> </span>solution<span class="w"> </span>API/Solution.yaml<span class="w"> </span>code/run_templates/orchestrator_tutorial/parameters<span class="w"> </span>what_if<span class="w"> </span>--no-write-csv<span class="w"> </span>--write-json
-</code></pre></div>
-<p>After running this command we have a folder <code>orchestrator_tutorial</code> initialized with our <code>parameters</code> folder and a <code>parameters.json</code> file</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">code/run_templates/orchestrator_tutorial/parameters/parameters.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;parameterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stock&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stock_value&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;varType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;int&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;isInherited&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;parameterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;restock_quantity&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;restock_quantity_value&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;varType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;int&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;isInherited&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;parameterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;num_waiters&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;num_waiters_value&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;varType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;int&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;isInherited&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">]</span>
-</code></pre></div></td></tr></table></div>
-<p>In the file we can see 3 lines with the <code>value</code> property set to a dummy one (for example <code class="highlight"><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stock_value&quot;</span></code>), we need to set those variables before being able to use them.</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">updated parameters.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">[</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;parameterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stock&quot;</span><span class="p">,</span>
-<span class="hll"><span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100&quot;</span><span class="p">,</span>
-</span><span class="w">    </span><span class="nt">&quot;varType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;int&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;isInherited&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;parameterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;restock_quantity&quot;</span><span class="p">,</span>
-<span class="hll"><span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;25&quot;</span><span class="p">,</span>
-</span><span class="w">    </span><span class="nt">&quot;varType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;int&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;isInherited&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;parameterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;num_waiters&quot;</span><span class="p">,</span>
-<span class="hll"><span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5&quot;</span><span class="p">,</span>
-</span><span class="w">    </span><span class="nt">&quot;varType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;int&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;isInherited&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">]</span>
-</code></pre></div></td></tr></table></div>
-<p>Before moving on we will create a folder <code>dataset</code> in the <code>orchestrator_tutorial</code> folder for future use</p>
-<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>code/run_templates/orchestrator_tutorial/dataset
-</code></pre></div>
-<p>Now that we have a <code>orchestrator_tutorial</code> folder ready to be used we can start working on our orchestration file.</p>
-<h3 id="define-our-set-of-commands">Define our set of commands</h3>
-<p>But first we will define which commands we want to run before orchestrating them.</p>
-<p>For simplicity, we will be using helper commands made available with <code>csm-orc</code> again so that we can keep commands close to the cloud environment.</p>
-<p>To run our steps we will make use of the <code>run-step</code> command</p>
-<p>In the onboarding of the brewery you create a run template called <code>what_if</code> we will be making use of its code with no modification.</p>
-<p>The <code>parameters_handler</code> part make use of 2 environment variables (defined in its code) :</p>
+<p>The Brewery conceptual model is very simple: it consists of a Bar entity and a Customer entity, 
+where the Bar contains the Customer(s). 
+The Bar can serve the Customers based on customer thirst levels and stock. 
+It restocks when stock drops below a set restock quantity.</p>
+<p>Customers have a Thirsty state and a Satisfaction state, which affect each other: 
+the higher the satisfaction, the higher the chance of becoming thirsty, 
+and the longer a customer is left thirsty, the lower the satisfaction. 
+Satisfaction increases when a customer is served. 
+Satisfaction is also affected by the satisfaction of surrounding customers.</p>
+<p>For this tutorial we will write our new files in the folder <code>MyBrewery/code/run_templates/orchestrator_tutorial_1</code> (this folder hierarchy will be used in future tutorials too)</p>
+<h2 id="define-a-set-of-parameters-to-apply">Define a set of parameters to apply</h2>
+<p>In our simulation we will want to see the effects of variations on the Bar attributes.</p>
+<p>Our existing CSV based simulations look for 3 attributes to instantiate a Bar :</p>
 <ul>
-<li><code>CSM_DATASET_ABSOLUTE_PATH</code> : a path to our dataset  </li>
-<li><code>CSM_PARAMETERS_ABSOLUTE_PATH</code> : a path to our parameters</li>
+<li><code>NbWaiters</code>: the number of waiters in our Bar</li>
+<li><code>RestockQty</code>: the quantity of elements to restock when getting bellow the threshold</li>
+<li><code>Stock</code>: the Bar initial stock</li>
 </ul>
-<p>We previously created the content of our <code>orchestrator_tutorial</code> folder we will be using it there to make our data available.</p>
-<p>One last step will be to copy the content of our dataset in the folder.</p>
-<div class="highlight"><span class="filename">run parameter handler step</span><pre><span></span><code>cp<span class="w"> </span>Simulation/Resource/scenariorun-data/*<span class="w"> </span>code/run_templates/orchestrator_tutorial/dataset
-<span class="nb">export</span><span class="w"> </span><span class="nv">CSM_DATASET_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;code/run_templates/orchestrator_tutorial/dataset&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">CSM_PARAMETERS_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;code/run_templates/orchestrator_tutorial/parameters&quot;</span>
-csm-orc<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>what_if<span class="w"> </span>--steps<span class="w"> </span>parameters_handler
+<p>We will then use those 3 attributes as parameters for our simulations.</p>
+<p>To store our parameters we will define a JSON file containing them. </p>
+<div class="highlight"><span class="filename">code/run_templates/orchestrator_tutorial_1/parameters.json</span><pre><span></span><code><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;parameterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Stock&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;parameterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RestockQty&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4567</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;parameterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NbWaiters&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">89</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
 </code></pre></div>
-<p>By taking a look at the values of the <code>code/run_templates/orchestrator_tutorial/dataset/Bar.csv</code> file we can see that our <code>parameters_handler</code> worked.</p>
-<p>The next step will be to run our simulation and get our data our of it.</p>
-<p>We will once more make use of the <code>run-step</code> command to run the <code>engine</code> step, it is a specific step that runs the simulator directly</p>
-<p>Before running the <code>engine</code> step we need to back up our existing <code>Simulation/Resource/scenariorun-data</code> folder if it exists, and restore it at the end.</p>
-<p>Then we will copy our dataset in the now empty folder.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>A limitation on the language makes it required to manually change the dataset we want to use during a simulation.<br />
-The loader targets the folder <code>Simulation/Resource/scenariorun-data</code> to load the simulation, 
-thus we will back it up to keep our original dataset replace the content with our new data and run the simulation 
-before replacing the back-up in its original folder.</p>
-</div>
-<div class="highlight"><span class="filename">code/run_templates/orchestrator_tutorial/replace_scenariorun_data.sh</span><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-L<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span>mv<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>Simulation/Resource/scenariorun-data.back
-<span class="k">fi</span><span class="w"> </span>
-ln<span class="w"> </span>-s<span class="w"> </span><span class="k">$(</span>realpath<span class="w"> </span><span class="nv">$CSM_DATASET_ABSOLUTE_PATH</span><span class="k">)</span><span class="w"> </span>Simulation/Resource/scenariorun-data
+<details class="info" open="open">
+<summary>About the JSON file format</summary>
+<p>In prevision of future use, we will define a json format close to the one returned by the command:<br />
+<div class="highlight"><pre><span></span><code>csm-orc<span class="w"> </span>fetch-scenariorun-data
 </code></pre></div>
-<div class="highlight"><span class="filename">code/run_templates/orchestrator_tutorial/restore_scenariorun_data.sh</span><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-L<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data.back&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">  </span>rm<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>
-<span class="w">  </span>mv<span class="w"> </span>Simulation/Resource/scenariorun-data.back<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>
-<span class="k">fi</span>
+This command will be used later to download data from the Cosmo Tech API</p>
+</details>
+<h2 id="apply-our-parameters">Apply our parameters</h2>
+<p>Having defined our 3 parameters we can now work on a script to apply those to update a given dataset</p>
+<p>Our script will consist of 3 steps :</p>
+<ul>
+<li>Read the original dataset</li>
+<li>Apply our parameters to the dataset</li>
+<li>Write the new dataset in a given folder</li>
+</ul>
+<p>We will need 3 parameters for the script :</p>
+<ul>
+<li>The path to our original dataset</li>
+<li>The path to our parameter file</li>
+<li>The path where we want to write our new dataset</li>
+</ul>
+<p>Using those information we can write a simple script :</p>
+<div class="highlight"><span class="filename">code/run_templates/orchestrator_tutorial_1/apply_parameters.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">from</span> <span class="nn">csv</span> <span class="kn">import</span> <span class="n">DictReader</span>
+<span class="kn">from</span> <span class="nn">csv</span> <span class="kn">import</span> <span class="n">DictWriter</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parameters apply&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;input_path&quot;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;A path containing our original dataset&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;output_path&quot;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;A path where we will write our updated dataset&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;parameters_path&quot;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">),</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;A path to a parameters.json file&quot;</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="c1"># Let&#39;s make a copy of our original dataset</span>
+    <span class="n">original_dataset_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_path</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">original_dataset_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The folder </span><span class="si">{</span><span class="n">original_dataset_path</span><span class="si">}</span><span class="s2"> &quot;</span>
+                                <span class="sa">f</span><span class="s2">&quot;does not exists&quot;</span><span class="p">)</span>
+
+    <span class="n">dataset_files</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">_file</span> <span class="ow">in</span> <span class="n">original_dataset_path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.csv&quot;</span><span class="p">):</span>
+        <span class="n">_file_name</span> <span class="o">=</span> <span class="n">_file</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">dataset_files</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">_file_name</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">with</span> <span class="n">_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">_file_content</span><span class="p">:</span>
+            <span class="n">reader</span> <span class="o">=</span> <span class="n">DictReader</span><span class="p">(</span><span class="n">_file_content</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+                <span class="n">dataset_files</span><span class="p">[</span><span class="n">_file_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+    <span class="c1"># Now that we made a memory copy of our file let&#39;s get our parameters</span>
+
+    <span class="k">with</span> <span class="n">args</span><span class="o">.</span><span class="n">parameters_path</span> <span class="k">as</span> <span class="n">_file_parameters</span><span class="p">:</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_file_parameters</span><span class="p">)</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">({</span><span class="n">_p</span><span class="p">[</span><span class="s1">&#39;parameterId&#39;</span><span class="p">]:</span> <span class="n">_p</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+                           <span class="k">for</span> <span class="n">_p</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">})</span>
+
+    <span class="c1"># Now we can apply our parameters to our Bar file</span>
+    <span class="k">if</span> <span class="s1">&#39;Bar.csv&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataset_files</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No Bar.csv could be found &quot;</span>
+                                <span class="sa">f</span><span class="s2">&quot;in the given input folder&quot;</span><span class="p">)</span>
+
+    <span class="n">bars</span> <span class="o">=</span> <span class="n">dataset_files</span><span class="p">[</span><span class="s1">&#39;Bar.csv&#39;</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">bars</span><span class="p">:</span>
+        <span class="n">bar</span><span class="p">[</span><span class="s1">&#39;Stock&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;Stock&#39;</span><span class="p">]</span>
+        <span class="n">bar</span><span class="p">[</span><span class="s1">&#39;NbWaiters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;NbWaiters&#39;</span><span class="p">]</span>
+        <span class="n">bar</span><span class="p">[</span><span class="s1">&#39;RestockQty&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;RestockQty&#39;</span><span class="p">]</span>
+
+    <span class="c1"># and now that our dataset got updated we can write it</span>
+
+    <span class="n">target_dataset_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">target_dataset_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">target_dataset_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">FileExistsError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">target_dataset_path</span><span class="si">}</span><span class="s2"> exists &quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot;and is not a directory&quot;</span><span class="p">)</span>
+    <span class="n">target_dataset_path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">_file_name</span><span class="p">,</span> <span class="n">_file_content</span> <span class="ow">in</span> <span class="n">dataset_files</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">_file_path</span> <span class="o">=</span> <span class="n">target_dataset_path</span> <span class="o">/</span> <span class="n">_file_name</span>
+        <span class="k">with</span> <span class="n">_file_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">_file</span><span class="p">:</span>
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">DictWriter</span><span class="p">(</span><span class="n">_file</span><span class="p">,</span> <span class="n">_file_content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writeheader</span><span class="p">()</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="n">_file_content</span><span class="p">)</span>
 </code></pre></div>
-<p>Using the environment variable <code>CSM_Simulation</code> we can control which simulation to run.</p>
-<div class="highlight"><span class="filename">run simulation</span><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CSM_SIMULATION</span><span class="o">=</span><span class="s2">&quot;CSV_Simulation&quot;</span>
-csm-orc<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>what_if<span class="w"> </span>--steps<span class="w"> </span>engine
+<p>Using that script can do the trick, we can test it :</p>
+<div class="highlight"><span class="filename">Test run of apply_parameters.py</span><pre><span></span><code>python<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/apply_parameters.py<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/scenariorun-data<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/parameters.json
+cat<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/scenariorun-data/Bar.csv
+<span class="c1"># NbWaiters,RestockQty,Stock,id</span>
+<span class="c1"># 89,4567,123,MyBar</span>
 </code></pre></div>
-<p>Using those 3 commands we are now able to run a local simulation and set back our state.</p>
-<p>We now have been able to apply our parameter handler and then run our simulation using 3 environment variables, 
-we are ready to write our orchestration file.</p>
-<h3 id="writing-the-orchestration-file">Writing the orchestration file</h3>
-<p>Following the previous tutorials it is easy to write a simple orchestration file :</p>
-<div class="highlight"><span class="filename">code/run_templates/orchestrator_tutorial/run.json</span><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;parameter-handler&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;csm-orc&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;run-step&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--template&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;what_if&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--steps&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;parameters_handler&quot;</span>
-<span class="w">      </span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Apply the \&quot;what-if\&quot; parameter handler&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A folder containing our dataset&quot;</span>
-<span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;CSM_PARAMETERS_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A folder containing our parameters&quot;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;replace-data&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bash&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;code/run_templates/orchestrator_tutorial/replace_scenariorun_data.sh&quot;</span>
-<span class="w">      </span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Replace exisiting scenariorun-data with our dataset&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A folder containing our dataset&quot;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="nt">&quot;precedents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;parameter-handler&quot;</span>
-<span class="w">      </span><span class="p">]</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;engine&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;csm-orc&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;run-step&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--template&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;what_if&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--steps&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;engine&quot;</span>
-<span class="w">      </span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Run the simulation targeted by CSM_SIMULATION&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;useSystemEnvironment&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;CSM_SIMULATION&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The simulation file to run&quot;</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BusinessApp_Simulation&quot;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="nt">&quot;precedents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;replace-data&quot;</span>
-<span class="w">      </span><span class="p">]</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;restore-data&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bash&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;code/run_templates/orchestrator_tutorial/restore_scenariorun_data.sh&quot;</span>
-<span class="w">      </span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Restore scenariorun-data if it was existing before the run&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;precedents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;engine&quot;</span>
-<span class="w">      </span><span class="p">]</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
+<p>We can see that having run the script our <code>Bar.csv</code> got correctly updated with our parameters.</p>
+<h2 id="run-a-simulation-with-our-updated-parameters">Run a simulation with our updated parameters</h2>
+<p>A limitation on the CoSML Language locks the folder used by a simulation to load datasets from. 
+In the existing model the file <code>Simulation/Resource/CSV_Brewery.ist.xml</code> set this folder to <code>Simulation/Resource/scenariorun-data</code>.
+We will have to use that folder to give the simulator access to our dataset.</p>
+<details class="info">
+<summary>About <code>Simulation/Resource/scenariorun-data</code></summary>
+<p>The folder <code>Simulation/Resource/scenariorun-data</code> is a special folder in docker containers, 
+it is replaced by a symbolic link to the path <code>/mnt/scenariorun-data</code> 
+which is in an environment variable called <code>CSM_DATASET_ABSOLUTE_PATH</code></p>
+<p>We then know that the content of this folder will not be available in a container as is, 
+and need to keep that in mind for future uses.</p>
+</details>
+<p>For simplicity we won't be making an effort to keep the old values of possibly existing datasets and will overwrite the content instead.</p>
+<p>It will be attained by using our <code>apply_parameters.py</code> on the same input and output folder (here <code>Simulation/Resource/scenariorun-data</code>)</p>
+<p>A safer way would be to make a back-up of the dataset and to restore it after the run, but we won't go over this possibility in this tutorial</p>
+<p>To run the simulator we can either make use of <code>csmcli</code>, the <code>Main</code> or <code>csm-orc run-step</code>, we will only cover the <code>csm-orc</code> use in this tutorial.</p>
+<p>We started writing our code in the folder <code>code/run_templates/orchestrator_tutorial_1</code> it allows the use of a Run Template called <code>orchestrator_tutorial_1</code> in commands</p>
+<p>The simulator run can be done by using some configurations of the <code>csm-orc run-step</code> :</p>
+<ul>
+<li><code>--template orchestrator_tutorial_1</code> is necesary to target a template (dependency for non simulator run steps)</li>
+<li><code>--steps engine</code> will look for either a file <code>engine/main.py</code> or if it is not found and the environment varaible <code>CSM_SIMULATION</code> is set will try to run the simulator</li>
+</ul>
+<p>So the following command will run our <code>CSV_Simulation</code> defined by the <code>Simulation/CSV_Simulation.sml.xml</code></p>
+<div class="highlight"><span class="filename">run CSV_Simulation using csm-orc</span><pre><span></span><code><span class="nv">CSM_SIMULATION</span><span class="o">=</span>CSV_Simulation<span class="w"> </span>csm-orc<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>orchestrator_tutorial_1<span class="w"> </span>--steps<span class="w"> </span>engine
 </code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>In the <code>engine</code> step we set the field <code class="highlight"><span class="nt">&quot;useSystemEnvironment&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span></code>, 
-it allows to use the system environment variables that are set for graphical interfaces.
-Without it (or if set to <code class="highlight"><span class="kc">false</span></code>) we would have crashes with the simulator when using the QT Consumers locally.</p>
-<p><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/26a0.svg" title=":warning:" /> In a docker environment we won't have access to a graphical interface, so even with this field the QT Consumers will crash.</p>
-</div>
-<p>We can then easily run this file :</p>
-<div class="highlight"><span class="filename">run run.json</span><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CSM_DATASET_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;code/run_templates/orchestrator_tutorial/dataset&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">CSM_PARAMETERS_ABSOLUTE_PATH</span><span class="o">=</span><span class="s2">&quot;code/run_templates/orchestrator_tutorial/parameters&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">CSM_SIMULATION</span><span class="o">=</span><span class="s2">&quot;CSV_Simulation&quot;</span>
-csm-orc<span class="w"> </span>run<span class="w"> </span>code/run_templates/orchestrator_tutorial/run.json
+<p>Since we did nont update our dataset files in place of the original we will get our base results.</p>
+<p>Now we can simply run both commands to update our dataset and run the updated simulation</p>
+<div class="highlight"><span class="filename">Apply parameters and run simulation</span><pre><span></span><code>python<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/apply_parameters.py<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/parameters.json
+<span class="nv">CSM_SIMULATION</span><span class="o">=</span>CSV_Simulation<span class="w"> </span>csm-orc<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>ochestrator_tutorial_1<span class="w"> </span>--steps<span class="w"> </span>engine<span class="w"> </span>
 </code></pre></div>
+<p>A different set of graphics should appear this time, corresponding to our updated dataset</p>
+<p>Now we can write our <code>run.json</code> file to run those step in a single command</p>
+<div class="highlight"><span class="filename">core/run_templates/orchestrator_tutorial_1/run.json</span><pre><span></span><code><span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;steps&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">    </span><span class="o">{</span>
+<span class="w">      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;ApplyParameters&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;command&quot;</span>:<span class="w"> </span><span class="s2">&quot;python&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;arguments&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="s2">&quot;code/run_templates/orchestrator_tutorial_1/apply_parameters.py&quot;</span>,
+<span class="w">        </span><span class="s2">&quot;</span><span class="nv">$DATASET_PATH</span><span class="s2">&quot;</span>,
+<span class="w">        </span><span class="s2">&quot;</span><span class="nv">$DATASET_PATH</span><span class="s2">&quot;</span>,
+<span class="w">        </span><span class="s2">&quot;</span><span class="nv">$PARAMETERS_PATH</span><span class="s2">&quot;</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;description&quot;</span>:<span class="w"> </span><span class="s2">&quot;Apply our parameters to the dataset&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;environment&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="s2">&quot;DATASET_PATH&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span><span class="s2">&quot;description&quot;</span>:<span class="w"> </span><span class="s2">&quot;The path to the dataset to update&quot;</span>,
+<span class="w">          </span><span class="s2">&quot;defaultValue&quot;</span>:<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span>
+<span class="w">        </span><span class="o">}</span>,
+<span class="w">        </span><span class="s2">&quot;PARAMETERS_PATH&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span><span class="s2">&quot;description&quot;</span>:<span class="w"> </span><span class="s2">&quot;The path to parameters json file containing our parameters&quot;</span>,
+<span class="w">          </span><span class="s2">&quot;defaultValue&quot;</span>:<span class="w"> </span><span class="s2">&quot;code/run_templates/orchestrator_tutorial_1/parameters.json&quot;</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">      </span><span class="o">}</span>
+<span class="w">    </span><span class="o">}</span>,
+<span class="w">    </span><span class="o">{</span>
+<span class="w">      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;SimulationRun&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;command&quot;</span>:<span class="w"> </span><span class="s2">&quot;csm-orc&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;arguments&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="s2">&quot;run-step&quot;</span>,
+<span class="w">        </span><span class="s2">&quot;--template&quot;</span>,<span class="w"> </span><span class="s2">&quot;orchestrator_tutorial_1&quot;</span>,
+<span class="w">        </span><span class="s2">&quot;--steps&quot;</span>,<span class="w"> </span><span class="s2">&quot;engine&quot;</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;description&quot;</span>:<span class="w"> </span><span class="s2">&quot;Runs the simulation targeted by CSM_SIMULATION&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;useSystemEnvironment&quot;</span>:<span class="w"> </span>true,
+<span class="w">      </span><span class="s2">&quot;environment&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="s2">&quot;CSM_SIMULATION&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span><span class="s2">&quot;description&quot;</span>:<span class="w"> </span><span class="s2">&quot;The simulation file to run&quot;</span>,
+<span class="w">          </span><span class="s2">&quot;defaultValue&quot;</span>:<span class="w"> </span><span class="s2">&quot;CSV_Simulation&quot;</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">      </span><span class="o">}</span>,
+<span class="w">      </span><span class="s2">&quot;precedents&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="s2">&quot;ApplyParameters&quot;</span>
+<span class="w">      </span><span class="o">]</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="w">  </span><span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>Now that we have this <code>run.json</code> file we can run it
+<div class="highlight"><span class="filename">run run.json</span><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/run.json
+</code></pre></div></p>
+<p>And we are done ! Our first simulation based on our parameters file ran in a single command :)</p>
+<p>You can now do the next tutorial : "csm-orc and Docker based Simulator"</p>
 
 
 

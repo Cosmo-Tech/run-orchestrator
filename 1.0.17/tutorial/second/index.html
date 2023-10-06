@@ -6,6 +6,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Simple tutorial to learn about Environment Variables and csm-orc">
+      
       
       
       
@@ -55,6 +57,32 @@
       
 
     
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Concerning Configuration - Run Template Orchestrator" >
+      
+        <meta  property="og:description"  content="Simple tutorial to learn about Environment Variables and csm-orc" >
+      
+        <meta  property="og:image"  content="./assets/images/social/tutorial/second.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="None" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Concerning Configuration - Run Template Orchestrator" >
+      
+        <meta  name="twitter:description"  content="Simple tutorial to learn about Environment Variables and csm-orc" >
+      
+        <meta  name="twitter:image"  content="./assets/images/social/tutorial/second.png" >
+      
     
     
   </head>
@@ -1151,8 +1179,8 @@ Both ways should display the following lines
 <span class="w">    </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;run-fibo&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;python&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;fibonacci.py&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;10&quot;</span><span class="w"> </span><span class="p">],</span>
-<span class="hll"><span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="hll"><span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;fibonacci.py&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;10&quot;</span><span class="w"> </span><span class="p">],</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span class="hll"><span class="w">        </span><span class="nt">&quot;FIBO_FILE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A file run-fibo will write to&quot;</span>
 </span><span class="hll"><span class="w">        </span><span class="p">}</span>
@@ -1161,8 +1189,8 @@ Both ways should display the following lines
 <span class="w">    </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;run-display&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;python&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;display_file.py&quot;</span><span class="w"> </span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;precedents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;run-fibo&quot;</span><span class="w"> </span><span class="p">],</span>
+<span class="hll"><span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;display_file.py&quot;</span><span class="w"> </span><span class="p">],</span>
+</span><span class="w">      </span><span class="nt">&quot;precedents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;run-fibo&quot;</span><span class="w"> </span><span class="p">],</span>
 <span class="hll"><span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span class="hll"><span class="w">        </span><span class="nt">&quot;FIBO_FILE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A file run-display will read and print to stdout&quot;</span><span class="p">}</span>
