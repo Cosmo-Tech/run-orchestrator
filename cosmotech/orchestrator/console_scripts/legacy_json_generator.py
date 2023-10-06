@@ -128,6 +128,7 @@ def generate_from_template(template: RunTemplate, output: str):
         _s = Step(id="fetch_scenario_parameters",
                   command="csm-orc",
                   arguments=["fetch-scenariorun-data"],
+                  useSystemEnvironment=True,
                   environment={
                       "CSM_ORGANIZATION_ID": {
                           "description": "The id of an organization in the cosmotech api"
@@ -152,18 +153,18 @@ def generate_from_template(template: RunTemplate, output: str):
                       },
                       "WRITE_JSON": {
                           "description": "Toggle writing of parameters in json format",
-                          "defaultValue": json.dumps(
-                              template.fetch_scenario_parameters and template.parameters_json)
+                          "defaultValue": json.dumps((template.fetch_scenario_parameters and template.parameters_json)
+                                                     is True)
                       },
                       "WRITE_CSV": {
                           "description": "Toggle writing of parameters in csv format",
                           "defaultValue": json.dumps(
-                              template.fetch_scenario_parameters and not template.parameters_json)
+                              (template.fetch_scenario_parameters and not template.parameters_json)
+                              is True)
                       },
                       "FETCH_DATASET": {
                           "description": "Toggle fetching datasets",
-                          "defaultValue": json.dumps(
-                              template.fetch_dataset if template.fetch_dataset is not None else True)
+                          "defaultValue": json.dumps(template.fetch_datasets is True)
                       },
                       "LOG_LEVEL": {
                           "description": "Either CRITICAL, ERROR, WARNING, INFO or DEBUG",
@@ -183,6 +184,7 @@ def generate_from_template(template: RunTemplate, output: str):
                 _step_dl_cloud = Step(id=_name,
                                       command="csm-orc",
                                       arguments=["fetch-cloud-steps"],
+                                      useSystemEnvironment=True,
                                       environment={
                                           "CSM_ORGANIZATION_ID": {
                                               "description": "The id of an organization in the cosmotech api"
@@ -192,11 +194,11 @@ def generate_from_template(template: RunTemplate, output: str):
                                           },
                                           "CSM_RUN_TEMPLATE_ID": {
                                               "description": "The name of the run template in the cosmotech api",
-                                              "defaultValue": template.id
+                                              "value": template.id
                                           },
                                           "CSM_CONTAINER_MODE": {
                                               "description": "A list of handlers to download (comma separated)",
-                                              "defaultValue": name
+                                              "value": name
                                           },
                                           "CSM_API_URL": {
                                               "description": "The url to a Cosmotech API"
@@ -227,6 +229,7 @@ def generate_from_template(template: RunTemplate, output: str):
             _run_step = Step(id=name,
                              command="csm-orc",
                              arguments=["run-step"],
+                             useSystemEnvironment=True,
                              environment={
                                  "CSM_ORGANIZATION_ID": {
                                      "description": "The id of an organization in the cosmotech api"
@@ -236,11 +239,11 @@ def generate_from_template(template: RunTemplate, output: str):
                                  },
                                  "CSM_RUN_TEMPLATE_ID": {
                                      "description": "The name of the run template in the cosmotech api",
-                                     "defaultValue": template.id
+                                     "value": template.id
                                  },
                                  "CSM_CONTAINER_MODE": {
                                      "description": "A list of handlers to download (comma separated)",
-                                     "defaultValue": name
+                                     "value": name
                                  },
                                  "CSM_API_URL": {
                                      "description": "The url to a Cosmotech API"
@@ -305,6 +308,7 @@ def generate_from_template(template: RunTemplate, output: str):
         _send_to_adx_step = Step(id="send_to_adx",
                                  command="csm-orc",
                                  arguments=["send-to-adx"],
+                                 useSystemEnvironment=True,
                                  environment={
                                      "AZURE_TENANT_ID": {
                                          "description": "An Azure Tenant ID"
@@ -352,6 +356,10 @@ def generate_from_template(template: RunTemplate, output: str):
                                          "defaultValue": "false"
                                      },
                                  })
+        if previous:
+            _send_to_adx_step.precedents = [previous]
+        previous = "send_to_adx"
+        steps.append(_send_to_adx_step)
     previous, new_steps = run_template_phase("prerun", "pre_run", "pre_run_source", previous, False)
     steps.extend(new_steps)
     previous, new_steps = run_template_phase("engine", "run", "run_source", previous, True)

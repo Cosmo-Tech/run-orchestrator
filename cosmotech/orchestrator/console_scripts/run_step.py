@@ -100,6 +100,15 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
             else:
                 args = ["-i",
                         simulation]
+                if os.environ.get('CSM_PROBES_MEASURES_TOPIC') is not None:
+                    LOGGER.debug(f"Probes measures topic: {os.environ['CSM_PROBES_MEASURES_TOPIC']}")
+                    args = args + ["--amqp-consumer", os.environ['CSM_PROBES_MEASURES_TOPIC']]
+
+                if os.environ.get('CSM_CONTROL_PLANE_TOPIC') is not None:
+                    LOGGER.debug(f"Control plane topic: {os.environ['CSM_CONTROL_PLANE_TOPIC']}."
+                                 "Main Simulator binary is able to handle "
+                                 "CSM_CONTROL_PLANE_TOPIC directly so it is not"
+                                 "transformed as an argument.")
                 subprocess.run(args=args,
                                executable=str(engine_path.absolute()))
             continue
