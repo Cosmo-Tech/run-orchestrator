@@ -1,3 +1,6 @@
+---
+description: Simple tutorial to discover csm-orc 
+---
 # My first orchestration
 
 !!! abstract "Objective"
@@ -78,6 +81,7 @@ An orchestration file is a json file following the given JSON schema
 ### The first step
 
 In the schema we can see that it is divided in two parts :
+
 - the CommandTemplate
 - the Step
 

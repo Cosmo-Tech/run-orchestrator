@@ -1,0 +1,14 @@
+[
+  {
+    "parameterId": "Stock",
+    "value": 123
+  },
+  {
+    "parameterId": "RestockQty",
+    "value": 4567
+  },
+  {
+    "parameterId": "NbWaiters",
+    "value": 89
+  }
+]

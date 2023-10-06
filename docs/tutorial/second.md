@@ -1,3 +1,6 @@
+---
+description: Simple tutorial to learn about Environment Variables and csm-orc 
+---
 # Concerning configuration
 
 
@@ -53,7 +56,7 @@ Those modifications will allow us to set an Environment Variable `FIBO_FILE_PATH
 
 Now that our commands work we will look at the orchestration file to configure those environment variables
 
-```json title="run_env.json" hl_lines="7-11 18-21"
+```json title="run_env.json" hl_lines="6-11 16 18-21"
 --8<-- "tutorial/second/run_env.json"
 ```
 

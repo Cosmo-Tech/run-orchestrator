@@ -1,0 +1,45 @@
+{
+  "steps": [
+    {
+      "id": "ApplyParameters",
+      "command": "python",
+      "arguments": [
+        "code/run_templates/orchestrator_tutorial_1/apply_parameters.py",
+        "$DATASET_PATH",
+        "$DATASET_PATH",
+        "$PARAMETERS_PATH"
+      ],
+      "description": "Apply our parameters to the dataset",
+      "environment": {
+        "DATASET_PATH": {
+          "description": "The path to the dataset to update",
+          "defaultValue": "Simulation/Resource/scenariorun-data"
+        },
+        "PARAMETERS_PATH": {
+          "description": "The path to parameters json file containing our parameters",
+          "defaultValue": "code/run_templates/orchestrator_tutorial_1/parameters.json"
+        }
+      }
+    },
+    {
+      "id": "SimulationRun",
+      "command": "csm-orc",
+      "arguments": [
+        "run-step",
+        "--template", "orchestrator_tutorial_1",
+        "--steps", "engine"
+      ],
+      "description": "Runs the simulation targeted by CSM_SIMULATION",
+      "useSystemEnvironment": true,
+      "environment": {
+        "CSM_SIMULATION": {
+          "description": "The simulation file to run",
+          "defaultValue": "CSV_Simulation"
+        }
+      },
+      "precedents": [
+        "ApplyParameters"
+      ]
+    }
+  ]
+}

@@ -1,143 +1,157 @@
+---
+description: Simple tutorial to combine csm-orc and a Cosmo Tech Simulator
+---
 # Integration with a CosmoTech Simulator
 
 !!! abstract "Objective"
-    + Create an orchestration file for a CosmoTech Simulator
-    + Use existing Solution info to generate an orchestration file and run it locally
+    + Combine previous tutorials and Cosmo Tech Simulator to be able to apply changes to a simulation instance
 
 !!! warning "Prerequisites"
     + You need to have completed the "Brewery" onboarding for CosmoTech projects
-    + You need a local version of the "Brewery" solution (available [here](https://github.com/Cosmo-Tech/onboarding-brewery-solution))
+    + You need a local version of the "Brewery" solution (full code available [here](https://github.com/Cosmo-Tech/onboarding-brewery-solution))
 
 --8<-- "partials/orchestrator_known_issues.md"
 
-## Create a new orchestration file for a Run Template
+## Reminder : Model + Project
 
-In this first part we will look at creating a new orchestration file from scratch.
+The full simulator files can be found with the tag 
+[Complete-model](https://github.com/Cosmo-Tech/onboarding-brewery-solution/releases/tag/Complete-model)
+on the repository.
 
-We will first initialize our run template folder
+Online view: [here](https://github.com/Cosmo-Tech/onboarding-brewery-solution/blob/Complete-model/ConceptualModel/MyBrewery.csm.xml)
 
-```bash title="create orchestrator_tutorial run template folder"
-mkdir code/run_templates/orchestrator_tutorial
+```text title="Project files"
+--8<-- "tutorial/breweryv2/repo_tree_initial.txt"
 ```
 
-??? info
-    By creating it inside the `code/run_templates` folder we will make it packaged in future docker images
+The Brewery conceptual model is very simple: it consists of a Bar entity and a Customer entity, 
+where the Bar contains the Customer(s). 
+The Bar can serve the Customers based on customer thirst levels and stock. 
+It restocks when stock drops below a set restock quantity.
 
-### Write a `parameters` file
+Customers have a Thirsty state and a Satisfaction state, which affect each other: 
+the higher the satisfaction, the higher the chance of becoming thirsty, 
+and the longer a customer is left thirsty, the lower the satisfaction. 
+Satisfaction increases when a customer is served. 
+Satisfaction is also affected by the satisfaction of surrounding customers.
 
-We will create a set of parameters, make them available for the `what_if` parameter handler defined during the onboarding and then run our simulator.
+For this tutorial we will write our new files in the folder `MyBrewery/code/run_templates/orchestrator_tutorial_1` (this folder hierarchy will be used in future tutorials too)
 
-To initialize our parameters, we will use a helper command of `csm-orc` : `init-parameters`
+## Define a set of parameters to apply
 
-During the onboarding we created the file `API/Solution.yaml` that contains the API definition of the Solution and the parameters we will be using it to initialize our parameters file. 
+In our simulation we will want to see the effects of variations on the Bar attributes.
 
-```bash title="Initialize parameters.json"
-csm-orc init-parameters solution API/Solution.yaml code/run_templates/orchestrator_tutorial/parameters what_if --no-write-csv --write-json
+Our existing CSV based simulations look for 3 attributes to instantiate a Bar :
+
+* `NbWaiters`: the number of waiters in our Bar
+* `RestockQty`: the quantity of elements to restock when getting bellow the threshold
+* `Stock`: the Bar initial stock
+
+We will then use those 3 attributes as parameters for our simulations.
+
+To store our parameters we will define a JSON file containing them. 
+
+```json title="code/run_templates/orchestrator_tutorial_1/parameters.json"
+--8<-- "tutorial/breweryv2/parameters.json"
 ```
 
-After running this command we have a folder `orchestrator_tutorial` initialized with our `parameters` folder and a `parameters.json` file
+???+ info "About the JSON file format"
+    In prevision of future use, we will define a json format close to the one returned by the command:  
+    ```bash
+    csm-orc fetch-scenariorun-data
+    ```  
+    This command will be used later to download data from the Cosmo Tech API
 
-```json title="code/run_templates/orchestrator_tutorial/parameters/parameters.json" linenums="1"
---8<-- "tutorial/brewery/parameters/parameters_init.json"
+## Apply our parameters
+
+Having defined our 3 parameters we can now work on a script to apply those to update a given dataset
+
+Our script will consist of 3 steps :
+
+- Read the original dataset
+- Apply our parameters to the dataset
+- Write the new dataset in a given folder
+
+We will need 3 parameters for the script :
+
+- The path to our original dataset
+- The path to our parameter file
+- The path where we want to write our new dataset
+
+Using those information we can write a simple script :
+
+```python title="code/run_templates/orchestrator_tutorial_1/apply_parameters.py"
+--8<-- "tutorial/breweryv2/apply_parameters.py"
 ```
 
-In the file we can see 3 lines with the `value` property set to a dummy one (for example `#!json "value": "stock_value"`), we need to set those variables before being able to use them.
+Using that script can do the trick, we can test it :
 
-```json title="updated parameters.json" linenums="1" hl_lines="4 10 16"
---8<-- "tutorial/brewery/parameters/parameters.json"
+```bash title="Test run of apply_parameters.py"
+python code/run_templates/orchestrator_tutorial_1/apply_parameters.py Simulation/Resource/scenariorun-data code/run_templates/orchestrator_tutorial_1/scenariorun-data code/run_templates/orchestrator_tutorial_1/parameters.json
+cat code/run_templates/orchestrator_tutorial_1/scenariorun-data/Bar.csv
+# NbWaiters,RestockQty,Stock,id
+# 89,4567,123,MyBar
 ```
 
-Before moving on we will create a folder `dataset` in the `orchestrator_tutorial` folder for future use
+We can see that having run the script our `Bar.csv` got correctly updated with our parameters.
 
-```bash
-mkdir code/run_templates/orchestrator_tutorial/dataset
-```
+## Run a simulation with our updated parameters
 
-Now that we have a `orchestrator_tutorial` folder ready to be used we can start working on our orchestration file.
+A limitation on the CoSML Language locks the folder used by a simulation to load datasets from. 
+In the existing model the file `Simulation/Resource/CSV_Brewery.ist.xml` set this folder to `Simulation/Resource/scenariorun-data`.
+We will have to use that folder to give the simulator access to our dataset.
 
-### Define our set of commands
-
-But first we will define which commands we want to run before orchestrating them.
-
-For simplicity, we will be using helper commands made available with `csm-orc` again so that we can keep commands close to the cloud environment.
-
-To run our steps we will make use of the `run-step` command
-
-In the onboarding of the brewery you create a run template called `what_if` we will be making use of its code with no modification.
-
-The `parameters_handler` part make use of 2 environment variables (defined in its code) :
-
-+ `CSM_DATASET_ABSOLUTE_PATH` : a path to our dataset  
-+ `CSM_PARAMETERS_ABSOLUTE_PATH` : a path to our parameters
-
-We previously created the content of our `orchestrator_tutorial` folder we will be using it there to make our data available.
-
-One last step will be to copy the content of our dataset in the folder.
-
-```bash title="run parameter handler step"
-cp Simulation/Resource/scenariorun-data/* code/run_templates/orchestrator_tutorial/dataset
-export CSM_DATASET_ABSOLUTE_PATH="code/run_templates/orchestrator_tutorial/dataset"
-export CSM_PARAMETERS_ABSOLUTE_PATH="code/run_templates/orchestrator_tutorial/parameters"
-csm-orc run-step --template what_if --steps parameters_handler
-```
-
-By taking a look at the values of the `code/run_templates/orchestrator_tutorial/dataset/Bar.csv` file we can see that our `parameters_handler` worked.
-
-The next step will be to run our simulation and get our data our of it.
-
-We will once more make use of the `run-step` command to run the `engine` step, it is a specific step that runs the simulator directly
-
-Before running the `engine` step we need to back up our existing `Simulation/Resource/scenariorun-data` folder if it exists, and restore it at the end.
-
-Then we will copy our dataset in the now empty folder.
-
-!!! warning
-    A limitation on the language makes it required to manually change the dataset we want to use during a simulation.  
-    The loader targets the folder `Simulation/Resource/scenariorun-data` to load the simulation, 
-    thus we will back it up to keep our original dataset replace the content with our new data and run the simulation 
-    before replacing the back-up in its original folder.
-
-```bash title="code/run_templates/orchestrator_tutorial/replace_scenariorun_data.sh"
---8<-- "tutorial/brewery/replace_scenariorun_data.sh"
-```
-
-```bash title="code/run_templates/orchestrator_tutorial/restore_scenariorun_data.sh"
---8<-- "tutorial/brewery/restore_scenariorun_data.sh"
-```
-
-Using the environment variable `CSM_Simulation` we can control which simulation to run.
-
-```bash title="run simulation"
-export CSM_SIMULATION="CSV_Simulation"
-csm-orc run-step --template what_if --steps engine
-```
-
-Using those 3 commands we are now able to run a local simulation and set back our state.
-
-We now have been able to apply our parameter handler and then run our simulation using 3 environment variables, 
-we are ready to write our orchestration file.
-
-### Writing the orchestration file
-
-Following the previous tutorials it is easy to write a simple orchestration file :
-
-```json title="code/run_templates/orchestrator_tutorial/run.json" 
---8<-- "tutorial/brewery/run.json"
-```
-
-!!! warning
-    In the `engine` step we set the field `#!json "useSystemEnvironment": true`, 
-    it allows to use the system environment variables that are set for graphical interfaces.
-    Without it (or if set to `#!json false`) we would have crashes with the simulator when using the QT Consumers locally.
+??? info "About `Simulation/Resource/scenariorun-data`"
+    The folder `Simulation/Resource/scenariorun-data` is a special folder in docker containers, 
+    it is replaced by a symbolic link to the path `/mnt/scenariorun-data` 
+    which is in an environment variable called `CSM_DATASET_ABSOLUTE_PATH`
     
-    :warning: In a docker environment we won't have access to a graphical interface, so even with this field the QT Consumers will crash.
+    We then know that the content of this folder will not be available in a container as is, 
+    and need to keep that in mind for future uses.
 
+For simplicity we won't be making an effort to keep the old values of possibly existing datasets and will overwrite the content instead.
 
-We can then easily run this file :
+It will be attained by using our `apply_parameters.py` on the same input and output folder (here `Simulation/Resource/scenariorun-data`)
 
-```bash title="run run.json" 
-export CSM_DATASET_ABSOLUTE_PATH="code/run_templates/orchestrator_tutorial/dataset"
-export CSM_PARAMETERS_ABSOLUTE_PATH="code/run_templates/orchestrator_tutorial/parameters"
-export CSM_SIMULATION="CSV_Simulation"
-csm-orc run code/run_templates/orchestrator_tutorial/run.json
+A safer way would be to make a back-up of the dataset and to restore it after the run, but we won't go over this possibility in this tutorial
+
+To run the simulator we can either make use of `csmcli`, the `Main` or `csm-orc run-step`, we will only cover the `csm-orc` use in this tutorial.
+
+We started writing our code in the folder `code/run_templates/orchestrator_tutorial_1` it allows the use of a Run Template called `orchestrator_tutorial_1` in commands
+
+The simulator run can be done by using some configurations of the `csm-orc run-step` :
+
+- `--template orchestrator_tutorial_1` is necesary to target a template (dependency for non simulator run steps)
+- `--steps engine` will look for either a file `engine/main.py` or if it is not found and the environment varaible `CSM_SIMULATION` is set will try to run the simulator
+
+So the following command will run our `CSV_Simulation` defined by the `Simulation/CSV_Simulation.sml.xml`
+
+```bash title="run CSV_Simulation using csm-orc"
+CSM_SIMULATION=CSV_Simulation csm-orc run-step --template orchestrator_tutorial_1 --steps engine
 ```
+
+Since we did nont update our dataset files in place of the original we will get our base results.
+
+Now we can simply run both commands to update our dataset and run the updated simulation
+
+```bash title="Apply parameters and run simulation"
+python code/run_templates/orchestrator_tutorial_1/apply_parameters.py Simulation/Resource/scenariorun-data Simulation/Resource/scenariorun-data code/run_templates/orchestrator_tutorial_1/parameters.json
+CSM_SIMULATION=CSV_Simulation csm-orc run-step --template ochestrator_tutorial_1 --steps engine 
+```
+
+A different set of graphics should appear this time, corresponding to our updated dataset
+
+Now we can write our `run.json` file to run those step in a single command
+
+```bash title="core/run_templates/orchestrator_tutorial_1/run.json"
+--8<-- "tutorial/breweryv2/run.json"
+```
+
+Now that we have this `run.json` file we can run it
+```bash title="run run.json"
+csm-orc run code/run_templates/orchestrator_tutorial_1/run.json
+```
+
+And we are done ! Our first simulation based on our parameters file ran in a single command :)
+
+You can now do the next tutorial : "csm-orc and Docker based Simulator"

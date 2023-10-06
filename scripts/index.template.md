@@ -17,15 +17,25 @@ It will also suppose you have a build version of the CosmoTech SDK in the folder
     # Next create and activate a venv (here .venv)
     python -m venv .venv
     source .venv/bin/activate
-    # Update your python path with the bindings from the sdk
-    export PYTHONPATH=$PYTHONPATH:~/Cosmotech/Studio/lib/python/site-packages
-    # Add the local wrappers for your solution to the python path
-    export PYTHONPATH=$PYTHONPATH:~/MyProject/Generated/Build/Wrapping:~/MyProject/Generated/Build/Lib
     # Finally install the dependencies for your project (they should be in code/requirements.txt)
     pip install -r code/requirements.txt
     ``` 
-    ??? note
+    To add python wrappers of the Cosmo Tech simulators you need to update your `PYTHONPATH` before running commands
+    === "Use `PYTHONPATH` for Simulators wrapping"
+        ```bash
+        # Update your python path with the bindings from the sdk
+        export PYTHONPATH=$PYTHONPATH:~/Cosmotech/Studio/lib/python/site-packages
+        # Add the local wrappers for your solution to the python path
+        export PYTHONPATH=$PYTHONPATH:~/MyProject/Generated/Build/Wrapping:~/MyProject/Generated/Build/Lib
+        # Now further commands will have the PYTHONPATH correctly set
+        csm-orc run ...
+        ```
+    === "Use `csmcli` "
         If you use the Cosmotech CLI `csmcli` you can replace the use of the `PYTHONPATH` environment variable by calls to `csm exec`
+        ```bash
+        # prepending your command by using csm exec will fully set your environment with complementary variables
+        csm exec csm-orc run ...
+        ```
 
 After all those commands you environment should be ready for a test, but first let's install the repository
 

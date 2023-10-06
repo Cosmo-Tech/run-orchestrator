@@ -1,0 +1,18 @@
+MyBrewery/                           |
+├─ ConceptualModel/                  |
+|  └─ MyBrewery.csm.xml              | CoSML Conceptual Model
+├─ Simulation/                       | Simulation instances
+|  └─ Resource/                      | 
+|     └─ scenariorun-data/           | Example dataset in CSV
+|        └─ arc_to_Customer.csv      |
+|        └─ Bar.csv                  |
+|        └─ Customer.csv             |
+|     └─ Brewery.ist.xml             | Model instance in XML
+|     └─ CSV_Brewery.ist.xml         | Model instance using CSVs
+|     └─ InstanceCalibration.ini.xml | Initialize an entity using XML
+|  └─ BusinessApp_Simulation.sml.xml | CSV files -> CSV outputs
+|  └─ CSV_Simulation.sml.xml         | CSV files -> graphical results
+|  └─ XML_Simulation.sml.xml         | XML instantiation -> graphical results
+├─ Simulator/                        | 
+|  └─ Simulator.sor.xml              | CoSML Simulator
+└─ project.csm                       | Information on your project

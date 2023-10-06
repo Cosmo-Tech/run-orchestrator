@@ -1,7 +1,7 @@
 site_name: Run Template Orchestrator
 repo_url: https://github.com/Cosmo-Tech/run-orchestrator
 repo_name: Cosmo-Tech/run-orchestrator
-
+site_description: Cosmo Tech ORC helps with defining and running commands DAG
 theme:
   name: material
   logo: assets/logo.png
@@ -101,3 +101,4 @@ plugins:
           - scripts/generate_helps.py
     - literate-nav
     - mike
+    - social

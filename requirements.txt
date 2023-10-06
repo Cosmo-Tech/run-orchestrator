@@ -17,6 +17,7 @@ rich
 mkdocs
 mkdocs-gen-files
 mkdocs-material
+mkdocs-material[imaging]
 mkdocstrings[python]
 mkdocs-literate-nav
 mike
