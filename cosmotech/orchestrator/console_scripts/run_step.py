@@ -97,6 +97,7 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
                 LOGGER.error("To use direct main simulation (no engine step in python) "
                              "you need to set the environment variable CSM_SIMULATION "
                              "with the name of the simulation file to be run")
+                return 1
             else:
                 args = ["-i",
                         simulation]
@@ -109,8 +110,10 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
                                  "Main Simulator binary is able to handle "
                                  "CSM_CONTROL_PLANE_TOPIC directly so it is not"
                                  "transformed as an argument.")
-                subprocess.run(args=args,
-                               executable=str(engine_path.absolute()))
+                r = subprocess.run(args=args,
+                                   executable=str(engine_path.absolute()))
+                if r.returncode != 0:
+                    return r.returncode
             continue
         main_path = template_path / s
 
