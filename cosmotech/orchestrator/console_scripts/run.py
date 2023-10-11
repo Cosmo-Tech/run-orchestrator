@@ -71,7 +71,8 @@ In case you are in a python venv, the venv is activated before any command is ru
             LOGGER.info("===     Results    ===")
             LOGGER.debug(g)
             for k, v in s.items():
-                LOGGER.info(v[0])
+                LOGGER.info(v[0].simple_repr())
+                LOGGER.debug(str(v[0]))
                 if v[0].status == "RunError":
                     success = False
             if not success:

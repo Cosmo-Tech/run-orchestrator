@@ -150,7 +150,12 @@ class Step:
                     r[k] = v.description
         return r
 
-    def __repr__(self):
+    def simple_repr(self):
+        if self.description:
+            return f"{self.id} ({self.status}): {self.description}"
+        return f"{self.id} ({self.status})"
+
+    def __str__(self):
         r = list()
         r.append(f"Step {self.id}")
         r.append(f"Command: {self.command}" + ("" if not self.arguments else " " + " ".join(self.arguments)))
