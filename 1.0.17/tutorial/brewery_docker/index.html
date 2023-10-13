@@ -1,0 +1,1778 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Simple tutorial to convert a fully local Simulator to a cloud ready docker image">
+      
+      
+      
+      
+        <link rel="prev" href="../brewery/">
+      
+      
+        <link rel="next" href="../../Validator/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.5">
+    
+    
+      
+        <title>Cloud Ready Simulator - Run Template Orchestrator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6a10b989.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CFira+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Fira Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Cloud Ready Simulator - Run Template Orchestrator" >
+      
+        <meta  property="og:description"  content="Simple tutorial to convert a fully local Simulator to a cloud ready docker image" >
+      
+        <meta  property="og:image"  content="./assets/images/social/tutorial/brewery_docker.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="None" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Cloud Ready Simulator - Run Template Orchestrator" >
+      
+        <meta  name="twitter:description"  content="Simple tutorial to convert a fully local Simulator to a cloud ready docker image" >
+      
+        <meta  name="twitter:image"  content="./assets/images/social/tutorial/brewery_docker.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#make-a-cosmo-tech-simulator-cloud-ready" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Run Template Orchestrator" class="md-header__button md-logo" aria-label="Run Template Orchestrator" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Run Template Orchestrator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Cloud Ready Simulator
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="orange" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Cosmo-Tech/run-orchestrator" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Cosmo-Tech/run-orchestrator
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+    
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../Validator/" class="md-tabs__link">
+        
+  
+    
+  
+  Semantic Validator
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../commands/" class="md-tabs__link">
+          
+  
+    
+  
+  Commands
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Run Template Orchestrator" class="md-nav__button md-logo" aria-label="Run Template Orchestrator" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    Run Template Orchestrator
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Cosmo-Tech/run-orchestrator" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Cosmo-Tech/run-orchestrator
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../.." class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../License/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    My First Orchestrator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../second/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concerning Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../brewery/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Brewery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Cloud Ready Simulator
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Cloud Ready Simulator
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-the-cosmo-tech-platform-runs-orchestration" class="md-nav__link">
+    How does the Cosmo Tech Platform runs orchestration ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-entrypointpy-works" class="md-nav__link">
+    How does entrypoint.py works ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-environment-variables-are-made-available-by-the-api" class="md-nav__link">
+    What Environment Variables are made available by the API ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-to-the-api-to-get-our-scenario-data" class="md-nav__link">
+    Connect to the API to get our Scenario data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#combine-everything-in-a-run-template" class="md-nav__link">
+    Combine everything in a Run Template
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-a-docker-image" class="md-nav__link">
+    Build a docker image
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#define-api-items" class="md-nav__link">
+    Define API items
+  </a>
+  
+    <nav class="md-nav" aria-label="Define API items">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#define-a-solution" class="md-nav__link">
+    Define a Solution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-a-workspace" class="md-nav__link">
+    Define a Workspace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-a-dataset" class="md-nav__link">
+    Define a Dataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-a-scenario" class="md-nav__link">
+    Define a Scenario
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-our-distant-scenario" class="md-nav__link">
+    Run our distant Scenario
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-want-to-use-my-local-data-instead-of-needing-a-scenario" class="md-nav__link">
+    I want to use my local data instead of needing a Scenario
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Validator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Semantic Validator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../commands/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Commands
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Commands
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/orchestrator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orchestrator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Legacy help
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Legacy help
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/scenario_data_downloader/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scenario data download
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/download_cloud_steps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Download cloud Steps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/run_step/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Run Python Steps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/simulation_to_adx/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Simulation to ADX
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/legacy_json_generator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Legacy Generator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Helpers
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Helpers
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/parameters_generator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Initialize Parameters folder
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-the-cosmo-tech-platform-runs-orchestration" class="md-nav__link">
+    How does the Cosmo Tech Platform runs orchestration ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-entrypointpy-works" class="md-nav__link">
+    How does entrypoint.py works ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-environment-variables-are-made-available-by-the-api" class="md-nav__link">
+    What Environment Variables are made available by the API ?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connect-to-the-api-to-get-our-scenario-data" class="md-nav__link">
+    Connect to the API to get our Scenario data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#combine-everything-in-a-run-template" class="md-nav__link">
+    Combine everything in a Run Template
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-a-docker-image" class="md-nav__link">
+    Build a docker image
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#define-api-items" class="md-nav__link">
+    Define API items
+  </a>
+  
+    <nav class="md-nav" aria-label="Define API items">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#define-a-solution" class="md-nav__link">
+    Define a Solution
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-a-workspace" class="md-nav__link">
+    Define a Workspace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-a-dataset" class="md-nav__link">
+    Define a Dataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-a-scenario" class="md-nav__link">
+    Define a Scenario
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-our-distant-scenario" class="md-nav__link">
+    Run our distant Scenario
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-want-to-use-my-local-data-instead-of-needing-a-scenario" class="md-nav__link">
+    I want to use my local data instead of needing a Scenario
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="make-a-cosmo-tech-simulator-cloud-ready">Make a Cosmo Tech Simulator cloud-ready</h1>
+<p>In this tutorial we will take our updated Brewery Simulator project as we left it in the <a href="../brewery/">previous tutorial</a>
+and add modification to get it ready to be used inside a Cosmo Tech Platform.</p>
+<div class="admonition warning">
+<p class="admonition-title">Requirements</p>
+<ul>
+<li><code>csmcli</code> the CLI bundled with the Cosmo Tech SDK</li>
+<li><code>docker</code></li>
+<li>A Cosmo Tech Platform minimal version of 3.0</li>
+<li>A Cosmo Tech SDK minimal version of 10.0</li>
+</ul>
+</div>
+<h2 id="how-does-the-cosmo-tech-platform-runs-orchestration">How does the Cosmo Tech Platform runs orchestration ?</h2>
+<p>The Cosmo Tech Platform will run registered docker images based on the definition of <code>Solutions</code> in its API.</p>
+<p>In the API you can define a <code>Solution</code> that will refer to a specific version of a docker image in a given repository.
+That <code>Solution</code> contains a definition of sets of <code>Parameters</code> and <code>Run Templates</code>. 
+Then <code>Workspaces</code> are defined in the API and point to a given <code>Solution</code> 
+allowing you to create a <code>Scenario</code> which will tie together <code>Datasets</code>, <code>Parameters</code>, 
+and a <code>Run Template</code> which will then be run by the API.</p>
+<p><code>Datasets</code> are a description of how and where data are stored, <code>Parameters</code> can be simple types 
+or full <code>Datasets</code> allowing you to update the main <code>Dataset</code> of your <code>Scenario</code> changing its behavior.</p>
+<p>Running your <code>Scenario</code> will create a <code>ScenarioRun</code> into the API 
+and that <code>ScenarioRun</code> will make use of the docker image your previously defined.
+The API will call the image with an <code>Entrypoint</code> called <code>entrypoint.py</code> and that call should be your full orchestration.</p>
+<details class="question">
+<summary>Why <code>entrypoint.py</code> and not <code>csm-orc</code> ?</summary>
+<p>The definition of the <code>Entrypoint</code> being <code>entrypoint.py</code> 
+is left for compatibility of the old images on the Cosmo Tech API (pre 3.0)
+It will be changed in the future, but for now <code>csm-orc</code> comes bundled with 
+a script called <code>entrypoint.py</code> that allow legacy and new runs of the docker image.</p>
+</details>
+<h2 id="how-does-entrypointpy-works">How does <code>entrypoint.py</code> works ?</h2>
+<p>The <code>entrypoint.py</code> command (and its equivalent <code>csm-orc entrypoint</code>) work using some Environment variables to switch between 3 modes:</p>
+<ul>
+<li>The general entrypoint with no special configuration that allow to run your <code>run templates</code> requiring the environment variable <code>CSM_RUN_TEMPLATE_ID</code> to be set with your run template name</li>
+<li>The legacy entrypoint activated by setting the environment variable <code>CSM_ENTRYPOINT_LEGACY</code> to <code>true</code> which is made available for compatibility with pre3.0 Cosmo Tech API</li>
+<li>The direct simulator mode which requires the environment variable <code>CSM_RUN_TEMPLATE_ID</code> to not be set, and will then run the simulator by passing it any argument of the command</li>
+</ul>
+<p>Every <code>Environment Variable</code> passed to the command will be forwarded to the <code>csm-orc run</code> command inside. 
+And the command will be run with the working directory set to <code>/pkg/share</code></p>
+<h2 id="what-environment-variables-are-made-available-by-the-api">What <code>Environment Variables</code> are made available by the API ?</h2>
+<p>The Cosmo Tech API will forward a set of environment variables to any Simulator containers. You can find the full list of the in the following table.</p>
+<details class="notes">
+<summary>List of environment variables</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Environment Variable</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">AZURE_CLIENT_ID</td>
+<td style="text-align: left;">An identifier to an Azure identity defined during the installation of the platform</td>
+</tr>
+<tr>
+<td style="text-align: left;">AZURE_CLIENT_SECRET</td>
+<td style="text-align: left;">A secret tied to the given client ID allowing to connect with it</td>
+</tr>
+<tr>
+<td style="text-align: left;">AZURE_TENANT_ID</td>
+<td style="text-align: left;">An identifier of your Azure tenant to be able to connect to it</td>
+</tr>
+<tr>
+<td style="text-align: left;">IDENTITY_PROVIDER</td>
+<td style="text-align: left;">Will be set to  <code>azure</code> in an Azure based API</td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_API_URL</td>
+<td style="text-align: left;">The url to the Cosmo Tech API your are connecting to</td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_API_SCOPE</td>
+<td style="text-align: left;">An identifier scope used to get permission to your API</td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_DATASET_ABSOLUTE_PATH</td>
+<td style="text-align: left;">A local folder path to which an external volume is mounted to and in which you can write datasets</td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_PARAMETERS_ABSOLUTE_PATH</td>
+<td style="text-align: left;">A local folder path to which an external volume is mounted to and in which you can write parameters</td>
+</tr>
+<tr>
+<td style="text-align: left;">TWIN_CACHE_HOST</td>
+<td style="text-align: left;">The URL to the twin cache service inside the platform (deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left;">TWIN_CACHE_PORT</td>
+<td style="text-align: left;">The port to the twin cache service inside the platform (deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left;">TWIN_CACHE_PASSWORD</td>
+<td style="text-align: left;">The password to the twin cache service inside the platform (deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left;">TWIN_CACHE_USERNAME</td>
+<td style="text-align: left;">The username to the twin cache service inside the platform (deprecated)</td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_SIMULATION_ID</td>
+<td style="text-align: left;">The  <code>Simulation</code> ID for your current scenario run</td>
+</tr>
+<tr>
+<td style="text-align: left;">AZURE_DATA_EXPLORER_RESOURCE_URI</td>
+<td style="text-align: left;">The URI used to query an Azure Data Explorer Cluster tied to your  <code>Workspace</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI</td>
+<td style="text-align: left;">The URI used to send data to an  <code>Azure Data Explorer</code> Cluster tied to your  <code>Workspace</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">AZURE_DATA_EXPLORER_DATABASE_NAME</td>
+<td style="text-align: left;">The name of the database of your  <code>Workspace</code> in  <code>Azure Data Explorer</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_ORGANIZATION_ID</td>
+<td style="text-align: left;">The ID of your  <code>Organization</code> in the Cosmo Tech API</td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_WORKSPACE_ID</td>
+<td style="text-align: left;">The ID of your  <code>Workspace</code> in the Cosmo Tech API</td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_SCENARIO_ID</td>
+<td style="text-align: left;">The ID of your  <code>Scenario</code> in the Cosmo Tech API</td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_RUN_TEMPLATE_ID</td>
+<td style="text-align: left;">The ID of your  <code>Run Template</code> in the Cosmo Tech API (as defined in your Solution)</td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_CONTAINER_MODE</td>
+<td style="text-align: left;">Will always be <code>csm-orc</code> left for compatibility with pre 3.0 API</td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_ENTRYPOINT_LEGACY</td>
+<td style="text-align: left;">Will always be  <code>false</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_PROBES_MEASURES_TOPIC</td>
+<td style="text-align: left;">An  <code>amqp</code> address used by the simulator to send your probe data to ADX via Event Hub</td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_CONTROL_PLANE_TOPIC</td>
+<td style="text-align: left;">An  <code>amqp</code> address used by the simulator to send your control info to ADX via Event Hub (mostly number of measures sent)</td>
+</tr>
+<tr>
+<td style="text-align: left;">CSM_SIMULATION</td>
+<td style="text-align: left;">The  <code>Simulation</code> file that should be used to run your simulation (this value is defined in your  <code>Run Template</code> and targets one of the files in the <code>Simulation/</code> folder)</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="connect-to-the-api-to-get-our-scenario-data">Connect to the API to get our <code>Scenario</code> data</h2>
+<p>Multiple ways exists to connect to the API and query some data, but for simplicity there exists a command in <code>csm-orc</code> that will make use of known API environment variables and do the work for you.</p>
+<p>That command is <code>csm-orc fetch-scenariorun-data</code> (documentation of the command is available <a href="../../commands/scenario_data_downloader/">here</a>)</p>
+<p>The command make use of 5 environment variables set by the API (as described in the previous point) :</p>
+<ul>
+<li><code>CSM_ORGANIZATION_ID</code></li>
+<li><code>CSM_WORKSPACE_ID</code></li>
+<li><code>CSM_SCENARIO_ID</code></li>
+<li><code>CSM_DATASET_ABSOLUTE_PATH</code></li>
+<li><code>CSM_PARAMETERS_ABSOLUTE_PATH</code></li>
+</ul>
+<p>And uses 3 control environment variables :</p>
+<ul>
+<li><code>WRITE_JSON</code>: If set to <code>true</code> will write a <code>parameters.json</code> file in <code>CSM_PARAMETERS_ABSOLUTE_PATH</code></li>
+<li><code>WRITE_CSV</code>: If set to <code>true</code> will write a <code>parameters.csv</code> file in <code>CSM_PARAMETERS_ABSOLUTE_PATH</code></li>
+<li><code>FETCH_DATASET</code>: If set to <code>true</code> will download all the <code>Datasets</code> tied to your scenario, 
+     will write the main ones (not defined as a <code>Parameter</code>) in <code>CSM_DATASET_ABSOLUTE_PATH</code> 
+     and will write the others in <code>CSM_PARAMETERS_ABSOLUTE_PATH/[parameter name]</code> 
+     where <code>[parameter name]</code> is the name of the <code>Parameter</code> targeting the <code>Dataset</code> (with a type set to <code>%DATASETID%</code>)</li>
+</ul>
+<p>Using that command allow to easily download any dataset defined in the Cosmo Tech API, 
+as long as those datasets use one of the standard connections defined in the API 
+(as of version 3.0: <code>Azure Storage Blob</code>, <code>Azure Digital Twin</code>, <code>TwinGraph Storage</code>)</p>
+<h2 id="combine-everything-in-a-run-template">Combine everything in a <code>Run Template</code></h2>
+<p>Using all those new information we can see that most of the actions needed to run our code based on API data are already prepackaged.</p>
+<p>We can :
+- Download our scenario information using <code>csm-orc fetch-scenariorun-data</code>
+- Apply our parameters with our <code>apply_parameters.py</code>
+- Run our simulation using <code>csm-orc run-step</code>
+- And send our simulation results to an external system (here Azure Data Explorer) by setting environment variables during the <code>run-step</code></p>
+<p>It is then easy to update our previous <code>run.json</code> to take those changes into account.</p>
+<details class="question" open="open">
+<summary>New <code>code/run_templates/orchestrator_tutorial_2</code> folder</summary>
+<p>To keep a clean distinction on the code of the previous tutorial and this one, 
+we will refer to the folder <code>code/run_templates/orchestrator_tutorial_2</code> 
+which is an exact copy of the folder <code>code/run_templates/orchestrator_tutorial_1</code></p>
+<p>You can create it by using the following command:
+<div class="highlight"><span class="filename">copy `orchestrator_tutorial_1`</span><pre><span></span><code>cp<span class="w"> </span>-r<span class="w"> </span>code/run_templates/orchestrator_tutorial_1<span class="w"> </span>code/run_templates/orchestrator_tutorial_2
+</code></pre></div></p>
+</details>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">code/run_templates/orchestrator_tutorial2/run.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="hll"><span class="w">    </span><span class="p">{</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DownloadScenarioData&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;csm-orc&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Connect to the Cosmo Tech API to download dataset and parameters&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span class="hll"><span class="w">        </span><span class="s2">&quot;fetch-scenariorun-data&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="w">        </span><span class="s2">&quot;--write-json&quot;</span>
+</span><span class="hll"><span class="w">      </span><span class="p">],</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;useSystemEnvironment&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_API_URL&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The URL used to query your Cosmo Tech API instance&quot;</span>
+</span><span class="hll"><span class="w">        </span><span class="p">},</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_API_SCOPE&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The scope of identification used to request access token for your Cosmo Tech API instance&quot;</span>
+</span><span class="hll"><span class="w">        </span><span class="p">},</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_ORGANIZATION_ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The id of the organization in the Cosmo Tech API&quot;</span>
+</span><span class="hll"><span class="w">        </span><span class="p">},</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_WORKSPACE_ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The id of the workspace in the Cosmo Tech API&quot;</span>
+</span><span class="hll"><span class="w">        </span><span class="p">},</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_SCENARIO_ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The id of the scenario in the Cosmo Tech API&quot;</span>
+</span><span class="hll"><span class="w">        </span><span class="p">},</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The path used to store the datasets of the scenario&quot;</span>
+</span><span class="hll"><span class="w">        </span><span class="p">},</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_PARAMETERS_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The path used to store the parameters of the scenario&quot;</span>
+</span><span class="hll"><span class="w">        </span><span class="p">}</span>
+</span><span class="hll"><span class="w">      </span><span class="p">}</span>
+</span><span class="hll"><span class="w">    </span><span class="p">},</span>
+</span><span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ApplyParameters&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;python&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="hll"><span class="w">        </span><span class="s2">&quot;code/run_templates/orchestrator_tutorial_2/apply_parameters.py&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="w">        </span><span class="s2">&quot;$CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="w">        </span><span class="s2">&quot;$CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="w">        </span><span class="s2">&quot;$CSM_PARAMETERS_ABSOLUTE_PATH/parameters.json&quot;</span>
+</span><span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Apply our parameters to the dataset&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The path to the dataset to update&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_PARAMETERS_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The path to a folder containing our parameters.json file&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;code/run_templates/orchestrator_tutorial_2&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="hll"><span class="w">      </span><span class="nt">&quot;precedents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span class="hll"><span class="w">        </span><span class="s2">&quot;DownloadScenarioData&quot;</span>
+</span><span class="hll"><span class="w">      </span><span class="p">]</span>
+</span><span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SimulationRun&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;csm-orc&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;run-step&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;--template&quot;</span><span class="p">,</span>
+<span class="hll"><span class="w">        </span><span class="s2">&quot;orchestrator_tutorial_2&quot;</span><span class="p">,</span>
+</span><span class="w">        </span><span class="s2">&quot;--steps&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;engine&quot;</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Runs the simulation targeted by CSM_SIMULATION&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;useSystemEnvironment&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;CSM_SIMULATION&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The simulation file to run&quot;</span><span class="p">,</span>
+<span class="hll"><span class="w">          </span><span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BusinessApp_Simulation&quot;</span>
+</span><span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;precedents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;ApplyParameters&quot;</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>We can see a few changes and additions compared to the previous <code>run.json</code> file :</p>
+<ul>
+<li>We created a new <code>step</code> called <code>DownloadScenarioData</code> that makes use of <code>csm-orc fetch-scenariorun-data</code><ul>
+<li>In this step we defined a few environment variables required to run it, 
+  but we still added <code>useSystemEnvironment</code> to <code>true</code> to ensure any environment variable required 
+  to connect to the api is made available as well.</li>
+</ul>
+</li>
+<li>In the <code>ApplyParameters</code> we made a few changes:<ul>
+<li><code>DATASET/PARAMETERS_PATH</code> became <code>CSM_DATASET/PARAMETERS_ABSOLUTE_PATH</code></li>
+<li>We added <code>/parameters.json</code> in the arguments for the parameters path</li>
+<li>We added a precendent step to schedule it after the <code>DownloadScenarioData</code></li>
+</ul>
+</li>
+<li>In the <code>SimulatorRun</code> step changes are minimals:<ul>
+<li>The template targeted is the new <code>orchestrator_tutorial_2</code></li>
+<li>The default value of <code>CSM_SIMULATION</code> has been changed to <code>BusinessApp_Simulation</code> 
+  since <code>docker</code> simulation can't make use of visual consumers</li>
+</ul>
+</li>
+</ul>
+<h2 id="build-a-docker-image">Build a docker image</h2>
+<p>Now that we have our <code>run.json</code> ready we can build our docker image.</p>
+<div class="highlight"><span class="filename">Build a docker image using csmcli</span><pre><span></span><code><span class="c1"># First we will clean everything to ensure a correct generation of the project</span>
+csm<span class="w"> </span>clean
+<span class="c1"># Now we can build our full project</span>
+csm<span class="w"> </span>flow
+<span class="c1"># The simulator is now ready to be packaged</span>
+csm<span class="w"> </span>docker<span class="w"> </span>build
+</code></pre></div>
+<p>After those commands we end up with a docker image <code>cosmotech/mybrewery_simulator</code> ready to be used</p>
+<p>A simple test can be made with the following command:</p>
+<div class="highlight"><span class="filename">Test the docker image</span><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-e<span class="w"> </span><span class="nv">CSM_RUN_TEMPLATE_ID</span><span class="o">=</span>orchestrator_tutorial_1<span class="w"> </span>-e<span class="w"> </span><span class="nv">CSM_SIMULATION</span><span class="o">=</span>BusinessApp_Simulation<span class="w"> </span>-v<span class="w"> </span>./Simulation/Resource/scenariorun-data:/mnt/scenariorun-data<span class="w"> </span>cosmotech/mybrewery_simulator
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">About the parameters of the command <code>docker run</code></p>
+<ul>
+<li><code>-e</code> allows to set an environment variable during the docker run, here we set our run template id and our simulation</li>
+<li><code>-v</code> allows to set a volume during the docker run, 
+  here we set the content of our <code>Simulation/Resource/scenariorun-data</code> to the path <code>/mnt/scenariorun-data</code> 
+  in the docker container, allowing us to use our existing dataset during the run.</li>
+</ul>
+</div>
+<h2 id="define-api-items">Define API items</h2>
+<p>The following points will give you a simple example of <code>.yaml</code> files used to define elements in the Cosmo Tech API</p>
+<h3 id="define-a-solution">Define a <code>Solution</code></h3>
+<h3 id="define-a-workspace">Define a <code>Workspace</code></h3>
+<h3 id="define-a-dataset">Define a <code>Dataset</code></h3>
+<h3 id="define-a-scenario">Define a <code>Scenario</code></h3>
+<h2 id="run-our-distant-scenario">Run our distant <code>Scenario</code></h2>
+<p>We will need to either use a lot of parameters or environment variables, 
+we can make use of a parameter of <code>csm-orc run</code> to generate a template of <code>.env</code> file we will be able to use.</p>
+<p>That parameter is <code>--gen-env-target</code> and takes a filename to create a <code>.env</code> file initialized with all the environment variables defined in our <code>run.json</code></p>
+<p>If a variable is present multiple times, only the last one will be taken into account. And each environment variable will have one and only one value from the following list (the first existing in order):</p>
+<ul>
+<li>The <code>value</code> defined in the <code>run.json</code></li>
+<li>The current value in your working environment</li>
+<li>The <code>defaultValue</code> defined in the <code>run.json</code></li>
+<li>The <code>description</code> defined in the <code>run.json</code></li>
+<li><code>None</code> if no other value can be found</li>
+</ul>
+<div class="highlight"><span class="filename">use of --gen-env-target</span><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/run.json<span class="w"> </span>--gen-env-target<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env
+cat<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env
+<span class="c1"># CSM_API_SCOPE=The scope of identification used to request access token for your Cosmo Tech API instance</span>
+<span class="c1"># CSM_API_URL=The URL used to query your Cosmo Tech API instance</span>
+<span class="c1"># CSM_DATASET_ABSOLUTE_PATH=Simulation/Resource/scenariorun-data</span>
+<span class="c1"># CSM_ORGANIZATION_ID=The id of the organization in the Cosmo Tech API</span>
+<span class="c1"># CSM_PARAMETERS_ABSOLUTE_PATH=code/run_templates/orchestrator_tutorial_2</span>
+<span class="c1"># CSM_SCENARIO_ID=The id of the scenario in the Cosmo Tech API</span>
+<span class="c1"># CSM_SIMULATION=BusinessApp_Simulation</span>
+<span class="c1"># CSM_WORKSPACE_ID=The id of the workspace in the Cosmo Tech API</span>
+</code></pre></div>
+<p>This <code>.env</code> file can then be used as a parameter of the <code>docker run</code> command with <code>--env-file</code> 
+or can be used with a tool like <code>dotenv</code> (<code>pip install dotenv</code>) to temporary set the env vars of commands. 
+You can also just load it to get all values in your current environment</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">load a <code>.env</code> file in bash then run <code>csm-orc</code></label><label for="__tabbed_1_2"><code>docker run</code> with <code>.env</code></label><label for="__tabbed_1_3"><code>csm-orc run</code> with <code>.env</code> and <code>dotenv</code></label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="w"> </span>-o<span class="w"> </span>allexport
+<span class="nb">source</span><span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env<span class="w"> </span><span class="nb">set</span>
++o<span class="w"> </span>allexport
+csm-orc<span class="w"> </span>run<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/run.json
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--env-file<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env<span class="w"> </span>cosmotech/mybrewery_simulator
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>dotenv<span class="w"> </span>-e<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env<span class="w"> </span>csm-orc<span class="w"> </span>run<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/run.json
+</code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="i-want-to-use-my-local-data-instead-of-needing-a-scenario">I want to use my local data instead of needing a <code>Scenario</code></h2>
+<p>The <code>csm-orc run</code> command comes with a parameter <code>--skip-step</code> that can be set 
+in an environment variable <code>CSM_SKIP_STEPS</code> which allow to define a list of steps that will be ignored during the run.</p>
+<p>Since the "only" step used to download distant data from our run is <code>DownloadScenarioData</code> we can simply run locally by skipping it</p>
+<div class="highlight"><span class="filename">Local run skipping a step</span><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>--skip-step<span class="w"> </span>DownloadScenarioData<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/run.json
+</code></pre></div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../brewery/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Brewery">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Brewery
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../Validator/" class="md-footer__link md-footer__link--next" aria-label="Next: Semantic Validator">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Semantic Validator
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  Made by
+  <a href="https://cosmotech.com/" target="_blank" rel="noopener">
+    Cosmotech
+  </a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.footer"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+        <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
+      
+        <script src="../../javascript/tablesort.js"></script>
+      
+    
+  </body>
+</html>
