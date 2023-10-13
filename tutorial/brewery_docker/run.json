@@ -1,0 +1,83 @@
+{
+  "steps": [
+    {
+      "id": "DownloadScenarioData",
+      "command": "csm-orc",
+      "description": "Connect to the Cosmo Tech API to download dataset and parameters",
+      "arguments": [
+        "fetch-scenariorun-data",
+        "--write-json"
+      ],
+      "useSystemEnvironment": true,
+      "environment": {
+        "CSM_API_URL": {
+          "description": "The URL used to query your Cosmo Tech API instance"
+        },
+        "CSM_API_SCOPE": {
+          "description": "The scope of identification used to request access token for your Cosmo Tech API instance"
+        },
+        "CSM_ORGANIZATION_ID": {
+          "description": "The id of the organization in the Cosmo Tech API"
+        },
+        "CSM_WORKSPACE_ID": {
+          "description": "The id of the workspace in the Cosmo Tech API"
+        },
+        "CSM_SCENARIO_ID": {
+          "description": "The id of the scenario in the Cosmo Tech API"
+        },
+        "CSM_DATASET_ABSOLUTE_PATH": {
+          "description": "The path used to store the datasets of the scenario"
+        },
+        "CSM_PARAMETERS_ABSOLUTE_PATH": {
+          "description": "The path used to store the parameters of the scenario"
+        }
+      }
+    },
+    {
+      "id": "ApplyParameters",
+      "command": "python",
+      "arguments": [
+        "code/run_templates/orchestrator_tutorial_2/apply_parameters.py",
+        "$CSM_DATASET_ABSOLUTE_PATH",
+        "$CSM_DATASET_ABSOLUTE_PATH",
+        "$CSM_PARAMETERS_ABSOLUTE_PATH/parameters.json"
+      ],
+      "description": "Apply our parameters to the dataset",
+      "environment": {
+        "CSM_DATASET_ABSOLUTE_PATH": {
+          "description": "The path to the dataset to update",
+          "defaultValue": "Simulation/Resource/scenariorun-data"
+        },
+        "CSM_PARAMETERS_ABSOLUTE_PATH": {
+          "description": "The path to a folder containing our parameters.json file",
+          "defaultValue": "code/run_templates/orchestrator_tutorial_2"
+        }
+      },
+      "precedents": [
+        "DownloadScenarioData"
+      ]
+    },
+    {
+      "id": "SimulationRun",
+      "command": "csm-orc",
+      "arguments": [
+        "run-step",
+        "--template",
+        "orchestrator_tutorial_2",
+        "--steps",
+        "engine"
+      ],
+      "description": "Runs the simulation targeted by CSM_SIMULATION",
+      "useSystemEnvironment": true,
+      "environment": {
+        "CSM_SIMULATION": {
+          "description": "The simulation file to run",
+          "defaultValue": "BusinessApp_Simulation"
+        }
+      },
+      "precedents": [
+        "ApplyParameters"
+      ]
+    }
+  ]
+}

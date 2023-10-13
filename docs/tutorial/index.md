@@ -52,4 +52,18 @@ A more in depth use of the orchestrator in conjunction with a CosmoTech Simulato
 </div>
 </article>
 
+<article markdown>
+<div class="text" markdown>
+:material-graph: __Brewery + Docker__
+
+---
+A more in depth use of the orchestrator in conjunction with a CosmoTech Simulator, now with docker images
+
+---
+<footer markdown>
+[:octicons-arrow-right-24: Brewery](./brewery_docker.md)
+</footer>
+</div>
+</article>
+
 </main>

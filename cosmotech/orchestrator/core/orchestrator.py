@@ -49,7 +49,8 @@ class Orchestrator(metaclass=Singleton):
         dry: bool = False,
         display_env: bool = False,
         skipped_steps: list[str] = (),
-        validate_only: bool = False
+        validate_only: bool = False,
+        ignore_error: bool = False
     ):
         _path = pathlib.Path(json_file_path)
         _run_content = json.load(open(_path))
@@ -59,13 +60,14 @@ class Orchestrator(metaclass=Singleton):
         if validate_only:
             LOGGER.info(f"[green bold]{_path}[/] is a valid orchestration file")
             return None, None, None
-        return self._load_from_json_content(json_file_path, _run_content, dry, display_env, skipped_steps)
+        return self._load_from_json_content(json_file_path, _run_content, dry, display_env, skipped_steps, ignore_error)
 
     def _load_from_json_content(
         self, json_file_path, _run_content,
         dry: bool = False,
         display_env: bool = False,
-        skipped_steps: list[str] = ()
+        skipped_steps: list[str] = (),
+        ignore_error: bool = False
     ):
         g = flowpipe.Graph(name=json_file_path)
         steps: dict[str, (Step, flowpipe.Node)] = dict()
@@ -107,7 +109,7 @@ class Orchestrator(metaclass=Singleton):
             for k, v in sorted(_env.items(), key=lambda a: a[0]):
                 desc = (":\n  - " + "\n  - ".join(v)) if len(v) > 1 else (": " + list(v)[0] if len(v) else "")
                 LOGGER.info(f" - [yellow]{k}[/]{desc}")
-        elif missing_env:
+        elif missing_env and not ignore_error:
             LOGGER.error("Missing environment values")
             for k, v in missing_env.items():
                 LOGGER.error(f" - {k}" + (f": {v}" if v else ""))

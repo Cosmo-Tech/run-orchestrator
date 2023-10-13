@@ -20,6 +20,7 @@ mkdocs-material
 mkdocs-material[imaging]
 mkdocstrings[python]
 mkdocs-literate-nav
+mkdocs-table-reader-plugin
 mike
 pymdown-extensions
 requirements-parser

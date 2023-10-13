@@ -1,0 +1,33 @@
+key: "brewery"
+name: "Demo Brewery Solution, csm-orc tutorial"
+description: "A simple example of a Cosmo Tech solution built using the Brewery model"
+tags:
+  - "csm-orc"
+  - "Brewery"
+repository: "mybrewery_simulator"
+version: "0.0.1"
+parameters:
+  - id: "stock"
+    varType: "int"
+    defaultValue: 100
+  - id: "restock_quantity"
+    varType: "int"
+    defaultValue: 25
+  - id: "num_waiters"
+    varType: "int"
+    defaultValue: 5
+parameterGroups:
+  - id: bar_parameters
+    parameters:
+      - stock
+      - restock_quantity
+      - num_waiters
+runTemplates:
+  - id: "orchestrator_tutorial_2"
+    name: "Basic what-if"
+    description: "Basic what-if simulation"
+    tags:
+      - "basic_simulation"
+    parameterGroups:
+      - bar_parameters
+    csmSimulation: BusinessApp_Simulation

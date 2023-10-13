@@ -1,0 +1,50 @@
+- Environment Variable: AZURE_CLIENT_ID
+  Description:  An identifier to an Azure identity defined during the installation of the platform
+- Environment Variable: AZURE_CLIENT_SECRET
+  Description:  A secret tied to the given client ID allowing to connect with it
+- Environment Variable: AZURE_TENANT_ID
+  Description:  An identifier of your Azure tenant to be able to connect to it
+- Environment Variable: IDENTITY_PROVIDER
+  Description: Will be set to  `azure` in an Azure based API
+- Environment Variable: CSM_API_URL
+  Description:  The url to the Cosmo Tech API your are connecting to
+- Environment Variable: CSM_API_SCOPE
+  Description:  An identifier scope used to get permission to your API
+- Environment Variable: CSM_DATASET_ABSOLUTE_PATH
+  Description:  A local folder path to which an external volume is mounted to and in which you can write datasets
+- Environment Variable: CSM_PARAMETERS_ABSOLUTE_PATH
+  Description:  A local folder path to which an external volume is mounted to and in which you can write parameters
+- Environment Variable: TWIN_CACHE_HOST
+  Description:  The URL to the twin cache service inside the platform (deprecated)
+- Environment Variable: TWIN_CACHE_PORT
+  Description:  The port to the twin cache service inside the platform (deprecated)
+- Environment Variable: TWIN_CACHE_PASSWORD
+  Description:  The password to the twin cache service inside the platform (deprecated)
+- Environment Variable: TWIN_CACHE_USERNAME
+  Description:  The username to the twin cache service inside the platform (deprecated)
+- Environment Variable: CSM_SIMULATION_ID
+  Description:  The  `Simulation` ID for your current scenario run
+- Environment Variable: AZURE_DATA_EXPLORER_RESOURCE_URI
+  Description:  The URI used to query an Azure Data Explorer Cluster tied to your  `Workspace`
+- Environment Variable: AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI
+  Description:  The URI used to send data to an  `Azure Data Explorer` Cluster tied to your  `Workspace`
+- Environment Variable: AZURE_DATA_EXPLORER_DATABASE_NAME
+  Description:  The name of the database of your  `Workspace` in  `Azure Data Explorer`
+- Environment Variable: CSM_ORGANIZATION_ID
+  Description:  The ID of your  `Organization` in the Cosmo Tech API
+- Environment Variable: CSM_WORKSPACE_ID
+  Description:  The ID of your  `Workspace` in the Cosmo Tech API
+- Environment Variable: CSM_SCENARIO_ID
+  Description:  The ID of your  `Scenario` in the Cosmo Tech API
+- Environment Variable: CSM_RUN_TEMPLATE_ID
+  Description:  The ID of your  `Run Template` in the Cosmo Tech API (as defined in your Solution)
+- Environment Variable: CSM_CONTAINER_MODE
+  Description:  Will always be `csm-orc` left for compatibility with pre 3.0 API
+- Environment Variable: CSM_ENTRYPOINT_LEGACY
+  Description:  Will always be  `false`
+- Environment Variable: CSM_PROBES_MEASURES_TOPIC
+  Description:  An  `amqp` address used by the simulator to send your probe data to ADX via Event Hub
+- Environment Variable: CSM_CONTROL_PLANE_TOPIC
+  Description:  An  `amqp` address used by the simulator to send your control info to ADX via Event Hub (mostly number of measures sent)
+- Environment Variable: CSM_SIMULATION
+  Description:  The  `Simulation` file that should be used to run your simulation (this value is defined in your  `Run Template` and targets one of the files in the `Simulation/` folder)

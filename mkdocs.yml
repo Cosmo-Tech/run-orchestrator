@@ -54,6 +54,7 @@ nav:
       - My First Orchestrator: "tutorial/first.md"
       - Concerning Configuration: "tutorial/second.md"
       - Brewery: "tutorial/brewery.md"
+      - Cloud Ready Simulator: "tutorial/brewery_docker.md"
   - Semantic Validator: "Validator.md"
   - Commands:
       - Commands list: "commands/index.md"
@@ -106,3 +107,4 @@ plugins:
     - literate-nav
     - mike
     - social
+    - table-reader

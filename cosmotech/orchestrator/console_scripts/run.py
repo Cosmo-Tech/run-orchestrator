@@ -50,22 +50,25 @@ from cosmotech.orchestrator import VERSION
               default=False,
               help="Run only a sematic validation of the orchestrator file")
 @web_help("commands/orchestrator")
-def main(template: str, dry_run: bool, display_env: bool, gen_env_target: Optional[str], skipped_steps: list[str], 
-         validate_only: bool):
+def main(
+    template: str, dry_run: bool, display_env: bool, gen_env_target: Optional[str], skipped_steps: list[str],
+    validate_only: bool
+    ):
     """Runs the given `TEMPLATE` file  
 Commands are run as subprocess using `bash -c "<command> <arguments>"`.  
 In case you are in a python venv, the venv is activated before any command is run."""
     LOGGER.info(f"Starting run orchestrator version {VERSION}")
     f = Orchestrator()
     try:
-        c, s, g = f.load_json_file(template, dry_run, display_env, skipped_steps, validate_only)
+        c, s, g = f.load_json_file(template, dry_run, display_env, skipped_steps, validate_only,
+                                   gen_env_target is not None)
     except ValueError as e:
         LOGGER.error(e)
     else:
         if g is None:
             return
         success = True
-        if not display_env:
+        if not display_env and gen_env_target is None:
             LOGGER.info("===      Run     ===")
             g.evaluate(mode="threading")
             LOGGER.info("===     Results    ===")
@@ -78,6 +81,7 @@ In case you are in a python venv, the venv is activated before any command is ru
             if not success:
                 exit(1)
         elif gen_env_target is not None:
+            LOGGER.info(f'Writing environment file "{gen_env_target}"')
             _fp = pathlib.Path(gen_env_target)
             _fp.parent.mkdir(parents=True, exist_ok=True)
             with _fp.open("w") as _f:
@@ -85,7 +89,7 @@ In case you are in a python venv, the venv is activated before any command is ru
                 _env.update(
                     {k: v.description if v.effective_value() is None else v.effective_value() for _s, _ in s.values()
                      for k, v in _s.environment.items()})
-                _f.writelines(f"{k}=\"{v}\"\n" for k, v in sorted(_env.items(), key=lambda e: e[0]))
+                _f.writelines(f"{k}={v}\n" for k, v in sorted(_env.items(), key=lambda e: e[0]))
 
 
 if __name__ == "__main__":
