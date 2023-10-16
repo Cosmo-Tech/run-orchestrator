@@ -1,5 +1,6 @@
 ---
 description: Simple tutorial to convert a fully local Simulator to a cloud ready docker image
+readtime: 15
 ---
 # Make a Cosmo Tech Simulator cloud-ready
 
@@ -154,11 +155,136 @@ The following points will give you a simple example of `.yaml` files used to def
 
 ### Define a `Solution`
 
+An example of `Solution.yaml` which is a file used by the Cosmo Tech API for our current solution would be :
+
+```yaml title="Solution.yaml"
+--8<-- "tutorial/brewery_docker/Solution.yaml:config"
+--8<-- "tutorial/brewery_docker/Solution.yaml:parameters"
+--8<-- "tutorial/brewery_docker/Solution.yaml:runTemplates"
+```
+
+Full Open API description of a `Solution` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/solution/src/main/openapi/solution.yaml)
+??? info "Open API description of a Solution (`components.schemas`)"
+    ```yaml linenums="1"
+    --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/solution/src/main/openapi/solution.yaml:649:988"
+    ```
+
+Once this file is sent to a Cosmo Tech API we will get a `Solution ID` of the form `sol-xxxxxxxx` 
+which will allow us to create further elements inside the API referencing our solution.
+
+Now let's look deeper in how to create our `Solution.yaml`
+
+#### `Solution` description
+
+```yaml title="Solution.yaml - description"
+--8<-- "tutorial/brewery_docker/Solution.yaml:config"
+```
+
+We can see a few important keys in this part of the `Solution` file:
+
+* `key` : it is a "grouping" value used to make multiple `Solution` using the same base but different versions together.
+* `name` : a simple name given to the `Solution`
+* `description` : a simple description of the `Solution`
+* `tags` : a list of tags used in the API to filter `Solutions`
+* `repository` : the name of the docker image inside the image registry
+* `version` : the version of the docker image tied to the `Solution` 
+
+#### `parameters` and `parametersGroups`
+
+```yaml title="Solution.yaml - parameters"
+--8<-- "tutorial/brewery_docker/Solution.yaml:parameters"
+```
+
+In this part we define our parameters, as previously decided we have 3 :
+
+* `NbWaiters`
+* `RestockQty`
+* `Stock`
+
+We can add a `varType` inside the API so that we give more information 
+on what are our parameters. As well as a `defaultValue`
+
+Then we grouped our `parameters` in a `parametersGroup` "bar_parameters" that will make our parameters available for further part of the `Solution`
+
+#### `runTemplates`
+
+```yaml title="Solution.yaml - runTemplates"
+--8<-- "tutorial/brewery_docker/Solution.yaml:runTemplates"
+```
+
+In this part we finally define our `Run Template` for the API, we have 3 main elements defined :
+
+* `id`: the `id` of a run template is the name of a folder inside `code/run_templates` that will contain a `run.json` file
+* `parametersGroups` : that contains the group we defined in the previous part
+* `csmSimulation`: where we choose which simulation will be set in the `CSM_SIMULATION_ID` environment variable
+
 ### Define a `Workspace`
+
+An example of `Workspace.yaml` which is a file used by the Cosmo Tech API for our current solution would be :
+
+```yaml title="Workspace.yaml"
+--8<-- "tutorial/brewery_docker/Workspace.yaml"
+```
+
+Full Open API description of a `Workspace` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/workspace/src/main/openapi/workspace.yaml)
+??? info "Open API description of a Workspace (`components.schemas`)"
+    ```yaml linenums="1"
+    --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/workspace/src/main/openapi/workspace.yaml:692:854"
+    ```
+
+!!! warning "After creation of a `Worskpace` in the API you will need to create some resources for it in your platform if you want to run simulations using the API"
+
+Once your `Workspace` is created you will have a workspace ID of the form `w-xxxxxxxx` it will allow you to connect to your workspace.
+
+We have 3 required parts in a `Workspace`:
+
+* `key`: a unique identifier for your workspace which will be used during the resources creation
+* `name`: the name of your `Workspace`
+* `solution.solutionId`: the solution id (`sol-xxxxxxxx`) from the solution you want to use in the workspace
 
 ### Define a `Dataset`
 
+An example of `Dataset.yaml` which is a file used by the Cosmo Tech API for our current solution would be :
+
+```yaml title="Dataset.yaml"
+--8<-- "tutorial/brewery_docker/Dataset.yaml"
+```
+
+Full Open API description of a `Dataset` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/dataset/src/main/openapi/dataset.yaml)
+??? info "Open API description of a Dataset (`components.schemas`)"
+    ```yaml linenums="1"
+    --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/dataset/src/main/openapi/dataset.yaml:1191:1560"
+    ```
+
+After creation your `Dataset` will have an ID of the form `d-xxxxxxxx` which will be used to link it to your scenarios
+
+The creation of a `Dataset` is a bit complex to explain in a single post due to the different types of datasets that are made available.
+
+But the main part would be that depending on the type of `Dataset` you want to create you should fill information about a `Connector` which is defined at the platform level.
+
+The `Connector` information should allow you to get access to your `Dataset` information
+
 ### Define a `Scenario`
+
+An example of `Scenario.yaml` which is a file used by the Cosmo Tech API for our current solution would be :
+
+```yaml title="Scenario.yaml"
+--8<-- "tutorial/brewery_docker/Scenario.yaml"
+```
+
+Full Open API description of a `Scenario` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/scenario/src/main/openapi/scenario.yaml)
+??? info "Open API description of a Scenario (`components.schemas`)"
+    ```yaml linenums="1"
+    --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/scenario/src/main/openapi/scenario.yaml:830:1126"
+    ```
+
+After creation your `Scenario` will have an ID of the form `s-xxxxxxxx` which will be used to run it
+
+Multiple elements are to be focused on :
+
+* `runTemplateId` : should be the same as the one we defined in our `Solution`
+* `datasetList` : should contain the `Dataset` we defined in the previous part using its ID
+* `parametersValues` : is a list of object representing the parameters we defined in the `Solution` with the actual value they are set to.
 
 ## Run our distant `Scenario`
 

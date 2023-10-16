@@ -12,7 +12,7 @@ A list of tutorials to start getting used to the run-orchestrator
 
 <article markdown>
 <div class="text" markdown>
-:material-flag: __My first orchestration__
+:material-roman-numeral-1: __My first orchestration__
 
 ---
 A first look at how the orchestrator works, how to create commands and run them in order
@@ -26,7 +26,7 @@ A first look at how the orchestrator works, how to create commands and run them 
 
 <article markdown>
 <div class="text" markdown>
-:material-flag: __Concerning configuration__
+:material-roman-numeral-2: __Concerning configuration__
 
 ---
 Now that we know how to run commands we want to configure them
@@ -54,14 +54,14 @@ A more in depth use of the orchestrator in conjunction with a CosmoTech Simulato
 
 <article markdown>
 <div class="text" markdown>
-:material-graph: __Brewery + Docker__
+:material-docker: __Brewery + Docker__
 
 ---
 A more in depth use of the orchestrator in conjunction with a CosmoTech Simulator, now with docker images
 
 ---
 <footer markdown>
-[:octicons-arrow-right-24: Brewery](./brewery_docker.md)
+[:octicons-arrow-right-24: Brewery+Docker](./brewery_docker.md)
 </footer>
 </div>
 </article>

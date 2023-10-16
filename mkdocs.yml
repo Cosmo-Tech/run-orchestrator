@@ -76,7 +76,8 @@ markdown_extensions:
     - tables
     - def_list
     - pymdownx.details
-    - pymdownx.snippets
+    - pymdownx.snippets:
+        url_download: true
     - pymdownx.superfences
     - pymdownx.highlight
     - pymdownx.inlinehilite

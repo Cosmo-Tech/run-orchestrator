@@ -1,0 +1,18 @@
+name: Orchestrator Tutorial
+description: Scenario of the Orchestrator tutorial
+tags:
+  - Brewery
+  - Orchestrator Tutorial
+runTemplateId: orchestrator_tutorial_2
+datasetList:
+  - 'd-xxxxxxxx'
+parametersValues:
+  - parameterId: Stock
+    varType: int
+    value: 200
+  - parameterId: RestockQty
+    varType: int
+    value: 50
+  - parameterId: NbWaiters
+    varType: int
+    value: 10
