@@ -49,6 +49,7 @@ nav:
   - Home: 
     - Cosmo Tech Run Orchestrator: 'index.md'
     - License: 'License.md'
+    - Dependencies: 'dependencies.md'
   - Tutorials:
       - List of tutorials: "tutorial/index.md"
       - My First Orchestrator: "tutorial/first.md"
@@ -110,6 +111,7 @@ plugins:
         scripts:
           - scripts/generate_index.py
           - scripts/generate_helps.py
+          - scripts/generate_requirements.py
     - literate-nav
     - mike
     - social
