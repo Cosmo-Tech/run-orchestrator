@@ -238,11 +238,12 @@ def generate_from_template(template: RunTemplate, output: str):
                                      "description": "The id of a workspace in the cosmotech api"
                                  },
                                  "CSM_RUN_TEMPLATE_ID": {
-                                     "description": "The name of the run template in the cosmotech api",
+                                     "description": "The name of the run template defined in the cosmotech api "
+                                                    "and available in the project",
                                      "value": template.id
                                  },
                                  "CSM_CONTAINER_MODE": {
-                                     "description": "A list of handlers to download (comma separated)",
+                                     "description": "The steps run during a run-step",
                                      "value": name
                                  },
                                  "CSM_API_URL": {
@@ -281,10 +282,12 @@ def generate_from_template(template: RunTemplate, output: str):
                                      "description": "The name of the Simulation file to use"
                                  },
                                  "AZURE_DATA_EXPLORER_RESOURCE_URI": {
-                                     "description": "the ADX cluster path (URI info can be found into ADX cluster page)"
+                                     "description": "the ADX cluster path "
+                                                    "(URI info can be found into ADX cluster page)"
                                  },
                                  "AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI": {
-                                     "description": "The ADX cluster ingest path (URI info can be found into ADX cluster page)"
+                                     "description": "The ADX cluster ingest path "
+                                                    "(URI info can be found into ADX cluster page)"
                                  },
                                  "AZURE_DATA_EXPLORER_DATABASE_NAME": {
                                      "description": "The targeted database name"
@@ -301,7 +304,7 @@ def generate_from_template(template: RunTemplate, output: str):
     previous, new_steps = run_template_phase("parameters_handler", "apply_parameters", "parameters_handler_source",
                                              previous, False)
     steps.extend(new_steps)
-    previous, new_steps = run_template_phase("validator", "validator", "validator_source", previous, False)
+    previous, new_steps = run_template_phase("validator", "validate_data", "validator_source", previous, False)
     steps.extend(new_steps)
     if template.send_datasets_to_data_warehouse is True or template.send_input_parameters_to_data_warehouse is True:
         LOGGER.info("- [green]send_to_adx[/] step found")
@@ -333,21 +336,25 @@ def generate_from_template(template: RunTemplate, output: str):
                                          "description": "The id of the simulation run"
                                      },
                                      "AZURE_DATA_EXPLORER_RESOURCE_URI": {
-                                         "description": "the ADX cluster path (URI info can be found into ADX cluster page)"
+                                         "description": "the ADX cluster path "
+                                                        "(URI info can be found into ADX cluster page)"
                                      },
                                      "AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI": {
-                                         "description": "The ADX cluster ingest path (URI info can be found into ADX cluster page)"
+                                         "description": "The ADX cluster ingest path "
+                                                        "(URI info can be found into ADX cluster page)"
                                      },
                                      "AZURE_DATA_EXPLORER_DATABASE_NAME": {
                                          "description": "The targeted database name"
                                      },
                                      "CSM_SEND_DATAWAREHOUSE_PARAMETERS": {
-                                         "description": "whether or not to send parameters (parameters path is mandatory then)",
+                                         "description": "whether or not to send parameters "
+                                                        "(parameters path is mandatory then)",
                                          "defaultValue": json.dumps(
                                              template.send_input_parameters_to_data_warehouse is True)
                                      },
                                      "CSM_SEND_DATAWAREHOUSE_DATASETS": {
-                                         "description": "whether or not to send datasets (parameters path is mandatory then)",
+                                         "description": "whether or not to send datasets "
+                                                        "(parameters path is mandatory then)",
                                          "defaultValue": json.dumps(
                                              template.send_datasets_to_data_warehouse is True)
                                      },
