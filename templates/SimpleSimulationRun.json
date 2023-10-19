@@ -1,0 +1,18 @@
+{
+  "steps": [
+    {
+      "id": "Run",
+      "description": "Simple Run of a Cosmo Tech Simulator",
+      "command": "main",
+      "arguments": [
+        "-i",
+        "$CSM_SIMULATION"
+      ],
+      "environment": {
+        "CSM_SIMULATION": {
+          "description": "The simulation file that will be run"
+        }
+      }
+    }
+  ]
+}

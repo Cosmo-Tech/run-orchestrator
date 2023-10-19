@@ -1,0 +1,239 @@
+{
+  "commandTemplates": [
+    {
+      "id": "csm_orc_run_step",
+      "command": "csm-orc",
+      "arguments": [
+        "run-step"
+      ],
+      "environment": {
+        "CSM_ORGANIZATION_ID": {
+          "description": "The id of an organization in the cosmotech api"
+        },
+        "CSM_WORKSPACE_ID": {
+          "description": "The id of a workspace in the cosmotech api"
+        },
+        "CSM_RUN_TEMPLATE_ID": {
+          "description": "The name of the run template defined in the cosmotech api and available in the project"
+        },
+        "CSM_CONTAINER_MODE": {
+          "description": "The steps run during a run-step"
+        },
+        "CSM_API_URL": {
+          "description": "The url to a Cosmotech API"
+        },
+        "CSM_API_SCOPE": {
+          "description": "The identification scope of a Cosmotech API"
+        },
+        "AZURE_TENANT_ID": {
+          "description": "An Azure Tenant ID"
+        },
+        "AZURE_CLIENT_ID": {
+          "description": "An Azure Client ID having access to the Cosmotech API"
+        },
+        "AZURE_CLIENT_SECRET": {
+          "description": "The secret for the Azure Client"
+        },
+        "LOG_LEVEL": {
+          "defaultValue": "INFO",
+          "description": "Either CRITICAL, ERROR, WARNING, INFO or DEBUG"
+        },
+        "PYTHONPATH": {
+          "description": "A list of folder to add to the python path"
+        },
+        "CSM_DATASET_ABSOLUTE_PATH": {
+          "description": "A local folder to store the main dataset content"
+        },
+        "CSM_PARAMETERS_ABSOLUTE_PATH": {
+          "description": "A local folder to store the parameters content"
+        },
+        "CSM_SIMULATION_ID": {
+          "description": "The id of the simulation run"
+        },
+        "CSM_SIMULATION": {
+          "defaultValue": "MySimulation",
+          "description": "The name of the Simulation file to use"
+        },
+        "AZURE_DATA_EXPLORER_RESOURCE_URI": {
+          "description": "the ADX cluster path (URI info can be found into ADX cluster page)"
+        },
+        "AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI": {
+          "description": "The ADX cluster ingest path (URI info can be found into ADX cluster page)"
+        },
+        "AZURE_DATA_EXPLORER_DATABASE_NAME": {
+          "description": "The targeted database name"
+        }
+      }
+    }
+  ],
+  "steps": [
+    {
+      "id": "fetch_scenario_parameters",
+      "command": "csm-orc",
+      "arguments": [
+        "fetch-scenariorun-data"
+      ],
+      "environment": {
+        "CSM_ORGANIZATION_ID": {
+          "description": "The id of an organization in the cosmotech api"
+        },
+        "CSM_WORKSPACE_ID": {
+          "description": "The id of a workspace in the cosmotech api"
+        },
+        "CSM_SCENARIO_ID": {
+          "description": "The id of a scenario in the cosmotech api"
+        },
+        "CSM_API_URL": {
+          "description": "The url to a Cosmotech API"
+        },
+        "CSM_API_SCOPE": {
+          "description": "The identification scope of a Cosmotech API"
+        },
+        "CSM_DATASET_ABSOLUTE_PATH": {
+          "description": "A local folder to store the main dataset content"
+        },
+        "CSM_PARAMETERS_ABSOLUTE_PATH": {
+          "description": "A local folder to store the parameters content"
+        },
+        "WRITE_JSON": {
+          "defaultValue": "true",
+          "description": "Toggle writing of parameters in json format"
+        },
+        "WRITE_CSV": {
+          "defaultValue": "false",
+          "description": "Toggle writing of parameters in csv format"
+        },
+        "FETCH_DATASET": {
+          "defaultValue": "true",
+          "description": "Toggle fetching datasets"
+        },
+        "LOG_LEVEL": {
+          "defaultValue": "INFO",
+          "description": "Either CRITICAL, ERROR, WARNING, INFO or DEBUG"
+        }
+      },
+      "useSystemEnvironment": true
+    },
+    {
+      "id": "parameters_handler",
+      "commandId": "csm_orc_run_step",
+      "environment": {
+        "CSM_CONTAINER_MODE": {
+          "value": "parameters_handler"
+        }
+      },
+      "precedents": [
+        "fetch_scenario_parameters"
+      ],
+      "useSystemEnvironment": true
+    },
+    {
+      "id": "validator",
+      "commandId": "csm_orc_run_step",
+      "environment": {
+        "CSM_CONTAINER_MODE": {
+          "value": "validator"
+        }
+      },
+      "precedents": [
+        "parameters_handler"
+      ],
+      "useSystemEnvironment": true
+    },
+    {
+      "id": "send_to_adx",
+      "command": "csm-orc",
+      "arguments": [
+        "send-to-adx"
+      ],
+      "environment": {
+        "AZURE_TENANT_ID": {
+          "description": "An Azure Tenant ID"
+        },
+        "AZURE_CLIENT_ID": {
+          "description": "An Azure Client ID having access to the Cosmotech API"
+        },
+        "AZURE_CLIENT_SECRET": {
+          "description": "The secret for the Azure Client"
+        },
+        "LOG_LEVEL": {
+          "defaultValue": "INFO",
+          "description": "Either CRITICAL, ERROR, WARNING, INFO or DEBUG"
+        },
+        "CSM_DATASET_ABSOLUTE_PATH": {
+          "description": "A local folder to store the main dataset content"
+        },
+        "CSM_PARAMETERS_ABSOLUTE_PATH": {
+          "description": "A local folder to store the parameters content"
+        },
+        "CSM_SIMULATION_ID": {
+          "description": "The id of the simulation run"
+        },
+        "AZURE_DATA_EXPLORER_RESOURCE_URI": {
+          "description": "the ADX cluster path (URI info can be found into ADX cluster page)"
+        },
+        "AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI": {
+          "description": "The ADX cluster ingest path (URI info can be found into ADX cluster page)"
+        },
+        "AZURE_DATA_EXPLORER_DATABASE_NAME": {
+          "description": "The targeted database name"
+        },
+        "CSM_SEND_DATAWAREHOUSE_PARAMETERS": {
+          "defaultValue": "true",
+          "description": "whether or not to send parameters (parameters path is mandatory then)"
+        },
+        "CSM_SEND_DATAWAREHOUSE_DATASETS": {
+          "defaultValue": "true",
+          "description": "whether or not to send datasets (parameters path is mandatory then)"
+        },
+        "WAIT_FOR_INGESTION": {
+          "defaultValue": "false",
+          "description": "Toggle waiting for the ingestion results"
+        }
+      },
+      "precedents": [
+        "validator"
+      ],
+      "useSystemEnvironment": true
+    },
+    {
+      "id": "prerun",
+      "commandId": "csm_orc_run_step",
+      "environment": {
+        "CSM_CONTAINER_MODE": {
+          "value": "prerun"
+        }
+      },
+      "precedents": [
+        "send_to_adx"
+      ],
+      "useSystemEnvironment": true
+    },
+    {
+      "id": "engine",
+      "commandId": "csm_orc_run_step",
+      "environment": {
+        "CSM_CONTAINER_MODE": {
+          "value": "engine"
+        }
+      },
+      "precedents": [
+        "prerun"
+      ],
+      "useSystemEnvironment": true
+    },
+    {
+      "id": "postrun",
+      "commandId": "csm_orc_run_step",
+      "environment": {
+        "CSM_CONTAINER_MODE": {
+          "value": "postrun"
+        }
+      },
+      "precedents": [
+        "engine"
+      ],
+      "useSystemEnvironment": true
+    }
+  ]
+}

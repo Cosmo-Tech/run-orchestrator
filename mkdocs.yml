@@ -55,6 +55,11 @@ nav:
       - Concerning Configuration: "tutorial/second.md"
       - Brewery: "tutorial/brewery.md"
       - Cloud Ready Simulator: "tutorial/brewery_docker.md"
+  - Templates:
+      - List of templates: "templates_commands/index.md"
+      - "templates_commands/simple_simulation_run.md"
+      - "templates_commands/simple_script_run.md"
+      - "templates_commands/legacy_run.md"
   - Semantic Validator: "Validator.md"
   - Commands:
       - Commands list: "commands/index.md"
