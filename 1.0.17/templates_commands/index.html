@@ -11,10 +11,10 @@
       
       
       
-        <link rel="prev" href="../templates_commands/simple_simulation_run/">
+        <link rel="prev" href="../tutorial/brewery_docker/">
       
       
-        <link rel="next" href="../commands/">
+        <link rel="next" href="simple_simulation_run/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Semantic Validator - Run Template Orchestrator</title>
+        <title>List of templates - Run Template Orchestrator</title>
       
     
     
@@ -61,11 +61,11 @@
       
         <meta  property="og:type"  content="website" >
       
-        <meta  property="og:title"  content="Semantic Validator - Run Template Orchestrator" >
+        <meta  property="og:title"  content="List of templates - Run Template Orchestrator" >
       
         <meta  property="og:description"  content="Cosmo Tech ORC helps with defining and running commands DAG" >
       
-        <meta  property="og:image"  content="./assets/images/social/Validator.png" >
+        <meta  property="og:image"  content="./assets/images/social/templates_commands/index.png" >
       
         <meta  property="og:image:type"  content="image/png" >
       
@@ -77,11 +77,11 @@
       
         <meta  name="twitter:card"  content="summary_large_image" >
       
-        <meta  name="twitter:title"  content="Semantic Validator - Run Template Orchestrator" >
+        <meta  name="twitter:title"  content="List of templates - Run Template Orchestrator" >
       
         <meta  name="twitter:description"  content="Cosmo Tech ORC helps with defining and running commands DAG" >
       
-        <meta  name="twitter:image"  content="./assets/images/social/Validator.png" >
+        <meta  name="twitter:image"  content="./assets/images/social/templates_commands/index.png" >
       
     
     
@@ -107,7 +107,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#semantic-validator" class="md-skip">
+        <a href="#templates" class="md-skip">
           Skip to content
         </a>
       
@@ -146,7 +146,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Semantic Validator
+              List of templates
             
           </span>
         </div>
@@ -282,11 +282,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../templates_commands/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
           
   
     
@@ -302,11 +304,9 @@
         
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../Validator/" class="md-tabs__link">
         
   
     
@@ -632,6 +632,8 @@
       
   
   
+    
+  
   
     
     
@@ -649,19 +651,17 @@
       
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../templates_commands/" class="md-nav__link ">
+            <a href="./" class="md-nav__link md-nav__link--active">
               
   
   <span class="md-ellipsis">
@@ -672,13 +672,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+              <label class="md-nav__link md-nav__link--active" for="__nav_3" id="__nav_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Templates
@@ -693,7 +693,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../templates_commands/simple_simulation_run/" class="md-nav__link">
+      <a href="simple_simulation_run/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -718,18 +718,9 @@
       
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../Validator/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -738,7 +729,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1099,250 +1089,21 @@
   
 
 
-<h1 id="semantic-validator">Semantic Validator</h1>
-<p>Simple semantic validator,</p>
-<p>Paste your orchestration file in <code>text</code> mode and it will be semantically validated</p>
-<div id="jsoneditor"></div>
-
-<script type="module" markdown>
-      import { JSONEditor, createAjvValidator } from 'https://cdn.jsdelivr.net/npm/vanilla-jsoneditor/index.js'
-
-      const schema = {
-  "$id": "https://cosmotech.com/run_template.schema.json",
-  "title": "Run Template",
-  "description": "A run template description",
-  "type": "object",
-  "properties": {
-    "commandTemplates": {
-      "description": "A list of Commands Templates",
-      "type": "array",
-      "items": {
-        "description": "A Command Template describe a single executable with default properties",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "The Id of the Command Template",
-            "pattern": "^\\S*$"
-          },
-          "description": {
-            "type": "string",
-            "description": "A description of the command template"
-          },
-          "command": {
-            "type": "string",
-            "description": "The root bash command necessary to execute the template"
-          },
-          "arguments": {
-            "type": "array",
-            "description": "The list of default arguments passed to the command",
-            "items": {
-              "type": "string"
-            }
-          },
-          "useSystemEnvironment": {
-            "type": "boolean",
-            "description": "Should the system environment be fully passed to the command ?"
-          },
-          "environment": {
-            "type": "object",
-            "description": "The default list of Environment Variables required for the command",
-            "patternProperties": {
-              ".+": {
-                "$ref": "#/$defs/environmentVariable"
-              }
-            },
-            "minProperties": 1
-          }
-        },
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "command"
-        ]
-      }
-    },
-    "steps": {
-      "description": "A list of Steps descriptors",
-      "type": "array",
-      "items": {
-        "description": "A Step is a single instance of a Command that is scheduled to be run, can use an existing command or define its own",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "The Id of the Step",
-            "pattern": "^\\S*$"
-          },
-          "description": {
-            "type": "string",
-            "description": "A description of the step (override command template description)"
-          },
-          "commandId": {
-            "type": "string",
-            "description": "An Id for an existing command"
-          },
-          "command": {
-            "type": "string",
-            "description": "The root bash command necessary to execute the command"
-          },
-          "arguments": {
-            "type": "array",
-            "description": "The list of arguments passed to the command (replace the default one)",
-            "items": {
-              "type": "string"
-            }
-          },
-          "useSystemEnvironment": {
-            "type": "boolean",
-            "description": "Should the system environment be fully passed to the command ?"
-          },
-          "environment": {
-            "type": "object",
-            "description": "The list of Environment Variables defined for the command (replace the default one)",
-            "patternProperties": {
-              ".+": {
-                "$ref": "#/$defs/environmentVariable"
-              }
-            },
-            "minProperties": 1
-          },
-          "precedents": {
-            "type": "array",
-            "description": "A list of steps that have to be run before this one",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "additionalProperties": false,
-        "oneOf": [
-          {
-            "required": [
-              "id",
-              "command"
-            ]
-          },
-          {
-            "required": [
-              "id",
-              "commandId"
-            ]
-          }
-        ]
-      }
-    }
-  },
-  "required": [
-    "steps"
-  ],
-  "$defs": {
-    "environmentVariable": {
-      "type": "object",
-      "description": "A environment variable descriptor",
-      "properties": {
-        "defaultValue": {
-          "type": "string",
-          "description": "The default value of the required variable, if not set, the variable has to be set in the system"
-        },
-        "value": {
-          "type": "string",
-          "description": "The effective value of the required variable, will override any system value"
-        },
-        "description": {
-          "type": "string",
-          "description": "A description of the required Environment Variable for documentation reasons"
-        }
-      },
-      "additionalProperties": false
-    }
-  }
-}
-
-
-      const schemaDefinitions = {
-
-      }
-
-      const content = {
-        json:
-{
-  "commandTemplates": [
-    {
-      "id": "TEMPLATE_ID",
-      "command": "echo",
-      "arguments": [
-        "list",
-        "of",
-        "arguments",
-        "$ENV_VALUE"
-      ],
-      "environment": {
-        "ENV_VALUE": {
-          "defaultValue": "DEFAULT",
-          "description": "An environment variable with a default value"
-        }
-      }
-    }
-  ],
-  "steps": [
-    {
-      "id": "UseTemplate",
-      "commandId": "TEMPLATE_ID"
-    },
-    {
-      "id": "OverrideTemplate",
-      "commandId": "TEMPLATE_ID",
-      "arguments": [
-        "Added",
-        "arguments"
-      ],
-      "environment": {
-        "ENV_VALUE": {
-          "value": "OVERRIDE",
-          "description": "An environment variable with a forced value"
-        }
-      },
-      "precedents": [
-        "UseTemplate"
-      ]
-    },
-    {
-      "id": "NewCommand",
-      "command": "echo",
-      "arguments": [
-        "$NO_EXIST"
-      ],
-      "environment": {
-        "NO_EXIST": {
-          "description": "An environment variable with no value"
-        }
-      },
-      "precedents": [
-        "OverrideTemplate"
-      ]
-    }
-  ]
-}
-,
-        text: undefined
-      }
-
-      // create the editor
-      const target = document.getElementById('jsoneditor')
-      const editor = new JSONEditor({
-        target: document.getElementById('jsoneditor'),
-        props: {
-          content,
-          onChange: (update) => console.log('onChange', update),
-          validator: createAjvValidator({ schema, schemaDefinitions })
-        }
-      })
-    </script>
-
-<blockquote>
-<p>Page made with <a href="https://github.com/josdejong/svelte-jsoneditor">https://github.com/josdejong/svelte-jsoneditor</a></p>
-</blockquote>
+<h1 id="templates">Templates</h1>
+<p>A list of templates for the main usages you could have with <code>csm-orc run</code></p>
+<main class="grid">
+<article>
+<div class="text">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 7v2h-1v6h1v2h-4v-2h1V9h-1V7h4Z"/></svg></span> <strong>Simple Simulation Run</strong></p>
+<hr />
+<p>A simple run of a Cosmo Tech Simulator with no special configuration except for the input Simulation</p>
+<hr />
+<footer>
+<p><a href="simple_simulation_run/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"/></svg></span> Simple Simulation Run</a></p>
+</footer>
+</div>
+</article>
+</main>
 
 
 
@@ -1374,7 +1135,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../templates_commands/simple_simulation_run/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Simple Simulation">
+          <a href="../tutorial/brewery_docker/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Cloud Ready Simulator">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -1384,20 +1145,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Simple Simulation
+                Cloud Ready Simulator
               </div>
             </div>
           </a>
         
         
           
-          <a href="../commands/" class="md-footer__link md-footer__link--next" aria-label="Next: Commands list">
+          <a href="simple_simulation_run/" class="md-footer__link md-footer__link--next" aria-label="Next: Simple Simulation">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Commands list
+                Simple Simulation
               </div>
             </div>
             <div class="md-footer__button md-icon">
