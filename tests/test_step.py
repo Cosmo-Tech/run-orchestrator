@@ -57,6 +57,9 @@ class TestStep:
                 },
                 "SET_ENV": {
                     "value": "SET"
+                },
+                "OPTIONAL_UNSET_ENV": {
+                    "optional": True
                 }
             }
         }
