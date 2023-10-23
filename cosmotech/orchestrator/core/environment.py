@@ -16,9 +16,10 @@ class EnvironmentVariable:
     defaultValue: str = field(default=None)
     value: str = field(default=None)
     description: str = field(default=None)
+    optional: bool = field(default=False)
 
     def is_required(self):
-        return not self.value and not self.defaultValue
+        return (not self.value and not self.defaultValue) and not self.optional
 
     def effective_value(self):
         v = self.value or os.environ.get(self.name, self.defaultValue)
@@ -30,6 +31,7 @@ class EnvironmentVariable:
         self.defaultValue = self.defaultValue or other.defaultValue
         self.value = self.value or other.value
         self.description = self.description or other.description
+        self.optional = self.optional or other.optional
 
     def serialize(self):
         r = {}
@@ -39,4 +41,5 @@ class EnvironmentVariable:
             r['defaultValue'] = self.defaultValue
         if self.description:
             r['description'] = self.description
+        r['optional'] = self.optional
         return r

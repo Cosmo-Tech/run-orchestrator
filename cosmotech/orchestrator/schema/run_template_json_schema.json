@@ -144,6 +144,10 @@
         "description": {
           "type": "string",
           "description": "A description of the required Environment Variable for documentation reasons"
+        },
+        "optional": {
+          "type": "boolean",
+          "description": "Should the Environment Variable be required for the run of a step ?"
         }
       },
       "additionalProperties": false
