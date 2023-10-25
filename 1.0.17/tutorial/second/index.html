@@ -653,6 +653,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#make-use-of-optional-environment-variables" class="md-nav__link">
+    Make use of optional Environment Variables
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1223,6 +1230,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#make-use-of-optional-environment-variables" class="md-nav__link">
+    Make use of optional Environment Variables
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1428,15 +1442,8 @@ csm-orc<span class="w"> </span>run<span class="w"> </span>run_env.json
 <span class="c1"># 34</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-display</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===</span>
-<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Step run-fibo</span>
-<span class="c1">#                                Command: python fibonacci.py 10</span>
-<span class="c1">#                                Environment:</span>
-<span class="c1">#                                - FIBO_FILE_PATH: A file run-fibo will write to</span>
-<span class="c1">#                                Status: Done</span>
-<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Step run-display</span>
-<span class="c1">#                                Command: python display_file.py</span>
-<span class="c1">#                                Environment:</span>
-<span class="c1">#                                - FIBO_FILE_PATH: A file run-display will read and print to stdout</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-fibo (Done)</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)</span>
 </code></pre></div>
 <p>We can see that our orchestrator works now.</p>
 <h2 id="use-environment-variables-as-argument">Use Environment Variables as Argument</h2>
@@ -1495,16 +1502,8 @@ csm-orc<span class="w"> </span>run<span class="w"> </span>run_env_arg.json
 <span class="c1"># 34</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-display</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===</span>
-<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Step run-fibo</span>
-<span class="c1">#                                Command: python fibonacci.py 10</span>
-<span class="c1">#                                Environment:</span>
-<span class="c1">#                                - FIBO_FILE_PATH: A file run-fibo will write to</span>
-<span class="c1">#                                - FIBO_COUNT: The rank of the fibonacci sequence run-fibo will write to</span>
-<span class="c1">#                                Status: Done</span>
-<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Step run-display</span>
-<span class="c1">#                                Command: python display_file.py</span>
-<span class="c1">#                                Environment:</span>
-<span class="c1">#                                - FIBO_FILE_PATH: A file run-display will read and print to stdout</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-fibo (Done)</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -1525,16 +1524,8 @@ csm-orc<span class="w"> </span>run<span class="w"> </span>run_env_arg.json
 <span class="c1"># 13</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-display</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===</span>
-<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Step run-fibo</span>
-<span class="c1">#                                Command: python fibonacci.py 10</span>
-<span class="c1">#                                Environment:</span>
-<span class="c1">#                                - FIBO_FILE_PATH: A file run-fibo will write to</span>
-<span class="c1">#                                - FIBO_COUNT: The rank of the fibonacci sequence run-fibo will write to</span>
-<span class="c1">#                                Status: Done</span>
-<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Step run-display</span>
-<span class="c1">#                                Command: python display_file.py</span>
-<span class="c1">#                                Environment:</span>
-<span class="c1">#                                - FIBO_FILE_PATH: A file run-display will read and print to stdout</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-fibo (Done)</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)</span>
 </code></pre></div>
 </div>
 </div>
@@ -1595,19 +1586,154 @@ csm-orc<span class="w"> </span>run<span class="w"> </span>run_with_template.json
 <span class="c1"># 13</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-display</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===</span>
-<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Step run-fibo</span>
-<span class="c1">#                                Command: python fibonacci.py $FIBO_COUNT</span>
-<span class="c1">#                                Environment:</span>
-<span class="c1">#                                - FIBO_COUNT: The rank of the fibonacci sequence run-fibo will write to</span>
-<span class="c1">#                                - FIBO_FILE_PATH: A file available to the command</span>
-<span class="c1">#                                Status: Done</span>
-<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Step run-display</span>
-<span class="c1">#                                Command: python display_file.py</span>
-<span class="c1">#                                Environment:</span>
-<span class="c1">#                                - FIBO_FILE_PATH: A file available to the command</span>
-<span class="c1">#                                Status: Done</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-fibo (Done)</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)</span>
 </code></pre></div>
 <p>Now you can create command templates, use environment variables to configure your scripts, and set some values for those.</p>
+<h2 id="make-use-of-optional-environment-variables">Make use of optional Environment Variables</h2>
+<p>In some case you may want to have optional effects that can be used to change your script only if present 
+(the use of a <code>defaultValue</code> does not make sense for those)</p>
+<p>For example, we will make a change to the run-display step to either print the content of the file as is, 
+or if an Environment Variable <code>DISPLAY_SYMBOL</code> is set it will instead display that symbol on each line X times, 
+where X is the number read from the file.</p>
+<p>So <code>DISPLAY_SYMBOL=X</code> and <code>FIBO_COUNT=5</code> would look like that:</p>
+<div class="highlight"><span class="filename">DISPLAY_SYMBOL=X and FIBO_COUNT=5</span><pre><span></span><code>#
+# X
+# X
+# XX
+# XXX
+</code></pre></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">updated_display.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;File printer&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--filename&quot;</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">),</span>
+                    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The file to print&quot;</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;FIBO_FILE_PATH&quot;</span><span class="p">))</span>
+
+<span class="hll"><span class="n">display_symbol</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DISPLAY_SYMBOL&quot;</span><span class="p">)</span>
+</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="n">args</span><span class="o">.</span><span class="n">filename</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+<span class="hll">            <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span><span class="hll">            <span class="k">if</span> <span class="n">display_symbol</span><span class="p">:</span>
+</span><span class="hll">                <span class="nb">print</span><span class="p">(</span><span class="n">display_symbol</span> <span class="o">*</span> <span class="n">value</span><span class="p">)</span>
+</span><span class="hll">            <span class="k">else</span><span class="p">:</span>
+</span><span class="hll">                <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<p>And to make use of that new script we can update our <code>.json</code> file as following</p>
+<div class="highlight"><span class="filename">optional_envvar.json</span><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;run-fibo&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;commandId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;python-with-fibo-file&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;fibonacci.py&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;$FIBO_COUNT&quot;</span><span class="w"> </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;FIBO_COUNT&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The rank of the fibonacci sequence run-fibo will write to&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;run-display&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;commandId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;python-with-fibo-file&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;updated_display.py&quot;</span><span class="w"> </span><span class="p">],</span>
+<span class="hll"><span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">&quot;DISPLAY_SYMBOL&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span class="hll"><span class="w">          </span><span class="nt">&quot;optional&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A symbol used to replace the display of a number by a repetition of it.&quot;</span>
+</span><span class="hll"><span class="w">        </span><span class="p">}</span>
+</span><span class="hll"><span class="w">      </span><span class="p">},</span>
+</span><span class="w">      </span><span class="nt">&quot;precedents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;run-fibo&quot;</span><span class="w"> </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;commandTemplates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;python-with-fibo-file&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;python&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;FIBO_FILE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A file available to the command&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Run without <code>DISPLAY_SYMBOL</code></label><label for="__tabbed_3_2">Run with <code>DISPLAY_SYMBOL</code></label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">FIBO_FILE_PATH</span><span class="o">=</span>fib_second.txt
+<span class="nb">export</span><span class="w"> </span><span class="nv">FIBO_COUNT</span><span class="o">=</span><span class="m">8</span><span class="w"> </span>
+csm-orc<span class="w"> </span>run<span class="w"> </span>optional_envvar.json
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-fibo</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-display</span>
+<span class="c1"># 0</span>
+<span class="c1"># 1</span>
+<span class="c1"># 1</span>
+<span class="c1"># 2</span>
+<span class="c1"># 3</span>
+<span class="c1"># 5</span>
+<span class="c1"># 8</span>
+<span class="c1"># 13</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-display</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-fibo (Done)</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">FIBO_FILE_PATH</span><span class="o">=</span>fib_second.txt
+<span class="nb">export</span><span class="w"> </span><span class="nv">FIBO_COUNT</span><span class="o">=</span><span class="m">8</span><span class="w"> </span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">DISPLAY_SYMBOL</span><span class="o">=</span>X<span class="w"> </span>
+csm-orc<span class="w"> </span>run<span class="w"> </span>optional_envvar.json
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-fibo</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-display</span>
+<span class="c1"># </span>
+<span class="c1"># X</span>
+<span class="c1"># X</span>
+<span class="c1"># XX</span>
+<span class="c1"># XXX</span>
+<span class="c1"># XXXXX</span>
+<span class="c1"># XXXXXXXX</span>
+<span class="c1"># XXXXXXXXXXXXX</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-display</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-fibo (Done)</span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 
 
 

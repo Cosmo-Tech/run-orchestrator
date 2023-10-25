@@ -1553,7 +1553,11 @@ This should display the following lines
 <span class="normal">149</span>
 <span class="normal">150</span>
 <span class="normal">151</span>
-<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://cosmotech.com/run_template.schema.json&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Run Template&quot;</span><span class="p">,</span>
@@ -1699,6 +1703,10 @@ This should display the following lines
 <span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A description of the required Environment Variable for documentation reasons&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;optional&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Should the Environment Variable be required for the run of a step ?&quot;</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">      </span><span class="p">},</span>
 <span class="w">      </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
@@ -1743,17 +1751,13 @@ that runs the command <code>echo</code> with the arguments <code>foo</code> and 
 <span class="normal">4</span>
 <span class="normal">5</span>
 <span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span>
-<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>simple_step.json
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>simple_step.json
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Starting step echo-foo-bar</span>
 <span class="c1"># foo bar</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Done running step echo-foo-bar</span>
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===</span>
-<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     Step echo-foo-bar</span>
-<span class="c1">#                                Command: echo foo bar</span>
-<span class="c1">#                                Status: Done </span>
+<span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     echo-foo-bar (Done)</span>
 </code></pre></div></td></tr></table></div>
 <p>On line 4 we can see the result of the command <code>echo foo bar</code> which is defined in the step.</p>
 <p>Now using this basis we will write our commands in an orchestration file using the same options as the previous example</p>
