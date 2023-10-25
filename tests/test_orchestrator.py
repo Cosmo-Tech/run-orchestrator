@@ -30,6 +30,23 @@ class TestOrchestrator:
                 "commandId": "TEMPLATE_ID"
             },
             {
+                "id": "OverrideOptionalTemplate",
+                "commandId": "TEMPLATE_ID",
+                "arguments": [
+                    "Optional",
+                    "environment"
+                ],
+                "environment": {
+                    "OPTIONAL_VALUE": {
+                        "optional": True,
+                        "description": "An optional environment variable"
+                    }
+                },
+                "precedents": [
+                    "UseTemplate"
+                ]
+            },
+            {
                 "id": "OverrideTemplate",
                 "commandId": "TEMPLATE_ID",
                 "arguments": [
@@ -73,7 +90,7 @@ class TestOrchestrator:
         c, s, g = o._load_from_json_content("example/simple.json", self.file_content, False, False, [])
         os.environ = old_env
         assert len(c) == 1
-        assert len(s) == 3
+        assert len(s) == 4
 
     def test_load_command_missing_env(self):
         o = Orchestrator()

@@ -146,7 +146,7 @@ class Step:
         r = dict()
         if not self.skipped:
             for k, v in self.environment.items():
-                if v.effective_value() is None:
+                if v.effective_value() is None and v.is_required():
                     r[k] = v.description
         return r
 
@@ -165,10 +165,11 @@ class Step:
         if self.environment:
             r.append("Environment:")
             for k, v in self.environment.items():
+                optional_str = "" if not v.optional else "(Optional)"
                 if v.description:
-                    r.append(f"- {k}: {v.description}")
+                    r.append(f"- {k}{optional_str}: {v.description}")
                 else:
-                    r.append(f"- {k}")
+                    r.append(f"- {k}{optional_str}")
         if self.useSystemEnvironment:
             r.append("[yellow]Use system environment variables[/]")
         if self.skipped:

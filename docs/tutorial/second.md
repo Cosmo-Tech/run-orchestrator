@@ -105,15 +105,8 @@ FIBO_FILE_PATH=fib_second.txt csm-orc run run_env.json
 # 34
 # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-display
 # [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===
-# [YYYY/MM/DD-HH:mm:SS] INFO     Step run-fibo
-#                                Command: python fibonacci.py 10
-#                                Environment:
-#                                - FIBO_FILE_PATH: A file run-fibo will write to
-#                                Status: Done
-# [YYYY/MM/DD-HH:mm:SS] INFO     Step run-display
-#                                Command: python display_file.py
-#                                Environment:
-#                                - FIBO_FILE_PATH: A file run-display will read and print to stdout
+# [YYYY/MM/DD-HH:mm:SS] INFO     run-fibo (Done)
+# [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)
 ```
 
 We can see that our orchestrator works now.
@@ -152,16 +145,8 @@ ensuring that even if the environment variable is not defined a default value is
     # 34
     # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-display
     # [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===
-    # [YYYY/MM/DD-HH:mm:SS] INFO     Step run-fibo
-    #                                Command: python fibonacci.py 10
-    #                                Environment:
-    #                                - FIBO_FILE_PATH: A file run-fibo will write to
-    #                                - FIBO_COUNT: The rank of the fibonacci sequence run-fibo will write to
-    #                                Status: Done
-    # [YYYY/MM/DD-HH:mm:SS] INFO     Step run-display
-    #                                Command: python display_file.py
-    #                                Environment:
-    #                                - FIBO_FILE_PATH: A file run-display will read and print to stdout
+    # [YYYY/MM/DD-HH:mm:SS] INFO     run-fibo (Done)
+    # [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)
     ```
 
 === "Run with the new variable"
@@ -183,16 +168,8 @@ ensuring that even if the environment variable is not defined a default value is
     # 13
     # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-display
     # [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===
-    # [YYYY/MM/DD-HH:mm:SS] INFO     Step run-fibo
-    #                                Command: python fibonacci.py 10
-    #                                Environment:
-    #                                - FIBO_FILE_PATH: A file run-fibo will write to
-    #                                - FIBO_COUNT: The rank of the fibonacci sequence run-fibo will write to
-    #                                Status: Done
-    # [YYYY/MM/DD-HH:mm:SS] INFO     Step run-display
-    #                                Command: python display_file.py
-    #                                Environment:
-    #                                - FIBO_FILE_PATH: A file run-display will read and print to stdout
+    # [YYYY/MM/DD-HH:mm:SS] INFO     run-fibo (Done)
+    # [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)
     ```
 
 ## Use CommandTemplate to reduce copy
@@ -227,17 +204,84 @@ csm-orc run run_with_template.json
 # 13
 # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-display
 # [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===
-# [YYYY/MM/DD-HH:mm:SS] INFO     Step run-fibo
-#                                Command: python fibonacci.py $FIBO_COUNT
-#                                Environment:
-#                                - FIBO_COUNT: The rank of the fibonacci sequence run-fibo will write to
-#                                - FIBO_FILE_PATH: A file available to the command
-#                                Status: Done
-# [YYYY/MM/DD-HH:mm:SS] INFO     Step run-display
-#                                Command: python display_file.py
-#                                Environment:
-#                                - FIBO_FILE_PATH: A file available to the command
-#                                Status: Done
+# [YYYY/MM/DD-HH:mm:SS] INFO     run-fibo (Done)
+# [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)
 ```
 
 Now you can create command templates, use environment variables to configure your scripts, and set some values for those.
+
+## Make use of optional Environment Variables
+
+In some case you may want to have optional effects that can be used to change your script only if present 
+(the use of a `defaultValue` does not make sense for those)
+
+For example, we will make a change to the run-display step to either print the content of the file as is, 
+or if an Environment Variable `DISPLAY_SYMBOL` is set it will instead display that symbol on each line X times, 
+where X is the number read from the file.
+
+So `DISPLAY_SYMBOL=X` and `FIBO_COUNT=5` would look like that:
+
+```text title="DISPLAY_SYMBOL=X and FIBO_COUNT=5"
+#
+# X
+# X
+# XX
+# XXX
+```
+
+```python title="updated_display.py" linenums="1" hl_lines="10 17-21"
+--8<-- "tutorial/second/updated_display.py"
+```
+
+And to make use of that new script we can update our `.json` file as following
+
+```json title="optional_envvar.json" hl_lines="18-23"
+--8<-- "tutorial/second/optional_envvar.json"
+```
+
+=== "Run without `DISPLAY_SYMBOL`"
+    ```bash
+    export FIBO_FILE_PATH=fib_second.txt
+    export FIBO_COUNT=8 
+    csm-orc run optional_envvar.json
+    # [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===
+    # [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo
+    # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-fibo
+    # [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-display
+    # 0
+    # 1
+    # 1
+    # 2
+    # 3
+    # 5
+    # 8
+    # 13
+    # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-display
+    # [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===
+    # [YYYY/MM/DD-HH:mm:SS] INFO     run-fibo (Done)
+    # [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)
+    ```
+
+=== "Run with `DISPLAY_SYMBOL`"
+    ```bash
+    export FIBO_FILE_PATH=fib_second.txt
+    export FIBO_COUNT=8 
+    export DISPLAY_SYMBOL=X 
+    csm-orc run optional_envvar.json
+    # [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===
+    # [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo
+    # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-fibo
+    # [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-display
+    # 
+    # X
+    # X
+    # XX
+    # XXX
+    # XXXXX
+    # XXXXXXXX
+    # XXXXXXXXXXXXX
+    # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-display
+    # [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===
+    # [YYYY/MM/DD-HH:mm:SS] INFO     run-fibo (Done)
+    # [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)
+    ```
