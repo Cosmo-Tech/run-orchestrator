@@ -8,9 +8,11 @@
       ],
       "environment": {
         "CSM_ORGANIZATION_ID": {
+          "optional": true,
           "description": "The id of an organization in the cosmotech api"
         },
         "CSM_WORKSPACE_ID": {
+          "optional": true,
           "description": "The id of a workspace in the cosmotech api"
         },
         "CSM_RUN_TEMPLATE_ID": {
@@ -20,18 +22,23 @@
           "description": "The steps run during a run-step"
         },
         "CSM_API_URL": {
+          "optional": true,
           "description": "The url to a Cosmotech API"
         },
         "CSM_API_SCOPE": {
+          "optional": true,
           "description": "The identification scope of a Cosmotech API"
         },
         "AZURE_TENANT_ID": {
+          "optional": true,
           "description": "An Azure Tenant ID"
         },
         "AZURE_CLIENT_ID": {
+          "optional": true,
           "description": "An Azure Client ID having access to the Cosmotech API"
         },
         "AZURE_CLIENT_SECRET": {
+          "optional": true,
           "description": "The secret for the Azure Client"
         },
         "LOG_LEVEL": {
@@ -55,12 +62,15 @@
           "description": "The name of the Simulation file to use"
         },
         "AZURE_DATA_EXPLORER_RESOURCE_URI": {
+          "optional": true,
           "description": "the ADX cluster path (URI info can be found into ADX cluster page)"
         },
         "AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI": {
+          "optional": true,
           "description": "The ADX cluster ingest path (URI info can be found into ADX cluster page)"
         },
         "AZURE_DATA_EXPLORER_DATABASE_NAME": {
+          "optional": true,
           "description": "The targeted database name"
         }
       }

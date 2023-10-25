@@ -232,9 +232,11 @@ def generate_from_template(template: RunTemplate, output: str):
                              useSystemEnvironment=True,
                              environment={
                                  "CSM_ORGANIZATION_ID": {
+                                     "optional": True,
                                      "description": "The id of an organization in the cosmotech api"
                                  },
                                  "CSM_WORKSPACE_ID": {
+                                     "optional": True,
                                      "description": "The id of a workspace in the cosmotech api"
                                  },
                                  "CSM_RUN_TEMPLATE_ID": {
@@ -247,18 +249,23 @@ def generate_from_template(template: RunTemplate, output: str):
                                      "value": name
                                  },
                                  "CSM_API_URL": {
+                                     "optional": True,
                                      "description": "The url to a Cosmotech API"
                                  },
                                  "CSM_API_SCOPE": {
+                                     "optional": True,
                                      "description": "The identification scope of a Cosmotech API"
                                  },
                                  "AZURE_TENANT_ID": {
+                                     "optional": True,
                                      "description": "An Azure Tenant ID"
                                  },
                                  "AZURE_CLIENT_ID": {
+                                     "optional": True,
                                      "description": "An Azure Client ID having access to the Cosmotech API"
                                  },
                                  "AZURE_CLIENT_SECRET": {
+                                     "optional": True,
                                      "description": "The secret for the Azure Client"
                                  },
                                  "LOG_LEVEL": {
@@ -282,14 +289,17 @@ def generate_from_template(template: RunTemplate, output: str):
                                      "description": "The name of the Simulation file to use"
                                  },
                                  "AZURE_DATA_EXPLORER_RESOURCE_URI": {
+                                     "optional": True,
                                      "description": "the ADX cluster path "
                                                     "(URI info can be found into ADX cluster page)"
                                  },
                                  "AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI": {
+                                     "optional": True,
                                      "description": "The ADX cluster ingest path "
                                                     "(URI info can be found into ADX cluster page)"
                                  },
                                  "AZURE_DATA_EXPLORER_DATABASE_NAME": {
+                                     "optional": True,
                                      "description": "The targeted database name"
                                  },
                              })

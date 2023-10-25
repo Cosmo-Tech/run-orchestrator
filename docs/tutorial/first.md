@@ -108,9 +108,7 @@ csm-orc run simple_step.json
 # foo bar
 # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step echo-foo-bar
 # [YYYY/MM/DD-HH:mm:SS] INFO     ===     Results    ===
-# [YYYY/MM/DD-HH:mm:SS] INFO     Step echo-foo-bar
-#                                Command: echo foo bar
-#                                Status: Done 
+# [YYYY/MM/DD-HH:mm:SS] INFO     echo-foo-bar (Done)
 ```
 
 On line 4 we can see the result of the command `echo foo bar` which is defined in the step.
