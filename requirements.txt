@@ -1,26 +1,14 @@
 # Cosmotech dependencies
-cosmotech-acceleration-library
-cosmotech-api
+cosmotech-acceleration-library==0.4.1
+cosmotech-api==2.4.7
 
 # Orchestrator Dependencies
-flowpipe
-jsonschema
-pyyaml
+flowpipe==0.10.1
+jsonschema==4.19.1
+pyyaml==6.0.1
 
 # Command dependencies
-click
-rich-click
-click-log
-rich
-
-# Documentation generation requirements
-mkdocs
-mkdocs-gen-files
-mkdocs-material
-mkdocs-material[imaging]
-mkdocstrings[python]
-mkdocs-literate-nav
-mkdocs-table-reader-plugin
-mike
-pymdown-extensions
-requirements-parser
+click==8.1.7
+rich-click==1.7.0
+click-log==0.4.0
+rich==13.6.0

@@ -1,0 +1,10 @@
+# Documentation generation requirements
+mkdocs==1.5.3
+mkdocs-gen-files==0.5.0
+mkdocs-material[imaging]==9.4.6
+mkdocstrings[python]==0.23.0
+mkdocs-literate-nav==0.6.1
+mkdocs-table-reader-plugin==2.0.3
+mike==1.1.2
+pymdown-extensions==10.3.1
+requirements-parser==0.5.0
