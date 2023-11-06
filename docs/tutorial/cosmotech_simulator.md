@@ -1,13 +1,13 @@
 ---
 description: Simple tutorial to combine csm-orc and a Cosmo Tech Simulator
 ---
-# Integration with a CosmoTech Simulator
+# Integration with a Cosmo Tech Simulator
 
 !!! abstract "Objective"
     + Combine previous tutorials and Cosmo Tech Simulator to be able to apply changes to a simulation instance
 
 !!! warning "Prerequisites"
-    + You need to have completed the "Brewery" onboarding for CosmoTech projects
+    + You need to have completed the "Brewery" onboarding for Cosmo Tech projects
     + You need a local version of the "Brewery" solution (full code available [here](https://github.com/Cosmo-Tech/onboarding-brewery-solution))
 
 --8<-- "partials/orchestrator_known_issues.md"
@@ -21,7 +21,7 @@ on the repository.
 Online view: [here](https://github.com/Cosmo-Tech/onboarding-brewery-solution/blob/Complete-model/ConceptualModel/MyBrewery.csm.xml)
 
 ```text title="Project files"
---8<-- "tutorial/breweryv2/repo_tree_initial.txt"
+--8<-- "tutorial/cosmotech_simulator/repo_tree_initial.txt"
 ```
 
 The Brewery conceptual model is very simple: it consists of a Bar entity and a Customer entity, 
@@ -52,7 +52,7 @@ We will then use those 3 attributes as parameters for our simulations.
 To store our parameters we will define a JSON file containing them. 
 
 ```json title="code/run_templates/orchestrator_tutorial_1/parameters.json"
---8<-- "tutorial/breweryv2/parameters.json"
+--8<-- "tutorial/cosmotech_simulator/parameters.json"
 ```
 
 ???+ info "About the JSON file format"
@@ -81,7 +81,7 @@ We will need 3 parameters for the script :
 Using those information we can write a simple script :
 
 ```python title="code/run_templates/orchestrator_tutorial_1/apply_parameters.py"
---8<-- "tutorial/breweryv2/apply_parameters.py"
+--8<-- "tutorial/cosmotech_simulator/apply_parameters.py"
 ```
 
 Using that script can do the trick, we can test it :
@@ -109,7 +109,7 @@ We will have to use that folder to give the simulator access to our dataset.
     We then know that the content of this folder will not be available in a container as is, 
     and need to keep that in mind for future uses.
 
-For simplicity we won't be making an effort to keep the old values of possibly existing datasets and will overwrite the content instead.
+For simplicity, we won't be making an effort to keep the old values of possibly existing datasets and will overwrite the content instead.
 
 It will be attained by using our `apply_parameters.py` on the same input and output folder (here `Simulation/Resource/scenariorun-data`)
 
@@ -144,7 +144,7 @@ A different set of graphics should appear this time, corresponding to our update
 Now we can write our `run.json` file to run those step in a single command
 
 ```bash title="core/run_templates/orchestrator_tutorial_1/run.json"
---8<-- "tutorial/breweryv2/run.json"
+--8<-- "tutorial/cosmotech_simulator/run.json"
 ```
 
 Now that we have this `run.json` file we can run it

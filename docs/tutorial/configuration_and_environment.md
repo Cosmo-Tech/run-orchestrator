@@ -18,12 +18,12 @@ First we will start by modifying our scripts to now accept an environment variab
 
 === "Fibonacci"
     ```python title="fibonacci.py" linenums="1" hl_lines="2 8 11"
-    --8<-- "tutorial/second/fibonacci.py"
+    --8<-- "tutorial/configuration_and_environment/fibonacci.py"
     ```
 
 === "Display"
     ```python title="display_file.py" linenums="1" hl_lines="2 5 8"
-    --8<-- "tutorial/second/display_file.py"
+    --8<-- "tutorial/configuration_and_environment/display_file.py"
     ```
 
 Those modifications will allow us to set an Environment Variable `FIBO_FILE_PATH` that will be used for our file name
@@ -57,7 +57,7 @@ Those modifications will allow us to set an Environment Variable `FIBO_FILE_PATH
 Now that our commands work we will look at the orchestration file to configure those environment variables
 
 ```json title="run_env.json" hl_lines="6-11 16 18-21"
---8<-- "tutorial/second/run_env.json"
+--8<-- "tutorial/configuration_and_environment/run_env.json"
 ```
 
 We added 2 definitions of our `FIBO_FILE_PATH` to the steps, so we can try to run our script
@@ -116,7 +116,7 @@ We can see that our orchestrator works now.
 To add more configuration to our file lets use an environment variable for the `run-fibo` step argument.
 
 ```json title="run_env_arg.json" hl_lines="6 11-14"
---8<-- "tutorial/second/run_env_arg.json"
+--8<-- "tutorial/configuration_and_environment/run_env_arg.json"
 ```
 
 In this file we defined an environment variable that will be used as an argument for our command (by using it as an argument preceded by `$`), 
@@ -178,7 +178,7 @@ We now have 2 `steps` that use the same base `command` and a common Environment 
 Let's make use of the `CommandTemplate` to reduce the number of time we need to impact our steps.
 
 ```json title="run_with_template.json" hl_lines="5 16 21-31"
---8<-- "tutorial/second/run_with_template.json"
+--8<-- "tutorial/configuration_and_environment/run_with_template.json"
 ```
 
 We grouped the common part of the steps in a new command template called `python-with-fibo-file`, 
@@ -230,13 +230,13 @@ So `DISPLAY_SYMBOL=X` and `FIBO_COUNT=5` would look like that:
 ```
 
 ```python title="updated_display.py" linenums="1" hl_lines="10 17-21"
---8<-- "tutorial/second/updated_display.py"
+--8<-- "tutorial/configuration_and_environment/updated_display.py"
 ```
 
 And to make use of that new script we can update our `.json` file as following
 
 ```json title="optional_envvar.json" hl_lines="18-23"
---8<-- "tutorial/second/optional_envvar.json"
+--8<-- "tutorial/configuration_and_environment/optional_envvar.json"
 ```
 
 === "Run without `DISPLAY_SYMBOL`"

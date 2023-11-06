@@ -1,0 +1,33 @@
+{
+  "steps": [
+    {
+      "id": "git-clone",
+      "command": "git",
+      "arguments": [
+        "clone",
+        "$REPOSITORY_URL",
+        "cloned-repository"
+      ],
+      "useSystemEnvironment": true,
+      "environment": {
+        "REPOSITORY_URL": {
+          "description": "The URL of a repository to clone"
+        }
+      }
+    },
+    {
+      "id": "run-subscript",
+      "command": "csm-orc",
+      "useSystemEnvironment": true,
+      "arguments": [
+        "run",
+        "cloned-repository/$ORC_SCRIPT_PATH"
+      ],
+      "environment": {
+        "ORC_SCRIPT_PATH": {
+          "description": "Path to an orchestrator script inside the cloned repository"
+        }
+      }
+    }
+  ]
+}

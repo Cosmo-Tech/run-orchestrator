@@ -1,14 +1,14 @@
 ---
-description: Full legacy run template file
+description: Cosmo Tech Legacy Run Template
 ---
 
-# Legacy run template
+# Cosmo Tech Legacy Run Template
 
 ## Description
 
 This template represent a full legacy run template requiring a lot of environment variables and making use of `csm-orc` commands
 
-Most environment variables are defined in the ["Brewery+Docker"](../tutorial/brewery_docker.md#what-environment-variables-are-made-available-by-the-api) tutorial
+Most environment variables are defined in the ["Brewery+Docker"](../tutorial/advanced_cosmotech_simulator.md#what-environment-variables-are-made-available-by-the-api) tutorial
 
 ## Template
 

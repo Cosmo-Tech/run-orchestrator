@@ -1,6 +1,7 @@
 ---
 hide:
   - toc
+description: "Command help: `csm-orc fetch-cloud-steps`"
 ---
 # Download Steps from cloud
 
