@@ -1,5 +1,4 @@
 [metadata]
-long_description_content_type="text/markdown"
 licence_files=["LICENSE"]
 
 [project]
@@ -10,6 +9,7 @@ urls.Homepage = "https://www.cosmotech.com"
 urls.Source = "https://github.com/Cosmo-Tech/run-orchestrator"
 urls.Documentation = "https://cosmo-tech.github.io/run-orchestrator/"
 dynamic = ["version", "dependencies", "optional-dependencies"]
+readme = {file = "README.md", content-type = "text/markdown"}
 
 [project.scripts]
 csm-orc= "cosmotech.orchestrator.console_scripts.main:main"
