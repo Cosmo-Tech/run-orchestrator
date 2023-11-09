@@ -1,6 +1,7 @@
 ---
 hide:
   - toc
+description: "Command help: `csm-orc send-to-adx`"
 ---
 # Simulation to ADX connector
 

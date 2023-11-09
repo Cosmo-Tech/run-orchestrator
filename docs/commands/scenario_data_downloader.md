@@ -1,6 +1,7 @@
 ---
 hide:
   - toc
+description: "Command help: `csm-orc fetch-scenariorun-data`"
 ---
 # Scenario Data Download
 

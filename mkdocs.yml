@@ -51,28 +51,28 @@ nav:
     - License: 'License.md'
     - Dependencies: 'dependencies.md'
   - Tutorials:
-      - List of tutorials: "tutorial/index.md"
-      - My First Orchestrator: "tutorial/first.md"
-      - Concerning Configuration: "tutorial/second.md"
-      - Brewery: "tutorial/brewery.md"
-      - Cloud Ready Simulator: "tutorial/brewery_docker.md"
+      - "tutorial/index.md"
+      - "tutorial/getting_started.md"
+      - "tutorial/configuration_and_environment.md"
+      - "tutorial/cosmotech_simulator.md"
+      - "tutorial/advanced_cosmotech_simulator.md"
   - Templates:
-      - List of templates: "templates_commands/index.md"
+      - "templates_commands/index.md"
       - "templates_commands/simple_simulation_run.md"
       - "templates_commands/simple_script_run.md"
       - "templates_commands/legacy_run.md"
+      - "templates_commands/git_run.md"
   - Semantic Validator: "Validator.md"
   - Commands:
-      - Commands list: "commands/index.md"
       - Orchestrator: "commands/orchestrator.md"
       - Legacy help:
-        - Scenario data download: "commands/scenario_data_downloader.md"
-        - Download cloud Steps: "commands/download_cloud_steps.md"
-        - Run Python Steps: "commands/run_step.md"
-        - Simulation to ADX: "commands/simulation_to_adx.md"
-        - Legacy Generator: "commands/legacy_json_generator.md"
+        - "commands/scenario_data_downloader.md"
+        - "commands/download_cloud_steps.md"
+        - "commands/run_step.md"
+        - "commands/simulation_to_adx.md"
+        - "commands/legacy_json_generator.md"
       - Helpers:
-        - Initialize Parameters folder: "commands/parameters_generator.md"
+        - "commands/parameters_generator.md"
 
 markdown_extensions:
     - admonition

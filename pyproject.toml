@@ -1,5 +1,4 @@
 [metadata]
-long_description_content_type="text/markdown"
 licence_files=["LICENSE"]
 
 [project]
@@ -9,11 +8,13 @@ description = "Orchestration suite for Cosmotech Run Templates"
 urls.Homepage = "https://www.cosmotech.com"
 urls.Source = "https://github.com/Cosmo-Tech/run-orchestrator"
 urls.Documentation = "https://cosmo-tech.github.io/run-orchestrator/"
-dynamic = ["version", "dependencies"]
+dynamic = ["version", "dependencies", "optional-dependencies"]
+readme = {file = "README.md", content-type = "text/markdown"}
 
 [project.scripts]
 csm-orc= "cosmotech.orchestrator.console_scripts.main:main"
 "entrypoint.py" = "cosmotech.orchestrator.console_scripts.entrypoint:main"
+
 
 [build-system]
 requires = ["setuptools", "wheel"]
@@ -22,6 +23,7 @@ requires = ["setuptools", "wheel"]
 include-package-data = true
 package-data."*" = [
   "requirements.txt",
+  "requirements.doc.txt"
 ]
 zip-safe = false
 
@@ -33,3 +35,4 @@ include = ["cosmotech.*"]
 [tool.setuptools.dynamic]
 version.attr = "cosmotech.orchestrator.VERSION"
 dependencies.file = "requirements.txt"
+optional-dependencies.doc.file = "requirements.doc.txt"

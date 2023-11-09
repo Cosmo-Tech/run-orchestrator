@@ -1,6 +1,7 @@
 ---
 hide:
   - toc
+description: "Command help: `csm-orc run-step`"
 ---
 # Run Template Step
 

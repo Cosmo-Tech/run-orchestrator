@@ -38,12 +38,12 @@ and the second one will display them.
 
 === "Fibonacci"
     ```python title="fibonacci.py" linenums="1"
-    --8<-- "tutorial/first/fibonacci.py"
+    --8<-- "tutorial/getting_started/fibonacci.py"
     ```
 
 === "Display"
     ```python title="display_file.py" linenums="1"
-    --8<-- "tutorial/first/display_file.py"
+    --8<-- "tutorial/getting_started/display_file.py"
     ```
 
 !!! example "Let's try our scripts"
@@ -91,7 +91,7 @@ Let's take a look at an example step
 
 
 ```json title="simple_step.json" linenums="1"
---8<-- "tutorial/first/simple_step.json"
+--8<-- "tutorial/getting_started/simple_step.json"
 ```
 
 In this minimal file we can see one `step` with the id `echo-foo-bar` 
@@ -117,7 +117,7 @@ Now using this basis we will write our commands in an orchestration file using t
 
 !!! example "Let's try our scripts as an orchestration file"
     ```json title="run.json" linenums="1"
-    --8<-- "tutorial/first/run.json"
+    --8<-- "tutorial/getting_started/run.json"
     ```
     Now we can run our file using the orchestrator
     ```bash title="run our first orchestration"

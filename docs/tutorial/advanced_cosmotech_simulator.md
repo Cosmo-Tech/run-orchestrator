@@ -1,10 +1,9 @@
 ---
 description: Simple tutorial to convert a fully local Simulator to a cloud ready docker image
-readtime: 15
 ---
 # Make a Cosmo Tech Simulator cloud-ready
 
-In this tutorial we will take our updated Brewery Simulator project as we left it in the [previous tutorial](./brewery.md)
+In this tutorial we will take our updated Brewery Simulator project as we left it in the [previous tutorial](./cosmotech_simulator.md)
 and add modification to get it ready to be used inside a Cosmo Tech Platform.
 
 !!! warning "Requirements"
@@ -52,7 +51,7 @@ And the command will be run with the working directory set to `/pkg/share`
 The Cosmo Tech API will forward a set of environment variables to any Simulator containers. You can find the full list of the in the following table.
 
 ??? notes "List of environment variables"
-    {{ read_yaml('partials/tutorial/brewery_docker/api_envvars.yaml') }}
+    {{ read_yaml('partials/tutorial/advanced_cosmotech_simulator/api_envvars.yaml') }}
 
 ## Connect to the API to get our `Scenario` data
 
@@ -104,7 +103,7 @@ It is then easy to update our previous `run.json` to take those changes into acc
     ```
 
 ```json title="code/run_templates/orchestrator_tutorial2/run.json" linenums="1" hl_lines="3-35 40-43 47 51 56-58 66 75"
---8<-- "tutorial/brewery_docker/run.json"
+--8<-- "tutorial/advanced_cosmotech_simulator/run.json"
 ```
 
 We can see a few changes and additions compared to the previous `run.json` file :
@@ -158,9 +157,9 @@ The following points will give you a simple example of `.yaml` files used to def
 An example of `Solution.yaml` which is a file used by the Cosmo Tech API for our current solution would be :
 
 ```yaml title="Solution.yaml"
---8<-- "tutorial/brewery_docker/Solution.yaml:config"
---8<-- "tutorial/brewery_docker/Solution.yaml:parameters"
---8<-- "tutorial/brewery_docker/Solution.yaml:runTemplates"
+--8<-- "tutorial/advanced_cosmotech_simulator/Solution.yaml:config"
+--8<-- "tutorial/advanced_cosmotech_simulator/Solution.yaml:parameters"
+--8<-- "tutorial/advanced_cosmotech_simulator/Solution.yaml:runTemplates"
 ```
 
 Full Open API description of a `Solution` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/solution/src/main/openapi/solution.yaml)
@@ -177,7 +176,7 @@ Now let's look deeper in how to create our `Solution.yaml`
 #### `Solution` description
 
 ```yaml title="Solution.yaml - description"
---8<-- "tutorial/brewery_docker/Solution.yaml:config"
+--8<-- "tutorial/advanced_cosmotech_simulator/Solution.yaml:config"
 ```
 
 We can see a few important keys in this part of the `Solution` file:
@@ -192,7 +191,7 @@ We can see a few important keys in this part of the `Solution` file:
 #### `parameters` and `parametersGroups`
 
 ```yaml title="Solution.yaml - parameters"
---8<-- "tutorial/brewery_docker/Solution.yaml:parameters"
+--8<-- "tutorial/advanced_cosmotech_simulator/Solution.yaml:parameters"
 ```
 
 In this part we define our parameters, as previously decided we have 3 :
@@ -209,7 +208,7 @@ Then we grouped our `parameters` in a `parametersGroup` "bar_parameters" that wi
 #### `runTemplates`
 
 ```yaml title="Solution.yaml - runTemplates"
---8<-- "tutorial/brewery_docker/Solution.yaml:runTemplates"
+--8<-- "tutorial/advanced_cosmotech_simulator/Solution.yaml:runTemplates"
 ```
 
 In this part we finally define our `Run Template` for the API, we have 3 main elements defined :
@@ -223,7 +222,7 @@ In this part we finally define our `Run Template` for the API, we have 3 main el
 An example of `Workspace.yaml` which is a file used by the Cosmo Tech API for our current solution would be :
 
 ```yaml title="Workspace.yaml"
---8<-- "tutorial/brewery_docker/Workspace.yaml"
+--8<-- "tutorial/advanced_cosmotech_simulator/Workspace.yaml"
 ```
 
 Full Open API description of a `Workspace` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/workspace/src/main/openapi/workspace.yaml)
@@ -247,7 +246,7 @@ We have 3 required parts in a `Workspace`:
 An example of `Dataset.yaml` which is a file used by the Cosmo Tech API for our current solution would be :
 
 ```yaml title="Dataset.yaml"
---8<-- "tutorial/brewery_docker/Dataset.yaml"
+--8<-- "tutorial/advanced_cosmotech_simulator/Dataset.yaml"
 ```
 
 Full Open API description of a `Dataset` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/dataset/src/main/openapi/dataset.yaml)
@@ -269,7 +268,7 @@ The `Connector` information should allow you to get access to your `Dataset` inf
 An example of `Scenario.yaml` which is a file used by the Cosmo Tech API for our current solution would be :
 
 ```yaml title="Scenario.yaml"
---8<-- "tutorial/brewery_docker/Scenario.yaml"
+--8<-- "tutorial/advanced_cosmotech_simulator/Scenario.yaml"
 ```
 
 Full Open API description of a `Scenario` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/scenario/src/main/openapi/scenario.yaml)
@@ -341,7 +340,7 @@ in an environment variable `CSM_SKIP_STEPS` which allow to define a list of step
 
 Since the "only" step used to download distant data from our run is `DownloadScenarioData` we can simply run locally by skipping it
 
-```bash title="Local run skipping a step"
-csm-orc run --skip-step DownloadScenarioData code/run_templates/orchestrator_tutorial_2/run.json
+```bash title="Running only the SimulationRun step"
+csm-orc run --skip-step DownloadScenarioData --skip-step ApplyParameters code/run_templates/orchestrator_tutorial_2/run.json
 ```
 

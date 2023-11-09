@@ -1,14 +1,14 @@
 ---
 description: legacy tutorial to combine csm-orc and a Cosmo Tech Simulator
 ---
-# Integration with a CosmoTech Simulator
+# Integration with a Cosmo Tech Simulator
 
 !!! abstract "Objective"
-    + Create an orchestration file for a CosmoTech Simulator
+    + Create an orchestration file for a Cosmo Tech Simulator
     + Use existing Solution info to generate an orchestration file and run it locally
 
 !!! warning "Prerequisites"
-    + You need to have completed the "Brewery" onboarding for CosmoTech projects
+    + You need to have completed the "Brewery" onboarding for Cosmo Tech projects
     + You need a local version of the "Brewery" solution (full code available [here](https://github.com/Cosmo-Tech/onboarding-brewery-solution))
 
 --8<-- "partials/orchestrator_known_issues.md"
