@@ -1178,26 +1178,26 @@
 <p class="admonition-title">Help command</p>
 <div class="highlight"><pre><span></span><code>&gt; csm-orc run-step --help
 
- Usage: csm-orc run-step [OPTIONS]                                                                                    
+ Usage: csm-orc run-step [OPTIONS]                                                                                      
 
- Runs a list of steps of a run template in a CosmoTech project Known limitations:                                     
+ Runs a list of steps of a run template in a CosmoTech project Known limitations:                                       
 
-  • The step MUST contain an executable main.py file                                                                  
-  • The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine              
-  • QT consumer in the simulator breaks the engine step when orchestrating                                            
+  • The step MUST contain an executable main.py file                                                                    
+  • The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine                
+  • QT consumer in the simulator breaks the engine step when orchestrating                                              
 
-╭─ OPTIONS ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *  --template    TEXT  refer to a folder contained in code/run_templates                                           │
-│                        ENV: CSM_RUN_TEMPLATE_ID                                                                    │
-│                        [required]                                                                                  │
-│    --steps       TEXT  A list of Steps definer in the TEMPLATE folder that will be executed (comma-separated).     │
-│                        Defaults to CSMDOCKER equivalent to parameters_handler,validator,prerun,engine,postrun (the │
-│                        legacy order)                                                                               │
-│                        ENV: CSM_CONTAINER_MODE                                                                     │
-│                        DEFAULT: CSMDOCKER                                                                          │
-│    --web-help          Open the web documentation                                                                  │
-│    --help              Show this message and exit.                                                                 │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  --template    TEXT  refer to a folder contained in code/run_templates                                             │
+│                        ENV: CSM_RUN_TEMPLATE_ID                                                                      │
+│                        [required]                                                                                    │
+│    --steps       TEXT  A list of Steps definer in the TEMPLATE folder that will be executed (comma-separated).       │
+│                        Defaults to CSMDOCKER equivalent to parameters_handler,validator,prerun,engine,postrun (the   │
+│                        legacy order)                                                                                 │
+│                        ENV: CSM_CONTAINER_MODE                                                                       │
+│                        DEFAULT: CSMDOCKER                                                                            │
+│    --web-help          Open the web documentation                                                                    │
+│    --help              Show this message and exit.                                                                   │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>
 

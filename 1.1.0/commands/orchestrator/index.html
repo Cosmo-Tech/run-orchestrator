@@ -1230,32 +1230,32 @@
 <p class="admonition-title">Help command</p>
 <div class="highlight"><pre><span></span><code>&gt; csm-orc run --help
 
- Usage: csm-orc run [OPTIONS] TEMPLATE                                                                                
+ Usage: csm-orc run [OPTIONS] TEMPLATE                                                                                  
 
- Runs the given TEMPLATE file                                                                                         
- Commands are run as subprocess using bash -c &quot;&lt;command&gt; &lt;arguments&gt;&quot;.                                                
- In case you are in a python venv, the venv is activated before any command is run.                                   
+ Runs the given TEMPLATE file                                                                                           
+ Commands are run as subprocess using bash -c &quot;&lt;command&gt; &lt;arguments&gt;&quot;.                                                  
+ In case you are in a python venv, the venv is activated before any command is run.                                     
 
-╭─ Arguments ────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *  TEMPLATE    FILE  [required]                                                                                    │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ OPTIONS ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --dry-run/--no-dry-run              -n           Use dry-run mode                                                  │
-│                                                  ENV: DRY_RUN                                                      │
-│                                                  DEFAULT: no-dry-run                                               │
-│ --display-env/--no-display-env                   List all required environment variables and their documentation   │
-│                                                  ENV: DISPLAY_ENVIRONMENT                                          │
-│                                                  DEFAULT: no-display-env                                           │
-│ --gen-env-target                        PATH     Generate a .env file with all env vars to be filed when           │
-│                                                  display-env is called                                             │
-│                                                  ENV: GENERATE_ENVIRONMENT                                         │
-│ --skip-step                             STEP_ID  Define a list of steps to be skipped during this run              │
-│                                                  ENV: CSM_SKIP_STEPS                                               │
-│ --validate-only/--no-validate-only               Run only a sematic validation of the orchestrator file            │
-│                                                  ENV: CSM_ORCHESTRATOR_VALIDATE_ONLY                               │
-│ --web-help                                       Open the web documentation                                        │
-│ --help                                           Show this message and exit.                                       │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Arguments ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  TEMPLATE    FILE  [required]                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --dry-run/--no-dry-run              -n           Use dry-run mode                                                    │
+│                                                  ENV: DRY_RUN                                                        │
+│                                                  DEFAULT: no-dry-run                                                 │
+│ --display-env/--no-display-env                   List all required environment variables and their documentation     │
+│                                                  ENV: DISPLAY_ENVIRONMENT                                            │
+│                                                  DEFAULT: no-display-env                                             │
+│ --gen-env-target                        PATH     Generate a .env file with all env vars to be filed when display-env │
+│                                                  is called                                                           │
+│                                                  ENV: GENERATE_ENVIRONMENT                                           │
+│ --skip-step                             STEP_ID  Define a list of steps to be skipped during this run                │
+│                                                  ENV: CSM_SKIP_STEPS                                                 │
+│ --validate-only/--no-validate-only               Run only a sematic validation of the orchestrator file              │
+│                                                  ENV: CSM_ORCHESTRATOR_VALIDATE_ONLY                                 │
+│ --web-help                                       Open the web documentation                                          │
+│ --help                                           Show this message and exit.                                         │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>
 <div class="admonition warning">
