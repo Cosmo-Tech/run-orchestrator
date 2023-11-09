@@ -6,7 +6,7 @@ from typing import IO
 _md_file: IO
 with (mkdocs_gen_files.open("dependencies.md", "w") as _md_file,
       open("requirements.txt") as _req,
-      open("documentation.requirements.txt") as _doc_req):
+      open("requirements.doc.txt") as _doc_req):
     content = ["# List of dependencies", ""]
 
     _requirements: list[str] = _req.read().splitlines()

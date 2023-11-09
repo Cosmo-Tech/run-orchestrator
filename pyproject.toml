@@ -23,7 +23,7 @@ requires = ["setuptools", "wheel"]
 include-package-data = true
 package-data."*" = [
   "requirements.txt",
-  "documentation.requirements.txt"
+  "requirements.doc.txt"
 ]
 zip-safe = false
 
@@ -35,4 +35,4 @@ include = ["cosmotech.*"]
 [tool.setuptools.dynamic]
 version.attr = "cosmotech.orchestrator.VERSION"
 dependencies.file = "requirements.txt"
-optional-dependencies.doc.file = "documentation.requirements.txt"
+optional-dependencies.doc.file = "requirements.doc.txt"
