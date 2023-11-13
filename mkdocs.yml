@@ -80,6 +80,9 @@ markdown_extensions:
     - footnotes
     - md_in_html
     - tables
+    - toc:
+        title: "In this page"
+        permalink: true
     - def_list
     - pymdownx.details
     - pymdownx.snippets:

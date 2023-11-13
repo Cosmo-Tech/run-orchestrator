@@ -1,5 +1,7 @@
 ---
 description: legacy tutorial to combine csm-orc and a Cosmo Tech Simulator
+search:
+  exclude: true
 ---
 # Integration with a Cosmo Tech Simulator
 
