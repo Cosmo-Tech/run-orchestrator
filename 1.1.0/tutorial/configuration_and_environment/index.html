@@ -619,7 +619,9 @@
       
         
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="In this page">
   
   
   
@@ -628,7 +630,7 @@
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Table of contents
+      In this page
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
@@ -1204,7 +1206,9 @@
                   <div class="md-sidebar__inner">
                     
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="In this page">
   
   
   
@@ -1213,7 +1217,7 @@
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Table of contents
+      In this page
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
@@ -1263,7 +1267,7 @@
   
 
 
-<h1 id="concerning-configuration">Concerning configuration</h1>
+<h1 id="concerning-configuration">Concerning configuration<a class="headerlink" href="#concerning-configuration" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">Objective</p>
 <ul>
@@ -1272,7 +1276,7 @@
 <li>Use CommandTemplate to combine close commands</li>
 </ul>
 </div>
-<h2 id="taking-a-look-at-environment-variables">Taking a look at Environment Variables</h2>
+<h2 id="taking-a-look-at-environment-variables">Taking a look at Environment Variables<a class="headerlink" href="#taking-a-look-at-environment-variables" title="Permanent link">&para;</a></h2>
 <p>We will start in the same folder as the previous tutorial : <code>MyFirstOrchestrationProject</code> 
 and augment it to use some Environment Variables to configure our commands.</p>
 <p>First we will start by modifying our scripts to now accept an environment variable for the file path</p>
@@ -1454,7 +1458,7 @@ csm-orc<span class="w"> </span>run<span class="w"> </span>run_env.json
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)</span>
 </code></pre></div>
 <p>We can see that our orchestrator works now.</p>
-<h2 id="use-environment-variables-as-argument">Use Environment Variables as Argument</h2>
+<h2 id="use-environment-variables-as-argument">Use Environment Variables as Argument<a class="headerlink" href="#use-environment-variables-as-argument" title="Permanent link">&para;</a></h2>
 <p>To add more configuration to our file lets use an environment variable for the <code>run-fibo</code> step argument.</p>
 <div class="highlight"><span class="filename">run_env_arg.json</span><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -1538,7 +1542,7 @@ csm-orc<span class="w"> </span>run<span class="w"> </span>run_env_arg.json
 </div>
 </div>
 </div>
-<h2 id="use-commandtemplate-to-reduce-copy">Use CommandTemplate to reduce copy</h2>
+<h2 id="use-commandtemplate-to-reduce-copy">Use CommandTemplate to reduce copy<a class="headerlink" href="#use-commandtemplate-to-reduce-copy" title="Permanent link">&para;</a></h2>
 <p>We now have 2 <code>steps</code> that use the same base <code>command</code> and a common Environment Variable. 
 Let's make use of the <code>CommandTemplate</code> to reduce the number of time we need to impact our steps.</p>
 <div class="highlight"><span class="filename">run_with_template.json</span><pre><span></span><code><span class="p">{</span>
@@ -1598,7 +1602,7 @@ csm-orc<span class="w"> </span>run<span class="w"> </span>run_with_template.json
 <span class="c1"># [YYYY/MM/DD-HH:mm:SS] INFO     run-display (Done)</span>
 </code></pre></div>
 <p>Now you can create command templates, use environment variables to configure your scripts, and set some values for those.</p>
-<h2 id="make-use-of-optional-environment-variables">Make use of optional Environment Variables</h2>
+<h2 id="make-use-of-optional-environment-variables">Make use of optional Environment Variables<a class="headerlink" href="#make-use-of-optional-environment-variables" title="Permanent link">&para;</a></h2>
 <p>In some case you may want to have optional effects that can be used to change your script only if present 
 (the use of a <code>defaultValue</code> does not make sense for those)</p>
 <p>For example, we will make a change to the run-display step to either print the content of the file as is, 

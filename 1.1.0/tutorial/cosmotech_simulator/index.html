@@ -639,7 +639,9 @@
       
         
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="In this page">
   
   
   
@@ -648,7 +650,7 @@
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Table of contents
+      In this page
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
@@ -1204,7 +1206,9 @@
                   <div class="md-sidebar__inner">
                     
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="In this page">
   
   
   
@@ -1213,7 +1217,7 @@
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Table of contents
+      In this page
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
@@ -1263,7 +1267,7 @@
   
 
 
-<h1 id="integration-with-a-cosmo-tech-simulator">Integration with a Cosmo Tech Simulator</h1>
+<h1 id="integration-with-a-cosmo-tech-simulator">Integration with a Cosmo Tech Simulator<a class="headerlink" href="#integration-with-a-cosmo-tech-simulator" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">Objective</p>
 <ul>
@@ -1283,7 +1287,7 @@
 Adding the Environment Variable <code>PATH</code> and <code>PYTHONPATH</code> (or set <code>useSystemEnvironment</code> to <code>true</code>) to a step 
 using a Cosmo Tech Simulator is required for the Simulator to run </p>
 </div>
-<h2 id="reminder-model-project">Reminder : Model + Project</h2>
+<h2 id="reminder-model-project">Reminder : Model + Project<a class="headerlink" href="#reminder-model-project" title="Permanent link">&para;</a></h2>
 <p>The full simulator files can be found with the tag 
 <a href="https://github.com/Cosmo-Tech/onboarding-brewery-solution/releases/tag/Complete-model">Complete-model</a>
 on the repository.</p>
@@ -1317,7 +1321,7 @@ and the longer a customer is left thirsty, the lower the satisfaction.
 Satisfaction increases when a customer is served. 
 Satisfaction is also affected by the satisfaction of surrounding customers.</p>
 <p>For this tutorial we will write our new files in the folder <code>MyBrewery/code/run_templates/orchestrator_tutorial_1</code> (this folder hierarchy will be used in future tutorials too)</p>
-<h2 id="define-a-set-of-parameters-to-apply">Define a set of parameters to apply</h2>
+<h2 id="define-a-set-of-parameters-to-apply">Define a set of parameters to apply<a class="headerlink" href="#define-a-set-of-parameters-to-apply" title="Permanent link">&para;</a></h2>
 <p>In our simulation we will want to see the effects of variations on the Bar attributes.</p>
 <p>Our existing CSV based simulations look for 3 attributes to instantiate a Bar :</p>
 <ul>
@@ -1349,7 +1353,7 @@ Satisfaction is also affected by the satisfaction of surrounding customers.</p>
 </code></pre></div>
 This command will be used later to download data from the Cosmo Tech API</p>
 </details>
-<h2 id="apply-our-parameters">Apply our parameters</h2>
+<h2 id="apply-our-parameters">Apply our parameters<a class="headerlink" href="#apply-our-parameters" title="Permanent link">&para;</a></h2>
 <p>Having defined our 3 parameters we can now work on a script to apply those to update a given dataset</p>
 <p>Our script will consist of 3 steps :</p>
 <ul>
@@ -1442,7 +1446,7 @@ cat<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/scenarioru
 <span class="c1"># 89,4567,123,MyBar</span>
 </code></pre></div>
 <p>We can see that having run the script our <code>Bar.csv</code> got correctly updated with our parameters.</p>
-<h2 id="run-a-simulation-with-our-updated-parameters">Run a simulation with our updated parameters</h2>
+<h2 id="run-a-simulation-with-our-updated-parameters">Run a simulation with our updated parameters<a class="headerlink" href="#run-a-simulation-with-our-updated-parameters" title="Permanent link">&para;</a></h2>
 <p>A limitation on the CoSML Language locks the folder used by a simulation to load datasets from. 
 In the existing model the file <code>Simulation/Resource/CSV_Brewery.ist.xml</code> set this folder to <code>Simulation/Resource/scenariorun-data</code>.
 We will have to use that folder to give the simulator access to our dataset.</p>

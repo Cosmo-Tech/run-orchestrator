@@ -1130,7 +1130,9 @@
                   <div class="md-sidebar__inner">
                     
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="In this page">
   
   
   
@@ -1139,7 +1141,7 @@
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Table of contents
+      In this page
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
@@ -1195,7 +1197,7 @@
   
 
 
-<h1 id="integration-with-a-cosmo-tech-simulator">Integration with a Cosmo Tech Simulator</h1>
+<h1 id="integration-with-a-cosmo-tech-simulator">Integration with a Cosmo Tech Simulator<a class="headerlink" href="#integration-with-a-cosmo-tech-simulator" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">Objective</p>
 <ul>
@@ -1216,7 +1218,7 @@
 Adding the Environment Variable <code>PATH</code> and <code>PYTHONPATH</code> (or set <code>useSystemEnvironment</code> to <code>true</code>) to a step 
 using a Cosmo Tech Simulator is required for the Simulator to run </p>
 </div>
-<h2 id="create-a-new-orchestration-file-for-a-run-template">Create a new orchestration file for a Run Template</h2>
+<h2 id="create-a-new-orchestration-file-for-a-run-template">Create a new orchestration file for a Run Template<a class="headerlink" href="#create-a-new-orchestration-file-for-a-run-template" title="Permanent link">&para;</a></h2>
 <p>In this first part we will look at creating a new orchestration file from scratch.</p>
 <p>We will first initialize our run template folder</p>
 <div class="highlight"><span class="filename">create orchestrator_tutorial run template folder</span><pre><span></span><code>mkdir<span class="w"> </span>code/run_templates/orchestrator_tutorial
@@ -1225,7 +1227,7 @@ using a Cosmo Tech Simulator is required for the Simulator to run </p>
 <summary>Info</summary>
 <p>By creating it inside the <code>code/run_templates</code> folder we will make it packaged in future docker images</p>
 </details>
-<h3 id="write-a-parameters-file">Write a <code>parameters</code> file</h3>
+<h3 id="write-a-parameters-file">Write a <code>parameters</code> file<a class="headerlink" href="#write-a-parameters-file" title="Permanent link">&para;</a></h3>
 <p>We will create a set of parameters, make them available for the <code>what_if</code> parameter handler defined during the onboarding and then run our simulator.</p>
 <p>To initialize our parameters, we will use a helper command of <code>csm-orc</code> : <code>init-parameters</code></p>
 <p>During the onboarding we created the file <code>API/Solution.yaml</code> that contains the API definition of the Solution and the parameters we will be using it to initialize our parameters file. </p>
@@ -1317,7 +1319,7 @@ using a Cosmo Tech Simulator is required for the Simulator to run </p>
 <div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>code/run_templates/orchestrator_tutorial/dataset
 </code></pre></div>
 <p>Now that we have a <code>orchestrator_tutorial</code> folder ready to be used we can start working on our orchestration file.</p>
-<h3 id="define-our-set-of-commands">Define our set of commands</h3>
+<h3 id="define-our-set-of-commands">Define our set of commands<a class="headerlink" href="#define-our-set-of-commands" title="Permanent link">&para;</a></h3>
 <p>But first we will define which commands we want to run before orchestrating them.</p>
 <p>For simplicity, we will be using helper commands made available with <code>csm-orc</code> again so that we can keep commands close to the cloud environment.</p>
 <p>To run our steps we will make use of the <code>run-step</code> command.</p>
@@ -1363,7 +1365,7 @@ csm-orc<span class="w"> </span>run-step<span class="w"> </span>--template<span c
 <p>Using those 3 commands we are now able to run a local simulation and set back our state.</p>
 <p>We now have been able to apply our parameter handler and then run our simulation using 3 environment variables, 
 we are ready to write our orchestration file.</p>
-<h3 id="writing-the-orchestration-file">Writing the orchestration file</h3>
+<h3 id="writing-the-orchestration-file">Writing the orchestration file<a class="headerlink" href="#writing-the-orchestration-file" title="Permanent link">&para;</a></h3>
 <p>Following the previous tutorials it is easy to write a simple orchestration file :</p>
 <div class="highlight"><span class="filename">code/run_templates/orchestrator_tutorial/run.json</span><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>

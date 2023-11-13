@@ -659,7 +659,9 @@
       
         
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="In this page">
   
   
   
@@ -668,7 +670,7 @@
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Table of contents
+      In this page
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
@@ -1300,7 +1302,9 @@
                   <div class="md-sidebar__inner">
                     
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="In this page">
   
   
   
@@ -1309,7 +1313,7 @@
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Table of contents
+      In this page
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
@@ -1455,7 +1459,7 @@
   
 
 
-<h1 id="make-a-cosmo-tech-simulator-cloud-ready">Make a Cosmo Tech Simulator cloud-ready</h1>
+<h1 id="make-a-cosmo-tech-simulator-cloud-ready">Make a Cosmo Tech Simulator cloud-ready<a class="headerlink" href="#make-a-cosmo-tech-simulator-cloud-ready" title="Permanent link">&para;</a></h1>
 <p>In this tutorial we will take our updated Brewery Simulator project as we left it in the <a href="../cosmotech_simulator/">previous tutorial</a>
 and add modification to get it ready to be used inside a Cosmo Tech Platform.</p>
 <div class="admonition warning">
@@ -1467,7 +1471,7 @@ and add modification to get it ready to be used inside a Cosmo Tech Platform.</p
 <li>A Cosmo Tech SDK minimal version of 10.0</li>
 </ul>
 </div>
-<h2 id="how-does-the-cosmo-tech-platform-runs-orchestration">How does the Cosmo Tech Platform runs orchestration ?</h2>
+<h2 id="how-does-the-cosmo-tech-platform-runs-orchestration">How does the Cosmo Tech Platform runs orchestration ?<a class="headerlink" href="#how-does-the-cosmo-tech-platform-runs-orchestration" title="Permanent link">&para;</a></h2>
 <p>The Cosmo Tech Platform will run registered docker images based on the definition of <code>Solutions</code> in its API.</p>
 <p>In the API you can define a <code>Solution</code> that will refer to a specific version of a docker image in a given repository.
 That <code>Solution</code> contains a definition of sets of <code>Parameters</code> and <code>Run Templates</code>. 
@@ -1486,7 +1490,7 @@ is left for compatibility of the old images on the Cosmo Tech API (pre 3.0)
 It will be changed in the future, but for now <code>csm-orc</code> comes bundled with 
 a script called <code>entrypoint.py</code> that allow legacy and new runs of the docker image.</p>
 </details>
-<h2 id="how-does-entrypointpy-works">How does <code>entrypoint.py</code> works ?</h2>
+<h2 id="how-does-entrypointpy-works">How does <code>entrypoint.py</code> works ?<a class="headerlink" href="#how-does-entrypointpy-works" title="Permanent link">&para;</a></h2>
 <p>The <code>entrypoint.py</code> command (and its equivalent <code>csm-orc entrypoint</code>) work using some Environment variables to switch between 3 modes:</p>
 <ul>
 <li>The general entrypoint with no special configuration that allow to run your <code>run templates</code> requiring the environment variable <code>CSM_RUN_TEMPLATE_ID</code> to be set with your run template name</li>
@@ -1495,7 +1499,7 @@ a script called <code>entrypoint.py</code> that allow legacy and new runs of the
 </ul>
 <p>Every <code>Environment Variable</code> passed to the command will be forwarded to the <code>csm-orc run</code> command inside. 
 And the command will be run with the working directory set to <code>/pkg/share</code></p>
-<h2 id="what-environment-variables-are-made-available-by-the-api">What <code>Environment Variables</code> are made available by the API ?</h2>
+<h2 id="what-environment-variables-are-made-available-by-the-api">What <code>Environment Variables</code> are made available by the API ?<a class="headerlink" href="#what-environment-variables-are-made-available-by-the-api" title="Permanent link">&para;</a></h2>
 <p>The Cosmo Tech API will forward a set of environment variables to any Simulator containers. You can find the full list of the in the following table.</p>
 <details class="notes">
 <summary>List of environment variables</summary>
@@ -1610,7 +1614,7 @@ And the command will be run with the working directory set to <code>/pkg/share</
 </tbody>
 </table>
 </details>
-<h2 id="connect-to-the-api-to-get-our-scenario-data">Connect to the API to get our <code>Scenario</code> data</h2>
+<h2 id="connect-to-the-api-to-get-our-scenario-data">Connect to the API to get our <code>Scenario</code> data<a class="headerlink" href="#connect-to-the-api-to-get-our-scenario-data" title="Permanent link">&para;</a></h2>
 <p>Multiple ways exists to connect to the API and query some data, but for simplicity there exists a command in <code>csm-orc</code> that will make use of known API environment variables and do the work for you.</p>
 <p>That command is <code>csm-orc fetch-scenariorun-data</code> (documentation of the command is available <a href="../../commands/scenario_data_downloader/">here</a>)</p>
 <p>The command make use of 5 environment variables set by the API (as described in the previous point) :</p>
@@ -1633,7 +1637,7 @@ And the command will be run with the working directory set to <code>/pkg/share</
 <p>Using that command allow to easily download any dataset defined in the Cosmo Tech API, 
 as long as those datasets use one of the standard connections defined in the API 
 (as of version 3.0: <code>Azure Storage Blob</code>, <code>Azure Digital Twin</code>, <code>TwinGraph Storage</code>)</p>
-<h2 id="combine-everything-in-a-run-template">Combine everything in a <code>Run Template</code></h2>
+<h2 id="combine-everything-in-a-run-template">Combine everything in a <code>Run Template</code><a class="headerlink" href="#combine-everything-in-a-run-template" title="Permanent link">&para;</a></h2>
 <p>Using all those new information we can see that most of the actions needed to run our code based on API data are already prepackaged.</p>
 <p>We can :
 - Download our scenario information using <code>csm-orc fetch-scenariorun-data</code>
@@ -1837,7 +1841,7 @@ which is an exact copy of the folder <code>code/run_templates/orchestrator_tutor
 </ul>
 </li>
 </ul>
-<h2 id="build-a-docker-image">Build a docker image</h2>
+<h2 id="build-a-docker-image">Build a docker image<a class="headerlink" href="#build-a-docker-image" title="Permanent link">&para;</a></h2>
 <p>Now that we have our <code>run.json</code> ready we can build our docker image.</p>
 <div class="highlight"><span class="filename">Build a docker image using csmcli</span><pre><span></span><code><span class="c1"># First we will clean everything to ensure a correct generation of the project</span>
 csm<span class="w"> </span>clean
@@ -1859,9 +1863,9 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
   in the docker container, allowing us to use our existing dataset during the run.</li>
 </ul>
 </div>
-<h2 id="define-api-items">Define API items</h2>
+<h2 id="define-api-items">Define API items<a class="headerlink" href="#define-api-items" title="Permanent link">&para;</a></h2>
 <p>The following points will give you a simple example of <code>.yaml</code> files used to define elements in the Cosmo Tech API</p>
-<h3 id="define-a-solution">Define a <code>Solution</code></h3>
+<h3 id="define-a-solution">Define a <code>Solution</code><a class="headerlink" href="#define-a-solution" title="Permanent link">&para;</a></h3>
 <p>An example of <code>Solution.yaml</code> which is a file used by the Cosmo Tech API for our current solution would be :</p>
 <div class="highlight"><span class="filename">Solution.yaml</span><pre><span></span><code><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;brewery&quot;</span>
 <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Demo</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">Solution,</span><span class="nv"> </span><span class="s">csm-orc</span><span class="nv"> </span><span class="s">tutorial&quot;</span>
@@ -2582,7 +2586,7 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <p>Once this file is sent to a Cosmo Tech API we will get a <code>Solution ID</code> of the form <code>sol-xxxxxxxx</code> 
 which will allow us to create further elements inside the API referencing our solution.</p>
 <p>Now let's look deeper in how to create our <code>Solution.yaml</code></p>
-<h4 id="solution-description"><code>Solution</code> description</h4>
+<h4 id="solution-description"><code>Solution</code> description<a class="headerlink" href="#solution-description" title="Permanent link">&para;</a></h4>
 <div class="highlight"><span class="filename">Solution.yaml - description</span><pre><span></span><code><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;brewery&quot;</span>
 <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Demo</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">Solution,</span><span class="nv"> </span><span class="s">csm-orc</span><span class="nv"> </span><span class="s">tutorial&quot;</span>
 <span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;A</span><span class="nv"> </span><span class="s">simple</span><span class="nv"> </span><span class="s">example</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">Cosmo</span><span class="nv"> </span><span class="s">Tech</span><span class="nv"> </span><span class="s">solution</span><span class="nv"> </span><span class="s">built</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">model&quot;</span>
@@ -2601,7 +2605,7 @@ which will allow us to create further elements inside the API referencing our so
 <li><code>repository</code> : the name of the docker image inside the image registry</li>
 <li><code>version</code> : the version of the docker image tied to the <code>Solution</code> </li>
 </ul>
-<h4 id="parameters-and-parametersgroups"><code>parameters</code> and <code>parametersGroups</code></h4>
+<h4 id="parameters-and-parametersgroups"><code>parameters</code> and <code>parametersGroups</code><a class="headerlink" href="#parameters-and-parametersgroups" title="Permanent link">&para;</a></h4>
 <div class="highlight"><span class="filename">Solution.yaml - parameters</span><pre><span></span><code><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Stock&quot;</span>
 <span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;int&quot;</span>
@@ -2628,7 +2632,7 @@ which will allow us to create further elements inside the API referencing our so
 <p>We can add a <code>varType</code> inside the API so that we give more information 
 on what are our parameters. As well as a <code>defaultValue</code></p>
 <p>Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "bar_parameters" that will make our parameters available for further part of the <code>Solution</code></p>
-<h4 id="runtemplates"><code>runTemplates</code></h4>
+<h4 id="runtemplates"><code>runTemplates</code><a class="headerlink" href="#runtemplates" title="Permanent link">&para;</a></h4>
 <div class="highlight"><span class="filename">Solution.yaml - runTemplates</span><pre><span></span><code><span class="nt">runTemplates</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;orchestrator_tutorial_2&quot;</span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Basic</span><span class="nv"> </span><span class="s">what-if&quot;</span>
@@ -2643,7 +2647,7 @@ on what are our parameters. As well as a <code>defaultValue</code></p>
 <li><code>parametersGroups</code> : that contains the group we defined in the previous part</li>
 <li><code>csmSimulation</code>: where we choose which simulation will be set in the <code>CSM_SIMULATION_ID</code> environment variable</li>
 </ul>
-<h3 id="define-a-workspace">Define a <code>Workspace</code></h3>
+<h3 id="define-a-workspace">Define a <code>Workspace</code><a class="headerlink" href="#define-a-workspace" title="Permanent link">&para;</a></h3>
 <p>An example of <code>Workspace.yaml</code> which is a file used by the Cosmo Tech API for our current solution would be :</p>
 <div class="highlight"><span class="filename">Workspace.yaml</span><pre><span></span><code><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">brewery_orchestrator_tutorial</span>
 <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Brewery tutorial workspace</span>
@@ -2990,7 +2994,7 @@ on what are our parameters. As well as a <code>defaultValue</code></p>
 <li><code>name</code>: the name of your <code>Workspace</code></li>
 <li><code>solution.solutionId</code>: the solution id (<code>sol-xxxxxxxx</code>) from the solution you want to use in the workspace</li>
 </ul>
-<h3 id="define-a-dataset">Define a <code>Dataset</code></h3>
+<h3 id="define-a-dataset">Define a <code>Dataset</code><a class="headerlink" href="#define-a-dataset" title="Permanent link">&para;</a></h3>
 <p>An example of <code>Dataset.yaml</code> which is a file used by the Cosmo Tech API for our current solution would be :</p>
 <div class="highlight"><span class="filename">Dataset.yaml</span><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Orchestrator Tutorial Dataset</span>
 <span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Example dataset defined during the Orchestrator Tutorial</span>
@@ -3746,7 +3750,7 @@ on what are our parameters. As well as a <code>defaultValue</code></p>
 <p>The creation of a <code>Dataset</code> is a bit complex to explain in a single post due to the different types of datasets that are made available.</p>
 <p>But the main part would be that depending on the type of <code>Dataset</code> you want to create you should fill information about a <code>Connector</code> which is defined at the platform level.</p>
 <p>The <code>Connector</code> information should allow you to get access to your <code>Dataset</code> information</p>
-<h3 id="define-a-scenario">Define a <code>Scenario</code></h3>
+<h3 id="define-a-scenario">Define a <code>Scenario</code><a class="headerlink" href="#define-a-scenario" title="Permanent link">&para;</a></h3>
 <p>An example of <code>Scenario.yaml</code> which is a file used by the Cosmo Tech API for our current solution would be :</p>
 <div class="highlight"><span class="filename">Scenario.yaml</span><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Orchestrator Tutorial</span>
 <span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Scenario of the Orchestrator tutorial</span>
@@ -4372,7 +4376,7 @@ on what are our parameters. As well as a <code>defaultValue</code></p>
 <li><code>datasetList</code> : should contain the <code>Dataset</code> we defined in the previous part using its ID</li>
 <li><code>parametersValues</code> : is a list of object representing the parameters we defined in the <code>Solution</code> with the actual value they are set to.</li>
 </ul>
-<h2 id="run-our-distant-scenario">Run our distant <code>Scenario</code></h2>
+<h2 id="run-our-distant-scenario">Run our distant <code>Scenario</code><a class="headerlink" href="#run-our-distant-scenario" title="Permanent link">&para;</a></h2>
 <p>We will need to either use a lot of parameters or environment variables, 
 we can make use of a parameter of <code>csm-orc run</code> to generate a template of <code>.env</code> file we will be able to use.</p>
 <p>That parameter is <code>--gen-env-target</code> and takes a filename to create a <code>.env</code> file initialized with all the environment variables defined in our <code>run.json</code></p>
@@ -4417,7 +4421,7 @@ csm-orc<span class="w"> </span>run<span class="w"> </span>code/run_templates/orc
 </div>
 </div>
 </div>
-<h2 id="i-want-to-use-my-local-data-instead-of-needing-a-scenario">I want to use my local data instead of needing a <code>Scenario</code></h2>
+<h2 id="i-want-to-use-my-local-data-instead-of-needing-a-scenario">I want to use my local data instead of needing a <code>Scenario</code><a class="headerlink" href="#i-want-to-use-my-local-data-instead-of-needing-a-scenario" title="Permanent link">&para;</a></h2>
 <p>The <code>csm-orc run</code> command comes with a parameter <code>--skip-step</code> that can be set 
 in an environment variable <code>CSM_SKIP_STEPS</code> which allow to define a list of steps that will be ignored during the run.</p>
 <p>Since the "only" step used to download distant data from our run is <code>DownloadScenarioData</code> we can simply run locally by skipping it</p>
