@@ -6,7 +6,7 @@ description: Simple script template file
 
 ## Description
 
-This simple template runs a script called `my_script.py`
+This simple template runs a script called `my_script.py`.
 
 ## Example call
 

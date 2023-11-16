@@ -6,7 +6,7 @@ hide:
 ---
 # Templates
 
-A list of templates for the main usages you could have with `csm-orc run`
+A list of templates for the main usages you could have with `csm-orc run`.
 
 <main class="grid" markdown>
 
@@ -15,7 +15,7 @@ A list of templates for the main usages you could have with `csm-orc run`
 :fontawesome-solid-diagram-project: __Simple Simulation Run__
 
 ---
-A simple run of a Cosmo Tech Simulator with no special configuration except for the input Simulation
+A simple run of a Cosmo Tech Simulator with no special configuration except for the input Simulation.
 
 ---
 <footer markdown>
@@ -43,7 +43,7 @@ A simple run of a python script
 :material-step-backward: __Cosmo Tech Legacy Run Template__
 
 ---
-The equivalent to a legacy run template with all steps active for a Cosmo Tech Simulator
+The equivalent to a legacy run template with all steps active.
 
 ---
 <footer markdown>
