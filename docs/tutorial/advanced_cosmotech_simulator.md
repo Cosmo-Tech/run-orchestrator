@@ -7,48 +7,50 @@ In this tutorial we will take our updated Brewery Simulator project as we left i
 and add modification to get it ready to be used inside a Cosmo Tech Platform.
 
 !!! warning "Requirements"
-    - `csmcli` the CLI bundled with the Cosmo Tech SDK
     - `docker`
     - A Cosmo Tech Platform minimal version of 3.0
     - A Cosmo Tech SDK minimal version of 10.0
+    - Installed SDK package must include `csmcli`
 
-## How does the Cosmo Tech Platform runs orchestration ?
+## How does the Cosmo Tech Platform runs orchestration?
 
-The Cosmo Tech Platform will run registered docker images based on the definition of `Solutions` in its API.
+The Cosmo Tech Platform will run pre-registered `docker` images based on the definition of `Solutions` in its API.
 
-In the API you can define a `Solution` that will refer to a specific version of a docker image in a given repository.
-That `Solution` contains a definition of sets of `Parameters` and `Run Templates`. 
+In the API you can define a `Solution` that will refer to a specific version of a `docker` image in a given repository.
+That `Solution` defines sets of `Parameters` and `Run Templates`. 
 Then `Workspaces` are defined in the API and point to a given `Solution` 
 allowing you to create a `Scenario` which will tie together `Datasets`, `Parameters`, 
 and a `Run Template` which will then be run by the API.
 
 `Datasets` are a description of how and where data are stored, `Parameters` can be simple types 
-or full `Datasets` allowing you to update the main `Dataset` of your `Scenario` changing its behavior.
+or full `Datasets` allowing you to update the main `Dataset` of your `Scenario`, therefore
+changing its initial state or behavior (or both).
 
 Running your `Scenario` will create a `ScenarioRun` into the API 
-and that `ScenarioRun` will make use of the docker image your previously defined.
+and that `ScenarioRun` will make use of the `docker` image your previously defined.
 The API will call the image with an `Entrypoint` called `entrypoint.py` and that call should be your full orchestration.
 
 ??? question "Why `entrypoint.py` and not `csm-orc` ?"
     The definition of the `Entrypoint` being `entrypoint.py` 
-    is left for compatibility of the old images on the Cosmo Tech API (pre 3.0)
+    is left for compatibility with old images on the Cosmo Tech API (pre 3.0).
     It will be changed in the future, but for now `csm-orc` comes bundled with 
-    a script called `entrypoint.py` that allow legacy and new runs of the docker image.
+    a script called `entrypoint.py` that allows both legacy and new runs of
+    the `docker` image.
 
-## How does `entrypoint.py` works ?
+## How does `entrypoint.py` works?
 
-The `entrypoint.py` command (and its equivalent `csm-orc entrypoint`) work using some Environment variables to switch between 3 modes:
+The `entrypoint.py` command (and its equivalent `csm-orc entrypoint`) works using some Environment variables to switch between 3 modes:
 
-- The general entrypoint with no special configuration that allow to run your `run templates` requiring the environment variable `CSM_RUN_TEMPLATE_ID` to be set with your run template name
-- The legacy entrypoint activated by setting the environment variable `CSM_ENTRYPOINT_LEGACY` to `true` which is made available for compatibility with pre3.0 Cosmo Tech API
-- The direct simulator mode which requires the environment variable `CSM_RUN_TEMPLATE_ID` to not be set, and will then run the simulator by passing it any argument of the command
+- The general entrypoint with no special configuration that allow to run your `run templates` requiring the environment variable `CSM_RUN_TEMPLATE_ID` to be set with your run template name.
+- The legacy entrypoint activated by setting the environment variable `CSM_ENTRYPOINT_LEGACY` to `true` which is made available for compatibility with pre 3.0 Cosmo Tech API.
+- The direct simulator mode which requires the environment variable `CSM_RUN_TEMPLATE_ID` to not be set, and will then run the simulator by passing it any argument of the command.
 
-Every `Environment Variable` passed to the command will be forwarded to the `csm-orc run` command inside. 
-And the command will be run with the working directory set to `/pkg/share`
+Every `Environment Variable` passed to the command will be forwarded to the
+`csm-orc run` command inside, and the command will be run with the working directory set to `/pkg/share`.
 
-## What `Environment Variables` are made available by the API ?
+## Which `Environment Variables` are made available by the API?
 
-The Cosmo Tech API will forward a set of environment variables to any Simulator containers. You can find the full list of the in the following table.
+The Cosmo Tech API will forward a set of environment variables to any Simulator containers. You can find the full list in the following table.
 
 ??? notes "List of environment variables"
     {{ read_yaml('partials/tutorial/advanced_cosmotech_simulator/api_envvars.yaml') }}
@@ -57,9 +59,9 @@ The Cosmo Tech API will forward a set of environment variables to any Simulator 
 
 Multiple ways exists to connect to the API and query some data, but for simplicity there exists a command in `csm-orc` that will make use of known API environment variables and do the work for you.
 
-That command is `csm-orc fetch-scenariorun-data` (documentation of the command is available [here](../commands/scenario_data_downloader.md))
+That command is `csm-orc fetch-scenariorun-data` (documentation of the command is available [here](../commands/scenario_data_downloader.md)).
 
-The command make use of 5 environment variables set by the API (as described in the previous point) :
+The command makes use of 5 environment variables set by the API (as described in the previous section):
 
 - `CSM_ORGANIZATION_ID`
 - `CSM_WORKSPACE_ID`
@@ -67,35 +69,36 @@ The command make use of 5 environment variables set by the API (as described in 
 - `CSM_DATASET_ABSOLUTE_PATH`
 - `CSM_PARAMETERS_ABSOLUTE_PATH`
 
-And uses 3 control environment variables :
+And uses 3 control environment variables:
 
-- `WRITE_JSON`: If set to `true` will write a `parameters.json` file in `CSM_PARAMETERS_ABSOLUTE_PATH`
-- `WRITE_CSV`: If set to `true` will write a `parameters.csv` file in `CSM_PARAMETERS_ABSOLUTE_PATH`
+- `WRITE_JSON`: If set to `true` will write a `parameters.json` file in `CSM_PARAMETERS_ABSOLUTE_PATH`.
+- `WRITE_CSV`: If set to `true` will write a `parameters.csv` file in `CSM_PARAMETERS_ABSOLUTE_PATH`.
 - `FETCH_DATASET`: If set to `true` will download all the `Datasets` tied to your scenario, 
      will write the main ones (not defined as a `Parameter`) in `CSM_DATASET_ABSOLUTE_PATH` 
      and will write the others in `CSM_PARAMETERS_ABSOLUTE_PATH/[parameter name]` 
-     where `[parameter name]` is the name of the `Parameter` targeting the `Dataset` (with a type set to `%DATASETID%`)
+     where `[parameter name]` is the name of the `Parameter` targeting the `Dataset` (with a type set to `%DATASETID%`).
 
-Using that command allow to easily download any dataset defined in the Cosmo Tech API, 
+With that command one can easily download any dataset defined in the Cosmo Tech API, 
 as long as those datasets use one of the standard connections defined in the API 
-(as of version 3.0: `Azure Storage Blob`, `Azure Digital Twin`, `TwinGraph Storage`)
+(as of version 3.0: `Azure Blob Storage`, `Azure Digital Twin`, `TwinGraph Storage`).
 
 ## Combine everything in a `Run Template`
 
 Using all those new information we can see that most of the actions needed to run our code based on API data are already prepackaged.
 
-We can :
-- Download our scenario information using `csm-orc fetch-scenariorun-data`
-- Apply our parameters with our `apply_parameters.py`
-- Run our simulation using `csm-orc run-step`
-- And send our simulation results to an external system (here Azure Data Explorer) by setting environment variables during the `run-step`
+We can:
+
+- Download our scenario information using `csm-orc fetch-scenariorun-data`.
+- Apply our parameters with our `apply_parameters.py`.
+- Run our simulation using `csm-orc run-step`.
+- And send our simulation results to an external system (here Azure Data Explorer) by setting environment variables during the `run-step`.
 
 It is then easy to update our previous `run.json` to take those changes into account.
 
 ???+ question "New `code/run_templates/orchestrator_tutorial_2` folder"
     To keep a clean distinction on the code of the previous tutorial and this one, 
     we will refer to the folder `code/run_templates/orchestrator_tutorial_2` 
-    which is an exact copy of the folder `code/run_templates/orchestrator_tutorial_1`
+    which is an exact copy of the folder `code/run_templates/orchestrator_tutorial_1`.
     
     You can create it by using the following command:
     ```bash title="copy `orchestrator_tutorial_1`"
@@ -106,20 +109,21 @@ It is then easy to update our previous `run.json` to take those changes into acc
 --8<-- "tutorial/advanced_cosmotech_simulator/run.json"
 ```
 
-We can see a few changes and additions compared to the previous `run.json` file :
+We can see a few changes and additions compared to the previous `run.json` file:
 
-- We created a new `step` called `DownloadScenarioData` that makes use of `csm-orc fetch-scenariorun-data`
+- We created a new `step` called `DownloadScenarioData` that makes use of `csm-orc fetch-scenariorun-data`:
     + In this step we defined a few environment variables required to run it, 
       but we still added `useSystemEnvironment` to `true` to ensure any environment variable required 
-      to connect to the api is made available as well.
+      to connect to the API is made available as well.
 - In the `ApplyParameters` we made a few changes:
-    + `DATASET/PARAMETERS_PATH` became `CSM_DATASET/PARAMETERS_ABSOLUTE_PATH`
-    + We added `/parameters.json` in the arguments for the parameters path
-    + We added a precendent step to schedule it after the `DownloadScenarioData`
-- In the `SimulatorRun` step changes are minimals:
-    + The template targeted is the new `orchestrator_tutorial_2`
+    + `DATASET/PARAMETERS_PATH` became `CSM_DATASET/PARAMETERS_ABSOLUTE_PATH`.
+    + We added `/parameters.json` in the arguments for the parameters path.
+    + We added a precendent step to schedule it after the
+    `DownloadScenarioData`.
+- In the `SimulatorRun` step changes are minimal:
+    + The template targeted is the new `orchestrator_tutorial_2`.
     + The default value of `CSM_SIMULATION` has been changed to `BusinessApp_Simulation` 
-      since `docker` simulation can't make use of visual consumers
+      since `docker` simulation can't make use of visual consumers.
 
 ## Build a docker image
 
@@ -134,7 +138,7 @@ csm flow
 csm docker build
 ```
 
-After those commands we end up with a docker image `cosmotech/mybrewery_simulator` ready to be used
+After running those commands we end up with a docker image `cosmotech/mybrewery_simulator` ready to be used.
 
 A simple test can be made with the following command:
 
@@ -143,18 +147,18 @@ docker run -e CSM_RUN_TEMPLATE_ID=orchestrator_tutorial_1 -e CSM_SIMULATION=Busi
 ```
 
 !!! question "About the parameters of the command `docker run`"
-    - `-e` allows to set an environment variable during the docker run, here we set our run template id and our simulation
-    - `-v` allows to set a volume during the docker run, 
-      here we set the content of our `Simulation/Resource/scenariorun-data` to the path `/mnt/scenariorun-data` 
-      in the docker container, allowing us to use our existing dataset during the run.
+    - `-e` sets an environment variable during the docker run, here we set our run template id and our simulation.
+    - `-v` sets a volume during the docker run, 
+      here we mount our local `Simulation/Resource/scenariorun-data` folder to the path `/mnt/scenariorun-data` 
+      in the `docker` container, allowing us to use our existing dataset during the run.
 
 ## Define API items
 
-The following points will give you a simple example of `.yaml` files used to define elements in the Cosmo Tech API
+The following sections give you simple examples of `.yaml` files used to define resources in the Cosmo Tech API.
 
 ### Define a `Solution`
 
-An example of `Solution.yaml` which is a file used by the Cosmo Tech API for our current solution would be :
+An example of `Solution.yaml` (a file used by the Cosmo Tech API) for our current solution would be:
 
 ```yaml title="Solution.yaml"
 --8<-- "tutorial/advanced_cosmotech_simulator/Solution.yaml:config"
@@ -162,16 +166,16 @@ An example of `Solution.yaml` which is a file used by the Cosmo Tech API for our
 --8<-- "tutorial/advanced_cosmotech_simulator/Solution.yaml:runTemplates"
 ```
 
-Full Open API description of a `Solution` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/solution/src/main/openapi/solution.yaml)
+Full Open API description of a `Solution` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/solution/src/main/openapi/solution.yaml).
 ??? info "Open API description of a Solution (`components.schemas`)"
     ```yaml linenums="1"
     --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/solution/src/main/openapi/solution.yaml:649:988"
     ```
 
-Once this file is sent to a Cosmo Tech API we will get a `Solution ID` of the form `sol-xxxxxxxx` 
+Once this file is sent to a Cosmo Tech API we will get a `Solution ID` of the form `sol-xxxxxxxx`
 which will allow us to create further elements inside the API referencing our solution.
 
-Now let's look deeper in how to create our `Solution.yaml`
+Now let's look deeper at how to create our `Solution.yaml`.
 
 #### `Solution` description
 
@@ -179,31 +183,29 @@ Now let's look deeper in how to create our `Solution.yaml`
 --8<-- "tutorial/advanced_cosmotech_simulator/Solution.yaml:config"
 ```
 
-We can see a few important keys in this part of the `Solution` file:
+We can see a few important properties in this part of the `Solution` file:
 
-* `key` : it is a "grouping" value used to make multiple `Solution` using the same base but different versions together.
-* `name` : a simple name given to the `Solution`
-* `description` : a simple description of the `Solution`
-* `tags` : a list of tags used in the API to filter `Solutions`
-* `repository` : the name of the docker image inside the image registry
-* `version` : the version of the docker image tied to the `Solution` 
+* `key`: it is a "grouping" value used to make multiple `Solution` using the same base but different versions together.
+* `name`: a simple name given to the `Solution`.
+* `description`: a simple description of the `Solution`.
+* `tags`: a list of tags used in the API to filter `Solution` resources.
+* `repository`: the name of the `docker` image inside the image registry.
+* `version`: the version of the `docker` image tied to the `Solution`.
 
-#### `parameters` and `parametersGroups`
+#### `parameters` and `parameterGroups`
 
 ```yaml title="Solution.yaml - parameters"
 --8<-- "tutorial/advanced_cosmotech_simulator/Solution.yaml:parameters"
 ```
 
-In this part we define our parameters, as previously decided we have 3 :
+In this part we declare our scenario parameters. As previously decided we need three parameters:
 
 * `NbWaiters`
 * `RestockQty`
 * `Stock`
 
-We can add a `varType` inside the API so that we give more information 
-on what are our parameters. As well as a `defaultValue`
-
-Then we grouped our `parameters` in a `parametersGroup` "bar_parameters" that will make our parameters available for further part of the `Solution`
+Each parameter can be given a type (property `varType`) and a default value (property 'defaultValue').
+Then we grouped our `parameters` in a `parametersGroup` "bar_parameters". Parameter groups will make our parameters available in further part of the `Solution`.
 
 #### `runTemplates`
 
@@ -211,57 +213,53 @@ Then we grouped our `parameters` in a `parametersGroup` "bar_parameters" that wi
 --8<-- "tutorial/advanced_cosmotech_simulator/Solution.yaml:runTemplates"
 ```
 
-In this part we finally define our `Run Template` for the API, we have 3 main elements defined :
+In this part we finally define our `Run Template` for the API. We have three main elements to define:
 
-* `id`: the `id` of a run template is the name of a folder inside `code/run_templates` that will contain a `run.json` file
-* `parametersGroups` : that contains the group we defined in the previous part
-* `csmSimulation`: where we choose which simulation will be set in the `CSM_SIMULATION_ID` environment variable
+* `id`: the `id` of a run template is the name of a folder inside `code/run_templates` that will contain a `run.json` file, along with one sub-folder for each step in the run template.
+* `parameterGroups`: list of parameter groups available for the run template. Parameters declared in those groups can be changed by users in order to create new scenarios.
+* `csmSimulation`: the name of a simulation file (without the ```.sml.xml``` suffix), to be set in the `CSM_SIMULATION_ID` environment variable. This simulation will run as part of the run template execution.
 
 ### Define a `Workspace`
 
-An example of `Workspace.yaml` which is a file used by the Cosmo Tech API for our current solution would be :
+An example of `Workspace.yaml` which is a file used by the Cosmo Tech API for our current solution would be:
 
 ```yaml title="Workspace.yaml"
 --8<-- "tutorial/advanced_cosmotech_simulator/Workspace.yaml"
 ```
 
-Full Open API description of a `Workspace` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/workspace/src/main/openapi/workspace.yaml)
+Full Open API description of a `Workspace` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/workspace/src/main/openapi/workspace.yaml).
 ??? info "Open API description of a Workspace (`components.schemas`)"
     ```yaml linenums="1"
     --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/workspace/src/main/openapi/workspace.yaml:692:854"
     ```
 
-!!! warning "After creation of a `Worskpace` in the API you will need to create some resources for it in your platform if you want to run simulations using the API"
+!!! warning "After creating a `Workspace` resource using the API you will need to create additional resources for it in your platform if you want to run scenarios."
 
-Once your `Workspace` is created you will have a workspace ID of the form `w-xxxxxxxx` it will allow you to connect to your workspace.
+Once your `Workspace` is created you will get a workspace identifier of the form `w-xxxxxxxx`. It will allow you to connect to your workspace and reference it in other resources.
 
 We have 3 required parts in a `Workspace`:
 
-* `key`: a unique identifier for your workspace which will be used during the resources creation
-* `name`: the name of your `Workspace`
-* `solution.solutionId`: the solution id (`sol-xxxxxxxx`) from the solution you want to use in the workspace
+* `key`: a unique identifier for your workspace which will be used during resource creation.
+* `name`: the name of your `Workspace`.
+* `solution.solutionId`: the solution identifier (`sol-xxxxxxxx`) for the solution you want to use in your workspace.
 
 ### Define a `Dataset`
 
-An example of `Dataset.yaml` which is a file used by the Cosmo Tech API for our current solution would be :
+An example of `Dataset.yaml` which is a file used by the Cosmo Tech API for our current solution would be:
 
 ```yaml title="Dataset.yaml"
 --8<-- "tutorial/advanced_cosmotech_simulator/Dataset.yaml"
 ```
 
-Full Open API description of a `Dataset` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/dataset/src/main/openapi/dataset.yaml)
+Full Open API description of a `Dataset` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/dataset/src/main/openapi/dataset.yaml).
 ??? info "Open API description of a Dataset (`components.schemas`)"
     ```yaml linenums="1"
     --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/dataset/src/main/openapi/dataset.yaml:1191:1560"
     ```
 
-After creation your `Dataset` will have an ID of the form `d-xxxxxxxx` which will be used to link it to your scenarios
-
-The creation of a `Dataset` is a bit complex to explain in a single post due to the different types of datasets that are made available.
-
-But the main part would be that depending on the type of `Dataset` you want to create you should fill information about a `Connector` which is defined at the platform level.
-
-The `Connector` information should allow you to get access to your `Dataset` information
+A `Dataset` is defined by a name, a type of data source (property `sourceType`) and a twin
+graph identifier (property `twingraphId`).
+After creating your `Dataset` you will get an identifier of the form `d-xxxxxxxx` which will be used to reference it to your scenarios.
 
 ### Define a `Scenario`
 
@@ -277,28 +275,28 @@ Full Open API description of a `Scenario` is available [here](https://raw.github
     --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/scenario/src/main/openapi/scenario.yaml:830:1126"
     ```
 
-After creation your `Scenario` will have an ID of the form `s-xxxxxxxx` which will be used to run it
+As a result of creating your `Scenario` you will get an identifier of the form `s-xxxxxxxx` that you can use to run it (as we will see further) and reference it in other endpoints.
 
-Multiple elements are to be focused on :
+A scenario essentially combines a run template with a dataset. The run template provides a set of parameters that can then be modified by the user before running the scenario. Multiple elements are required for defining a scenario, most notably:
 
-* `runTemplateId` : should be the same as the one we defined in our `Solution`
-* `datasetList` : should contain the `Dataset` we defined in the previous part using its ID
-* `parametersValues` : is a list of object representing the parameters we defined in the `Solution` with the actual value they are set to.
+* `runTemplateId`: should be one of the run template identifiers defined in our `Solution`.
+* `datasetList`: should reference a previously defined `Dataset` using its identifier.
+* `parametersValues`: is a list of objects representing the parameters we defined in the `Solution`, with the actual values they are set to.
 
 ## Run our distant `Scenario`
 
-We will need to either use a lot of parameters or environment variables, 
-we can make use of a parameter of `csm-orc run` to generate a template of `.env` file we will be able to use.
+We will need to either use a lot of parameters or environment variables. To make
+things easier we can make use of a parameter of `csm-orc run` to generate a template of `.env` file we will be able to use.
 
 That parameter is `--gen-env-target` and takes a filename to create a `.env` file initialized with all the environment variables defined in our `run.json`
 
-If a variable is present multiple times, only the last one will be taken into account. And each environment variable will have one and only one value from the following list (the first existing in order):
+If a variable is set multiple times, only the last one will be taken into account. Each environment variable will have one and only one value from the following list (highest value in the list takes precedence):
 
-- The `value` defined in the `run.json`
-- The current value in your working environment
-- The `defaultValue` defined in the `run.json`
-- The `description` defined in the `run.json`
-- `None` if no other value can be found
+- The `value` defined in the `run.json`.
+- The current value in your working environment.
+- The `defaultValue` defined in the `run.json`.
+- The `description` defined in the `run.json`.
+- `None` if no other value can be found.
 
 ```bash title="use of --gen-env-target"
 csm-orc run code/run_templates/orchestrator_tutorial_2/run.json --gen-env-target code/run_templates/orchestrator_tutorial_2/vars.env
@@ -306,16 +304,16 @@ cat code/run_templates/orchestrator_tutorial_2/vars.env
 # CSM_API_SCOPE=The scope of identification used to request access token for your Cosmo Tech API instance
 # CSM_API_URL=The URL used to query your Cosmo Tech API instance
 # CSM_DATASET_ABSOLUTE_PATH=Simulation/Resource/scenariorun-data
-# CSM_ORGANIZATION_ID=The id of the organization in the Cosmo Tech API
+# CSM_ORGANIZATION_ID=The identifier of the organization in the Cosmo Tech API
 # CSM_PARAMETERS_ABSOLUTE_PATH=code/run_templates/orchestrator_tutorial_2
-# CSM_SCENARIO_ID=The id of the scenario in the Cosmo Tech API
+# CSM_SCENARIO_ID=The identifier of the scenario in the Cosmo Tech API
 # CSM_SIMULATION=BusinessApp_Simulation
 # CSM_WORKSPACE_ID=The id of the workspace in the Cosmo Tech API
 ```
 
 This `.env` file can then be used as a parameter of the `docker run` command with `--env-file` 
-or can be used with a tool like `dotenv` (`pip install dotenv`) to temporary set the env vars of commands. 
-You can also just load it to get all values in your current environment
+or can be used with a tool like `dotenv` (`pip install dotenv`) to temporary set the environment variables of commands. 
+You can also just load it to get all values in your current environment.
 
 === "load a `.env` file in bash then run `csm-orc`"
     ```bash
@@ -335,10 +333,10 @@ You can also just load it to get all values in your current environment
 
 ## I want to use my local data instead of needing a `Scenario`
 
-The `csm-orc run` command comes with a parameter `--skip-step` that can be set 
-in an environment variable `CSM_SKIP_STEPS` which allow to define a list of steps that will be ignored during the run.
+The `csm-orc run` command comes with an optional parameter `--skip-step` that can be set 
+in an environment variable `CSM_SKIP_STEPS`. This parameter can be given a list of steps that will be ignored during the run.
 
-Since the "only" step used to download distant data from our run is `DownloadScenarioData` we can simply run locally by skipping it
+Since the "only" step used to download distant data from our run is `DownloadScenarioData` we can simply run locally by skipping it:
 
 ```bash title="Running only the SimulationRun step"
 csm-orc run --skip-step DownloadScenarioData --skip-step ApplyParameters code/run_templates/orchestrator_tutorial_2/run.json
