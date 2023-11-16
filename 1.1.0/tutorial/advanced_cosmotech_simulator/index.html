@@ -676,21 +676,21 @@
       
         <li class="md-nav__item">
   <a href="#how-does-the-cosmo-tech-platform-runs-orchestration" class="md-nav__link">
-    How does the Cosmo Tech Platform runs orchestration ?
+    How does the Cosmo Tech Platform runs orchestration?
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#how-does-entrypointpy-works" class="md-nav__link">
-    How does entrypoint.py works ?
+    How does entrypoint.py works?
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-environment-variables-are-made-available-by-the-api" class="md-nav__link">
-    What Environment Variables are made available by the API ?
+  <a href="#which-environment-variables-are-made-available-by-the-api" class="md-nav__link">
+    Which Environment Variables are made available by the API?
   </a>
   
 </li>
@@ -740,8 +740,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#parameters-and-parametersgroups" class="md-nav__link">
-    parameters and parametersGroups
+  <a href="#parameters-and-parametergroups" class="md-nav__link">
+    parameters and parameterGroups
   </a>
   
 </li>
@@ -1319,21 +1319,21 @@
       
         <li class="md-nav__item">
   <a href="#how-does-the-cosmo-tech-platform-runs-orchestration" class="md-nav__link">
-    How does the Cosmo Tech Platform runs orchestration ?
+    How does the Cosmo Tech Platform runs orchestration?
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#how-does-entrypointpy-works" class="md-nav__link">
-    How does entrypoint.py works ?
+    How does entrypoint.py works?
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-environment-variables-are-made-available-by-the-api" class="md-nav__link">
-    What Environment Variables are made available by the API ?
+  <a href="#which-environment-variables-are-made-available-by-the-api" class="md-nav__link">
+    Which Environment Variables are made available by the API?
   </a>
   
 </li>
@@ -1383,8 +1383,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#parameters-and-parametersgroups" class="md-nav__link">
-    parameters and parametersGroups
+  <a href="#parameters-and-parametergroups" class="md-nav__link">
+    parameters and parameterGroups
   </a>
   
 </li>
@@ -1465,42 +1465,44 @@ and add modification to get it ready to be used inside a Cosmo Tech Platform.</p
 <div class="admonition warning">
 <p class="admonition-title">Requirements</p>
 <ul>
-<li><code>csmcli</code> the CLI bundled with the Cosmo Tech SDK</li>
 <li><code>docker</code></li>
 <li>A Cosmo Tech Platform minimal version of 3.0</li>
 <li>A Cosmo Tech SDK minimal version of 10.0</li>
+<li>Installed SDK package must include <code>csmcli</code></li>
 </ul>
 </div>
-<h2 id="how-does-the-cosmo-tech-platform-runs-orchestration">How does the Cosmo Tech Platform runs orchestration ?<a class="headerlink" href="#how-does-the-cosmo-tech-platform-runs-orchestration" title="Permanent link">&para;</a></h2>
-<p>The Cosmo Tech Platform will run registered docker images based on the definition of <code>Solutions</code> in its API.</p>
-<p>In the API you can define a <code>Solution</code> that will refer to a specific version of a docker image in a given repository.
-That <code>Solution</code> contains a definition of sets of <code>Parameters</code> and <code>Run Templates</code>. 
+<h2 id="how-does-the-cosmo-tech-platform-runs-orchestration">How does the Cosmo Tech Platform runs orchestration?<a class="headerlink" href="#how-does-the-cosmo-tech-platform-runs-orchestration" title="Permanent link">&para;</a></h2>
+<p>The Cosmo Tech Platform will run pre-registered <code>docker</code> images based on the definition of <code>Solutions</code> in its API.</p>
+<p>In the API you can define a <code>Solution</code> that will refer to a specific version of a <code>docker</code> image in a given repository.
+That <code>Solution</code> defines sets of <code>Parameters</code> and <code>Run Templates</code>. 
 Then <code>Workspaces</code> are defined in the API and point to a given <code>Solution</code> 
 allowing you to create a <code>Scenario</code> which will tie together <code>Datasets</code>, <code>Parameters</code>, 
 and a <code>Run Template</code> which will then be run by the API.</p>
 <p><code>Datasets</code> are a description of how and where data are stored, <code>Parameters</code> can be simple types 
-or full <code>Datasets</code> allowing you to update the main <code>Dataset</code> of your <code>Scenario</code> changing its behavior.</p>
+or full <code>Datasets</code> allowing you to update the main <code>Dataset</code> of your <code>Scenario</code>, therefore
+changing its initial state or behavior (or both).</p>
 <p>Running your <code>Scenario</code> will create a <code>ScenarioRun</code> into the API 
-and that <code>ScenarioRun</code> will make use of the docker image your previously defined.
+and that <code>ScenarioRun</code> will make use of the <code>docker</code> image your previously defined.
 The API will call the image with an <code>Entrypoint</code> called <code>entrypoint.py</code> and that call should be your full orchestration.</p>
 <details class="question">
 <summary>Why <code>entrypoint.py</code> and not <code>csm-orc</code> ?</summary>
 <p>The definition of the <code>Entrypoint</code> being <code>entrypoint.py</code> 
-is left for compatibility of the old images on the Cosmo Tech API (pre 3.0)
+is left for compatibility with old images on the Cosmo Tech API (pre 3.0).
 It will be changed in the future, but for now <code>csm-orc</code> comes bundled with 
-a script called <code>entrypoint.py</code> that allow legacy and new runs of the docker image.</p>
+a script called <code>entrypoint.py</code> that allows both legacy and new runs of
+the <code>docker</code> image.</p>
 </details>
-<h2 id="how-does-entrypointpy-works">How does <code>entrypoint.py</code> works ?<a class="headerlink" href="#how-does-entrypointpy-works" title="Permanent link">&para;</a></h2>
-<p>The <code>entrypoint.py</code> command (and its equivalent <code>csm-orc entrypoint</code>) work using some Environment variables to switch between 3 modes:</p>
+<h2 id="how-does-entrypointpy-works">How does <code>entrypoint.py</code> works?<a class="headerlink" href="#how-does-entrypointpy-works" title="Permanent link">&para;</a></h2>
+<p>The <code>entrypoint.py</code> command (and its equivalent <code>csm-orc entrypoint</code>) works using some Environment variables to switch between 3 modes:</p>
 <ul>
-<li>The general entrypoint with no special configuration that allow to run your <code>run templates</code> requiring the environment variable <code>CSM_RUN_TEMPLATE_ID</code> to be set with your run template name</li>
-<li>The legacy entrypoint activated by setting the environment variable <code>CSM_ENTRYPOINT_LEGACY</code> to <code>true</code> which is made available for compatibility with pre3.0 Cosmo Tech API</li>
-<li>The direct simulator mode which requires the environment variable <code>CSM_RUN_TEMPLATE_ID</code> to not be set, and will then run the simulator by passing it any argument of the command</li>
+<li>The general entrypoint with no special configuration that allow to run your <code>run templates</code> requiring the environment variable <code>CSM_RUN_TEMPLATE_ID</code> to be set with your run template name.</li>
+<li>The legacy entrypoint activated by setting the environment variable <code>CSM_ENTRYPOINT_LEGACY</code> to <code>true</code> which is made available for compatibility with pre 3.0 Cosmo Tech API.</li>
+<li>The direct simulator mode which requires the environment variable <code>CSM_RUN_TEMPLATE_ID</code> to not be set, and will then run the simulator by passing it any argument of the command.</li>
 </ul>
-<p>Every <code>Environment Variable</code> passed to the command will be forwarded to the <code>csm-orc run</code> command inside. 
-And the command will be run with the working directory set to <code>/pkg/share</code></p>
-<h2 id="what-environment-variables-are-made-available-by-the-api">What <code>Environment Variables</code> are made available by the API ?<a class="headerlink" href="#what-environment-variables-are-made-available-by-the-api" title="Permanent link">&para;</a></h2>
-<p>The Cosmo Tech API will forward a set of environment variables to any Simulator containers. You can find the full list of the in the following table.</p>
+<p>Every <code>Environment Variable</code> passed to the command will be forwarded to the
+<code>csm-orc run</code> command inside, and the command will be run with the working directory set to <code>/pkg/share</code>.</p>
+<h2 id="which-environment-variables-are-made-available-by-the-api">Which <code>Environment Variables</code> are made available by the API?<a class="headerlink" href="#which-environment-variables-are-made-available-by-the-api" title="Permanent link">&para;</a></h2>
+<p>The Cosmo Tech API will forward a set of environment variables to any Simulator containers. You can find the full list in the following table.</p>
 <details class="notes">
 <summary>List of environment variables</summary>
 <table>
@@ -1616,8 +1618,8 @@ And the command will be run with the working directory set to <code>/pkg/share</
 </details>
 <h2 id="connect-to-the-api-to-get-our-scenario-data">Connect to the API to get our <code>Scenario</code> data<a class="headerlink" href="#connect-to-the-api-to-get-our-scenario-data" title="Permanent link">&para;</a></h2>
 <p>Multiple ways exists to connect to the API and query some data, but for simplicity there exists a command in <code>csm-orc</code> that will make use of known API environment variables and do the work for you.</p>
-<p>That command is <code>csm-orc fetch-scenariorun-data</code> (documentation of the command is available <a href="../../commands/scenario_data_downloader/">here</a>)</p>
-<p>The command make use of 5 environment variables set by the API (as described in the previous point) :</p>
+<p>That command is <code>csm-orc fetch-scenariorun-data</code> (documentation of the command is available <a href="../../commands/scenario_data_downloader/">here</a>).</p>
+<p>The command makes use of 5 environment variables set by the API (as described in the previous section):</p>
 <ul>
 <li><code>CSM_ORGANIZATION_ID</code></li>
 <li><code>CSM_WORKSPACE_ID</code></li>
@@ -1625,31 +1627,33 @@ And the command will be run with the working directory set to <code>/pkg/share</
 <li><code>CSM_DATASET_ABSOLUTE_PATH</code></li>
 <li><code>CSM_PARAMETERS_ABSOLUTE_PATH</code></li>
 </ul>
-<p>And uses 3 control environment variables :</p>
+<p>And uses 3 control environment variables:</p>
 <ul>
-<li><code>WRITE_JSON</code>: If set to <code>true</code> will write a <code>parameters.json</code> file in <code>CSM_PARAMETERS_ABSOLUTE_PATH</code></li>
-<li><code>WRITE_CSV</code>: If set to <code>true</code> will write a <code>parameters.csv</code> file in <code>CSM_PARAMETERS_ABSOLUTE_PATH</code></li>
+<li><code>WRITE_JSON</code>: If set to <code>true</code> will write a <code>parameters.json</code> file in <code>CSM_PARAMETERS_ABSOLUTE_PATH</code>.</li>
+<li><code>WRITE_CSV</code>: If set to <code>true</code> will write a <code>parameters.csv</code> file in <code>CSM_PARAMETERS_ABSOLUTE_PATH</code>.</li>
 <li><code>FETCH_DATASET</code>: If set to <code>true</code> will download all the <code>Datasets</code> tied to your scenario, 
      will write the main ones (not defined as a <code>Parameter</code>) in <code>CSM_DATASET_ABSOLUTE_PATH</code> 
      and will write the others in <code>CSM_PARAMETERS_ABSOLUTE_PATH/[parameter name]</code> 
-     where <code>[parameter name]</code> is the name of the <code>Parameter</code> targeting the <code>Dataset</code> (with a type set to <code>%DATASETID%</code>)</li>
+     where <code>[parameter name]</code> is the name of the <code>Parameter</code> targeting the <code>Dataset</code> (with a type set to <code>%DATASETID%</code>).</li>
 </ul>
-<p>Using that command allow to easily download any dataset defined in the Cosmo Tech API, 
+<p>With that command one can easily download any dataset defined in the Cosmo Tech API, 
 as long as those datasets use one of the standard connections defined in the API 
-(as of version 3.0: <code>Azure Storage Blob</code>, <code>Azure Digital Twin</code>, <code>TwinGraph Storage</code>)</p>
+(as of version 3.0: <code>Azure Blob Storage</code>, <code>Azure Digital Twin</code>, <code>TwinGraph Storage</code>).</p>
 <h2 id="combine-everything-in-a-run-template">Combine everything in a <code>Run Template</code><a class="headerlink" href="#combine-everything-in-a-run-template" title="Permanent link">&para;</a></h2>
 <p>Using all those new information we can see that most of the actions needed to run our code based on API data are already prepackaged.</p>
-<p>We can :
-- Download our scenario information using <code>csm-orc fetch-scenariorun-data</code>
-- Apply our parameters with our <code>apply_parameters.py</code>
-- Run our simulation using <code>csm-orc run-step</code>
-- And send our simulation results to an external system (here Azure Data Explorer) by setting environment variables during the <code>run-step</code></p>
+<p>We can:</p>
+<ul>
+<li>Download our scenario information using <code>csm-orc fetch-scenariorun-data</code>.</li>
+<li>Apply our parameters with our <code>apply_parameters.py</code>.</li>
+<li>Run our simulation using <code>csm-orc run-step</code>.</li>
+<li>And send our simulation results to an external system (here Azure Data Explorer) by setting environment variables during the <code>run-step</code>.</li>
+</ul>
 <p>It is then easy to update our previous <code>run.json</code> to take those changes into account.</p>
 <details class="question" open="open">
 <summary>New <code>code/run_templates/orchestrator_tutorial_2</code> folder</summary>
 <p>To keep a clean distinction on the code of the previous tutorial and this one, 
 we will refer to the folder <code>code/run_templates/orchestrator_tutorial_2</code> 
-which is an exact copy of the folder <code>code/run_templates/orchestrator_tutorial_1</code></p>
+which is an exact copy of the folder <code>code/run_templates/orchestrator_tutorial_1</code>.</p>
 <p>You can create it by using the following command:
 <div class="highlight"><span class="filename">copy `orchestrator_tutorial_1`</span><pre><span></span><code>cp<span class="w"> </span>-r<span class="w"> </span>code/run_templates/orchestrator_tutorial_1<span class="w"> </span>code/run_templates/orchestrator_tutorial_2
 </code></pre></div></p>
@@ -1820,24 +1824,25 @@ which is an exact copy of the folder <code>code/run_templates/orchestrator_tutor
 <span class="w">  </span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<p>We can see a few changes and additions compared to the previous <code>run.json</code> file :</p>
+<p>We can see a few changes and additions compared to the previous <code>run.json</code> file:</p>
 <ul>
-<li>We created a new <code>step</code> called <code>DownloadScenarioData</code> that makes use of <code>csm-orc fetch-scenariorun-data</code><ul>
+<li>We created a new <code>step</code> called <code>DownloadScenarioData</code> that makes use of <code>csm-orc fetch-scenariorun-data</code>:<ul>
 <li>In this step we defined a few environment variables required to run it, 
   but we still added <code>useSystemEnvironment</code> to <code>true</code> to ensure any environment variable required 
-  to connect to the api is made available as well.</li>
+  to connect to the API is made available as well.</li>
 </ul>
 </li>
 <li>In the <code>ApplyParameters</code> we made a few changes:<ul>
-<li><code>DATASET/PARAMETERS_PATH</code> became <code>CSM_DATASET/PARAMETERS_ABSOLUTE_PATH</code></li>
-<li>We added <code>/parameters.json</code> in the arguments for the parameters path</li>
-<li>We added a precendent step to schedule it after the <code>DownloadScenarioData</code></li>
+<li><code>DATASET/PARAMETERS_PATH</code> became <code>CSM_DATASET/PARAMETERS_ABSOLUTE_PATH</code>.</li>
+<li>We added <code>/parameters.json</code> in the arguments for the parameters path.</li>
+<li>We added a precendent step to schedule it after the
+<code>DownloadScenarioData</code>.</li>
 </ul>
 </li>
-<li>In the <code>SimulatorRun</code> step changes are minimals:<ul>
-<li>The template targeted is the new <code>orchestrator_tutorial_2</code></li>
+<li>In the <code>SimulatorRun</code> step changes are minimal:<ul>
+<li>The template targeted is the new <code>orchestrator_tutorial_2</code>.</li>
 <li>The default value of <code>CSM_SIMULATION</code> has been changed to <code>BusinessApp_Simulation</code> 
-  since <code>docker</code> simulation can't make use of visual consumers</li>
+  since <code>docker</code> simulation can't make use of visual consumers.</li>
 </ul>
 </li>
 </ul>
@@ -1850,23 +1855,23 @@ csm<span class="w"> </span>flow
 <span class="c1"># The simulator is now ready to be packaged</span>
 csm<span class="w"> </span>docker<span class="w"> </span>build
 </code></pre></div>
-<p>After those commands we end up with a docker image <code>cosmotech/mybrewery_simulator</code> ready to be used</p>
+<p>After running those commands we end up with a docker image <code>cosmotech/mybrewery_simulator</code> ready to be used.</p>
 <p>A simple test can be made with the following command:</p>
 <div class="highlight"><span class="filename">Test the docker image</span><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-e<span class="w"> </span><span class="nv">CSM_RUN_TEMPLATE_ID</span><span class="o">=</span>orchestrator_tutorial_1<span class="w"> </span>-e<span class="w"> </span><span class="nv">CSM_SIMULATION</span><span class="o">=</span>BusinessApp_Simulation<span class="w"> </span>-v<span class="w"> </span>./Simulation/Resource/scenariorun-data:/mnt/scenariorun-data<span class="w"> </span>cosmotech/mybrewery_simulator
 </code></pre></div>
 <div class="admonition question">
 <p class="admonition-title">About the parameters of the command <code>docker run</code></p>
 <ul>
-<li><code>-e</code> allows to set an environment variable during the docker run, here we set our run template id and our simulation</li>
-<li><code>-v</code> allows to set a volume during the docker run, 
-  here we set the content of our <code>Simulation/Resource/scenariorun-data</code> to the path <code>/mnt/scenariorun-data</code> 
-  in the docker container, allowing us to use our existing dataset during the run.</li>
+<li><code>-e</code> sets an environment variable during the docker run, here we set our run template id and our simulation.</li>
+<li><code>-v</code> sets a volume during the docker run, 
+  here we mount our local <code>Simulation/Resource/scenariorun-data</code> folder to the path <code>/mnt/scenariorun-data</code> 
+  in the <code>docker</code> container, allowing us to use our existing dataset during the run.</li>
 </ul>
 </div>
 <h2 id="define-api-items">Define API items<a class="headerlink" href="#define-api-items" title="Permanent link">&para;</a></h2>
-<p>The following points will give you a simple example of <code>.yaml</code> files used to define elements in the Cosmo Tech API</p>
+<p>The following sections give you simple examples of <code>.yaml</code> files used to define resources in the Cosmo Tech API.</p>
 <h3 id="define-a-solution">Define a <code>Solution</code><a class="headerlink" href="#define-a-solution" title="Permanent link">&para;</a></h3>
-<p>An example of <code>Solution.yaml</code> which is a file used by the Cosmo Tech API for our current solution would be :</p>
+<p>An example of <code>Solution.yaml</code> (a file used by the Cosmo Tech API) for our current solution would be:</p>
 <div class="highlight"><span class="filename">Solution.yaml</span><pre><span></span><code><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;brewery&quot;</span>
 <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Demo</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">Solution,</span><span class="nv"> </span><span class="s">csm-orc</span><span class="nv"> </span><span class="s">tutorial&quot;</span>
 <span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;A</span><span class="nv"> </span><span class="s">simple</span><span class="nv"> </span><span class="s">example</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">Cosmo</span><span class="nv"> </span><span class="s">Tech</span><span class="nv"> </span><span class="s">solution</span><span class="nv"> </span><span class="s">built</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">model&quot;</span>
@@ -1899,7 +1904,7 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar_parameters</span>
 <span class="w">    </span><span class="nt">csmSimulation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BusinessApp_Simulation</span>
 </code></pre></div>
-<p>Full Open API description of a <code>Solution</code> is available <a href="https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/solution/src/main/openapi/solution.yaml">here</a></p>
+<p>Full Open API description of a <code>Solution</code> is available <a href="https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/solution/src/main/openapi/solution.yaml">here</a>.</p>
 <details class="info">
 <summary>Open API description of a Solution (<code>components.schemas</code>)</summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
@@ -2583,9 +2588,9 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 </code></pre></div></td></tr></table></div>
 </details>
-<p>Once this file is sent to a Cosmo Tech API we will get a <code>Solution ID</code> of the form <code>sol-xxxxxxxx</code> 
+<p>Once this file is sent to a Cosmo Tech API we will get a <code>Solution ID</code> of the form <code>sol-xxxxxxxx</code>
 which will allow us to create further elements inside the API referencing our solution.</p>
-<p>Now let's look deeper in how to create our <code>Solution.yaml</code></p>
+<p>Now let's look deeper at how to create our <code>Solution.yaml</code>.</p>
 <h4 id="solution-description"><code>Solution</code> description<a class="headerlink" href="#solution-description" title="Permanent link">&para;</a></h4>
 <div class="highlight"><span class="filename">Solution.yaml - description</span><pre><span></span><code><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;brewery&quot;</span>
 <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Demo</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">Solution,</span><span class="nv"> </span><span class="s">csm-orc</span><span class="nv"> </span><span class="s">tutorial&quot;</span>
@@ -2596,16 +2601,16 @@ which will allow us to create further elements inside the API referencing our so
 <span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mybrewery_simulator&quot;</span>
 <span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.0.1&quot;</span>
 </code></pre></div>
-<p>We can see a few important keys in this part of the <code>Solution</code> file:</p>
+<p>We can see a few important properties in this part of the <code>Solution</code> file:</p>
 <ul>
-<li><code>key</code> : it is a "grouping" value used to make multiple <code>Solution</code> using the same base but different versions together.</li>
-<li><code>name</code> : a simple name given to the <code>Solution</code></li>
-<li><code>description</code> : a simple description of the <code>Solution</code></li>
-<li><code>tags</code> : a list of tags used in the API to filter <code>Solutions</code></li>
-<li><code>repository</code> : the name of the docker image inside the image registry</li>
-<li><code>version</code> : the version of the docker image tied to the <code>Solution</code> </li>
+<li><code>key</code>: it is a "grouping" value used to make multiple <code>Solution</code> using the same base but different versions together.</li>
+<li><code>name</code>: a simple name given to the <code>Solution</code>.</li>
+<li><code>description</code>: a simple description of the <code>Solution</code>.</li>
+<li><code>tags</code>: a list of tags used in the API to filter <code>Solution</code> resources.</li>
+<li><code>repository</code>: the name of the <code>docker</code> image inside the image registry.</li>
+<li><code>version</code>: the version of the <code>docker</code> image tied to the <code>Solution</code>.</li>
 </ul>
-<h4 id="parameters-and-parametersgroups"><code>parameters</code> and <code>parametersGroups</code><a class="headerlink" href="#parameters-and-parametersgroups" title="Permanent link">&para;</a></h4>
+<h4 id="parameters-and-parametergroups"><code>parameters</code> and <code>parameterGroups</code><a class="headerlink" href="#parameters-and-parametergroups" title="Permanent link">&para;</a></h4>
 <div class="highlight"><span class="filename">Solution.yaml - parameters</span><pre><span></span><code><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Stock&quot;</span>
 <span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;int&quot;</span>
@@ -2623,15 +2628,14 @@ which will allow us to create further elements inside the API referencing our so
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RestockQty</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NbWaiters</span>
 </code></pre></div>
-<p>In this part we define our parameters, as previously decided we have 3 :</p>
+<p>In this part we declare our scenario parameters. As previously decided we need three parameters:</p>
 <ul>
 <li><code>NbWaiters</code></li>
 <li><code>RestockQty</code></li>
 <li><code>Stock</code></li>
 </ul>
-<p>We can add a <code>varType</code> inside the API so that we give more information 
-on what are our parameters. As well as a <code>defaultValue</code></p>
-<p>Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "bar_parameters" that will make our parameters available for further part of the <code>Solution</code></p>
+<p>Each parameter can be given a type (property <code>varType</code>) and a default value (property 'defaultValue').
+Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "bar_parameters". Parameter groups will make our parameters available in further part of the <code>Solution</code>.</p>
 <h4 id="runtemplates"><code>runTemplates</code><a class="headerlink" href="#runtemplates" title="Permanent link">&para;</a></h4>
 <div class="highlight"><span class="filename">Solution.yaml - runTemplates</span><pre><span></span><code><span class="nt">runTemplates</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;orchestrator_tutorial_2&quot;</span>
@@ -2641,20 +2645,20 @@ on what are our parameters. As well as a <code>defaultValue</code></p>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar_parameters</span>
 <span class="w">    </span><span class="nt">csmSimulation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BusinessApp_Simulation</span>
 </code></pre></div>
-<p>In this part we finally define our <code>Run Template</code> for the API, we have 3 main elements defined :</p>
+<p>In this part we finally define our <code>Run Template</code> for the API. We have three main elements to define:</p>
 <ul>
-<li><code>id</code>: the <code>id</code> of a run template is the name of a folder inside <code>code/run_templates</code> that will contain a <code>run.json</code> file</li>
-<li><code>parametersGroups</code> : that contains the group we defined in the previous part</li>
-<li><code>csmSimulation</code>: where we choose which simulation will be set in the <code>CSM_SIMULATION_ID</code> environment variable</li>
+<li><code>id</code>: the <code>id</code> of a run template is the name of a folder inside <code>code/run_templates</code> that will contain a <code>run.json</code> file, along with one sub-folder for each step in the run template.</li>
+<li><code>parameterGroups</code>: list of parameter groups available for the run template. Parameters declared in those groups can be changed by users in order to create new scenarios.</li>
+<li><code>csmSimulation</code>: the name of a simulation file (without the <code>.sml.xml</code> suffix), to be set in the <code>CSM_SIMULATION_ID</code> environment variable. This simulation will run as part of the run template execution.</li>
 </ul>
 <h3 id="define-a-workspace">Define a <code>Workspace</code><a class="headerlink" href="#define-a-workspace" title="Permanent link">&para;</a></h3>
-<p>An example of <code>Workspace.yaml</code> which is a file used by the Cosmo Tech API for our current solution would be :</p>
+<p>An example of <code>Workspace.yaml</code> which is a file used by the Cosmo Tech API for our current solution would be:</p>
 <div class="highlight"><span class="filename">Workspace.yaml</span><pre><span></span><code><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">brewery_orchestrator_tutorial</span>
 <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Brewery tutorial workspace</span>
 <span class="nt">solution</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">solutionId</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sol-xxxxxxxx&quot;</span>
 </code></pre></div>
-<p>Full Open API description of a <code>Workspace</code> is available <a href="https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/workspace/src/main/openapi/workspace.yaml">here</a></p>
+<p>Full Open API description of a <code>Workspace</code> is available <a href="https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/workspace/src/main/openapi/workspace.yaml">here</a>.</p>
 <details class="info">
 <summary>Open API description of a Workspace (<code>components.schemas</code>)</summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
@@ -2985,24 +2989,24 @@ on what are our parameters. As well as a <code>defaultValue</code></p>
 </code></pre></div></td></tr></table></div>
 </details>
 <div class="admonition warning">
-<p class="admonition-title">After creation of a <code>Worskpace</code> in the API you will need to create some resources for it in your platform if you want to run simulations using the API</p>
+<p class="admonition-title">After creating a <code>Workspace</code> resource using the API you will need to create additional resources for it in your platform if you want to run scenarios.</p>
 </div>
-<p>Once your <code>Workspace</code> is created you will have a workspace ID of the form <code>w-xxxxxxxx</code> it will allow you to connect to your workspace.</p>
+<p>Once your <code>Workspace</code> is created you will get a workspace identifier of the form <code>w-xxxxxxxx</code>. It will allow you to connect to your workspace and reference it in other resources.</p>
 <p>We have 3 required parts in a <code>Workspace</code>:</p>
 <ul>
-<li><code>key</code>: a unique identifier for your workspace which will be used during the resources creation</li>
-<li><code>name</code>: the name of your <code>Workspace</code></li>
-<li><code>solution.solutionId</code>: the solution id (<code>sol-xxxxxxxx</code>) from the solution you want to use in the workspace</li>
+<li><code>key</code>: a unique identifier for your workspace which will be used during resource creation.</li>
+<li><code>name</code>: the name of your <code>Workspace</code>.</li>
+<li><code>solution.solutionId</code>: the solution identifier (<code>sol-xxxxxxxx</code>) for the solution you want to use in your workspace.</li>
 </ul>
 <h3 id="define-a-dataset">Define a <code>Dataset</code><a class="headerlink" href="#define-a-dataset" title="Permanent link">&para;</a></h3>
-<p>An example of <code>Dataset.yaml</code> which is a file used by the Cosmo Tech API for our current solution would be :</p>
+<p>An example of <code>Dataset.yaml</code> which is a file used by the Cosmo Tech API for our current solution would be:</p>
 <div class="highlight"><span class="filename">Dataset.yaml</span><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Orchestrator Tutorial Dataset</span>
 <span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Example dataset defined during the Orchestrator Tutorial</span>
 <span class="nt">tags</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Brewery</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tutorial</span>
 </code></pre></div>
-<p>Full Open API description of a <code>Dataset</code> is available <a href="https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/dataset/src/main/openapi/dataset.yaml">here</a></p>
+<p>Full Open API description of a <code>Dataset</code> is available <a href="https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/dataset/src/main/openapi/dataset.yaml">here</a>.</p>
 <details class="info">
 <summary>Open API description of a Dataset (<code>components.schemas</code>)</summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
@@ -3746,10 +3750,9 @@ on what are our parameters. As well as a <code>defaultValue</code></p>
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div></td></tr></table></div>
 </details>
-<p>After creation your <code>Dataset</code> will have an ID of the form <code>d-xxxxxxxx</code> which will be used to link it to your scenarios</p>
-<p>The creation of a <code>Dataset</code> is a bit complex to explain in a single post due to the different types of datasets that are made available.</p>
-<p>But the main part would be that depending on the type of <code>Dataset</code> you want to create you should fill information about a <code>Connector</code> which is defined at the platform level.</p>
-<p>The <code>Connector</code> information should allow you to get access to your <code>Dataset</code> information</p>
+<p>A <code>Dataset</code> is defined by a name, a type of data source (property <code>sourceType</code>) and a twin
+graph identifier (property <code>twingraphId</code>).
+After creating your <code>Dataset</code> you will get an identifier of the form <code>d-xxxxxxxx</code> which will be used to reference it to your scenarios.</p>
 <h3 id="define-a-scenario">Define a <code>Scenario</code><a class="headerlink" href="#define-a-scenario" title="Permanent link">&para;</a></h3>
 <p>An example of <code>Scenario.yaml</code> which is a file used by the Cosmo Tech API for our current solution would be :</p>
 <div class="highlight"><span class="filename">Scenario.yaml</span><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Orchestrator Tutorial</span>
@@ -4369,39 +4372,39 @@ on what are our parameters. As well as a <code>defaultValue</code></p>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Rejected</span>
 </code></pre></div></td></tr></table></div>
 </details>
-<p>After creation your <code>Scenario</code> will have an ID of the form <code>s-xxxxxxxx</code> which will be used to run it</p>
-<p>Multiple elements are to be focused on :</p>
+<p>As a result of creating your <code>Scenario</code> you will get an identifier of the form <code>s-xxxxxxxx</code> that you can use to run it (as we will see further) and reference it in other endpoints.</p>
+<p>A scenario essentially combines a run template with a dataset. The run template provides a set of parameters that can then be modified by the user before running the scenario. Multiple elements are required for defining a scenario, most notably:</p>
 <ul>
-<li><code>runTemplateId</code> : should be the same as the one we defined in our <code>Solution</code></li>
-<li><code>datasetList</code> : should contain the <code>Dataset</code> we defined in the previous part using its ID</li>
-<li><code>parametersValues</code> : is a list of object representing the parameters we defined in the <code>Solution</code> with the actual value they are set to.</li>
+<li><code>runTemplateId</code>: should be one of the run template identifiers defined in our <code>Solution</code>.</li>
+<li><code>datasetList</code>: should reference a previously defined <code>Dataset</code> using its identifier.</li>
+<li><code>parametersValues</code>: is a list of objects representing the parameters we defined in the <code>Solution</code>, with the actual values they are set to.</li>
 </ul>
 <h2 id="run-our-distant-scenario">Run our distant <code>Scenario</code><a class="headerlink" href="#run-our-distant-scenario" title="Permanent link">&para;</a></h2>
-<p>We will need to either use a lot of parameters or environment variables, 
-we can make use of a parameter of <code>csm-orc run</code> to generate a template of <code>.env</code> file we will be able to use.</p>
+<p>We will need to either use a lot of parameters or environment variables. To make
+things easier we can make use of a parameter of <code>csm-orc run</code> to generate a template of <code>.env</code> file we will be able to use.</p>
 <p>That parameter is <code>--gen-env-target</code> and takes a filename to create a <code>.env</code> file initialized with all the environment variables defined in our <code>run.json</code></p>
-<p>If a variable is present multiple times, only the last one will be taken into account. And each environment variable will have one and only one value from the following list (the first existing in order):</p>
+<p>If a variable is set multiple times, only the last one will be taken into account. Each environment variable will have one and only one value from the following list (highest value in the list takes precedence):</p>
 <ul>
-<li>The <code>value</code> defined in the <code>run.json</code></li>
-<li>The current value in your working environment</li>
-<li>The <code>defaultValue</code> defined in the <code>run.json</code></li>
-<li>The <code>description</code> defined in the <code>run.json</code></li>
-<li><code>None</code> if no other value can be found</li>
+<li>The <code>value</code> defined in the <code>run.json</code>.</li>
+<li>The current value in your working environment.</li>
+<li>The <code>defaultValue</code> defined in the <code>run.json</code>.</li>
+<li>The <code>description</code> defined in the <code>run.json</code>.</li>
+<li><code>None</code> if no other value can be found.</li>
 </ul>
 <div class="highlight"><span class="filename">use of --gen-env-target</span><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/run.json<span class="w"> </span>--gen-env-target<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env
 cat<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env
 <span class="c1"># CSM_API_SCOPE=The scope of identification used to request access token for your Cosmo Tech API instance</span>
 <span class="c1"># CSM_API_URL=The URL used to query your Cosmo Tech API instance</span>
 <span class="c1"># CSM_DATASET_ABSOLUTE_PATH=Simulation/Resource/scenariorun-data</span>
-<span class="c1"># CSM_ORGANIZATION_ID=The id of the organization in the Cosmo Tech API</span>
+<span class="c1"># CSM_ORGANIZATION_ID=The identifier of the organization in the Cosmo Tech API</span>
 <span class="c1"># CSM_PARAMETERS_ABSOLUTE_PATH=code/run_templates/orchestrator_tutorial_2</span>
-<span class="c1"># CSM_SCENARIO_ID=The id of the scenario in the Cosmo Tech API</span>
+<span class="c1"># CSM_SCENARIO_ID=The identifier of the scenario in the Cosmo Tech API</span>
 <span class="c1"># CSM_SIMULATION=BusinessApp_Simulation</span>
 <span class="c1"># CSM_WORKSPACE_ID=The id of the workspace in the Cosmo Tech API</span>
 </code></pre></div>
 <p>This <code>.env</code> file can then be used as a parameter of the <code>docker run</code> command with <code>--env-file</code> 
-or can be used with a tool like <code>dotenv</code> (<code>pip install dotenv</code>) to temporary set the env vars of commands. 
-You can also just load it to get all values in your current environment</p>
+or can be used with a tool like <code>dotenv</code> (<code>pip install dotenv</code>) to temporary set the environment variables of commands. 
+You can also just load it to get all values in your current environment.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">load a <code>.env</code> file in bash then run <code>csm-orc</code></label><label for="__tabbed_1_2"><code>docker run</code> with <code>.env</code></label><label for="__tabbed_1_3"><code>csm-orc run</code> with <code>.env</code> and <code>dotenv</code></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -4422,9 +4425,9 @@ csm-orc<span class="w"> </span>run<span class="w"> </span>code/run_templates/orc
 </div>
 </div>
 <h2 id="i-want-to-use-my-local-data-instead-of-needing-a-scenario">I want to use my local data instead of needing a <code>Scenario</code><a class="headerlink" href="#i-want-to-use-my-local-data-instead-of-needing-a-scenario" title="Permanent link">&para;</a></h2>
-<p>The <code>csm-orc run</code> command comes with a parameter <code>--skip-step</code> that can be set 
-in an environment variable <code>CSM_SKIP_STEPS</code> which allow to define a list of steps that will be ignored during the run.</p>
-<p>Since the "only" step used to download distant data from our run is <code>DownloadScenarioData</code> we can simply run locally by skipping it</p>
+<p>The <code>csm-orc run</code> command comes with an optional parameter <code>--skip-step</code> that can be set 
+in an environment variable <code>CSM_SKIP_STEPS</code>. This parameter can be given a list of steps that will be ignored during the run.</p>
+<p>Since the "only" step used to download distant data from our run is <code>DownloadScenarioData</code> we can simply run locally by skipping it:</p>
 <div class="highlight"><span class="filename">Running only the SimulationRun step</span><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>--skip-step<span class="w"> </span>DownloadScenarioData<span class="w"> </span>--skip-step<span class="w"> </span>ApplyParameters<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/run.json
 </code></pre></div>
 

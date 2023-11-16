@@ -1271,14 +1271,14 @@
 <div class="admonition abstract">
 <p class="admonition-title">Objective</p>
 <ul>
-<li>Combine previous tutorials and Cosmo Tech Simulator to be able to apply changes to a simulation instance</li>
+<li>Combine previous tutorials and Cosmo Tech Simulator to be able to apply changes to a simulation instance.</li>
 </ul>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Prerequisites</p>
 <ul>
-<li>You need to have completed the "Brewery" onboarding for Cosmo Tech projects</li>
-<li>You need a local version of the "Brewery" solution (full code available <a href="https://github.com/Cosmo-Tech/onboarding-brewery-solution">here</a>)</li>
+<li>You need to have completed the "Brewery" onboarding for Cosmo Tech projects.</li>
+<li>You need a local version of the "Brewery" solution (full code available <a href="https://github.com/Cosmo-Tech/onboarding-brewery-solution">here</a>).</li>
 </ul>
 </div>
 <div class="admonition warning">
@@ -1320,13 +1320,13 @@ the higher the satisfaction, the higher the chance of becoming thirsty,
 and the longer a customer is left thirsty, the lower the satisfaction. 
 Satisfaction increases when a customer is served. 
 Satisfaction is also affected by the satisfaction of surrounding customers.</p>
-<p>For this tutorial we will write our new files in the folder <code>MyBrewery/code/run_templates/orchestrator_tutorial_1</code> (this folder hierarchy will be used in future tutorials too)</p>
+<p>For this tutorial we will write our new files in the folder <code>MyBrewery/code/run_templates/orchestrator_tutorial_1</code> (this folder hierarchy will be used in future tutorials too).</p>
 <h2 id="define-a-set-of-parameters-to-apply">Define a set of parameters to apply<a class="headerlink" href="#define-a-set-of-parameters-to-apply" title="Permanent link">&para;</a></h2>
 <p>In our simulation we will want to see the effects of variations on the Bar attributes.</p>
-<p>Our existing CSV based simulations look for 3 attributes to instantiate a Bar :</p>
+<p>Our existing CSV based simulations look for 3 attributes to instantiate a Bar:</p>
 <ul>
 <li><code>NbWaiters</code>: the number of waiters in our Bar</li>
-<li><code>RestockQty</code>: the quantity of elements to restock when getting bellow the threshold</li>
+<li><code>RestockQty</code>: the quantity of elements to restock when getting below the threshold</li>
 <li><code>Stock</code>: the Bar initial stock</li>
 </ul>
 <p>We will then use those 3 attributes as parameters for our simulations.</p>
@@ -1351,23 +1351,23 @@ Satisfaction is also affected by the satisfaction of surrounding customers.</p>
 <p>In prevision of future use, we will define a json format close to the one returned by the command:<br />
 <div class="highlight"><pre><span></span><code>csm-orc<span class="w"> </span>fetch-scenariorun-data
 </code></pre></div>
-This command will be used later to download data from the Cosmo Tech API</p>
+This command will be used later to download data from the Cosmo Tech API.</p>
 </details>
 <h2 id="apply-our-parameters">Apply our parameters<a class="headerlink" href="#apply-our-parameters" title="Permanent link">&para;</a></h2>
 <p>Having defined our 3 parameters we can now work on a script to apply those to update a given dataset</p>
-<p>Our script will consist of 3 steps :</p>
+<p>Our script will consist of 3 steps:</p>
 <ul>
 <li>Read the original dataset</li>
 <li>Apply our parameters to the dataset</li>
 <li>Write the new dataset in a given folder</li>
 </ul>
-<p>We will need 3 parameters for the script :</p>
+<p>We will need 3 parameters for the script:</p>
 <ul>
 <li>The path to our original dataset</li>
 <li>The path to our parameter file</li>
 <li>The path where we want to write our new dataset</li>
 </ul>
-<p>Using those information we can write a simple script :</p>
+<p>Using those information we can write a simple script:</p>
 <div class="highlight"><span class="filename">code/run_templates/orchestrator_tutorial_1/apply_parameters.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">pathlib</span>
@@ -1447,37 +1447,38 @@ cat<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/scenarioru
 </code></pre></div>
 <p>We can see that having run the script our <code>Bar.csv</code> got correctly updated with our parameters.</p>
 <h2 id="run-a-simulation-with-our-updated-parameters">Run a simulation with our updated parameters<a class="headerlink" href="#run-a-simulation-with-our-updated-parameters" title="Permanent link">&para;</a></h2>
-<p>A limitation on the CoSML Language locks the folder used by a simulation to load datasets from. 
-In the existing model the file <code>Simulation/Resource/CSV_Brewery.ist.xml</code> set this folder to <code>Simulation/Resource/scenariorun-data</code>.
+<p>A limitation on the CoSML language locks the folder used by a simulation to load datasets from. 
+In the existing model the file <code>Simulation/Resource/CSV_Brewery.ist.xml</code> sets this folder to <code>Simulation/Resource/scenariorun-data</code>.
 We will have to use that folder to give the simulator access to our dataset.</p>
 <details class="info">
 <summary>About <code>Simulation/Resource/scenariorun-data</code></summary>
-<p>The folder <code>Simulation/Resource/scenariorun-data</code> is a special folder in docker containers, 
-it is replaced by a symbolic link to the path <code>/mnt/scenariorun-data</code> 
-which is in an environment variable called <code>CSM_DATASET_ABSOLUTE_PATH</code></p>
+<p>The folder <code>Simulation/Resource/scenariorun-data</code> is a special folder:
+in Cosmo Tech cloud platform (where solutions are packaged as Docker containers), 
+this folder is replaced by a symbolic link to the path <code>/mnt/scenariorun-data</code> 
+which is in an environment variable called <code>CSM_DATASET_ABSOLUTE_PATH</code>.</p>
 <p>We then know that the content of this folder will not be available in a container as is, 
 and need to keep that in mind for future uses.</p>
 </details>
 <p>For simplicity, we won't be making an effort to keep the old values of possibly existing datasets and will overwrite the content instead.</p>
 <p>It will be attained by using our <code>apply_parameters.py</code> on the same input and output folder (here <code>Simulation/Resource/scenariorun-data</code>)</p>
-<p>A safer way would be to make a back-up of the dataset and to restore it after the run, but we won't go over this possibility in this tutorial</p>
-<p>To run the simulator we can either make use of <code>csmcli</code>, the <code>Main</code> or <code>csm-orc run-step</code>, we will only cover the <code>csm-orc</code> use in this tutorial.</p>
-<p>We started writing our code in the folder <code>code/run_templates/orchestrator_tutorial_1</code> it allows the use of a Run Template called <code>orchestrator_tutorial_1</code> in commands</p>
-<p>The simulator run can be done by using some configurations of the <code>csm-orc run-step</code> :</p>
+<p>A safer way would be to make a back-up of the dataset and to restore it after the run, but we won't go over this possibility in this tutorial.</p>
+<p>To run the simulator we can either make use of <code>csmcli</code>, the <code>main</code> executable or <code>csm-orc run-step</code>; we will only cover the <code>csm-orc</code> use in this tutorial.</p>
+<p>By writing our code in the folder <code>code/run_templates/orchestrator_tutorial_1</code> we declared a Run Template named <code>orchestrator_tutorial_1</code> that we can call in <code>csm-orc</code> commands.</p>
+<p>The simulator run can be configured by using some options of the <code>csm-orc run-step</code> command:</p>
 <ul>
-<li><code>--template orchestrator_tutorial_1</code> is necesary to target a template (dependency for non simulator run steps)</li>
-<li><code>--steps engine</code> will look for either a file <code>engine/main.py</code> or if it is not found and the environment varaible <code>CSM_SIMULATION</code> is set will try to run the simulator</li>
+<li><code>--template orchestrator_tutorial_1</code> is necessary to target a run template (dependency for non-simulator run steps)</li>
+<li><code>--steps engine</code> will either look for a file <code>engine/main.py</code> in target run template or (if not found and the environment variable <code>CSM_SIMULATION</code> is set) try to run the simulator using a CoSML simulation file.</li>
 </ul>
-<p>So the following command will run our <code>CSV_Simulation</code> defined by the <code>Simulation/CSV_Simulation.sml.xml</code></p>
+<p>So the following command will run our <code>CSV_Simulation</code> defined by the <code>Simulation/CSV_Simulation.sml.xml</code>:</p>
 <div class="highlight"><span class="filename">run CSV_Simulation using csm-orc</span><pre><span></span><code><span class="nv">CSM_SIMULATION</span><span class="o">=</span>CSV_Simulation<span class="w"> </span>csm-orc<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>orchestrator_tutorial_1<span class="w"> </span>--steps<span class="w"> </span>engine
 </code></pre></div>
-<p>Since we did nont update our dataset files in place of the original we will get our base results.</p>
-<p>Now we can simply run both commands to update our dataset and run the updated simulation</p>
+<p>Since we did not update our dataset files in place of the original ones (only the <code>engine</code> step was executed) we will get our usual simulation results.</p>
+<p>Now we can simply run both commands to update our dataset then run the updated simulation:</p>
 <div class="highlight"><span class="filename">Apply parameters and run simulation</span><pre><span></span><code>python<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/apply_parameters.py<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/parameters.json
 <span class="nv">CSM_SIMULATION</span><span class="o">=</span>CSV_Simulation<span class="w"> </span>csm-orc<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>ochestrator_tutorial_1<span class="w"> </span>--steps<span class="w"> </span>engine<span class="w"> </span>
 </code></pre></div>
-<p>A different set of graphics should appear this time, corresponding to our updated dataset</p>
-<p>Now we can write our <code>run.json</code> file to run those step in a single command</p>
+<p>A different set of charts should appear this time, corresponding to our updated dataset values..</p>
+<p>Now we can write our <code>run.json</code> file to run those step in a single command.</p>
 <div class="highlight"><span class="filename">core/run_templates/orchestrator_tutorial_1/run.json</span><pre><span></span><code><span class="o">{</span>
 <span class="w">  </span><span class="s2">&quot;steps&quot;</span>:<span class="w"> </span><span class="o">[</span>
 <span class="w">    </span><span class="o">{</span>
@@ -1524,11 +1525,11 @@ and need to keep that in mind for future uses.</p>
 <span class="w">  </span><span class="o">]</span>
 <span class="o">}</span>
 </code></pre></div>
-<p>Now that we have this <code>run.json</code> file we can run it
+<p>Now that we have this <code>run.json</code> file we can run it:
 <div class="highlight"><span class="filename">run run.json</span><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/run.json
 </code></pre></div></p>
-<p>And we are done ! Our first simulation based on our parameters file ran in a single command :)</p>
-<p>You can now do the next tutorial : "csm-orc and Docker based Simulator"</p>
+<p>And we are done! Our first simulation based on our parameters file ran in a single command. :)</p>
+<p>You can now do the next tutorial: "Make a Cosmo Tech Simulator cloud-ready".</p>
 
 
 
