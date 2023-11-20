@@ -66,4 +66,18 @@ Download and run an orchestrator file stored inside a distant git repository
 </div>
 </article>
 
+<article markdown>
+<div class="text" markdown>
+:material-docker: __Minimal docker project__
+
+---
+Generate a minimal `docker` image that can be sent to be run in a Cosmo Tech API
+
+---
+<footer markdown>
+[:octicons-arrow-right-24: Minimal docker project](./minimal_docker.md)
+</footer>
+</div>
+</article>
+
 </main>

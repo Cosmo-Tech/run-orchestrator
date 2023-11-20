@@ -56,12 +56,13 @@ nav:
       - "tutorial/configuration_and_environment.md"
       - "tutorial/cosmotech_simulator.md"
       - "tutorial/advanced_cosmotech_simulator.md"
-  - Templates:
-      - "templates_commands/index.md"
-      - "templates_commands/simple_simulation_run.md"
-      - "templates_commands/simple_script_run.md"
-      - "templates_commands/legacy_run.md"
-      - "templates_commands/git_run.md"
+  - Examples:
+      - "examples/index.md"
+      - "examples/simple_simulation_run.md"
+      - "examples/simple_script_run.md"
+      - "examples/legacy_run.md"
+      - "examples/git_run.md"
+      - "examples/minimal_docker.md"
   - Semantic Validator: "Validator.md"
   - Commands:
       - Orchestrator: "commands/orchestrator.md"
@@ -128,5 +129,4 @@ plugins:
 watch:
   - examples
   - partials
-  - templates
   - tutorial

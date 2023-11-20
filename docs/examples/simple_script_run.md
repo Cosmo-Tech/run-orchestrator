@@ -1,12 +1,12 @@
 ---
-description: Simple script template file
+description: Simple script example file
 ---
 
 # Simple Script Run
 
 ## Description
 
-This simple template runs a script called `my_script.py`.
+This simple example runs a script called `my_script.py`.
 
 ## Example call
 
@@ -21,5 +21,5 @@ csm-orc run run.json
 ## Template
 
 ```json title="run.json" linenums="1"
---8<-- "templates/SimplePythonScript.json"
+--8<-- "examples/SimplePythonScript.json"
 ```

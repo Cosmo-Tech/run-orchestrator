@@ -1,0 +1,12 @@
+{
+  "steps": [
+    {
+      "id": "MAIN",
+      "command": "python",
+      "description": "Run a simple python script",
+      "arguments": [
+        "code/main.py"
+      ]
+    }
+  ]
+}
