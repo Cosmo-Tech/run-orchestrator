@@ -2,7 +2,7 @@
 description: Minimal project for a docker image compatible with the Cosmo Tech API
 ---
 
-# Minimal dockerproject
+# Minimal docker project
 
 ## Description
 
