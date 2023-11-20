@@ -23,4 +23,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-      - run: mike deploy --push --update-aliases ${{ steps.version.outputs.version }} latest
+      - name: Build the latest documentation version
+        run: mike deploy ${{ steps.version.outputs.version }}
+      - name: Set the default documentation to the last version
+        run: mike deploy --push --update-aliases ${{ steps.version.outputs.version }} latest
