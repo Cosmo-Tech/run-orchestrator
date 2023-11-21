@@ -4,9 +4,9 @@ hide:
   - toc
   - navigation
 ---
-# Templates
+# Example
 
-A list of templates for the main usages you could have with `csm-orc run`.
+A list of examples for the main usages you could have with `csm-orc run`.
 
 <main class="grid" markdown>
 
