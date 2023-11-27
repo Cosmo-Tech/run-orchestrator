@@ -12,7 +12,7 @@ from dataclasses import field
 
 @dataclass
 class EnvironmentVariable:
-    name: str = field()
+    name: str = field(repr=False)
     defaultValue: str = field(default=None)
     value: str = field(default=None)
     description: str = field(default=None)

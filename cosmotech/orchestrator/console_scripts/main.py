@@ -16,6 +16,7 @@ from cosmotech.orchestrator.console_scripts.run import main as run_cmd
 from cosmotech.orchestrator.console_scripts.parameters_generation import main as parameters_cmd
 from cosmotech.orchestrator.console_scripts.run_step import main as run_step_cmd
 from cosmotech.orchestrator.console_scripts.scenario_data_downloader import main as scenario_dl_cmd
+from cosmotech.orchestrator.console_scripts.templates_listing import main as tpl_listing
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
@@ -55,6 +56,7 @@ main.add_command(run_cmd, "run")
 main.add_command(parameters_cmd, "init-parameters")
 main.add_command(run_step_cmd, "run-step")
 main.add_command(scenario_dl_cmd, "fetch-scenariorun-data")
+main.add_command(tpl_listing, "list-templates")
 
 if __name__ == "__main__":
     main()
