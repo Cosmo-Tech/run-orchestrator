@@ -20,6 +20,7 @@ class CommandTemplate:
     arguments: list[str] = field(default_factory=list)
     environment: dict[str, Union[EnvironmentVariable, dict]] = field(default_factory=dict)
     useSystemEnvironment: bool = field(default=False)
+    sourcePlugin: str = field(default=None, repr=False)
 
     def __post_init__(self):
         tmp_env = dict()
@@ -36,7 +37,7 @@ class CommandTemplate:
         if self.arguments:
             r["arguments"] = self.arguments
         if self.environment:
-            r["environment"] = self.environment
+            r["environment"] = {k: v.serialize() for k, v in self.environment.items()}
         if self.description:
             r["description"] = self.description
         if self.useSystemEnvironment:
