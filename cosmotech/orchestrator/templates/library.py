@@ -2,9 +2,9 @@ import importlib
 import os
 import pathlib
 import pkgutil
+import pprint
 import sys
 from typing import Optional
-import pprint
 
 import cosmotech.orchestrator_templates
 from cosmotech.orchestrator.core.command_template import CommandTemplate
@@ -18,23 +18,29 @@ class Library:
     __plugins = None
 
     def display_library(self, log_function=LOGGER.info, verbose=False):
-        current_plugin = None
-        for _template in self.templates:
-            if _template.sourcePlugin != current_plugin:
-                current_plugin = _template.sourcePlugin
-                log_function(f"Templates from '{current_plugin}':")
-            self.display_template(_template.id, log_function=log_function, verbose=verbose)
+        log_function("Library content:")
+        for _plugin_name, _plugin in self.__plugins.items():
+            log_function(f"Templates from '{_plugin_name}':")
+            for _template in _plugin.templates.values():
+                if _template in self.__templates.values():
+                    self.display_template(_template, log_function=log_function, verbose=verbose)
+                else:
+                    log_function(f"- '{_template.id}': [red]OVERRIDEN[/]")
 
-    def display_template(self, template_id, log_function=LOGGER.info, verbose=False):
+    @staticmethod
+    def display_template(template, log_function=LOGGER.info, verbose=False):
+        if verbose:
+            log_function(pprint.pformat(template, width=os.get_terminal_size().columns))
+        else:
+            _desc = f": '{template.description}'" if template.description else ""
+            log_function(f"- '{template.id}'{_desc}")
+
+    def display_template_by_id(self, template_id, log_function=LOGGER.info, verbose=False):
         tpl = self.find_template_by_name(template_id=template_id)
         if tpl is None:
             log_function(f"{template_id} is not a valid template id")
             return
-        if verbose:
-            log_function(pprint.pformat(tpl, width=os.get_terminal_size().columns))
-        else:
-            _desc = f": '{tpl.description}'" if tpl.description else ""
-            log_function(f"- '{tpl.id}'{_desc}")
+        self.display_template(tpl, log_function=LOGGER.info, verbose=verbose)
 
     @property
     def templates(self) -> list[CommandTemplate]:

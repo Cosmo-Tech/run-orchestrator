@@ -60,6 +60,6 @@ def main(templates, verbose):
         return
     if templates:
         for temp in templates:
-            l.display_template(temp, log_function=LOGGER.info, verbose=True)
+            l.display_template_by_id(temp, log_function=LOGGER.info, verbose=True)
     else:
         l.display_library(log_function=LOGGER.info, verbose=verbose)
