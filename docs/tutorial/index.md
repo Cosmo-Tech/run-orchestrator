@@ -66,4 +66,19 @@ A more in depth use of the orchestrator in conjunction with a Cosmo Tech Simulat
 </div>
 </article>
 
+<article markdown>
+<div class="text" markdown>
+:material-library: __Plugins and Command Templates__
+
+---
+A deep dive into the Library and Plugins concepts
+--8<-- "partials/misc/new_1.2.0.md"
+
+---
+<footer markdown>
+[:octicons-arrow-right-24: Plugins and Command Templates](./plugins_and_templates.md)
+</footer>
+</div>
+</article>
+
 </main>
