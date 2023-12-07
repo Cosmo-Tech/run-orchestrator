@@ -14,35 +14,26 @@ import jsonschema
 from cosmotech.orchestrator.core.command_template import CommandTemplate
 from cosmotech.orchestrator.core.runner import Runner
 from cosmotech.orchestrator.core.step import Step
+from cosmotech.orchestrator.templates.plugin import Plugin
 from cosmotech.orchestrator.utils.logger import LOGGER
 from cosmotech.orchestrator.utils.singleton import Singleton
+from cosmotech.orchestrator.templates.library import Library
 
 
 class Orchestrator(metaclass=Singleton):
 
+    def __init__(self):
+        self.library = Library()
+
     @staticmethod
-    def __load_item(container, object_type, override, type_msg, **item):
-        _id = item.get('id')
-        LOGGER.debug(f"Loading [green bold]{_id}[/] of type [yellow bold]{object_type.__name__}[/]")
+    def load_step(container, override: bool = False, **step) -> Step:
+        _id = step.get('id')
+        LOGGER.debug(f"Loading [green bold]{_id}[/] of type [yellow bold]Step[/]")
         if _id in container and not override:
-            raise ValueError(f"{type_msg} {_id} is already defined")
-        _item = object_type(**item)
+            raise ValueError(f"Step {_id} is already defined")
+        _item = Step(**step)
         container[_id] = _item
         return _item
-
-    def load_command(self, container, override: bool = False, **command) -> CommandTemplate:
-        return self.__load_item(container=container,
-                                object_type=CommandTemplate,
-                                override=override,
-                                type_msg="Command Template",
-                                **command)
-
-    def load_step(self, container, override: bool = False, **step) -> Step:
-        return self.__load_item(container=container,
-                                object_type=Step,
-                                override=override,
-                                type_msg="Step",
-                                **step)
 
     def load_json_file(
         self, json_file_path,
@@ -72,16 +63,22 @@ class Orchestrator(metaclass=Singleton):
         g = flowpipe.Graph(name=json_file_path)
         steps: dict[str, (Step, flowpipe.Node)] = dict()
         commands: dict[str, CommandTemplate] = dict()
+        plugin = Plugin(json_file_path)
+        plugin.name = json_file_path
         for tmpl in _run_content.get("commandTemplates", list()):
-            self.load_command(commands, **tmpl)
+            _template = plugin.register_template(tmpl)
+            if _template:
+                commands[_template.id] = _template
+        self.library.load_plugin(plugin)
         for step in _run_content.get("steps", list()):
-            id = step.get('id')
+            _id = step.get('id')
             s = self.load_step(steps, **step)
-            if id in skipped_steps:
+            if _id in skipped_steps:
                 s.skipped = True
-            s.load_command(commands)
-            node = Runner(graph=g, name=id, step=s, dry_run=dry)
-            steps[id] = (s, node)
+            node = Runner(graph=g, name=_id, step=s, dry_run=dry)
+            steps[_id] = (s, node)
+        LOGGER.debug("Available templates:")
+        self.library.display_library(log_function=LOGGER.debug, verbose=False)
         missing_env = dict()
         for _step, _node in steps.values():
             if _step.precedents:

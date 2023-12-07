@@ -15,14 +15,14 @@ class Plugin:
         template.sourcePlugin = self.name
         self.templates[template_name] = template
 
-    def register_template(self, json_template: str):
+    def register_template(self, template_as_dict: dict):
         try:
-            _template = CommandTemplate(**(json.loads(json_template)))
+            _template = CommandTemplate(**template_as_dict)
             _template_name = _template.id
             self.__register_template(_template_name, _template)
         except ValueError:
             return False
-        return True
+        return _template
 
     def load_folder(self, plugin_folder: pathlib.Path):
         count = 0
@@ -51,5 +51,4 @@ class Plugin:
                                 count += _read(_template_dict)
                         else:
                             count += _read(_file_content)
-
         return count
