@@ -5,20 +5,19 @@
 # etc., to any person is prohibited unless it has been previously and
 # specifically authorized by written means by Cosmo Tech.
 
+import os
 import pathlib
 import subprocess
 import sys
+import tempfile
 from dataclasses import dataclass
 from dataclasses import field
-import tempfile
 from typing import Union
-
-import os
 
 from cosmotech.orchestrator.core.command_template import CommandTemplate
 from cosmotech.orchestrator.core.environment import EnvironmentVariable
-from cosmotech.orchestrator.utils.logger import LOGGER
 from cosmotech.orchestrator.templates.library import Library
+from cosmotech.orchestrator.utils.logger import LOGGER
 
 
 @dataclass

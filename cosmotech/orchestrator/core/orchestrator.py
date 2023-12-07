@@ -14,10 +14,10 @@ import jsonschema
 from cosmotech.orchestrator.core.command_template import CommandTemplate
 from cosmotech.orchestrator.core.runner import Runner
 from cosmotech.orchestrator.core.step import Step
+from cosmotech.orchestrator.templates.library import Library
 from cosmotech.orchestrator.templates.plugin import Plugin
 from cosmotech.orchestrator.utils.logger import LOGGER
 from cosmotech.orchestrator.utils.singleton import Singleton
-from cosmotech.orchestrator.templates.library import Library
 
 
 class Orchestrator(metaclass=Singleton):
@@ -70,6 +70,7 @@ class Orchestrator(metaclass=Singleton):
             if _template:
                 commands[_template.id] = _template
         self.library.load_plugin(plugin)
+        self.library.display_library(log_function=LOGGER.debug, verbose=False)
         for step in _run_content.get("steps", list()):
             _id = step.get('id')
             s = self.load_step(steps, **step)
@@ -77,8 +78,6 @@ class Orchestrator(metaclass=Singleton):
                 s.skipped = True
             node = Runner(graph=g, name=_id, step=s, dry_run=dry)
             steps[_id] = (s, node)
-        LOGGER.debug("Available templates:")
-        self.library.display_library(log_function=LOGGER.debug, verbose=False)
         missing_env = dict()
         for _step, _node in steps.values():
             if _step.precedents:
