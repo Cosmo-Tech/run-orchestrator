@@ -1,6 +1,8 @@
 import importlib
+import os
 import pathlib
 import pkgutil
+import sys
 from typing import Optional
 
 import cosmotech.orchestrator_templates
@@ -46,6 +48,8 @@ class Library:
 
     def __new__(cls, *args, **kwargs):
         if cls.__instance is None:
+            if os.getcwd() not in sys.path:
+                sys.path.append(os.getcwd())
             cls.__instance = object.__new__(cls)
             cls.__instance.reload()
         return cls.__instance
