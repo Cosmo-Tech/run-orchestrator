@@ -1,7 +1,7 @@
-from cosmotech.orchestrator.core.command_template import CommandTemplate
 import json
 import pathlib
-import typing
+
+from cosmotech.orchestrator.core.command_template import CommandTemplate
 
 
 class Plugin:
@@ -36,15 +36,20 @@ class Plugin:
                     finally:
                         if not isinstance(_file_content, dict):
                             continue
-                        _templates = _file_content.get("commandTemplates", [])
-                        for _template_dict in _templates:
+
+                        def _read(_template_as_dict):
                             try:
-                                _template = CommandTemplate(**_template_dict)
+                                _template = CommandTemplate(**_template_as_dict)
                             except ValueError:
-                                pass
-                            finally:
-                                _template_name = _template.id
-                                self.__register_template(_template_name, _template)
-                                count += 1
+                                return 0
+                            _template_name = _template.id
+                            self.__register_template(_template_name, _template)
+                            return 1
+
+                        if _templates := _file_content.get("commandTemplates", []):
+                            for _template_dict in _templates:
+                                count += _read(_template_dict)
+                        else:
+                            count += _read(_file_content)
 
         return count
