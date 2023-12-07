@@ -1,0 +1,12 @@
+{
+  "commandTemplates": [
+    {
+      "id": "Example1",
+      "command": "echo"
+    },
+    {
+      "id": "Example2",
+      "command": "ls"
+    }
+  ]
+}
