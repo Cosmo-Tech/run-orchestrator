@@ -60,14 +60,6 @@ def main(templates, verbose):
         return
     if templates:
         for temp in templates:
-            if _template := l.find_template_by_name(temp):
-                display_template(_template, verbose=True)
-            else:
-                LOGGER.error(f"{temp} is not a valid template id")
+            l.display_template(temp, log_function=LOGGER.info, verbose=True)
     else:
-        current_plugin = None
-        for _template in l.templates:
-            if _template.sourcePlugin != current_plugin:
-                current_plugin = _template.sourcePlugin
-                LOGGER.info(f"Templates from '{current_plugin}':")
-            display_template(_template, verbose=verbose)
+        l.display_library(log_function=LOGGER.info, verbose=verbose)

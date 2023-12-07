@@ -18,6 +18,7 @@ import os
 from cosmotech.orchestrator.core.command_template import CommandTemplate
 from cosmotech.orchestrator.core.environment import EnvironmentVariable
 from cosmotech.orchestrator.utils.logger import LOGGER
+from cosmotech.orchestrator.templates.library import Library
 
 
 @dataclass
@@ -34,15 +35,16 @@ class Step:
     status = None
     skipped = False
 
-    def load_command(self, available_commands):
+    def __load_command_from_library(self):
+        library = Library()
         if not self.commandId or self.loaded:
             LOGGER.debug(f"[green bold]{self.id}[/] already ready")
             return
-        if self.commandId not in available_commands:
+        command: CommandTemplate = library.find_template_by_name(self.commandId)
+        if command is None:
             self.status = "Error"
             LOGGER.error(f"[green bold]{self.id}[/] asks for a non existing template [cyan bold]{self.commandId}[/]")
             raise ValueError(f"Command Template {self.commandId} is not available")
-        command: CommandTemplate = available_commands[self.commandId]
         LOGGER.debug(f"[green bold]{self.id}[/] loads template [cyan bold]{self.commandId}[/]")
         self.command = command.command
         self.arguments = command.arguments[:] + self.arguments
@@ -59,13 +61,14 @@ class Step:
         if not bool(self.command) ^ bool(self.commandId):
             self.status = "Error"
             raise ValueError("A step requires either a command or a commandId")
-        if self.command:
-            self.loaded = True
         tmp_env = dict()
         for k, v in self.environment.items():
             tmp_env[k] = EnvironmentVariable(k, **v)
         self.environment = tmp_env
         self.status = "Init"
+        if self.commandId:
+            self.__load_command_from_library()
+        self.loaded = True
 
     def serialize(self):
         r = {
