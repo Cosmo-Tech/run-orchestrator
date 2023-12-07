@@ -17,12 +17,13 @@ from cosmotech.orchestrator.console_scripts.download_cloud_steps import main as 
 from cosmotech.orchestrator.console_scripts.legacy_json_generator import cloud as legacy_gen_command_cloud
 from cosmotech.orchestrator.console_scripts.legacy_json_generator import main as legacy_gen_command
 from cosmotech.orchestrator.console_scripts.legacy_json_generator import solution as legacy_gen_command_sol
-from cosmotech.orchestrator.console_scripts.run import main as orchestrator_run_command
 from cosmotech.orchestrator.console_scripts.parameters_generation import cloud as parameters_generation_command_cloud
 from cosmotech.orchestrator.console_scripts.parameters_generation import main as parameters_generation_command
 from cosmotech.orchestrator.console_scripts.parameters_generation import solution as parameters_generation_command_sol
+from cosmotech.orchestrator.console_scripts.run import main as orchestrator_run_command
 from cosmotech.orchestrator.console_scripts.run_step import main as run_step_command
 from cosmotech.orchestrator.console_scripts.scenario_data_downloader import main as scenario_data_dl_command
+from cosmotech.orchestrator.console_scripts.templates_listing import main as list_tpl_command
 
 ansi_escape = re.compile(r'(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]')
 commands = {
@@ -36,7 +37,8 @@ commands = {
     "csm-orc gen-from-legacy cloud": legacy_gen_command_cloud,
     "csm-orc init-parameters": parameters_generation_command,
     "csm-orc init-parameters solution": parameters_generation_command_sol,
-    "csm-orc init-parameters cloud": parameters_generation_command_cloud
+    "csm-orc init-parameters cloud": parameters_generation_command_cloud,
+    "csm-orc list-templates": list_tpl_command,
 }
 help_folder = pathlib.Path("generated/commands_help")
 help_folder.mkdir(parents=True, exist_ok=True)
