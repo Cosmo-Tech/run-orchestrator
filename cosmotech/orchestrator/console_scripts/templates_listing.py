@@ -11,6 +11,7 @@ import pprint
 
 from rich.logging import RichHandler
 
+from cosmotech.orchestrator.core.orchestrator import FileLoader
 from cosmotech.orchestrator.templates.library import Library
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import web_help
@@ -34,14 +35,19 @@ def display_template(template, verbose=False):
               multiple=True,
               default=[],
               type=str,
-              help="A list of templates id to check for")
+              help="A template id to check for, can be used multiple times")
+@click.option("-f",
+              "--file",
+              "orchestration_file",
+              type=click.Path(exists=True, file_okay=True, dir_okay=False, readable=True),
+              help="An orchestration file to add to the library")
 @click.option("-v",
               "--verbose",
               is_flag=True,
               default=False,
               help="Display full information on the resulting templates")
 @web_help("commands/list_templates")
-def main(templates, verbose):
+def main(templates, orchestration_file, verbose):
     """Show a list of pre-available command templates"""
     logging.basicConfig(
         format=_format,
@@ -54,6 +60,8 @@ def main(templates, verbose):
                               show_level=False,
                               markup=True)])
     LOGGER.setLevel(logging.INFO)
+    if orchestration_file:
+        FileLoader(orchestration_file)()
     l = Library()
     if not l.templates:
         LOGGER.warning("There is no available template to display")

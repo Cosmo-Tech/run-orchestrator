@@ -8,11 +8,11 @@
 import pathlib
 from typing import Optional
 
+from cosmotech.orchestrator import VERSION
 from cosmotech.orchestrator.core.orchestrator import Orchestrator
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
-from cosmotech.orchestrator import VERSION
 
 
 @click.command()
@@ -53,15 +53,15 @@ from cosmotech.orchestrator import VERSION
 def main(
     template: str, dry_run: bool, display_env: bool, gen_env_target: Optional[str], skipped_steps: list[str],
     validate_only: bool
-    ):
+):
     """Runs the given `TEMPLATE` file  
 Commands are run as subprocess using `bash -c "<command> <arguments>"`.  
 In case you are in a python venv, the venv is activated before any command is run."""
     LOGGER.info(f"Starting run orchestrator version {VERSION}")
     f = Orchestrator()
     try:
-        c, s, g = f.load_json_file(template, dry_run, display_env, skipped_steps, validate_only,
-                                   gen_env_target is not None)
+        s, g = f.load_json_file(template, dry_run, display_env, skipped_steps, validate_only,
+                                gen_env_target is not None)
     except ValueError as e:
         LOGGER.error(e)
     else:
