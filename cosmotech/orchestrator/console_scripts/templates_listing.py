@@ -42,6 +42,7 @@ def display_template(template, verbose=False):
               help="Display full information on the resulting templates")
 @web_help("commands/list_templates")
 def main(templates, verbose):
+    """Show a list of pre-available command templates"""
     logging.basicConfig(
         format=_format,
         force=True,

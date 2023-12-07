@@ -65,7 +65,9 @@ nav:
       - "examples/minimal_docker.md"
   - Semantic Validator: "Validator.md"
   - Commands:
-      - Orchestrator: "commands/orchestrator.md"
+      - Orchestrator: 
+        - "commands/orchestrator.md"
+        - "commands/list_templates.md"
       - Legacy help:
         - "commands/scenario_data_downloader.md"
         - "commands/download_cloud_steps.md"
