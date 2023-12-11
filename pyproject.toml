@@ -30,7 +30,7 @@ zip-safe = false
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["cosmotech*"]
+include = ["cosmotech.*"]
 
 [tool.setuptools.dynamic]
 version.attr = "cosmotech.orchestrator.VERSION"
