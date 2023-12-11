@@ -6,7 +6,7 @@ import pprint
 import sys
 from typing import Optional
 
-import cosmotech.orchestrator_templates
+import cosmotech.orchestrator_plugins
 from cosmotech.orchestrator.core.command_template import CommandTemplate
 from cosmotech.orchestrator.templates.plugin import Plugin
 from cosmotech.orchestrator.utils.logger import LOGGER
@@ -71,8 +71,8 @@ class Library:
         self.__templates = dict()
         self.__plugins = dict()
 
-        for finder, name, _ in pkgutil.iter_modules(cosmotech.orchestrator_templates.__path__,
-                                                    cosmotech.orchestrator_templates.__name__ + "."):
+        for finder, name, _ in pkgutil.iter_modules(cosmotech.orchestrator_plugins.__path__,
+                                                    cosmotech.orchestrator_plugins.__name__ + "."):
             _mod = importlib.import_module(name)
             if "plugin" in _mod.__dict__:
                 _plug: Plugin = _mod.plugin

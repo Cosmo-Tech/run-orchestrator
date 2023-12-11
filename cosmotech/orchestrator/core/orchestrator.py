@@ -41,7 +41,7 @@ class FileLoader:
         schema_path = pathlib.Path(__file__).parent.parent / "schema/run_template_json_schema.json"
         schema = json.load(open(schema_path))
         jsonschema.validate(_run_content, schema)
-        steps: dict[str, (Step, flowpipe.Node)] = dict()
+        steps: dict[str, Step] = dict()
         plugin = Plugin(self.file_path)
         plugin.name = self.file_path
         for tmpl in _run_content.get("commandTemplates", list()):

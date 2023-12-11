@@ -32,18 +32,18 @@ A `Plugin` needs the following structure
 ???+ experiment "A plugin structure"
     ```text
     cosmotech/
-    └── orchestrator_templates/
+    └── orchestrator_plugins/
         └── my_plugin
             ├── __init__.py
-            └── Templates
+            └── templates
                 └── ...
     ```
 
-```python title="cosmotech/orchestrator_templates/my_plugin/__init__.py"
+```python title="cosmotech/orchestrator_plugins/my_plugin/__init__.py"
 --8<-- "tutorial/plugins_and_templates/init.py"
 ```
 
-And in the `Templates` folder you can put any `.json` file containing either one single `CommandTemplate` 
+And in the `templates` folder you can put any `.json` file containing either one single `CommandTemplate` 
 or an orchestration file containing valid `CommandTemplate`
 
 === "json file containing a single `CommandTemplate`"
@@ -62,7 +62,7 @@ And that is all you need to create a `Plugin`.
 The `Library` make use of the `Implicit Namespace Packages` of `python` as defined by the [PEP-420](https://peps.python.org/pep-0420/).
 
 To summarize, we can define `Namespaces` that will be able to be filled across multiple `Packages` 
-and here we define the namespace `cosmotech.orchestrator_templates` to contain all future `Plugins`.
+and here we define the namespace `cosmotech.orchestrator_plugins` to contain all future `Plugins`.
 
 We can easily add our `Plugin` by making the `cosmotech/` folder part of the `PYTHONPATH`.
 
