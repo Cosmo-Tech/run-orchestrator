@@ -8,6 +8,8 @@
 import pathlib
 import re
 
+import mkdocs_gen_files
+
 from cosmotech.orchestrator.templates.library import Library
 
 ansi_escape = re.compile(r'(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]')
@@ -15,7 +17,5 @@ ansi_escape = re.compile(r'(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]')
 library = Library()
 
 for template in library.templates:
-    help_folder = pathlib.Path(f"docs/command_templates/{template.sourcePlugin}")
-    help_folder.mkdir(parents=True, exist_ok=True)
-    with open(f"docs/command_templates/{template.sourcePlugin}/{template.id}.md", "w") as _md_file:
+    with mkdocs_gen_files.open(f"command_templates/{template.sourcePlugin}/{template.id}.md", "w") as _md_file:
         _md_file.write(template.gen_doc())
