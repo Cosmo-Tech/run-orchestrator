@@ -43,3 +43,18 @@ class CommandTemplate:
         if self.useSystemEnvironment:
             r["useSystemEnvironment"] = self.useSystemEnvironment
         return r
+
+    def gen_doc(self):
+        env = "\n    ".join(e.name + "|" + (e.description or "None") for e in self.environment.values())
+        doc_page = f"""# {self.id}
+
+Description: {self.description or "None"}
+
+Command line: {self.command} {" ".join(self.arguments)}
+
+???+ info "Environment"
+    Variable Name | Description
+    ------------- | -----------
+    {env}
+"""
+        return doc_page
