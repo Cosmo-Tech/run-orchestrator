@@ -8,6 +8,7 @@ from zipfile import ZipFile
 
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.logger import LOGGER
+from cosmotech.orchestrator.utils import strtobool
 
 MODE_HANDLE_PARAMETERS = "handle-parameters"
 MODE_VALIDATE = "validate"
@@ -399,7 +400,7 @@ def main(legacy: bool):
     This command is used in CosmoTech docker containers only"""
     try:
         get_env()
-        if legacy:
+        if legacy or strtobool(os.getenv("CSM_ENTRYPOINT_LEGACY", "False")):
             logging.info("Phoenix Entry Point")
             run_entrypoint()
         else:
