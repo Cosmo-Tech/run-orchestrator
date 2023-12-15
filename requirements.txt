@@ -4,11 +4,11 @@ cosmotech-api==2.4.7
 
 # Orchestrator Dependencies
 flowpipe==0.10.1
-jsonschema==4.19.1
+jsonschema==4.20.0
 pyyaml==6.0.1
 
 # Command dependencies
 click==8.1.7
-rich-click==1.7.0
+rich-click==1.7.2
 click-log==0.4.0
-rich==13.6.0
+rich==13.7.0
