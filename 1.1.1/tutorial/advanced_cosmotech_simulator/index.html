@@ -10,6 +10,8 @@
       
       
       
+        <link rel="canonical" href="https://cosmo-tech.github.io/run-orchestrator/1.1.1/tutorial/advanced_cosmotech_simulator/">
+      
       
         <link rel="prev" href="../cosmotech_simulator/">
       
@@ -18,7 +20,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
     
     
       
@@ -26,10 +28,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.35e1ed30.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -65,7 +67,7 @@
       
         <meta  property="og:description"  content="Simple tutorial to convert a fully local Simulator to a cloud ready docker image" >
       
-        <meta  property="og:image"  content="./assets/images/social/tutorial/advanced_cosmotech_simulator.png" >
+        <meta  property="og:image"  content="https://cosmo-tech.github.io/run-orchestrator/1.1.1/assets/images/social/tutorial/advanced_cosmotech_simulator.png" >
       
         <meta  property="og:image:type"  content="image/png" >
       
@@ -73,7 +75,7 @@
       
         <meta  property="og:image:height"  content="630" >
       
-        <meta  property="og:url"  content="None" >
+        <meta  property="og:url"  content="https://cosmo-tech.github.io/run-orchestrator/1.1.1/tutorial/advanced_cosmotech_simulator/" >
       
         <meta  name="twitter:card"  content="summary_large_image" >
       
@@ -81,7 +83,7 @@
       
         <meta  name="twitter:description"  content="Simple tutorial to convert a fully local Simulator to a cloud ready docker image" >
       
-        <meta  name="twitter:image"  content="./assets/images/social/tutorial/advanced_cosmotech_simulator.png" >
+        <meta  name="twitter:image"  content="https://cosmo-tech.github.io/run-orchestrator/1.1.1/assets/images/social/tutorial/advanced_cosmotech_simulator.png" >
       
     
     
@@ -97,9 +99,6 @@
     
     <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="indigo">
   
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -159,9 +158,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
       </label>
     
@@ -169,15 +168,18 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="orange" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="orange" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
     
-      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
       </label>
     
   
 </form>
       
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -223,7 +225,7 @@
         <a href="https://github.com/Cosmo-Tech/run-orchestrator" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
   </div>
   <div class="md-source__repository">
     Cosmo-Tech/run-orchestrator
@@ -378,7 +380,7 @@
       <a href="https://github.com/Cosmo-Tech/run-orchestrator" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
   </div>
   <div class="md-source__repository">
     Cosmo-Tech/run-orchestrator
@@ -390,6 +392,7 @@
     
       
       
+  
   
   
   
@@ -454,6 +457,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../License/" class="md-nav__link">
         
@@ -471,6 +475,7 @@
             
               
                 
+  
   
   
   
@@ -501,6 +506,7 @@
   
   
     
+  
   
   
     
@@ -566,6 +572,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../getting_started/" class="md-nav__link">
         
@@ -583,6 +590,7 @@
             
               
                 
+  
   
   
   
@@ -606,6 +614,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../cosmotech_simulator/" class="md-nav__link">
         
@@ -626,6 +635,7 @@
   
   
     
+  
   
   
     <li class="md-nav__item md-nav__item--active">
@@ -676,49 +686,63 @@
       
         <li class="md-nav__item">
   <a href="#how-does-the-cosmo-tech-platform-runs-orchestration" class="md-nav__link">
-    How does the Cosmo Tech Platform runs orchestration?
+    <span class="md-ellipsis">
+      How does the Cosmo Tech Platform runs orchestration?
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#how-does-entrypointpy-works" class="md-nav__link">
-    How does entrypoint.py works?
+    <span class="md-ellipsis">
+      How does entrypoint.py works?
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#which-environment-variables-are-made-available-by-the-api" class="md-nav__link">
-    Which Environment Variables are made available by the API?
+    <span class="md-ellipsis">
+      Which Environment Variables are made available by the API?
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#connect-to-the-api-to-get-our-scenario-data" class="md-nav__link">
-    Connect to the API to get our Scenario data
+    <span class="md-ellipsis">
+      Connect to the API to get our Scenario data
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#combine-everything-in-a-run-template" class="md-nav__link">
-    Combine everything in a Run Template
+    <span class="md-ellipsis">
+      Combine everything in a Run Template
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#build-a-docker-image" class="md-nav__link">
-    Build a docker image
+    <span class="md-ellipsis">
+      Build a docker image
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#define-api-items" class="md-nav__link">
-    Define API items
+    <span class="md-ellipsis">
+      Define API items
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Define API items">
@@ -726,7 +750,9 @@
         
           <li class="md-nav__item">
   <a href="#define-a-solution" class="md-nav__link">
-    Define a Solution
+    <span class="md-ellipsis">
+      Define a Solution
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Define a Solution">
@@ -734,21 +760,27 @@
         
           <li class="md-nav__item">
   <a href="#solution-description" class="md-nav__link">
-    Solution description
+    <span class="md-ellipsis">
+      Solution description
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#parameters-and-parametergroups" class="md-nav__link">
-    parameters and parameterGroups
+    <span class="md-ellipsis">
+      parameters and parameterGroups
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#runtemplates" class="md-nav__link">
-    runTemplates
+    <span class="md-ellipsis">
+      runTemplates
+    </span>
   </a>
   
 </li>
@@ -760,21 +792,27 @@
         
           <li class="md-nav__item">
   <a href="#define-a-workspace" class="md-nav__link">
-    Define a Workspace
+    <span class="md-ellipsis">
+      Define a Workspace
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#define-a-dataset" class="md-nav__link">
-    Define a Dataset
+    <span class="md-ellipsis">
+      Define a Dataset
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#define-a-scenario" class="md-nav__link">
-    Define a Scenario
+    <span class="md-ellipsis">
+      Define a Scenario
+    </span>
   </a>
   
 </li>
@@ -786,14 +824,18 @@
       
         <li class="md-nav__item">
   <a href="#run-our-distant-scenario" class="md-nav__link">
-    Run our distant Scenario
+    <span class="md-ellipsis">
+      Run our distant Scenario
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#i-want-to-use-my-local-data-instead-of-needing-a-scenario" class="md-nav__link">
-    I want to use my local data instead of needing a Scenario
+    <span class="md-ellipsis">
+      I want to use my local data instead of needing a Scenario
+    </span>
   </a>
   
 </li>
@@ -816,6 +858,7 @@
     
       
       
+  
   
   
   
@@ -886,6 +929,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../examples/simple_simulation_run/" class="md-nav__link">
         
@@ -903,6 +947,7 @@
             
               
                 
+  
   
   
   
@@ -926,6 +971,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../examples/legacy_run/" class="md-nav__link">
         
@@ -946,6 +992,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../examples/git_run/" class="md-nav__link">
         
@@ -963,6 +1010,7 @@
             
               
                 
+  
   
   
   
@@ -993,6 +1041,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../Validator/" class="md-nav__link">
         
@@ -1009,6 +1058,7 @@
     
       
       
+  
   
   
   
@@ -1061,6 +1111,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../commands/orchestrator/" class="md-nav__link">
         
@@ -1078,6 +1129,7 @@
             
               
                 
+  
   
   
   
@@ -1131,6 +1183,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../commands/scenario_data_downloader/" class="md-nav__link">
         
@@ -1148,6 +1201,7 @@
             
               
                 
+  
   
   
   
@@ -1171,6 +1225,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../commands/run_step/" class="md-nav__link">
         
@@ -1191,6 +1246,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../../commands/simulation_to_adx/" class="md-nav__link">
         
@@ -1208,6 +1264,7 @@
             
               
                 
+  
   
   
   
@@ -1236,6 +1293,7 @@
             
               
                 
+  
   
   
   
@@ -1278,6 +1336,7 @@
             
               
                 
+  
   
   
   
@@ -1341,49 +1400,63 @@
       
         <li class="md-nav__item">
   <a href="#how-does-the-cosmo-tech-platform-runs-orchestration" class="md-nav__link">
-    How does the Cosmo Tech Platform runs orchestration?
+    <span class="md-ellipsis">
+      How does the Cosmo Tech Platform runs orchestration?
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#how-does-entrypointpy-works" class="md-nav__link">
-    How does entrypoint.py works?
+    <span class="md-ellipsis">
+      How does entrypoint.py works?
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#which-environment-variables-are-made-available-by-the-api" class="md-nav__link">
-    Which Environment Variables are made available by the API?
+    <span class="md-ellipsis">
+      Which Environment Variables are made available by the API?
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#connect-to-the-api-to-get-our-scenario-data" class="md-nav__link">
-    Connect to the API to get our Scenario data
+    <span class="md-ellipsis">
+      Connect to the API to get our Scenario data
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#combine-everything-in-a-run-template" class="md-nav__link">
-    Combine everything in a Run Template
+    <span class="md-ellipsis">
+      Combine everything in a Run Template
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#build-a-docker-image" class="md-nav__link">
-    Build a docker image
+    <span class="md-ellipsis">
+      Build a docker image
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#define-api-items" class="md-nav__link">
-    Define API items
+    <span class="md-ellipsis">
+      Define API items
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Define API items">
@@ -1391,7 +1464,9 @@
         
           <li class="md-nav__item">
   <a href="#define-a-solution" class="md-nav__link">
-    Define a Solution
+    <span class="md-ellipsis">
+      Define a Solution
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Define a Solution">
@@ -1399,21 +1474,27 @@
         
           <li class="md-nav__item">
   <a href="#solution-description" class="md-nav__link">
-    Solution description
+    <span class="md-ellipsis">
+      Solution description
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#parameters-and-parametergroups" class="md-nav__link">
-    parameters and parameterGroups
+    <span class="md-ellipsis">
+      parameters and parameterGroups
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#runtemplates" class="md-nav__link">
-    runTemplates
+    <span class="md-ellipsis">
+      runTemplates
+    </span>
   </a>
   
 </li>
@@ -1425,21 +1506,27 @@
         
           <li class="md-nav__item">
   <a href="#define-a-workspace" class="md-nav__link">
-    Define a Workspace
+    <span class="md-ellipsis">
+      Define a Workspace
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#define-a-dataset" class="md-nav__link">
-    Define a Dataset
+    <span class="md-ellipsis">
+      Define a Dataset
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#define-a-scenario" class="md-nav__link">
-    Define a Scenario
+    <span class="md-ellipsis">
+      Define a Scenario
+    </span>
   </a>
   
 </li>
@@ -1451,14 +1538,18 @@
       
         <li class="md-nav__item">
   <a href="#run-our-distant-scenario" class="md-nav__link">
-    Run our distant Scenario
+    <span class="md-ellipsis">
+      Run our distant Scenario
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#i-want-to-use-my-local-data-instead-of-needing-a-scenario" class="md-nav__link">
-    I want to use my local data instead of needing a Scenario
+    <span class="md-ellipsis">
+      I want to use my local data instead of needing a Scenario
+    </span>
   </a>
   
 </li>
@@ -3400,7 +3491,10 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="normal">367</span>
 <span class="normal">368</span>
 <span class="normal">369</span>
-<span class="normal">370</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">          </span><span class="nt">application/json</span><span class="p">:</span>
+<span class="normal">370</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the new Dataset security access to add.</span>
+<span class="w">        </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="nt">content</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">application/json</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">schema</span><span class="p">:</span>
 <span class="w">              </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/DatasetAccessControl&#39;</span>
 <span class="w">            </span><span class="nt">examples</span><span class="p">:</span>
@@ -3545,6 +3639,27 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">          </span><span class="nt">scopes</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">http://dev.api.cosmotech.com/platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Platform scope</span>
 <span class="w">  </span><span class="nt">schemas</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">FileUploadValidation</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">files read on upload</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">nodes</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list of filename found on nodes folder</span>
+<span class="w">          </span><span class="nt">items</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/FileUploadMetadata&#39;</span>
+<span class="w">        </span><span class="nt">edges</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
+<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list of filename found on edges folder</span>
+<span class="w">          </span><span class="nt">items</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/FileUploadMetadata&#39;</span>
+<span class="w">    </span><span class="nt">FileUploadMetadata</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<span class="w">        </span><span class="nt">size</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
 <span class="w">    </span><span class="nt">DatasetSearch</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
 <span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the search options</span>
@@ -3746,30 +3861,6 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the query in cypher language</span>
 <span class="w">      </span><span class="nt">required</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">query</span>
-<span class="w">    </span><span class="nt">DatasetTwinGraphHash</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
-<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">a twin graph hash</span>
-<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">hash</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the hash of the graph</span>
-<span class="w">    </span><span class="nt">DatasetCompatibility</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
-<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">a Dataset compatibility constraint to a Solution version open range</span>
-<span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">solutionKey</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Solution key which group Solution versions</span>
-<span class="w">        </span><span class="nt">minimumVersion</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Solution minimum version compatibility (version included)</span>
-<span class="w">        </span><span class="nt">maximumVersion</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Solution maximum version compatibility (version included)</span>
-<span class="w">      </span><span class="nt">required</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">solutionKey</span>
-<span class="w">    </span><span class="nt">Validator</span><span class="p">:</span>
 </code></pre></div></td></tr></table></div>
 </details>
 <p>A <code>Dataset</code> is defined by a name, a type of data source (property <code>sourceType</code>) and a twin
@@ -4457,11 +4548,22 @@ in an environment variable <code>CSM_SKIP_STEPS</code>. This parameter can be gi
 
 
 
+
+
+  
+  
+
+
+
+
+
+
                 
               </article>
             </div>
           
           
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
           <button type="button" class="md-top md-icon" data-md-component="top" hidden>
@@ -4536,7 +4638,7 @@ in an environment variable <code>CSM_SKIP_STEPS</code>. This parameter can be gi
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.footer"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.aecac24b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
       
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
