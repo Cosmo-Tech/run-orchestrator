@@ -1,0 +1,36 @@
+.tpl_table {
+    display: table;
+    width: 100%;
+}
+
+.tpl_row {
+    display: table-row;
+    width: 100%;
+}
+
+.tpl_cell {
+    display: table-cell;
+}
+
+.tpl_head {
+    display: table-cell;
+    text-align: center;
+}
+
+.joined {
+    display: table;
+    width: 100%;
+}
+
+.title_cmd {
+    width: 20%;
+}
+
+.body_cmd {
+    width: 80%
+}
+
+.hidden {
+    visibility: hidden;
+    display: none;
+}
