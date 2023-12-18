@@ -21,6 +21,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cosmo-tech.github.io/run-orchestrator/1.2.0-dev/command_templates/csm-orc/CSM-ORC-FetchRunData/</loc>
+         <lastmod>2023-12-18</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.2.0-dev/command_templates/csm-orc/CSM-ORC-RunStep/</loc>
          <lastmod>2023-12-18</lastmod>
          <changefreq>daily</changefreq>
