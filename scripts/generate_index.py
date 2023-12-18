@@ -6,6 +6,7 @@
 # specifically authorized by written means by Cosmo Tech.
 
 from typing import IO
+from string import Template
 
 import mkdocs_gen_files
 
@@ -18,7 +19,5 @@ with mkdocs_gen_files.open("index.md", "w") as _md_file, \
     _index: list[str] = index_template.readlines()
     _readme_content = readme.readlines()
     for _line in _index:
-        if "--README--" in _line:
-            _md_file.writelines(_readme_content[1:])
-            continue
-        _md_file.write(_line.replace("%%VERSION%%", VERSION))
+        _tpl = Template(_line)
+        _md_file.write(_tpl.safe_substitute({"version": VERSION}))

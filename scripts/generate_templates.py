@@ -7,6 +7,7 @@
 
 import pathlib
 import re
+from string import Template
 
 import mkdocs_gen_files
 
@@ -19,25 +20,26 @@ library = Library()
 
 
 def gen_doc(template: CommandTemplate):
-    title = f"# {template.id}"
-    description = f"Description: {template.description}"
-    command_line = f"Command: {template.command} {' '.join(template.arguments)}"
     env_content = "\n    ".join(e.name + " | " + (e.description or "None") for e in template.environment.values())
-    env = f"""???+ info "Environment"
+    env = f"""
     Variable Name | Description
     ------------- | -----------
     {env_content}
 """
-
-    doc_page = [title]
-    if template.description:
-        doc_page.extend(("\n", description))
-    doc_page.extend(("\n", command_line))
-    if template.environment:
-        doc_page.extend(("\n", env))
-    return "\n".join(doc_page)
+    ret = {
+        "id": template.id,
+        "description": template.description or "",
+        "command": template.command,
+        "arguments": ' '.join(template.arguments),
+        "env": env if template.environment else "",
+        "has_desc": "" if template.description else "hidden",
+        "has_env": "" if template.environment else "hidden",
+    }
+    return ret
 
 
 for _template in library.templates:
-    with mkdocs_gen_files.open(f"command_templates/{_template.sourcePlugin}/{_template.id}.md", "w") as _md_file:
-        _md_file.write(gen_doc(_template))
+    with mkdocs_gen_files.open(f"command_templates/{_template.sourcePlugin}/{_template.id}.md", "w") as _md_file, \
+            open("scripts/command_template.template.md") as tpl_file:
+        _tpl = Template(tpl_file.read())
+        _md_file.write(_tpl.safe_substitute(gen_doc(_template)))

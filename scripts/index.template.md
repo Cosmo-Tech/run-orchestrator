@@ -1,4 +1,4 @@
-# Run Template Orchestrator ![%%VERSION%%](https://img.shields.io/badge/%%VERSION%%-2e303e?style=for-the-badge)
+# Run Template Orchestrator ![$version](https://img.shields.io/badge/$version-2e303e?style=for-the-badge)
 
 This repository contains the new Run Template Orchestrator used in the latest Cosmotech Solutions
 
