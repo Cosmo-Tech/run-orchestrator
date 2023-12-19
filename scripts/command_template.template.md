@@ -1,5 +1,7 @@
 ---
 description: Full description of the command template "$id"
+hide:
+  - toc
 ---
 # $id
 
@@ -20,14 +22,19 @@ $description
 __Command__
 </div>
 <div class="tpl_cell body_cmd" markdown>
-`$command $arguments`
+`#!bash $command $arguments`
 </div>
 </div>
 </div>
 <div class="tpl_row $has_env" markdown>
 <div class="tpl_cell" markdown>
-???+ info "Environment"
+???+ info "Defined Environment"
 $env
+</div>
+</div>
+<div class="tpl_row $use_sys_env" markdown>
+<div class="tpl_head" markdown>
+Will be passed **all system `Environment Variables`** as well as the defined `Environment`
 </div>
 </div>
 </div>
