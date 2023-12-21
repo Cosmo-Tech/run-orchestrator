@@ -2,13 +2,19 @@
   "id": "csm-orc fetch-scenariorun-data",
   "command": "csm-orc",
   "arguments": [
-    "--log-level", "$LOG_LEVEL",
+    "--log-level",
+    "$LOG_LEVEL",
     "fetch-scenariorun-data",
-    "--organization-id", "$CSM_ORGANIZATION_ID",
-    "--workspace-id", "$CSM_WORKSPACE_ID",
-    "--scenario-id", "$CSM_SCENARIO_ID",
-    "--dataset-absolute-path", "$CSM_DATASET_ABSOLUTE_PATH",
-    "--parameters-absolute-path", "$CSM_PARAMETERS_ABSOLUTE_PATH"
+    "--organization-id",
+    "$CSM_ORGANIZATION_ID",
+    "--workspace-id",
+    "$CSM_WORKSPACE_ID",
+    "--scenario-id",
+    "$CSM_SCENARIO_ID",
+    "--dataset-absolute-path",
+    "$CSM_DATASET_ABSOLUTE_PATH",
+    "--parameters-absolute-path",
+    "$CSM_PARAMETERS_ABSOLUTE_PATH"
   ],
   "description": "Will download scenario parameters and datasets using the Cosmo Tech API. Will require a functional environment allowing access to a Cosmo Tech API",
   "environment": {

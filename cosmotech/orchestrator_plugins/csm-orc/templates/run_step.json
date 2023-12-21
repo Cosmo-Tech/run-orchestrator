@@ -2,10 +2,13 @@
   "id": "csm-orc run-step",
   "command": "csm-orc",
   "arguments": [
-    "--log-level", "$LOG_LEVEL",
+    "--log-level",
+    "$LOG_LEVEL",
     "run-step",
-    "--template", "$CSM_RUN_TEMPLATE_ID",
-    "--steps", "$CSM_CONTAINER_MODE"
+    "--template",
+    "$CSM_RUN_TEMPLATE_ID",
+    "--steps",
+    "$CSM_CONTAINER_MODE"
   ],
   "description": "Runs a RunTemplate Step with most of the environment variables given by the Cosmo Tech API. May require a functional environment allowing access to a Cosmo Tech API",
   "useSystemEnvironment": true,

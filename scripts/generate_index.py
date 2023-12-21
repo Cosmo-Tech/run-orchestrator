@@ -5,8 +5,8 @@
 # etc., to any person is prohibited unless it has been previously and
 # specifically authorized by written means by Cosmo Tech.
 
-from typing import IO
 from string import Template
+from typing import IO
 
 import mkdocs_gen_files
 

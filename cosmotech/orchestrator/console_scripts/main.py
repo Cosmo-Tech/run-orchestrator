@@ -12,8 +12,8 @@ from cosmotech.orchestrator.console_scripts.adx_scenario_connector import main a
 from cosmotech.orchestrator.console_scripts.download_cloud_steps import main as dl_cloud_cmd
 from cosmotech.orchestrator.console_scripts.entrypoint import main as entrypoint_cmd
 from cosmotech.orchestrator.console_scripts.legacy_json_generator import main as legacy_gen_cmd
-from cosmotech.orchestrator.console_scripts.run import main as run_cmd
 from cosmotech.orchestrator.console_scripts.parameters_generation import main as parameters_cmd
+from cosmotech.orchestrator.console_scripts.run import main as run_cmd
 from cosmotech.orchestrator.console_scripts.run_step import main as run_step_cmd
 from cosmotech.orchestrator.console_scripts.scenario_data_downloader import main as scenario_dl_cmd
 from cosmotech.orchestrator.console_scripts.templates_listing import main as tpl_listing

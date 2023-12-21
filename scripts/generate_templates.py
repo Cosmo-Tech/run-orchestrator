@@ -5,14 +5,14 @@
 # etc., to any person is prohibited unless it has been previously and
 # specifically authorized by written means by Cosmo Tech.
 
+import json
 import re
 from string import Template
 
 import mkdocs_gen_files
-import json
 
-from cosmotech.orchestrator.templates.library import Library
 from cosmotech.orchestrator.core.command_template import CommandTemplate
+from cosmotech.orchestrator.templates.library import Library
 
 ansi_escape = re.compile(r'(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]')
 

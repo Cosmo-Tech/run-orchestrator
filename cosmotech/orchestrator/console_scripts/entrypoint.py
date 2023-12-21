@@ -6,9 +6,9 @@ import sys
 from pathlib import Path
 from zipfile import ZipFile
 
+from cosmotech.orchestrator.utils import strtobool
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.logger import LOGGER
-from cosmotech.orchestrator.utils import strtobool
 
 MODE_HANDLE_PARAMETERS = "handle-parameters"
 MODE_VALIDATE = "validate"
