@@ -1,5 +1,5 @@
 {
-  "id": "CSM-ORC-RunStep",
+  "id": "csm-orc run-step",
   "command": "csm-orc",
   "arguments": [
     "--log-level", "$LOG_LEVEL",
@@ -61,7 +61,6 @@
       "description": "The id of the simulation run"
     },
     "CSM_SIMULATION": {
-      "defaultValue": "MySimulation",
       "description": "The name of the Simulation file to use"
     },
     "AZURE_DATA_EXPLORER_RESOURCE_URI": {

@@ -1,5 +1,5 @@
 {
-  "id": "CSM-ORC-FetchRunData",
+  "id": "csm-orc fetch-scenariorun-data",
   "command": "csm-orc",
   "arguments": [
     "--log-level", "$LOG_LEVEL",
