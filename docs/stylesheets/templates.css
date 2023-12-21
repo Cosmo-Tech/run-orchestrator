@@ -1,33 +1,32 @@
-.tpl_table {
-    display: table;
-    width: 100%;
+article > .tpl_table {
+    max-width: 100%;
 }
 
 .tpl_row {
-    display: table-row;
-    width: 100%;
+    max-width: 100%;
 }
 
-.tpl_cell {
-    display: table-cell;
+.tpl_row > div {
+    max-width: 100%;
 }
 
 .tpl_head {
-    display: table-cell;
     text-align: center;
 }
 
 .joined {
-    display: table;
-    width: 100%;
+    max-width: 100%;
 }
 
 .title_cmd {
+    display: inline-block;
     width: 20%;
+    vertical-align: middle;
 }
 
 .body_cmd {
-    width: 80%
+    display: inline-block;
+    width: 79%;
 }
 
 .hidden {

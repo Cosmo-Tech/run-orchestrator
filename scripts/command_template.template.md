@@ -28,13 +28,21 @@ __Command__
 </div>
 <div class="tpl_row $has_env" markdown>
 <div class="tpl_cell" markdown>
-???+ info "Defined Environment"
+???+ tip "Defined Environment"
 $env
 </div>
 </div>
 <div class="tpl_row $use_sys_env" markdown>
 <div class="tpl_head" markdown>
 Will be passed **all system `Environment Variables`** as well as the defined `Environment`
+</div>
+</div>
+<div class="tpl_row $has_env" markdown>
+<div class="tpl_cell" markdown>
+??? abstract "$id json file"
+    ```{.json style="--md-codeblock-width: 90%"}
+$json_content
+    ```
 </div>
 </div>
 </div>

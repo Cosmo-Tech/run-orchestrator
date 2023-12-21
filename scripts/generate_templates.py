@@ -5,11 +5,11 @@
 # etc., to any person is prohibited unless it has been previously and
 # specifically authorized by written means by Cosmo Tech.
 
-import pathlib
 import re
 from string import Template
 
 import mkdocs_gen_files
+import json
 
 from cosmotech.orchestrator.templates.library import Library
 from cosmotech.orchestrator.core.command_template import CommandTemplate
@@ -30,6 +30,8 @@ def gen_doc(template: CommandTemplate):
     ------------- | -----------
     {env_content}
 """
+    json_content = json.dumps(template.serialize(), indent=2, separators=(',', ':'))
+    json_content = "\n".join(map(lambda _line: f"    {_line}", json_content.split("\n")))
     ret = {
         "id": template.id,
         "description": template.description or "",
@@ -39,12 +41,15 @@ def gen_doc(template: CommandTemplate):
         "use_sys_env": "" if template.useSystemEnvironment else "hidden",
         "has_desc": "" if template.description else "hidden",
         "has_env": "" if template.environment else "hidden",
+        "json_content": json_content,
     }
     return ret
 
 
 for _template in library.templates:
-    with mkdocs_gen_files.open(f"command_templates/{_template.sourcePlugin}/{_template.id}.md", "w") as _md_file, \
+    with mkdocs_gen_files.open(f"command_templates/"
+                               f"{_template.sourcePlugin}/"
+                               f"{_template.id.replace(' ', '_')}.md", "w") as _md_file, \
             open("scripts/command_template.template.md") as tpl_file:
         _tpl = Template(tpl_file.read())
         _md_file.write(_tpl.safe_substitute(gen_doc(_template)))
