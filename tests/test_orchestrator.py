@@ -1,7 +1,8 @@
 import copy
 import os
 
-from cosmotech.orchestrator.core.orchestrator import Orchestrator, FileLoader
+from cosmotech.orchestrator.core.orchestrator import FileLoader
+from cosmotech.orchestrator.core.orchestrator import Orchestrator
 
 
 class TestOrchestrator:

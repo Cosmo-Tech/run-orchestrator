@@ -1,0 +1,82 @@
+{
+  "id": "csm-orc run-step",
+  "command": "csm-orc",
+  "arguments": [
+    "--log-level",
+    "$LOG_LEVEL",
+    "run-step",
+    "--template",
+    "$CSM_RUN_TEMPLATE_ID",
+    "--steps",
+    "$CSM_CONTAINER_MODE"
+  ],
+  "description": "Runs a RunTemplate Step with most of the environment variables given by the Cosmo Tech API. May require a functional environment allowing access to a Cosmo Tech API",
+  "useSystemEnvironment": true,
+  "environment": {
+    "CSM_ORGANIZATION_ID": {
+      "optional": true,
+      "description": "The id of an organization in the Cosmo Tech API"
+    },
+    "CSM_WORKSPACE_ID": {
+      "optional": true,
+      "description": "The id of a workspace in the Cosmo Tech API"
+    },
+    "CSM_RUN_TEMPLATE_ID": {
+      "description": "The name of the run template defined in the Cosmo Tech API and available in the project"
+    },
+    "CSM_CONTAINER_MODE": {
+      "description": "The steps run during a run-step"
+    },
+    "CSM_API_URL": {
+      "optional": true,
+      "description": "The url to a Cosmo Tech API"
+    },
+    "CSM_API_SCOPE": {
+      "optional": true,
+      "description": "The identification scope of a Cosmo Tech API"
+    },
+    "AZURE_TENANT_ID": {
+      "optional": true,
+      "description": "An Azure Tenant ID"
+    },
+    "AZURE_CLIENT_ID": {
+      "optional": true,
+      "description": "An Azure Client ID having access to the Cosmo Tech API"
+    },
+    "AZURE_CLIENT_SECRET": {
+      "optional": true,
+      "description": "The secret for the Azure Client"
+    },
+    "LOG_LEVEL": {
+      "defaultValue": "INFO",
+      "description": "Either CRITICAL, ERROR, WARNING, INFO or DEBUG"
+    },
+    "PYTHONPATH": {
+      "description": "A list of folder to add to the python path"
+    },
+    "CSM_DATASET_ABSOLUTE_PATH": {
+      "description": "A local folder to store the main dataset content"
+    },
+    "CSM_PARAMETERS_ABSOLUTE_PATH": {
+      "description": "A local folder to store the parameters content"
+    },
+    "CSM_SIMULATION_ID": {
+      "description": "The id of the simulation run"
+    },
+    "CSM_SIMULATION": {
+      "description": "The name of the Simulation file to use"
+    },
+    "AZURE_DATA_EXPLORER_RESOURCE_URI": {
+      "optional": true,
+      "description": "the ADX cluster path (URI info can be found into ADX cluster page)"
+    },
+    "AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI": {
+      "optional": true,
+      "description": "The ADX cluster ingest path (URI info can be found into ADX cluster page)"
+    },
+    "AZURE_DATA_EXPLORER_DATABASE_NAME": {
+      "optional": true,
+      "description": "The targeted database name"
+    }
+  }
+}

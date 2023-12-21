@@ -2,6 +2,7 @@ site_name: Run Template Orchestrator
 repo_url: https://github.com/Cosmo-Tech/run-orchestrator
 repo_name: Cosmo-Tech/run-orchestrator
 site_description: Cosmo Tech ORC helps with defining and running commands DAG
+site_url: https://cosmo-tech.github.io/run-orchestrator/
 theme:
   name: material
   logo: assets/logo.png
@@ -23,6 +24,7 @@ theme:
   features:
     - content.code.copy
     - content.code.annotate
+    - content.tooltips
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.expand
@@ -30,12 +32,14 @@ theme:
     - navigation.indexes
     - navigation.instant
     - navigation.footer
+    - navigation.sections
   custom_dir: overrides
   icon:
     repo: fontawesome/brands/github
 
 extra_css:
   - stylesheets/extra.css
+  - stylesheets/templates.css
 
 extra_javascript:
   - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
@@ -64,6 +68,7 @@ nav:
       - "examples/legacy_run.md"
       - "examples/git_run.md"
       - "examples/minimal_docker.md"
+  - Command Templates: "command_templates/*"
   - Semantic Validator: "Validator.md"
   - Commands:
       - Orchestrator: 
@@ -94,6 +99,7 @@ markdown_extensions:
     - pymdownx.details
     - pymdownx.snippets:
         url_download: true
+    - pymdownx.betterem
     - pymdownx.superfences
     - pymdownx.highlight
     - pymdownx.inlinehilite
@@ -124,10 +130,12 @@ plugins:
           - scripts/generate_index.py
           - scripts/generate_helps.py
           - scripts/generate_requirements.py
+          - scripts/generate_templates.py
     - literate-nav
     - mike
     - social
     - table-reader
+    - include_dir_to_nav
 
 watch:
   - examples

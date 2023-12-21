@@ -1,0 +1,77 @@
+{
+  "id": "csm-orc fetch-scenariorun-data",
+  "command": "csm-orc",
+  "arguments": [
+    "--log-level",
+    "$LOG_LEVEL",
+    "fetch-scenariorun-data",
+    "--organization-id",
+    "$CSM_ORGANIZATION_ID",
+    "--workspace-id",
+    "$CSM_WORKSPACE_ID",
+    "--scenario-id",
+    "$CSM_SCENARIO_ID",
+    "--dataset-absolute-path",
+    "$CSM_DATASET_ABSOLUTE_PATH",
+    "--parameters-absolute-path",
+    "$CSM_PARAMETERS_ABSOLUTE_PATH"
+  ],
+  "description": "Will download scenario parameters and datasets using the Cosmo Tech API. Will require a functional environment allowing access to a Cosmo Tech API",
+  "environment": {
+    "AZURE_CLIENT_ID": {
+      "optional": true,
+      "description": "An Azure Client ID having access to the Cosmo Tech API"
+    },
+    "AZURE_CLIENT_SECRET": {
+      "optional": true,
+      "description": "The secret for the Azure Client"
+    },
+    "AZURE_TENANT_ID": {
+      "optional": true,
+      "description": "An Azure Tenant ID"
+    },
+    "CSM_API_URL": {
+      "description": "The url to a Cosmo Tech API"
+    },
+    "CSM_API_SCOPE": {
+      "description": "The identification scope of a Cosmo Tech API"
+    },
+    "CSM_ORGANIZATION_ID": {
+      "description": "The id of an organization in the Cosmo Tech API"
+    },
+    "CSM_WORKSPACE_ID": {
+      "description": "The id of a workspace in the Cosmo Tech API"
+    },
+    "CSM_SCENARIO_ID": {
+      "description": "The id of a scenario in the cosmotech api"
+    },
+    "CSM_DATASET_ABSOLUTE_PATH": {
+      "description": "A local folder to store the main dataset content"
+    },
+    "CSM_PARAMETERS_ABSOLUTE_PATH": {
+      "description": "A local folder to store the parameters content"
+    },
+    "WRITE_JSON": {
+      "defaultValue": "true",
+      "description": "Toggle writing of parameters in json format"
+    },
+    "WRITE_CSV": {
+      "defaultValue": "false",
+      "description": "Toggle writing of parameters in csv format"
+    },
+    "FETCH_DATASET": {
+      "defaultValue": "true",
+      "description": "Toggle fetching datasets"
+    },
+    "LOG_LEVEL": {
+      "defaultValue": "INFO",
+      "description": "Either CRITICAL, ERROR, WARNING, INFO or DEBUG"
+    },
+    "PYTHONPATH": {
+      "description": "A list of folder to add to the python path",
+      "optional": "true"
+    }
+  },
+  "useSystemEnvironment": true
+}
+    
