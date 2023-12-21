@@ -6,15 +6,12 @@
 # specifically authorized by written means by Cosmo Tech.
 
 import json
-import re
 from string import Template
 
 import mkdocs_gen_files
 
 from cosmotech.orchestrator.core.command_template import CommandTemplate
 from cosmotech.orchestrator.templates.library import Library
-
-ansi_escape = re.compile(r'(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]')
 
 library = Library()
 
