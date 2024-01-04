@@ -27,7 +27,8 @@ def download_scenario_data(
     parameter_folder: str,
     write_json: bool,
     write_csv: bool,
-    fetch_dataset: bool
+    fetch_dataset: bool,
+    parallel_download: bool,
 ) -> None:
     """
     Download the datas from a scenario from the CosmoTech API to the local file system
@@ -43,7 +44,8 @@ def download_scenario_data(
     LOGGER.info("Starting connector")
     dl = ScenarioDownloader(workspace_id=workspace_id,
                             organization_id=organization_id,
-                            read_files=False)
+                            read_files=False,
+                            parallel=parallel_download)
 
     LOGGER.info("Load scenario data")
     scenario_data = dl.get_scenario_data(scenario_id=scenario_id)
@@ -161,6 +163,12 @@ def write_parameters(parameter_folder, parameters, write_csv, write_json):
               default=True,
               show_default=True,
               help="Toggle fetching datasets")
+@click.option("--parallel/--no-parallel",
+              envvar="FETCH_DATASETS_IN_PARALLEL",
+              show_envvar=True,
+              default=True,
+              show_default=True,
+              help="Toggle parallelization while fetching datasets,")
 @require_env('CSM_API_SCOPE', "The identification scope of a Cosmotech API")
 @require_env('CSM_API_URL', "The URL to a Cosmotech API")
 @web_help("commands/scenario_data_downloader")
@@ -172,7 +180,8 @@ def main(
     parameters_absolute_path: str,
     write_json: bool,
     write_csv: bool,
-    fetch_dataset: bool
+    fetch_dataset: bool,
+    parallel: bool
 ):
     """
 Uses environment variables to call the download_scenario_data function
@@ -181,7 +190,7 @@ Requires a valid Azure connection either with:
 - A triplet of env var `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`
     """
     return download_scenario_data(organization_id, workspace_id, scenario_id, dataset_absolute_path,
-                                  parameters_absolute_path, write_json, write_csv, fetch_dataset)
+                                  parameters_absolute_path, write_json, write_csv, fetch_dataset, parallel)
 
 
 if __name__ == "__main__":
