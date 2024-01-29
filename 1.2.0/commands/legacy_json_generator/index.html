@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.5">
     
     
       
@@ -1528,71 +1528,71 @@
 <p class="admonition-title">Help command</p>
 <div class="highlight"><pre><span></span><code>&gt; csm-orc gen-from-legacy --help
 
- Usage: csm-orc gen-from-legacy [OPTIONS] COMMAND [ARGS]...                                                             
+ Usage: csm-orc gen-from-legacy [OPTIONS] COMMAND [ARGS]...                                                           
 
- Base command for the json generator using legacy files                                                                 
- Check the help of the sub commands for more information:                                                               
+ Base command for the json generator using legacy files                                                               
+ Check the help of the sub commands for more information:                                                             
 
-  • cloud requires access to a fully deployed solution                                                                  
-  • solution requires a Solution.yaml file                                                                              
+  • cloud requires access to a fully deployed solution                                                                
+  • solution requires a Solution.yaml file                                                                            
 
-╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --web-help      Open the web documentation                                                                           │
-│ --help          Show this message and exit.                                                                          │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ cloud     Connect to the cosmotech API to download a run template and generate an orchestrator file at OUTPUT        │
-│ solution  Read SOLUTION_FILE to get a RUN_TEMPLATE_ID and generate an orchestrator file at OUTPUT                    │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ OPTIONS ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --web-help      Open the web documentation                                                                         │
+│ --help          Show this message and exit.                                                                        │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ─────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ cloud     Connect to the cosmotech API to download a run template and generate an orchestrator file at OUTPUT      │
+│ solution  Read SOLUTION_FILE to get a RUN_TEMPLATE_ID and generate an orchestrator file at OUTPUT                  │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 <div class="highlight"><span class="filename">Generate json from Soluton.yaml</span><pre><span></span><code>&gt; csm-orc gen-from-legacy solution --help
 
- Usage: csm-orc gen-from-legacy solution [OPTIONS] SOLUTION_FILE OUTPUT RUN_TEMPLATE_ID                                 
+ Usage: csm-orc gen-from-legacy solution [OPTIONS] SOLUTION_FILE OUTPUT RUN_TEMPLATE_ID                               
 
- Read SOLUTION_FILE to get a RUN_TEMPLATE_ID and generate an orchestrator file at OUTPUT                                
+ Read SOLUTION_FILE to get a RUN_TEMPLATE_ID and generate an orchestrator file at OUTPUT                              
 
-╭─ Arguments ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *  SOLUTION_FILE      FILE  [required]                                                                               │
-│ *  OUTPUT             FILE  [required]                                                                               │
-│ *  RUN-TEMPLATE-ID    TEXT  [required]                                                                               │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --describe/--no-describe      Show a description of the generated template after generation                          │
-│                               DEFAULT: no-describe                                                                   │
-│ --web-help                    Open the web documentation                                                             │
-│ --help                        Show this message and exit.                                                            │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Arguments ────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  SOLUTION_FILE      FILE  [required]                                                                             │
+│ *  OUTPUT             FILE  [required]                                                                             │
+│ *  RUN-TEMPLATE-ID    TEXT  [required]                                                                             │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ OPTIONS ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --describe/--no-describe      Show a description of the generated template after generation                        │
+│                               DEFAULT: no-describe                                                                 │
+│ --web-help                    Open the web documentation                                                           │
+│ --help                        Show this message and exit.                                                          │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 <div class="highlight"><span class="filename">Generate json from Cosmo Tech API</span><pre><span></span><code>&gt; csm-orc gen-from-legacy cloud --help
 
- Usage: csm-orc gen-from-legacy cloud [OPTIONS] OUTPUT                                                                  
+ Usage: csm-orc gen-from-legacy cloud [OPTIONS] OUTPUT                                                                
 
- Connect to the cosmotech API to download a run template and generate an orchestrator file at OUTPUT                    
+ Connect to the cosmotech API to download a run template and generate an orchestrator file at OUTPUT                  
 
-╭─ Arguments ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *  OUTPUT    FILE  [required]                                                                                        │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ OPTIONS ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *  --api-url                   URL           The url to a Cosmotech API                                              │
-│                                              ENV: CSM_API_URL                                                        │
-│                                              [required]                                                              │
-│ *  --api-scope                 URI           The identification scope of a Cosmotech API                             │
-│                                              ENV: CSM_API_SCOPE                                                      │
-│                                              [required]                                                              │
-│ *  --organization-id           o-##########  The id of an organization in the cosmotech api                          │
-│                                              ENV: CSM_ORGANIZATION_ID                                                │
-│                                              [required]                                                              │
-│ *  --workspace-id              w-##########  The id of a solution in the cosmotech api                               │
-│                                              ENV: CSM_WORKSPACE_ID                                                   │
-│                                              [required]                                                              │
-│ *  --run-template-id           NAME          The name of the run template in the cosmotech api                       │
-│                                              ENV: CSM_RUN_TEMPLATE_ID                                                │
-│                                              [required]                                                              │
-│    --describe/--no-describe                  Show a description of the generated template after generation           │
-│                                              DEFAULT: no-describe                                                    │
-│    --web-help                                Open the web documentation                                              │
-│    --help                                    Show this message and exit.                                             │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Arguments ────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  OUTPUT    FILE  [required]                                                                                      │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ OPTIONS ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  --api-url                   URL           The url to a Cosmotech API                                            │
+│                                              ENV: CSM_API_URL                                                      │
+│                                              [required]                                                            │
+│ *  --api-scope                 URI           The identification scope of a Cosmotech API                           │
+│                                              ENV: CSM_API_SCOPE                                                    │
+│                                              [required]                                                            │
+│ *  --organization-id           o-##########  The id of an organization in the cosmotech api                        │
+│                                              ENV: CSM_ORGANIZATION_ID                                              │
+│                                              [required]                                                            │
+│ *  --workspace-id              w-##########  The id of a solution in the cosmotech api                             │
+│                                              ENV: CSM_WORKSPACE_ID                                                 │
+│                                              [required]                                                            │
+│ *  --run-template-id           NAME          The name of the run template in the cosmotech api                     │
+│                                              ENV: CSM_RUN_TEMPLATE_ID                                              │
+│                                              [required]                                                            │
+│    --describe/--no-describe                  Show a description of the generated template after generation         │
+│                                              DEFAULT: no-describe                                                  │
+│    --web-help                                Open the web documentation                                            │
+│    --help                                    Show this message and exit.                                           │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 </code></pre></div>
 </div>
 
@@ -1691,10 +1691,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate", "content.tooltips", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.footer", "navigation.sections"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate", "content.tooltips", "navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.footer", "navigation.sections"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c18c5fb9.min.js"></script>
       
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
