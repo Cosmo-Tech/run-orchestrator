@@ -166,10 +166,10 @@ An example of `Solution.yaml` (a file used by the Cosmo Tech API) for our curren
 --8<-- "tutorial/advanced_cosmotech_simulator/Solution.yaml:runTemplates"
 ```
 
-Full Open API description of a `Solution` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/solution/src/main/openapi/solution.yaml).
+Full Open API description of a `Solution` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/3.0.0/solution/src/main/openapi/solution.yaml).
 ??? info "Open API description of a Solution (`components.schemas`)"
     ```yaml linenums="1"
-    --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/solution/src/main/openapi/solution.yaml:649:988"
+    --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/3.0.0/solution/src/main/openapi/solution.yaml:731:1073"
     ```
 
 Once this file is sent to a Cosmo Tech API we will get a `Solution ID` of the form `sol-xxxxxxxx`
@@ -227,10 +227,10 @@ An example of `Workspace.yaml` which is a file used by the Cosmo Tech API for ou
 --8<-- "tutorial/advanced_cosmotech_simulator/Workspace.yaml"
 ```
 
-Full Open API description of a `Workspace` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/workspace/src/main/openapi/workspace.yaml).
+Full Open API description of a `Workspace` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/3.0.0/workspace/src/main/openapi/workspace.yaml).
 ??? info "Open API description of a Workspace (`components.schemas`)"
     ```yaml linenums="1"
-    --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/workspace/src/main/openapi/workspace.yaml:692:854"
+    --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/3.0.0/workspace/src/main/openapi/workspace.yaml:770:947"
     ```
 
 !!! warning "After creating a `Workspace` resource using the API you will need to create additional resources for it in your platform if you want to run scenarios."
@@ -251,10 +251,10 @@ An example of `Dataset.yaml` which is a file used by the Cosmo Tech API for our 
 --8<-- "tutorial/advanced_cosmotech_simulator/Dataset.yaml"
 ```
 
-Full Open API description of a `Dataset` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/dataset/src/main/openapi/dataset.yaml).
+Full Open API description of a `Dataset` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/3.0.0/dataset/src/main/openapi/dataset.yaml).
 ??? info "Open API description of a Dataset (`components.schemas`)"
     ```yaml linenums="1"
-    --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/dataset/src/main/openapi/dataset.yaml:1191:1560"
+    --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/3.0.0/dataset/src/main/openapi/dataset.yaml:1419:1827"
     ```
 
 A `Dataset` is defined by a name, a type of data source (property `sourceType`) and a twin
@@ -269,10 +269,10 @@ An example of `Scenario.yaml` which is a file used by the Cosmo Tech API for our
 --8<-- "tutorial/advanced_cosmotech_simulator/Scenario.yaml"
 ```
 
-Full Open API description of a `Scenario` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/scenario/src/main/openapi/scenario.yaml)
+Full Open API description of a `Scenario` is available [here](https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/3.0.0/scenario/src/main/openapi/scenario.yaml)
 ??? info "Open API description of a Scenario (`components.schemas`)"
     ```yaml linenums="1"
-    --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/main/scenario/src/main/openapi/scenario.yaml:830:1126"
+    --8<-- "https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/3.0.0/scenario/src/main/openapi/scenario.yaml:832:1128"
     ```
 
 As a result of creating your `Scenario` you will get an identifier of the form `s-xxxxxxxx` that you can use to run it (as we will see further) and reference it in other endpoints.
