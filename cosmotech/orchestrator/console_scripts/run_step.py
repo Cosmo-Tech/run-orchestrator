@@ -108,7 +108,7 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
                 if os.environ.get('CSM_CONTROL_PLANE_TOPIC') is not None:
                     LOGGER.debug(f"Control plane topic: {os.environ['CSM_CONTROL_PLANE_TOPIC']}."
                                  "Main Simulator binary is able to handle "
-                                 "CSM_CONTROL_PLANE_TOPIC directly so it is not"
+                                 "CSM_CONTROL_PLANE_TOPIC directly so it is not "
                                  "transformed as an argument.")
                 r = subprocess.run(args=args,
                                    executable=str(engine_path.absolute()))

@@ -282,7 +282,7 @@ def run_direct_simulator():
         if CSM_CONTROL_PLANE_TOPIC is not None:
             logging.debug(f"Control plane topic: {CSM_CONTROL_PLANE_TOPIC}."
                           "Main Simulator binary is able to handle "
-                          "CSM_CONTROL_PLANE_TOPIC directly so it is not"
+                          "CSM_CONTROL_PLANE_TOPIC directly so it is not "
                           "transformed as an argument.")
         else:
             logging.warning("No Control plane topic")
@@ -396,7 +396,7 @@ def run_entrypoint():
               help="Use legacy entrypoint")
 def main(legacy: bool):
     """Docker entrypoint
-    
+
     This command is used in CosmoTech docker containers only"""
     try:
         get_env()
