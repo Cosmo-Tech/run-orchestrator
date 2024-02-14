@@ -128,8 +128,8 @@ class Step:
                     tmp_file.write("\n".join(tmp_file_content))
                     LOGGER.debug("Running:" + ";".join(tmp_file_content))
                     tmp_file.close()
-                    r = subprocess.run(executable="/bin/bash",
-                                       args=["-c", tmp_file.name],
+                    r = subprocess.run(f"/bin/bash {tmp_file.name}",
+                                       shell=True,
                                        env=_e,
                                        check=True)
                     os.remove(tmp_file.name)
