@@ -1,0 +1,14 @@
+{
+  "steps": [
+    {
+      "id": "TEST",
+      "command": "/bin/bash",
+      "arguments": [
+        "script.sh"
+      ],
+      "environment": {
+        "PATH": {}
+      }
+    }
+  ]
+}

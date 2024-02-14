@@ -1,0 +1,8 @@
+#! /usr/bin/env bash 
+echo -n "PROD-13100 - PATH envvar should be passed for further commands as defined"
+PATH=$PATH:TEST csm-orc run run.json >/dev/null 2>&1
+if [ $? -ne 0 ]; then 
+  echo " => FAIL"
+else  
+  echo " => SUCCESS" 
+fi 
