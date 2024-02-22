@@ -10,7 +10,7 @@ description: "Command help: `csm-orc gen-from-legacy`"
     --8<-- "generated/commands_help/csm-orc_gen-from-legacy.txt"
     ```
 
-    ```text title="Generate json from Soluton.yaml"
+    ```text title="Generate json from Solution.yaml"
     --8<-- "generated/commands_help/csm-orc_gen-from-legacy_solution.txt"
     ```
 

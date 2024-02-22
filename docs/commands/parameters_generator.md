@@ -10,7 +10,7 @@ description: "Command help: `csm-orc init-parameters`"
     --8<-- "generated/commands_help/csm-orc_init-parameters.txt"
     ```
 
-    ```text title="Initialize using Soluton.yaml"
+    ```text title="Initialize using Solution.yaml"
     --8<-- "generated/commands_help/csm-orc_init-parameters_solution.txt"
     ```
 

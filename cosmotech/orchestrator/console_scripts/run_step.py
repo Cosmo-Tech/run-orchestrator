@@ -36,7 +36,7 @@ def main(template: str, steps: str):
 Known limitations:
 - The step MUST contain an executable main.py file
 - The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine
-- QT consumer in the simulator breaks the engine step when orchestrating
+- Qt consumers in the simulator breaks the engine step when orchestrating
 """
     project = pathlib.Path(".")
     steps = steps.split(",")
