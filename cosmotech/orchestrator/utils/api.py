@@ -23,15 +23,19 @@ from cosmotech.orchestrator.utils.logger import LOGGER
 
 def read_solution_file(solution_file) -> Optional[Solution]:
     solution_path = pathlib.Path(solution_file)
-    if not solution_path.suffix == ".yaml":
-        LOGGER.error(f"{solution_file} is not a `.yaml` file")
+    if solution_path.suffix in [".yaml", ".yml"]:
+        open_function = yaml.safe_load
+    elif solution_path.suffix == ".json":
+        open_function = json.load
+    else:
+        LOGGER.error(f"{solution_file} is not a `.yaml` or `.json` file")
         return None
     with solution_path.open() as _sf:
-        solution_yaml = yaml.safe_load(_sf)
+        solution_content = open_function(_sf)
     LOGGER.info(f"Loaded {solution_path.absolute()}")
     _solution = Solution(_configuration=cosmotech_api.Configuration(discard_unknown_keys=True),
                          _spec_property_naming=True,
-                         **solution_yaml)
+                         **solution_content)
     LOGGER.debug(json.dumps(_solution.to_dict(), indent=2))
     return _solution
 
