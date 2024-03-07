@@ -13,7 +13,7 @@ Paste your orchestration file in `text` mode and it will be semantically validat
 <div id="jsoneditor"></div>
 
 <script type="module" markdown>
-      import { JSONEditor, createAjvValidator } from 'https://cdn.jsdelivr.net/npm/vanilla-jsoneditor/index.js'
+      import { JSONEditor, createAjvValidator } from 'https://cdn.jsdelivr.net/npm/vanilla-jsoneditor/standalone.js';
 
       const schema = {
 --8<-- "cosmotech/orchestrator/schema/run_template_json_schema.json:3"
