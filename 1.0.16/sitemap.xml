@@ -2,77 +2,77 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/License/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/Validator/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/commands/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/commands/download_cloud_steps/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/commands/legacy_json_generator/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/commands/orchestrator/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/commands/parameters_generator/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/commands/run_step/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/commands/scenario_data_downloader/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/commands/simulation_to_adx/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/tutorial/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/tutorial/brewery/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/tutorial/first/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/1.0.16/tutorial/second/</loc>
-         <lastmod>2023-12-15</lastmod>
+         <lastmod>2024-03-07</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
