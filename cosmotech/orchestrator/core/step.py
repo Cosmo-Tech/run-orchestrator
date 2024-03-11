@@ -94,6 +94,8 @@ class Step:
         for k, v in self.environment.items():
             _v = v.effective_value()
             if _v is None:
+                if v.optional:
+                    break
                 _v = ""
             _env[k] = _v
         return _env
