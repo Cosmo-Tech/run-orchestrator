@@ -9,7 +9,7 @@ import json
 import os
 import pathlib
 from csv import DictWriter
-from distutils.dir_util import copy_tree
+import shutil
 
 from CosmoTech_Acceleration_Library.Accelerators.scenario_download.scenario_downloader import ScenarioDownloader
 
@@ -60,12 +60,12 @@ def download_scenario_data(
         pathlib.Path(dataset_folder).mkdir(parents=True, exist_ok=True)
         for k in datasets.keys():
             if k in scenario_data.get('dataset_list', ()):
-                copy_tree(dl.dataset_to_file(k, datasets[k]), dataset_folder)
+                shutil.copytree(dl.dataset_to_file(k, datasets[k]), dataset_folder, dirs_exist_ok=True)
                 LOGGER.debug(f"  - [yellow]{dataset_folder}[/] ([green]{k}[/])")
             if k in datasets_parameters_ids.keys():
                 param_dir = os.path.join(parameter_folder, datasets_parameters_ids[k])
                 pathlib.Path(param_dir).mkdir(exist_ok=True, parents=True)
-                copy_tree(dl.dataset_to_file(k, datasets[k]), param_dir)
+                shutil.copytree(dl.dataset_to_file(k, datasets[k]), param_dir, dirs_exist_ok=True)
                 LOGGER.debug(f"  - [yellow]{datasets_parameters_ids[k]}[/] ([green]{k}[/])")
     else:
         LOGGER.info("No dataset write asked, skipping")
