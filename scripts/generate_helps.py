@@ -22,6 +22,7 @@ from cosmotech.orchestrator.console_scripts.parameters_generation import main as
 from cosmotech.orchestrator.console_scripts.parameters_generation import solution as parameters_generation_command_sol
 from cosmotech.orchestrator.console_scripts.run import main as orchestrator_run_command
 from cosmotech.orchestrator.console_scripts.run_step import main as run_step_command
+from cosmotech.orchestrator.console_scripts.runner_data_downloader import main as runner_dl_command
 from cosmotech.orchestrator.console_scripts.scenario_data_downloader import main as scenario_data_dl_command
 from cosmotech.orchestrator.console_scripts.templates_listing import main as list_tpl_command
 
@@ -29,6 +30,7 @@ ansi_escape = re.compile(r'(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]')
 commands = {
     "csm-orc run-step": run_step_command,
     "csm-orc fetch-cloud-steps": dl_cloud_steps_command,
+    "csm-orc fetch-run-data": runner_dl_command,
     "csm-orc fetch-scenariorun-data": scenario_data_dl_command,
     "csm-orc send-to-adx": adx_scenario_connector_command,
     "csm-orc run": orchestrator_run_command,
