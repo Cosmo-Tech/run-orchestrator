@@ -34,7 +34,7 @@ class Step:
     loaded = False
     status = None
     skipped = False
-    stop_library_load: InitVar[bool] = field(default=False)
+    stop_library_load: InitVar[bool] = field(default=False, repr=False)
 
     def __load_command_from_library(self):
         library = Library()
