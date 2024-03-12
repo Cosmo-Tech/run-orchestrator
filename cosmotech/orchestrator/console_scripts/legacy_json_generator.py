@@ -126,51 +126,7 @@ def generate_from_template(template: RunTemplate, output: str):
     if template.fetch_datasets is not False or template.fetch_scenario_parameters:
         LOGGER.info("- [green]fetch_scenario_parameters[/] step found")
         _s = Step(id="fetch_scenario_parameters",
-                  command="csm-orc",
-                  arguments=["fetch-scenariorun-data"],
-                  useSystemEnvironment=True,
-                  environment={
-                      "CSM_ORGANIZATION_ID": {
-                          "description": "The id of an organization in the cosmotech api"
-                      },
-                      "CSM_WORKSPACE_ID": {
-                          "description": "The id of a workspace in the cosmotech api"
-                      },
-                      "CSM_SCENARIO_ID": {
-                          "description": "The id of a scenario in the cosmotech api"
-                      },
-                      "CSM_API_URL": {
-                          "description": "The url to a Cosmotech API"
-                      },
-                      "CSM_API_SCOPE": {
-                          "description": "The identification scope of a Cosmotech API"
-                      },
-                      "CSM_DATASET_ABSOLUTE_PATH": {
-                          "description": "A local folder to store the main dataset content"
-                      },
-                      "CSM_PARAMETERS_ABSOLUTE_PATH": {
-                          "description": "A local folder to store the parameters content"
-                      },
-                      "WRITE_JSON": {
-                          "description": "Toggle writing of parameters in json format",
-                          "defaultValue": json.dumps((template.fetch_scenario_parameters and template.parameters_json)
-                                                     is True)
-                      },
-                      "WRITE_CSV": {
-                          "description": "Toggle writing of parameters in csv format",
-                          "defaultValue": json.dumps(
-                              (template.fetch_scenario_parameters and not template.parameters_json)
-                              is True)
-                      },
-                      "FETCH_DATASET": {
-                          "description": "Toggle fetching datasets",
-                          "defaultValue": json.dumps(template.fetch_datasets is True)
-                      },
-                      "LOG_LEVEL": {
-                          "description": "Either CRITICAL, ERROR, WARNING, INFO or DEBUG",
-                          "defaultValue": "INFO"
-                      },
-                  })
+                  commandId="csm-orc fetch-scenariorun-data")
         previous = "fetch_scenario_parameters"
         steps.append(_s)
 
@@ -227,18 +183,8 @@ def generate_from_template(template: RunTemplate, output: str):
                 _steps.append(_step_dl_cloud)
             LOGGER.info(f"- [green]{name}[/] step found")
             _run_step = Step(id=name,
-                             command="csm-orc",
-                             arguments=["run-step"],
-                             useSystemEnvironment=True,
+                             commandId="csm-orc run-step",
                              environment={
-                                 "CSM_ORGANIZATION_ID": {
-                                     "optional": True,
-                                     "description": "The id of an organization in the cosmotech api"
-                                 },
-                                 "CSM_WORKSPACE_ID": {
-                                     "optional": True,
-                                     "description": "The id of a workspace in the cosmotech api"
-                                 },
                                  "CSM_RUN_TEMPLATE_ID": {
                                      "description": "The name of the run template defined in the cosmotech api "
                                                     "and available in the project",
@@ -247,60 +193,6 @@ def generate_from_template(template: RunTemplate, output: str):
                                  "CSM_CONTAINER_MODE": {
                                      "description": "The steps run during a run-step",
                                      "value": name
-                                 },
-                                 "CSM_API_URL": {
-                                     "optional": True,
-                                     "description": "The url to a Cosmotech API"
-                                 },
-                                 "CSM_API_SCOPE": {
-                                     "optional": True,
-                                     "description": "The identification scope of a Cosmotech API"
-                                 },
-                                 "AZURE_TENANT_ID": {
-                                     "optional": True,
-                                     "description": "An Azure Tenant ID"
-                                 },
-                                 "AZURE_CLIENT_ID": {
-                                     "optional": True,
-                                     "description": "An Azure Client ID having access to the Cosmotech API"
-                                 },
-                                 "AZURE_CLIENT_SECRET": {
-                                     "optional": True,
-                                     "description": "The secret for the Azure Client"
-                                 },
-                                 "LOG_LEVEL": {
-                                     "description": "Either CRITICAL, ERROR, WARNING, INFO or DEBUG",
-                                     "defaultValue": "INFO"
-                                 },
-                                 "PYTHONPATH": {
-                                     "description": "A list of folder to add to the python path",
-                                     "defaultValue": ""
-                                 },
-                                 "CSM_DATASET_ABSOLUTE_PATH": {
-                                     "description": "A local folder to store the main dataset content"
-                                 },
-                                 "CSM_PARAMETERS_ABSOLUTE_PATH": {
-                                     "description": "A local folder to store the parameters content"
-                                 },
-                                 "CSM_SIMULATION_ID": {
-                                     "description": "The id of the simulation run"
-                                 },
-                                 "CSM_SIMULATION": {
-                                     "description": "The name of the Simulation file to use"
-                                 },
-                                 "AZURE_DATA_EXPLORER_RESOURCE_URI": {
-                                     "optional": True,
-                                     "description": "the ADX cluster path "
-                                                    "(URI info can be found into ADX cluster page)"
-                                 },
-                                 "AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI": {
-                                     "optional": True,
-                                     "description": "The ADX cluster ingest path "
-                                                    "(URI info can be found into ADX cluster page)"
-                                 },
-                                 "AZURE_DATA_EXPLORER_DATABASE_NAME": {
-                                     "optional": True,
-                                     "description": "The targeted database name"
                                  },
                              })
             if template.csm_simulation is not None:
