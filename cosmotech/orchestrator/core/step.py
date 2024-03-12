@@ -98,7 +98,7 @@ class Step:
             _v = v.effective_value()
             if _v is None:
                 if v.optional:
-                    break
+                    continue
                 _v = ""
             _env[k] = _v
         # Special case for some standard env var (mostly the ones configured in the docker image by default)
