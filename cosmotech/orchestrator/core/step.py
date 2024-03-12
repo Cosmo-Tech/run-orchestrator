@@ -98,6 +98,10 @@ class Step:
                     break
                 _v = ""
             _env[k] = _v
+        # Special case for "PATH" EnvVar due to subprocess run method
+        # to avoid needing to add "UseSystemEnv" in every step
+        if "PATH" not in _env and os.environ.get("PATH"):
+            _env["PATH"] = os.environ.get("PATH")
         return _env
 
     def run(self, dry: bool = False, previous=None):
