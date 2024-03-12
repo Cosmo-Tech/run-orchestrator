@@ -126,7 +126,8 @@ def generate_from_template(template: RunTemplate, output: str):
     if template.fetch_datasets is not False or template.fetch_scenario_parameters:
         LOGGER.info("- [green]fetch_scenario_parameters[/] step found")
         _s = Step(id="fetch_scenario_parameters",
-                  commandId="csm-orc fetch-scenariorun-data")
+                  commandId="csm-orc fetch-scenariorun-data",
+                  stop_library_load=True)
         previous = "fetch_scenario_parameters"
         steps.append(_s)
 
@@ -194,7 +195,8 @@ def generate_from_template(template: RunTemplate, output: str):
                                      "description": "The steps run during a run-step",
                                      "value": name
                                  },
-                             })
+                             },
+                             stop_library_load=True)
             if template.csm_simulation is not None:
                 _run_step.environment["CSM_SIMULATION"].defaultValue = template.csm_simulation
             if _previous:

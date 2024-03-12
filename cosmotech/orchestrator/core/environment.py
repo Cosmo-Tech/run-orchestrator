@@ -41,5 +41,6 @@ class EnvironmentVariable:
             r['defaultValue'] = self.defaultValue
         if self.description:
             r['description'] = self.description
-        r['optional'] = self.optional
+        if self.optional:
+            r['optional'] = self.optional
         return r

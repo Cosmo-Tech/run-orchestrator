@@ -36,7 +36,7 @@ def read_solution_file(solution_file) -> Optional[Solution]:
     _solution = Solution(_configuration=cosmotech_api.Configuration(discard_unknown_keys=True),
                          _spec_property_naming=True,
                          **solution_content)
-    LOGGER.debug(json.dumps(_solution.to_dict(), indent=2))
+    LOGGER.debug(json.dumps(_solution.to_dict(), indent=2, default=str))
     return _solution
 
 

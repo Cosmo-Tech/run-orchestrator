@@ -10,6 +10,7 @@ import pathlib
 import subprocess
 import sys
 import tempfile
+from dataclasses import InitVar
 from dataclasses import dataclass
 from dataclasses import field
 from typing import Union
@@ -33,6 +34,7 @@ class Step:
     loaded = False
     status = None
     skipped = False
+    stop_library_load: InitVar[bool] = field(default=False)
 
     def __load_command_from_library(self):
         library = Library()
@@ -56,7 +58,7 @@ class Step:
             else:
                 self.environment[_env_key] = _env
 
-    def __post_init__(self):
+    def __post_init__(self, stop_library_load):
         if not bool(self.command) ^ bool(self.commandId):
             self.status = "Error"
             raise ValueError("A step requires either a command or a commandId")
@@ -65,8 +67,9 @@ class Step:
             tmp_env[k] = EnvironmentVariable(k, **v)
         self.environment = tmp_env
         self.status = "Init"
-        if self.commandId:
+        if self.commandId and not stop_library_load:
             self.__load_command_from_library()
+            self.commandId = None
         self.loaded = True
 
     def serialize(self):
