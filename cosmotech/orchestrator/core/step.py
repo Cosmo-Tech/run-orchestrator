@@ -98,10 +98,11 @@ class Step:
                     break
                 _v = ""
             _env[k] = _v
-        # Special case for "PATH" EnvVar due to subprocess run method
-        # to avoid needing to add "UseSystemEnv" in every step
-        if "PATH" not in _env and os.environ.get("PATH"):
-            _env["PATH"] = os.environ.get("PATH")
+        # Special case for some standard env var (mostly the ones configured in the docker image by default)
+        # This avoids needing to add "useSystemEnvironment" in every/most steps
+        for env_name in ["PATH", "PYTHONPATH", "LD_LIBRARY_PATH", "SSL_CERT_DIR"]:
+            if env_name not in _env and os.environ.get(env_name):
+                _env[env_name] = os.environ.get(env_name)
         return _env
 
     def run(self, dry: bool = False, previous=None):
