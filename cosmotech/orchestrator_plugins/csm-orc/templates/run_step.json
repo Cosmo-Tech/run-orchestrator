@@ -77,6 +77,14 @@
     "AZURE_DATA_EXPLORER_DATABASE_NAME": {
       "optional": true,
       "description": "The targeted database name"
+    },
+    "CSM_PROBES_MEASURES_TOPIC": {
+      "optional": true,
+      "description": "An AMQP URI to send probe data to"
+    },
+    "CSM_CONTROL_PLANE_TOPIC" : {
+      "optional": true,
+      "description": "An AMQP URI to send simulation control values to"
     }
   }
 }

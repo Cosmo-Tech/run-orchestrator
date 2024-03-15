@@ -30,7 +30,7 @@ class Step:
     arguments: list[str] = field(default_factory=list)
     environment: dict[str, Union[EnvironmentVariable, dict]] = field(default_factory=dict)
     precedents: list[Union[str, 'Step']] = field(default_factory=list)
-    useSystemEnvironment: bool = field(default=False)
+    useSystemEnvironment: bool = field(default=True)
     loaded = False
     status = None
     skipped = False
