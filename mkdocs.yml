@@ -82,6 +82,7 @@ nav:
         - "commands/legacy_json_generator.md"
       - Helpers:
         - "commands/parameters_generator.md"
+        - "commands/run_data_downloader.md"
 
 not_in_nav: |
   tutorial/brewery_legacy.md

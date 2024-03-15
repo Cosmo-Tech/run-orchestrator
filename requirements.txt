@@ -1,5 +1,5 @@
 # Cosmotech dependencies
-cosmotech-acceleration-library==0.5.0
+cosmotech-acceleration-library==0.5.2
 cosmotech-api==3.1.0
 
 # Orchestrator Dependencies
