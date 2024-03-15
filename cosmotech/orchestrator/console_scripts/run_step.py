@@ -111,7 +111,8 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
                                  "CSM_CONTROL_PLANE_TOPIC directly so it is not "
                                  "transformed as an argument.")
                 r = subprocess.run(args=args,
-                                   executable=str(engine_path.absolute()))
+                                   executable=str(engine_path.absolute()),
+                                   env=os.environ)
                 if r.returncode != 0:
                     return r.returncode
             continue
@@ -120,16 +121,20 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
         executable = sys.executable
         if (req_path := main_path / "requirements.txt").exists():
             LOGGER.info(f"Found {req_path}, setting a venv to install it")
-            reqs = subprocess.check_output([executable, '-m', 'pip', 'freeze']).decode(sys.stdout.encoding).strip()
+            reqs = subprocess.check_output([executable, '-m', 'pip', 'freeze'],
+                                           env=os.environ).decode(sys.stdout.encoding).strip()
             venv_path = main_path / '.venv'
             if not venv_path.exists():
                 venv.create(venv_path, with_pip=True)
             executable = str(venv_path / "bin/python")
-            subprocess.run([executable, '-m', 'pip', 'install'] + reqs.split("\n"))
-            subprocess.run([executable, '-m', 'pip', 'install', '-r', str(req_path)])
+            subprocess.run([executable, '-m', 'pip', 'install'] + reqs.split("\n"),
+                           env=os.environ)
+            subprocess.run([executable, '-m', 'pip', 'install', '-r', str(req_path)],
+                           env=os.environ)
 
         LOGGER.info(f"Running {s} step")
-        p = subprocess.run([executable, str(main_path.absolute() / "main.py")])
+        p = subprocess.run([executable, str(main_path.absolute() / "main.py")],
+                           env=os.environ)
         if p.returncode != 0:
             LOGGER.error(f"Issue while running step {s} please check your logs")
             return 1
