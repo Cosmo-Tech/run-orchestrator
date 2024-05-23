@@ -19,6 +19,7 @@ MODE_SCENARIODATA_TRANSFORM = "scenariodata-transform"
 
 RESOURCE_PROVIDER_LOCAL = "local"
 RESOURCE_PROVIDER_AZURE = "azureStorage"
+RESOURCE_PROVIDER_S3 = "s3Storage"
 RESOURCE_PROVIDER_GIT = "git"
 
 RESOURCE_MAIN = "main.py"
@@ -85,11 +86,11 @@ def install_azure_dependencies():
     logging.debug("Azure packages configured")
 
 
-def download_azure(connection_string, path, download_file):
+def download_azure(path, download_file):
     install_azure_dependencies()
     from azure.storage.blob import BlobServiceClient, __version__
     logging.debug("Azure Blob storage v" + __version__)
-    if connection_string is None:
+    if AZURE_STORAGE_CONNECTION_STRING is None:
         raise EntrypointException(
             "You must provide the azure storage account "
             "connection string in AZURE_STORAGE_CONNECTION_STRING")
@@ -104,15 +105,38 @@ def download_azure(connection_string, path, download_file):
     blob = split_path[1]
 
     blob_service_client = BlobServiceClient.from_connection_string(
-        connection_string)
+        AZURE_STORAGE_CONNECTION_STRING)
     blob_client = blob_service_client.get_blob_client(
         container=container, blob=blob)
     with open(download_file, "wb") as file:
         file.write(blob_client.download_blob().readall())
 
 
-def fetch_azure_storage(path):
-    logging.info("Fetching resource from Azure Storage")
+def download_s3(path, download_file):
+    logging.info("Installing & importing S3 packages")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "boto3"])
+    import boto3
+    logging.debug("S3 packages configured")
+
+    if "/" not in path:
+        raise EntrypointException(
+            "You must provide the S3 object path in the format: BUCKET/OBJECT")
+
+    split_path = path.split("/", maxsplit=1)
+    bucket_name = split_path[0]
+    object_key = split_path[1]
+
+    s3_client = boto3.client(
+        service_name="s3",
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        endpoint_url=S3_ENDPOINT)
+    with open(download_file, "wb") as file:
+        s3_client.download_fileobj(bucket_name, object_key, file)
+
+
+def fetch_cloud_storage(path, download_callback):
+    logging.info("Fetching resource from cloud storage")
     if not path.endswith(".zip"):
         raise EntrypointException(
             f"Unsupported resource file format in {path}. "
@@ -123,7 +147,7 @@ def fetch_azure_storage(path):
     local_path.mkdir(parents=True, exist_ok=True)
     download_file = local_path / RESOURCE_ZIP
 
-    download_azure(AZURE_STORAGE_CONNECTION_STRING, path, download_file)
+    download_callback(path, download_file)
 
     logging.debug(f"Unzipping {download_file}")
     with ZipFile(download_file, 'r') as zipObj:
@@ -173,7 +197,9 @@ def fetch_resource(provider, path):
     if provider == RESOURCE_PROVIDER_LOCAL:
         return Path(path)
     if provider == RESOURCE_PROVIDER_AZURE:
-        return fetch_azure_storage(path)
+        return fetch_cloud_storage(path, download_azure)
+    if provider == RESOURCE_PROVIDER_S3:
+        return fetch_cloud_storage(path, download_s3)
     if provider == RESOURCE_PROVIDER_GIT:
         return fetch_git_repository(path)
 
@@ -341,6 +367,10 @@ def get_env():
         "AZURE_CLIENT_ID",
         "AZURE_CLIENT_SECRET",
         "AZURE_STORAGE_CONNECTION_STRING",
+        # S3 connection
+        "S3_ENDPOINT",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
     ]
     # Mode's provider and path
     for mode in ["PARAMETERS_HANDLER", "DATASET_VALIDATOR", "PRERUN", "ENGINE", "POSTRUN", "SCENARIODATA_TRANSFORM"]:
