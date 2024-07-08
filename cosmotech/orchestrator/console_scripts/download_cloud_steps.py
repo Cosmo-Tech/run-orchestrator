@@ -6,6 +6,7 @@
 # specifically authorized by written means by Cosmo Tech.
 
 import pathlib
+from io import BytesIO
 from zipfile import BadZipfile
 from zipfile import ZipFile
 
@@ -71,7 +72,6 @@ Requires a valid Azure connection either with:
 
     configuration = cosmotech_api.Configuration(
         host=api_url,
-        discard_unknown_keys=True,
         access_token=token.token
     )
     LOGGER.info("Configuration to the api set")
@@ -87,7 +87,7 @@ Requires a valid Azure connection either with:
             LOGGER.error(f"Workspace [green bold]{workspace_id}[/] was not found "
                          f"in Organization [green bold]{organization_id}[/]")
             LOGGER.debug(e.body)
-            return 1
+            raise click.Abort()
         solution_id = r_data.solution.solution_id
 
         api_sol = SolutionApi(api_client)
@@ -98,10 +98,10 @@ Requires a valid Azure connection either with:
             handler_path: pathlib.Path = template_path / handler_id
             LOGGER.info(f"Querying Handler [green bold]{handler_id}[/] for [green bold]{run_template_id}[/]")
             try:
-                r_data = api_sol.download_run_template_handler(organization_id=organization_id,
-                                                               solution_id=solution_id,
-                                                               run_template_id=run_template_id,
-                                                               handler_id=handler_id)
+                rt_data = api_sol.download_run_template_handler(organization_id=organization_id,
+                                                                solution_id=solution_id,
+                                                                run_template_id=run_template_id,
+                                                                handler_id=handler_id)
             except ServiceException as e:
                 LOGGER.error(
                     f"Handler [green bold]{handler_id}[/] was not found "
@@ -114,14 +114,14 @@ Requires a valid Azure connection either with:
             handler_path.mkdir(parents=True, exist_ok=True)
 
             try:
-                with ZipFile(r_data) as _zip:
+                with ZipFile(BytesIO(rt_data)) as _zip:
                     _zip.extractall(handler_path)
             except BadZipfile:
                 LOGGER.error(f"Handler [green bold]{handler_id}[/] is not a [blue]zip file[/]")
                 has_errors = True
         if has_errors:
             LOGGER.error("Issues were met during run, please check the previous logs")
-            return 2
+            raise click.Abort()
 
 
 if __name__ == "__main__":

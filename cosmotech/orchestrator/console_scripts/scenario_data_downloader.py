@@ -52,14 +52,14 @@ def download_scenario_data(
     LOGGER.info("Download datasets")
     if fetch_dataset:
         datasets = dl.get_all_datasets(scenario_id=scenario_id)
-        datasets_parameters_ids = {param.get('value'): param.get('parameter_id')
-                                   for param in scenario_data.get('parameters_values')
-                                   if param.get('var_type') == "%DATASETID%"}
+        datasets_parameters_ids = {param.value: param.parameter_id
+                                   for param in scenario_data.parameters_values
+                                   if param.var_type == "%DATASETID%"}
 
         LOGGER.info("Store datasets")
         pathlib.Path(dataset_folder).mkdir(parents=True, exist_ok=True)
         for k in datasets.keys():
-            if k in scenario_data.get('dataset_list', ()):
+            if k in scenario_data.dataset_list:
                 shutil.copytree(dl.dataset_to_file(k, datasets[k]), dataset_folder, dirs_exist_ok=True)
                 LOGGER.debug(f"  - [yellow]{dataset_folder}[/] ([green]{k}[/])")
             if k in datasets_parameters_ids.keys():
@@ -79,14 +79,14 @@ def download_scenario_data(
         return
 
     parameters = []
-    if scenario_data['parameters_values']:
-        max_name_size = max(map(lambda r: len(r.get('parameter_id')), scenario_data['parameters_values']))
-        max_type_size = max(map(lambda r: len(r.get('var_type')), scenario_data['parameters_values']))
-        for parameter_data in scenario_data['parameters_values']:
-            parameter_name = parameter_data.get('parameter_id')
-            value = parameter_data.get('value')
-            var_type = parameter_data.get('var_type')
-            is_inherited = parameter_data.get('is_inherited')
+    if scenario_data.parameters_values:
+        max_name_size = max(map(lambda r: len(r.parameter_id), scenario_data.parameters_values))
+        max_type_size = max(map(lambda r: len(r.var_type), scenario_data.parameters_values))
+        for parameter_data in scenario_data.parameters_values:
+            parameter_name = parameter_data.parameter_id
+            value = parameter_data.value
+            var_type = parameter_data.var_type
+            is_inherited = parameter_data.is_inherited
             parameters.append({
                 "parameterId": parameter_name,
                 "value": value,

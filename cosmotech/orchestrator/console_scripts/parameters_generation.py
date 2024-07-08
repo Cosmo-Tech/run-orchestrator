@@ -149,19 +149,19 @@ def generate_parameters(
         template: RunTemplate = _t[0]
     else:
         LOGGER.error(f"Run template [green bold]{run_template_id}[/] was not found.")
-        return 1
+        raise click.Abort()
     LOGGER.info(f"Found [green bold]{run_template_id}[/] in the solution generating json file")
-    parameter_groups = template['parameter_groups']
+    parameter_groups = template.parameter_groups
     parameter_names = []
-    for param_group in solution['parameter_groups']:
-        if param_group['id'] in parameter_groups:
-            parameter_names.extend(param_group['parameters'])
+    for param_group in solution.parameter_groups:
+        if param_group.id in parameter_groups:
+            parameter_names.extend(param_group.parameters)
     parameters = []
     dataset_parameters = []
-    for param in solution['parameters']:
-        if param['id'] in parameter_names:
-            parameter_name = param.get('id')
-            var_type = param.get('var_type')
+    for param in solution.parameters:
+        if param.id in parameter_names:
+            parameter_name = param.id
+            var_type = param.var_type
             if var_type == "%DATASETID%":
                 dataset_parameters.append(parameter_name)
             parameters.append({

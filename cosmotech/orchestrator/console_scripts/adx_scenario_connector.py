@@ -116,6 +116,7 @@ Requires a valid Azure connection either with:
         else:
             LOGGER.error(f"Issue creating table {k}")
             LOGGER.error(r.get_exceptions())
+            raise click.Abort()
     insert_csv_files(files_data=csv_data,
                      adx_client=adx_client,
                      simulation_id=simulation_id,

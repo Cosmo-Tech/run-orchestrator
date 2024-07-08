@@ -31,13 +31,12 @@ def download_runner_data(organization_id: str, workspace_id: str, runner_id: str
     :param parameter_folder: a local folder where all parameters will be downloaded
     :return: Nothing
     """
-    LOGGER.info("Starting the ETL Run")
+    LOGGER.info("Starting the Run data download")
     credentials = DefaultAzureCredential()
     scope = os.environ.get("CSM_API_SCOPE")
     access_token = credentials.get_token(scope).token
     configuration = cosmotech_api.Configuration(
         host=os.environ.get("CSM_API_URL"),
-        discard_unknown_keys=True,
         access_token=access_token
     )
     parameters = list()
@@ -51,23 +50,19 @@ def download_runner_data(organization_id: str, workspace_id: str, runner_id: str
                                                      workspace_id=workspace_id,
                                                      runner_id=runner_id)
         LOGGER.info("Loaded run data")
-        target_dataset = dataset_api_instance.find_dataset_by_id(
-            organization_id=organization_id,
-            dataset_id=runner_data['dataset_list'][0])
-        LOGGER.info("Loaded target dataset info")
         # Pre-read of all workspace files to ensure ready to download AZ storage files
         all_api_files = workspace_api_instance.find_all_workspace_files(
             organization_id=organization_id,
             workspace_id=workspace_id)
 
-        max_name_size = max(map(lambda r: len(r.get('parameter_id')), runner_data['parameters_values']))
-        max_type_size = max(map(lambda r: len(r.get('var_type')), runner_data['parameters_values']))
+        max_name_size = max(map(lambda r: len(r.parameter_id), runner_data.parameters_values))
+        max_type_size = max(map(lambda r: len(r.var_type), runner_data.parameters_values))
         # Loop over all parameters
-        for parameter in runner_data['parameters_values']:
-            value = parameter['value']
-            var_type = parameter['var_type']
-            param_id = parameter['parameter_id']
-            is_inherited = parameter.get('is_inherited')
+        for parameter in runner_data.parameters_values:
+            value = parameter.value
+            var_type = parameter.var_type
+            param_id = parameter.parameter_id
+            is_inherited = parameter.is_inherited
             LOGGER.info(f"Found parameter '{param_id}' with value '{value}'")
 
             # Download "%DATASETID%" files if AZ storage + workspace file based
@@ -99,6 +94,7 @@ def download_runner_data(organization_id: str, workspace_id: str, runner_id: str
 
 
 def write_parameters(parameter_folder, parameters):
+    pathlib.Path(parameter_folder).mkdir(exist_ok=True, parents=True)
     tmp_parameter_file = os.path.join(parameter_folder, "parameters.json")
     LOGGER.info(f"Generating {tmp_parameter_file}")
     with open(tmp_parameter_file, "w") as _file:
