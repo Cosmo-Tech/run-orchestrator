@@ -87,7 +87,7 @@ Requires a valid Azure connection either with:
             LOGGER.error(f"Workspace [green bold]{workspace_id}[/] was not found "
                          f"in Organization [green bold]{organization_id}[/]")
             LOGGER.debug(e.body)
-            return 1
+            raise click.Abort()
         solution_id = r_data.solution.solution_id
 
         api_sol = SolutionApi(api_client)
@@ -121,7 +121,7 @@ Requires a valid Azure connection either with:
                 has_errors = True
         if has_errors:
             LOGGER.error("Issues were met during run, please check the previous logs")
-            return 2
+            raise click.Abort()
 
 
 if __name__ == "__main__":

@@ -149,7 +149,7 @@ def generate_parameters(
         template: RunTemplate = _t[0]
     else:
         LOGGER.error(f"Run template [green bold]{run_template_id}[/] was not found.")
-        return 1
+        raise click.Abort()
     LOGGER.info(f"Found [green bold]{run_template_id}[/] in the solution generating json file")
     parameter_groups = template.parameter_groups
     parameter_names = []

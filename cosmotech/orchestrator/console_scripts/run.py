@@ -64,6 +64,7 @@ In case you are in a python venv, the venv is activated before any command is ru
                                 gen_env_target is not None)
     except ValueError as e:
         LOGGER.error(e)
+        raise click.Abort()
     else:
         if g is None:
             return
@@ -79,7 +80,7 @@ In case you are in a python venv, the venv is activated before any command is ru
                 if v[0].status == "RunError":
                     success = False
             if not success:
-                exit(1)
+                raise click.Abort()
         elif gen_env_target is not None:
             LOGGER.info(f'Writing environment file "{gen_env_target}"')
             _fp = pathlib.Path(gen_env_target)

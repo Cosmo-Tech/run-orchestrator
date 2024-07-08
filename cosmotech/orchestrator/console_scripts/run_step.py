@@ -42,9 +42,9 @@ Known limitations:
     steps = steps.split(",")
     if not project.exists() or not (project / "project.csm").exists():
         LOGGER.error(f"{project} is not the root directory of a Cosmo project.")
-        exit(1)
+        raise click.Abort()
     error = executor(project, template, steps)
-    exit(error)
+    return error
 
 
 def executor(project: pathlib.Path, template: str, steps: list[str]):

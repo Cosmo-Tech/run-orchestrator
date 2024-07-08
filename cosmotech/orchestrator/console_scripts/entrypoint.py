@@ -426,7 +426,7 @@ def main(legacy: bool):
                                   env=_env)
     except subprocess.CalledProcessError:
         logging.error("Error while running the entrypoint - check your logs")
-        exit(1)
+        raise click.Abort()
 
 
 if __name__ == "__main__":
