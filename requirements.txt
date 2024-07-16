@@ -1,7 +1,3 @@
-# Cosmotech dependencies
-cosmotech-acceleration-library>=0.5.3
-cosmotech-api>=3.2
-
 # Orchestrator Dependencies
 flowpipe==1.0.0
 jsonschema==4.21.1
