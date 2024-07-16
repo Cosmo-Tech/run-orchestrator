@@ -5,20 +5,12 @@
 # etc., to any person is prohibited unless it has been previously and
 # specifically authorized by written means by Cosmo Tech.
 
-import pathlib
-
-from cosmotech_api.api.solution_api import RunTemplate
-from cosmotech_api.api.solution_api import Solution
-
-from cosmotech.orchestrator.console_scripts.scenario_data_downloader import write_parameters
-from cosmotech.orchestrator.utils.api import get_solution
-from cosmotech.orchestrator.utils.api import read_solution_file
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
 
 
-@click.group()
+@click.group(deprecated=True)
 @web_help("commands/parameters_generator")
 def main():
     """Base command to initialize parameter folders  
@@ -31,7 +23,7 @@ Check the help of the sub commands for more information:
     pass
 
 
-@main.command()
+@main.command(deprecated=True)
 @click.argument("solution_file",
                 type=click.Path(file_okay=True, dir_okay=False, readable=True, writable=True),
                 required=True,
@@ -57,19 +49,17 @@ Check the help of the sub commands for more information:
               help="Toggle writing of parameters in csv format")
 @web_help("commands/parameters_generator")
 def solution(
-    solution_file: str,
-    run_template_id: str,
-    output_folder: str,
-    write_json: bool,
-    write_csv: bool
+    **kwargs
 ):
     """Initialize parameter folder for given run template from a Solution yaml file"""
-    if sol := read_solution_file(solution_file):
-        return generate_parameters(sol, run_template_id, output_folder, write_json, write_csv)
-    return 1
+    LOGGER.error("""Command as been removed from csm-orc since [cyan bold]1.3.0[/]
+You can find the new command in Cosmotech_Acceleration_Library version [cyan bold]0.7.0+[/]
+Use [cyan bold]csm-data legacy init-local-parameter-folder from-file[/] instead
+""")
+    raise click.Abort("Command as been removed from csm-orc")
 
 
-@main.command()
+@main.command(deprecated=True)
 @click.argument("output_folder",
                 envvar="CSM_PARAMETERS_ABSOLUTE_PATH",
                 type=click.Path(dir_okay=True, readable=True, writable=True),
@@ -119,69 +109,14 @@ def solution(
               help="Toggle writing of parameters in csv format")
 @web_help("commands/parameters_generator")
 def cloud(
-    workspace_id: str,
-    organization_id: str,
-    run_template_id: str,
-    api_scope: str,
-    api_url: str,
-    output_folder: str,
-    write_json: bool,
-    write_csv: bool,
+    **kwargs
 ):
     """Initialize parameter folder for given run template from CosmoTech cloud API"""
-    if sol := get_solution(api_scope=api_scope,
-                           api_url=api_url,
-                           organization_id=organization_id,
-                           workspace_id=workspace_id):
-        return generate_parameters(sol, run_template_id, output_folder, write_json, write_csv)
-    return 1
-
-
-def generate_parameters(
-    solution: Solution,
-    run_template_id: str,
-    output_folder: str,
-    write_json: bool,
-    write_csv: bool
-):
-    LOGGER.info(f"Searching [green bold]{run_template_id}[/] in the solution")
-    if _t := [t for t in solution.run_templates if t.id == run_template_id]:
-        template: RunTemplate = _t[0]
-    else:
-        LOGGER.error(f"Run template [green bold]{run_template_id}[/] was not found.")
-        raise click.Abort()
-    LOGGER.info(f"Found [green bold]{run_template_id}[/] in the solution generating json file")
-    parameter_groups = template.parameter_groups
-    parameter_names = []
-    for param_group in solution.parameter_groups:
-        if param_group.id in parameter_groups:
-            parameter_names.extend(param_group.parameters)
-    parameters = []
-    dataset_parameters = []
-    for param in solution.parameters:
-        if param.id in parameter_names:
-            parameter_name = param.id
-            var_type = param.var_type
-            if var_type == "%DATASETID%":
-                dataset_parameters.append(parameter_name)
-            parameters.append({
-                "parameterId": parameter_name,
-                "value": f'{parameter_name}_value',
-                "varType": var_type,
-                "isInherited": False
-            })
-    if not (write_csv or write_json or dataset_parameters):
-        LOGGER.warning(f"No parameters to write for [green bold]{run_template_id}[/]")
-        return 1
-    output_folder_path = pathlib.Path(output_folder)
-    output_folder_path.mkdir(parents=True, exist_ok=True)
-    if dataset_parameters:
-        LOGGER.info(f"Creating folders for dataset parameters")
-    for d_param in dataset_parameters:
-        dataset_parameters_folder = output_folder_path / d_param
-        dataset_parameters_folder.mkdir(parents=True, exist_ok=True)
-        LOGGER.info(f"- {dataset_parameters_folder}")
-    write_parameters(str(output_folder_path), parameters, write_csv, write_json)
+    LOGGER.error("""Command as been removed from csm-orc since [cyan bold]1.3.0[/]
+You can find the new command in Cosmotech_Acceleration_Library version [cyan bold]0.7.0+[/]
+Use [cyan bold]csm-data legacy init-local-parameter-folder from-api[/] instead
+""")
+    raise click.Abort("Command as been removed from csm-orc")
 
 
 if __name__ == "__main__":

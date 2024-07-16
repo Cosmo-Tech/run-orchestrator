@@ -29,17 +29,15 @@ def require_env(envvar, envvar_desc):
     return wrap_function
 
 
-def web_help(documentation_target):
-    documentation_page = WEB_DOCUMENTATION_ROOT
-    if documentation_target:
-        documentation_page = WEB_DOCUMENTATION_ROOT + documentation_target
+def web_help(effective_target="", base_url=WEB_DOCUMENTATION_ROOT):
+    documentation_url = base_url + effective_target
 
     def open_documentation(ctx: click.Context, param, value):
         if value:
-            if not webbrowser.open(documentation_page):
-                LOGGER.warning(f"Failed to open: {documentation_page}")
+            if not webbrowser.open(documentation_url):
+                LOGGER.warning(f"Failed to open: {documentation_url}")
             else:
-                LOGGER.info(f"Opened {documentation_page} in your navigator")
+                LOGGER.info(f"Opened {documentation_url} in your navigator")
             ctx.exit(0)
 
     def wrap_function(func):
