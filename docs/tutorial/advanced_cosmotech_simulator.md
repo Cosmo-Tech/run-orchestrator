@@ -57,9 +57,19 @@ The Cosmo Tech API will forward a set of environment variables to any Simulator 
 
 ## Connect to the API to get our `Scenario` data
 
-Multiple ways exists to connect to the API and query some data, but for simplicity there exists a command in `csm-orc` that will make use of known API environment variables and do the work for you.
+Multiple ways exists to connect to the API and query some data, but for simplicity there exists a command in `csm-data` that will make use of known API environment variables and do the work for you.
 
-That command is `csm-orc fetch-scenariorun-data` (documentation of the command is available [here](../commands/scenario_data_downloader.md)).
+!!! info "What is `csm-data`"
+    `csm-data` is a data oriented CLI part of the library `CosmoTech-Acceleration-Library` (abreviated as `CoAL`)  
+
+    It is made to have pre-made commands to facilitate use of most of the services a modelisator/integrator could require while working on a run template  
+
+    You can get it by installing `CoAL` starting with version `0.7.0`
+    ```bash title="How to install CoAL and csm-data"
+    pip install CosmoTech-Acceleration-Library~=0.7.0
+    ```
+
+That command is `csm-data api scenariorun-load-data` (documentation of the command is available [here](https://cosmo-tech.github.io/CosmoTech-Acceleration-Library/0.7.0/csm-data/api/scenariorun-load-data/)).
 
 The command makes use of 5 environment variables set by the API (as described in the previous section):
 
@@ -88,7 +98,7 @@ Using all those new information we can see that most of the actions needed to ru
 
 We can:
 
-- Download our scenario information using `csm-orc fetch-scenariorun-data`.
+- Download our scenario information using `csm-data api scenariorun-load-data`.
 - Apply our parameters with our `apply_parameters.py`.
 - Run our simulation using `csm-orc run-step`.
 - And send our simulation results to an external system (here Azure Data Explorer) by setting environment variables during the `run-step`.
@@ -105,13 +115,13 @@ It is then easy to update our previous `run.json` to take those changes into acc
     cp -r code/run_templates/orchestrator_tutorial_1 code/run_templates/orchestrator_tutorial_2
     ```
 
-```json title="code/run_templates/orchestrator_tutorial2/run.json" linenums="1" hl_lines="3-35 40-43 47 51 56-58 66 75"
+```json title="code/run_templates/orchestrator_tutorial2/run.json" linenums="1" hl_lines="3-36 41-44 48 52 57-59 67 76"
 --8<-- "tutorial/advanced_cosmotech_simulator/run.json"
 ```
 
 We can see a few changes and additions compared to the previous `run.json` file:
 
-- We created a new `step` called `DownloadScenarioData` that makes use of `csm-orc fetch-scenariorun-data`:
+- We created a new `step` called `DownloadScenarioData` that makes use of `csm-data api scenariorun-load-data`:
     + In this step we defined a few environment variables required to run it, 
       but we still added `useSystemEnvironment` to `true` to ensure any environment variable required 
       to connect to the API is made available as well.

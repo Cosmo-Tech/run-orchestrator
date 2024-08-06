@@ -30,7 +30,9 @@ def require_env(envvar, envvar_desc):
 
 
 def web_help(effective_target="", base_url=WEB_DOCUMENTATION_ROOT):
-    documentation_url = base_url + effective_target
+    documentation_url = base_url
+    if effective_target is not None:
+        documentation_url += effective_target
 
     def open_documentation(ctx: click.Context, param, value):
         if value:

@@ -58,7 +58,7 @@ To store our parameters we will define a JSON file containing them.
 ???+ info "About the JSON file format"
     In prevision of future use, we will define a json format close to the one returned by the command:  
     ```bash
-    csm-orc fetch-scenariorun-data
+    csm-data api scenariorun-load-data
     ```  
     This command will be used later to download data from the Cosmo Tech API.
 

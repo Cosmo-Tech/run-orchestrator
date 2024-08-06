@@ -2,10 +2,11 @@
   "steps": [
     {
       "id": "DownloadScenarioData",
-      "command": "csm-orc",
+      "command": "csm-data",
       "description": "Connect to the Cosmo Tech API to download dataset and parameters",
       "arguments": [
-        "fetch-scenariorun-data",
+        "api", 
+        "scenariorun-load-data",
         "--write-json"
       ],
       "useSystemEnvironment": true,
