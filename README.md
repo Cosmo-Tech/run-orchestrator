@@ -14,7 +14,7 @@ Once installed you will have access to the `csm-orc` CLI and all its commands.
 
 ## Licence
 
-> Copyright - 2023 - 2023 - Cosmo Tech
+> Copyright - 2023 - 2024 - Cosmo Tech
 > 
 > You are authorized to use this Cosmo Tech software following the execution of a specific agreement with Cosmo Tech or with an authorized licensee of Cosmo Tech.
 > 
