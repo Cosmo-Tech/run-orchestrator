@@ -324,6 +324,7 @@ def get_env():
     if projectFile.has_section("EntrypointEnv"):
         for key, value in projectFile.items("EntrypointEnv"):
             globals()[key.upper()] = value
+            os.environ.setdefault(key.upper(), value)
 
     env_names = [
         # Run data
