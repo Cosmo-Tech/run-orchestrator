@@ -1,14 +1,20 @@
 import configparser
 import importlib.util
+import logging as _logging
 import os
 import subprocess
 import sys
 from pathlib import Path
 from zipfile import ZipFile
 
+from rich.logging import RichHandler
+
 from cosmotech.orchestrator.utils import strtobool
 from cosmotech.orchestrator.utils.click import click
-from cosmotech.orchestrator.utils.logger import LOGGER
+
+LOGGER = _logging.getLogger("csm.run.entrypoint")
+_logging.basicConfig(level=_logging.INFO,
+                     handlers=[])
 
 MODE_HANDLE_PARAMETERS = "handle-parameters"
 MODE_VALIDATE = "validate"
@@ -399,6 +405,14 @@ def main(legacy: bool):
     """Docker entrypoint
 
     This command is used in CosmoTech docker containers only"""
+    LOGGER.addHandler(RichHandler(rich_tracebacks=True,
+                                  omit_repeated_times=False,
+                                  show_path=False,
+                                  markup=True,
+                                  show_level=False,
+                                  show_time=False,
+                                  ))
+    LOGGER.setLevel(_logging.INFO)
     try:
         get_env()
         if legacy or strtobool(os.getenv("CSM_ENTRYPOINT_LEGACY", "False")):
@@ -422,9 +436,20 @@ def main(legacy: bool):
             if not orchestrator_json.is_file():
                 raise EntrypointException(f"No \"run.json\" defined for the run template {template_id}")
             _env = os.environ.copy()
-            subprocess.check_call(["csm-orc", "run", str(orchestrator_json.absolute())],
-                                  cwd=project_root,
-                                  env=_env)
+            p = subprocess.Popen(["csm-orc", "run", str(orchestrator_json.absolute())],
+                                 cwd=project_root,
+                                 env=_env,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.STDOUT,
+                                 text=True)
+            for r in iter(p.stdout.readline, ""):
+                logging.info(r.strip())
+
+            return_code = p.wait()
+            if return_code != 0:
+                logging.error("Error while running the entrypoint - check your logs")
+                raise click.Abort()
+
     except subprocess.CalledProcessError:
         logging.error("Error while running the entrypoint - check your logs")
         raise click.Abort()
