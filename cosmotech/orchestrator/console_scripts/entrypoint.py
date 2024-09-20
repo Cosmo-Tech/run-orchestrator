@@ -405,14 +405,29 @@ def main(legacy: bool):
     """Docker entrypoint
 
     This command is used in CosmoTech docker containers only"""
-    LOGGER.addHandler(RichHandler(rich_tracebacks=True,
+    if "CSM_LOKI_URL" in os.environ:
+        import logging_loki
+        handler = logging_loki.LokiHandler(
+            url=os.environ.get("CSM_LOKI_URL"),
+            tags={
+                "organization_id": os.environ.get("CSM_ORGANIZATION_ID"),
+                "workspace_id": os.environ.get("CSM_WORKSPACE_ID"),
+                "runner_id": os.environ.get("CSM_RUNNER_ID"),
+                "run_id": os.environ.get("CSM_RUN_ID"),
+                "namespace": os.environ.get("CSM_NAMESPACE_NAME"),
+                "container": os.environ.get("ARGO_CONTAINER_NAME"),
+                "pod": os.environ.get("ARGO_NODE_ID"),
+            }
+        )
+        logging.addHandler(handler)
+    logging.addHandler(RichHandler(rich_tracebacks=True,
                                   omit_repeated_times=False,
                                   show_path=False,
                                   markup=True,
-                                  show_level=False,
+                                  show_level=True,
                                   show_time=False,
                                   ))
-    LOGGER.setLevel(_logging.INFO)
+    logging.setLevel(_logging.DEBUG)
     try:
         get_env()
         if legacy or strtobool(os.getenv("CSM_ENTRYPOINT_LEGACY", "False")):
@@ -443,7 +458,14 @@ def main(legacy: bool):
                                  stderr=subprocess.STDOUT,
                                  text=True)
             for r in iter(p.stdout.readline, ""):
-                logging.info(r.strip())
+                log_func = logging.info
+                if "WARN" in r:
+                    log_func = logging.warning
+                elif "ERROR" in r:
+                    log_func = logging.error
+                elif "DEBUG" in r:
+                    log_func = logging.debug
+                log_func(r.strip())
 
             return_code = p.wait()
             if return_code != 0:
