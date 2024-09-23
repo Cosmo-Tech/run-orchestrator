@@ -407,11 +407,6 @@ def main(legacy: bool):
     This command is used in CosmoTech docker containers only"""
     if "CSM_LOKI_URL" in os.environ:
         import logging_loki
-        # Argo does not send pod name but ID, and API requires pod name
-        pod_name = os.environ.get("ARGO_NODE_ID")
-        pod_name = pod_name.split("-")
-        pod_name.insert(-1, "csmorchestrator")
-        pod_name = "-".join(pod_name)
 
         handler = logging_loki.LokiHandler(
             url=os.environ.get("CSM_LOKI_URL"),
@@ -422,10 +417,11 @@ def main(legacy: bool):
                 "run_id": os.environ.get("CSM_RUN_ID"),
                 "namespace": os.environ.get("CSM_NAMESPACE_NAME"),
                 "container": os.environ.get("ARGO_CONTAINER_NAME"),
-                "pod": pod_name,
+                "pod": os.environ.get("ARGO_NODE_ID"),
             },
             version="1"
         )
+        handler.emitter.session.headers.setdefault("X-Scope-OrgId", os.environ.get("CSM_NAMESPACE_NAME"))
         logging.addHandler(handler)
     logging.addHandler(RichHandler(rich_tracebacks=True,
                                    omit_repeated_times=False,
