@@ -427,7 +427,7 @@ def main(legacy: bool):
                                    omit_repeated_times=False,
                                    show_path=False,
                                    markup=True,
-                                   show_level=True,
+                                   show_level=False,
                                    show_time=False,
                                    ))
     logging.setLevel(_logging.DEBUG)
@@ -460,14 +460,17 @@ def main(legacy: bool):
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.STDOUT,
                                  text=True)
+            log_func = logging.info
             for r in iter(p.stdout.readline, ""):
-                log_func = logging.info
-                if "WARN" in r:
+                _r = r.upper()
+                if "WARN" in _r:
                     log_func = logging.warning
-                elif "ERROR" in r:
+                elif "ERROR" in _r:
                     log_func = logging.error
-                elif "DEBUG" in r:
+                elif "DEBUG" in _r:
                     log_func = logging.debug
+                elif "INFO" in _r:
+                    log_func = logging.info
                 log_func(r.strip())
 
             return_code = p.wait()
