@@ -60,7 +60,9 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
     template_path = project / "code/run_templates" / target_template
     available_steps = list(template_path.glob('*'))
     csmdocker = False
-    engine_possible_paths = [project / "Generated/Build/Bin/main", pathlib.Path("/pkg/bin/main")]
+    engine_possible_paths = [project / "Generated/Build/Bin/csm-simulator", pathlib.Path("/pkg/bin/csm-simulator")]
+    # Add old names for compatibility with SDK pre v11.1.0
+    engine_possible_paths += [project / "Generated/Build/Bin/main", pathlib.Path("/pkg/bin/main")]
     engine_path = None
     if "CSMDOCKER" in steps:
         steps = ["parameters_handler", "validator", "prerun", "engine", "postrun"]
@@ -94,7 +96,7 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
     for s in _steps:
         if s == "engine" and engine_path is not None:
             if not (simulation := os.environ.get('CSM_SIMULATION')):
-                LOGGER.error("To use direct main simulation (no engine step in python) "
+                LOGGER.error("To use direct simulator (no engine step in python) "
                              "you need to set the environment variable CSM_SIMULATION "
                              "with the name of the simulation file to be run")
                 return 1
@@ -107,7 +109,7 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
 
                 if os.environ.get('CSM_CONTROL_PLANE_TOPIC') is not None:
                     LOGGER.debug(f"Control plane topic: {os.environ['CSM_CONTROL_PLANE_TOPIC']}."
-                                 "Main Simulator binary is able to handle "
+                                 "Simulator binary is able to handle "
                                  "CSM_CONTROL_PLANE_TOPIC directly so it is not "
                                  "transformed as an argument.")
                 r = subprocess.run(args=args,

@@ -5,6 +5,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from shutil import which
 from zipfile import ZipFile
 
 from rich.logging import RichHandler
@@ -30,8 +31,6 @@ RESOURCE_PROVIDER_GIT = "git"
 RESOURCE_MAIN = "main.py"
 RESOURCE_ZIP = "resource.zip"
 RESOURCE_REQUIREMENTS = "requirements.txt"
-
-CSM_MAIN = "main"
 
 DEFAULT_PATH_ROOT_LOCAL = "/pkg/share/"
 DEFAULT_RUN_TEMPLATES_ROOT_FOLDER = "code/run_templates/"
@@ -287,7 +286,7 @@ def run_direct_simulator():
 
         if CSM_CONTROL_PLANE_TOPIC is not None:
             logging.debug(f"Control plane topic: {CSM_CONTROL_PLANE_TOPIC}."
-                          "Main Simulator binary is able to handle "
+                          "Simulator binary is able to handle "
                           "CSM_CONTROL_PLANE_TOPIC directly so it is not "
                           "transformed as an argument.")
         else:
@@ -298,9 +297,15 @@ def run_direct_simulator():
             args = sys.argv[1:]
         else:
             args = sys.argv[2:]
-        logging.debug(f"main arguments: {args}")
+        logging.debug(f"Simulator arguments: {args}")
 
-    subprocess.check_call([CSM_MAIN] + args)
+    simulator_exe_name = "csm-simulator"
+    # Check for old simulator name below SDK version 11.1.0
+    old_main = "main"
+    if which(simulator_exe_name) is None and which(old_main):
+        simulator_exe_name = old_main
+
+    subprocess.check_call([simulator_exe_name] + args)
 
 
 def run_engine():
@@ -310,7 +315,7 @@ def run_engine():
         CSM_ENGINE_PATH,
         ENGINE_DEFAULT_PATH_TEMPLATE,
         run_direct_simulator,
-        "direct main simulator"
+        "direct simulator"
     )
 
 
