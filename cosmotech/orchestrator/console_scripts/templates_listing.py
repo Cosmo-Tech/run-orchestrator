@@ -49,17 +49,6 @@ def display_template(template, verbose=False):
 @web_help("commands/list_templates")
 def main(templates, orchestration_file, verbose):
     """Show a list of pre-available command templates"""
-    logging.basicConfig(
-        format=_format,
-        force=True,
-        datefmt="[%Y/%m/%d-%X]",
-        handlers=[RichHandler(rich_tracebacks=True,
-                              omit_repeated_times=False,
-                              show_path=False,
-                              show_time=False,
-                              show_level=False,
-                              markup=True)])
-    LOGGER.setLevel(logging.INFO)
     if orchestration_file:
         FileLoader(orchestration_file)()
     l = Library()
