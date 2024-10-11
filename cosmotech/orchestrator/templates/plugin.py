@@ -26,7 +26,7 @@ class Plugin:
 
     def load_folder(self, plugin_folder: pathlib.Path):
         count = 0
-        for _path in plugin_folder.glob("templates/*.json"):
+        for _path in plugin_folder.glob("templates/**/*.json"):
             if _path.is_file():
                 with _path.open("r") as _file:
                     try:
