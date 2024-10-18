@@ -58,7 +58,9 @@ class Library:
                 LOGGER.debug(f" - Loaded {loaded_templates_from_file} templates from plugin files")
         LOGGER.debug(f" - Plugin contains {len(plugin.templates.values())} templates")
         self.__templates.update(plugin.templates)
-        self.__exit_templates.extend(plugin.exit_commands)
+        for command in plugin.exit_commands:
+            if command not in self.__exit_templates:
+                self.__exit_templates.append(command)
         self.__plugins[plugin.name] = plugin
 
     def reload(self):
