@@ -72,11 +72,25 @@ A more in depth use of the orchestrator in conjunction with a Cosmo Tech Simulat
 
 ---
 A deep dive into the Library and Plugins concepts
---8<-- "partials/misc/new_1.2.0.md"
 
 ---
 <footer markdown>
 [:octicons-arrow-right-24: Plugins and Command Templates](./plugins_and_templates.md)
+</footer>
+</div>
+</article>
+
+
+<article markdown>
+<div class="text" markdown>
+:material-logout: __Exit handlers__
+
+---
+How to add exit handlers on your orchestration systems using the library
+
+---
+<footer markdown>
+[:octicons-arrow-right-24: Exit Handlers](./exit_handlers.md)
 </footer>
 </div>
 </article>
