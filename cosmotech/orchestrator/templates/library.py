@@ -16,6 +16,7 @@ class Library:
     __instance = None
     __templates = None
     __plugins = None
+    __exit_templates = None
 
     def display_library(self, log_function=LOGGER.info, verbose=False):
         log_function("Library content:")
@@ -57,6 +58,7 @@ class Library:
                 LOGGER.debug(f" - Loaded {loaded_templates_from_file} templates from plugin files")
         LOGGER.debug(f" - Plugin contains {len(plugin.templates.values())} templates")
         self.__templates.update(plugin.templates)
+        self.__exit_templates.extend(plugin.exit_commands)
         self.__plugins[plugin.name] = plugin
 
     def reload(self):
@@ -70,6 +72,7 @@ class Library:
             LOGGER.debug("Loading template library")
         self.__templates = dict()
         self.__plugins = dict()
+        self.__exit_templates = list()
 
         for finder, name, _ in pkgutil.iter_modules(cosmotech.orchestrator_plugins.__path__,
                                                     cosmotech.orchestrator_plugins.__name__ + "."):
@@ -82,6 +85,9 @@ class Library:
     def add_template(self, template: CommandTemplate, override: bool = False):
         if override or template.id not in self.__templates:
             self.__templates[template.id] = template
+
+    def list_exit_commands(self) -> list[str]:
+        return self.__exit_templates
 
     def __new__(cls, *args, **kwargs):
         if cls.__instance is None:

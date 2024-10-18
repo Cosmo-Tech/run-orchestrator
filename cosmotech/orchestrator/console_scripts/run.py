@@ -10,6 +10,7 @@ from typing import Optional
 
 from cosmotech.orchestrator import VERSION
 from cosmotech.orchestrator.core.orchestrator import Orchestrator
+from cosmotech.orchestrator.core.step import Step
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
@@ -79,6 +80,12 @@ In case you are in a python venv, the venv is activated before any command is ru
                 LOGGER.debug(str(v[0]))
                 if v[0].status == "RunError":
                     success = False
+            from cosmotech.orchestrator.templates.library import Library
+            library = Library()
+            for command_template in library.list_exit_commands():
+                _s = Step(id=command_template, commandId=command_template,
+                          environment={"CSM_ORC_IS_SUCCESS": {"value": str(success)}})
+                _s.run(as_exit=True)
             if not success:
                 raise click.Abort()
         elif gen_env_target is not None:

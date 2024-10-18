@@ -108,18 +108,20 @@ class Step:
                 _env[env_name] = os.environ.get(env_name)
         return _env
 
-    def run(self, dry: bool = False, previous=None):
+    def run(self, dry: bool = False, previous=None, as_exit: bool = False):
         if previous is None:
             previous = dict()
-
-        LOGGER.info(f"Starting step [green bold]{self.id}[/]")
+        step_type = "step"
+        if as_exit:
+            step_type = "exit handler"
+        LOGGER.info(f"Starting {step_type} [green bold]{self.id}[/]")
         self.status = "Ready"
         if isinstance(previous, dict) and any(map(lambda a: a not in ['Done', 'DryRun'], previous.values())):
-            LOGGER.warning(f"Skipping step [green bold]{self.id}[/] due to previous errors")
+            LOGGER.warning(f"Skipping {step_type} [green bold]{self.id}[/] due to previous errors")
             self.status = "Skipped"
         if self.status == "Ready":
             if self.skipped:
-                LOGGER.info(f"Skipping step [green bold]{self.id}[/] as required")
+                LOGGER.info(f"Skipping {step_type} [green bold]{self.id}[/] as required")
                 self.status = "Done"
             elif dry:
                 self.status = "DryRun"
@@ -144,13 +146,13 @@ class Step:
                                        check=True)
                     os.remove(tmp_file.name)
                     if r.returncode != 0:
-                        LOGGER.error(f"Error during step [green bold]{self.id}[/]")
+                        LOGGER.error(f"Error during {step_type} [green bold]{self.id}[/]")
                         self.status = "RunError"
                     else:
-                        LOGGER.info(f"Done running step [green bold]{self.id}[/]")
+                        LOGGER.info(f"Done running {step_type} [green bold]{self.id}[/]")
                         self.status = "Done"
                 except subprocess.CalledProcessError:
-                    LOGGER.error(f"Error during step [green bold]{self.id}[/]")
+                    LOGGER.error(f"Error during {step_type} [green bold]{self.id}[/]")
                     self.status = "RunError"
         return self.status
 
