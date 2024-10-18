@@ -49,11 +49,18 @@ from cosmotech.orchestrator.utils.logger import LOGGER
               envvar="CSM_ORCHESTRATOR_VALIDATE_ONLY",
               show_envvar=True,
               default=False,
+              show_default=True,
               help="Run only a sematic validation of the orchestrator file")
+@click.option("--exit-handlers/--no-exit-handlers", "exit_handlers",
+              envvar="CSM_ORCHESTRATOR_USE_EXIT_HANDLERS",
+              show_envvar=True,
+              default=True,
+              show_default=True,
+              help="Run exit handlers at the end of the execution")
 @web_help("commands/orchestrator")
 def main(
     template: str, dry_run: bool, display_env: bool, gen_env_target: Optional[str], skipped_steps: list[str],
-    validate_only: bool
+    validate_only: bool, exit_handlers: bool
 ):
     """Runs the given `TEMPLATE` file  
 Commands are run as subprocess using `bash -c "<command> <arguments>"`.  
@@ -80,12 +87,13 @@ In case you are in a python venv, the venv is activated before any command is ru
                 LOGGER.debug(str(v[0]))
                 if v[0].status == "RunError":
                     success = False
-            from cosmotech.orchestrator.templates.library import Library
-            library = Library()
-            for command_template in library.list_exit_commands():
-                _s = Step(id=command_template, commandId=command_template,
-                          environment={"CSM_ORC_IS_SUCCESS": {"value": str(success)}})
-                _s.run(as_exit=True)
+            if exit_handlers:
+                from cosmotech.orchestrator.templates.library import Library
+                library = Library()
+                for command_template in library.list_exit_commands():
+                    _s = Step(id=command_template, commandId=command_template,
+                              environment={"CSM_ORC_IS_SUCCESS": {"value": str(success)}})
+                    _s.run(as_exit=True)
             if not success:
                 raise click.Abort()
         elif gen_env_target is not None:
