@@ -110,7 +110,8 @@ class Orchestrator(metaclass=Singleton):
                     _prec_step, _prec_node = _steps.get(_precedent)
                     _prec_node.outputs['status'].connect(_node.inputs['previous'][_precedent])
                     LOGGER.debug(f" - Found [green bold]{_precedent}[/]")
-            missing_env.update(_step.check_env())
+            if _step_missing_env := _step.check_env():
+                missing_env[_step.id] = _step_missing_env
         if display_env:
             # Pure display of environment variables names and descriptions
             _env: dict[str, set] = dict()
@@ -125,8 +126,9 @@ class Orchestrator(metaclass=Singleton):
                 desc = (":\n  - " + "\n  - ".join(v)) if len(v) > 1 else (": " + list(v)[0] if len(v) else "")
                 LOGGER.info(f" - [yellow]{k}[/]{desc}")
         elif missing_env and not ignore_error:
-            LOGGER.error("Missing environment values")
-            for k, v in missing_env.items():
-                LOGGER.error(f" - {k}" + (f": {v}" if v else ""))
+            for _step_id, variables in missing_env.items():
+                LOGGER.error(f"Missing environment values for step {_step_id}")
+                for k, v in variables.items():
+                    LOGGER.error(f" - {k}" + (f": {v}" if v else ""))
             raise ValueError("Missing environment variables, check the logs")
         return _steps, _graph
