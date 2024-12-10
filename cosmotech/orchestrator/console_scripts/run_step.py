@@ -37,6 +37,8 @@ Known limitations:
 - The step MUST contain an executable main.py file
 - The engine step requires to set the env var CSM_SIMULATION if you have a run without a python engine
 - Qt consumers in the simulator breaks the engine step when orchestrating
+
+Marked for deprecation since 1.5.2, will be removed in a future version
 """
     project = pathlib.Path(".")
     steps = steps.split(",")
@@ -114,7 +116,8 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
                                  "transformed as an argument.")
                 r = subprocess.run(args=args,
                                    executable=str(engine_path.absolute()),
-                                   env=os.environ)
+                                   env=os.environ,
+                                   check=True)
                 if r.returncode != 0:
                     return r.returncode
             continue
@@ -136,10 +139,10 @@ def executor(project: pathlib.Path, template: str, steps: list[str]):
 
         LOGGER.info(f"Running {s} step")
         p = subprocess.run([executable, str(main_path.absolute() / "main.py")],
-                           env=os.environ)
+                           env=os.environ, check=True)
         if p.returncode != 0:
             LOGGER.error(f"Issue while running step {s} please check your logs")
-            return 1
+            return p.returncode
         LOGGER.debug(f"Finished running step {s}")
 
     else:
