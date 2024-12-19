@@ -90,10 +90,16 @@ In case you are in a python venv, the venv is activated before any command is ru
             if exit_handlers:
                 from cosmotech.orchestrator.templates.library import Library
                 library = Library()
+                exit_steps = []
                 for command_template in library.list_exit_commands():
                     _s = Step(id=command_template, commandId=command_template,
                               environment={"CSM_ORC_IS_SUCCESS": {"value": str(success)}})
                     _s.run(as_exit=True)
+                    exit_steps.append(_s)
+                if exit_steps:
+                    LOGGER.info("===   Exit Handlers   ===")
+                for _s in exit_steps:
+                    LOGGER.info(_s.simple_repr())
             if not success:
                 raise click.Abort()
         elif gen_env_target is not None:

@@ -26,7 +26,7 @@ class Library:
                 if _template in self.__templates.values():
                     self.display_template(_template, log_function=log_function, verbose=verbose)
                 else:
-                    log_function(f"- '{_template.id}': [red]OVERRIDEN[/]")
+                    log_function(f"- '{_template.id}': OVERRIDEN")
 
     @staticmethod
     def display_template(template, log_function=LOGGER.info, verbose=False):

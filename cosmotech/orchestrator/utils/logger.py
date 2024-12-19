@@ -8,23 +8,43 @@
 import logging
 import os
 
+import sys
+from rich.highlighter import NullHighlighter
 from rich.logging import RichHandler
 
-LOGGER = logging.getLogger("csm.run.orchestrator")
-HANDLER = RichHandler(rich_tracebacks=True,
-                      omit_repeated_times=False,
-                      show_path=False,
-                      markup=True)
 _format = "%(message)s"
 
-if "PAILLETTES" in os.environ:
-    paillettes = "[bold yellow blink]***[/]"
-    _format = f"{paillettes} {_format} {paillettes}"
+if sys.__stdout__.isatty():
+    if "PAILLETTES" in os.environ:
+        paillettes = "[bold yellow blink]***[/]"
+        _format = f"{paillettes} {_format} {paillettes}"
+    FORMATTER = logging.Formatter(fmt=_format,
+                                  datefmt="[%Y/%m/%d-%H:%M:%S]",
+                                  )
+    HIGLIGHTER = NullHighlighter()
 
-FORMATTER = logging.Formatter(fmt=_format,
-                              datefmt="[%Y/%m/%d-%H:%M:%S]",
-                              )
+    HANDLER = RichHandler(rich_tracebacks=True,
+                          omit_repeated_times=False,
+                          show_path=False,
+                          markup=True,
+                          highlighter=HIGLIGHTER)
+else:
+    FORMATTER = logging.Formatter(fmt="%(asctime)s - %(levelname)s - %(message)s",
+                                  datefmt="[%Y/%m/%d-%H:%M:%S]")
+    HANDLER = logging.StreamHandler(sys.stdout)
 
 HANDLER.setFormatter(FORMATTER)
-LOGGER.addHandler(HANDLER)
-LOGGER.setLevel(logging.INFO)
+
+
+def get_logger(
+    logger_name: str,
+    level=logging.INFO
+) -> logging.Logger:
+    _logger = logging.getLogger(logger_name)
+    if not _logger.hasHandlers():
+        _logger.addHandler(HANDLER)
+    _logger.setLevel(level)
+    return _logger
+
+
+LOGGER = get_logger("csm.run.orchestrator")
