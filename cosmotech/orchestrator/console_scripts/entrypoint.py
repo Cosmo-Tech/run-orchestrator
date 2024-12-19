@@ -480,11 +480,9 @@ def main(legacy: bool):
 
             return_code = p.wait()
             if return_code != 0:
-                logging.error("Error while running the entrypoint - check your logs")
                 raise click.Abort()
 
     except subprocess.CalledProcessError:
-        logging.error("Error while running the entrypoint - check your logs")
         raise click.Abort()
 
 

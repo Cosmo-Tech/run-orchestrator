@@ -39,14 +39,18 @@ class Step:
     def __load_command_from_library(self):
         library = Library()
         if not self.commandId or self.loaded:
-            LOGGER.debug(f"[green bold]{self.id}[/] already ready")
+            LOGGER.debug(f"{self.display_id} already ready")
             return
+
+        self.display_command_id = self.commandId
+        if sys.__stdout__.isatty():
+            self.display_command_id = f"[cyan bold]{self.commandId}[/] "
         command: CommandTemplate = library.find_template_by_name(self.commandId)
         if command is None:
             self.status = "Error"
-            LOGGER.error(f"[green bold]{self.id}[/] asks for a non existing template [cyan bold]{self.commandId}[/]")
+            LOGGER.error(f"{self.display_id} asks for a non existing template {self.display_command_id}")
             raise ValueError(f"Command Template {self.commandId} is not available")
-        LOGGER.debug(f"[green bold]{self.id}[/] loads template [cyan bold]{self.commandId}[/]")
+        LOGGER.debug(f"{self.display_id} loads template {self.display_command_id}")
         self.command = command.command
         self.arguments = command.arguments[:] + self.arguments
         self.useSystemEnvironment = self.useSystemEnvironment or command.useSystemEnvironment
@@ -67,6 +71,9 @@ class Step:
             tmp_env[k] = EnvironmentVariable(k, **v)
         self.environment = tmp_env
         self.status = "Init"
+        self.display_id = self.id
+        if sys.__stdout__.isatty():
+            self.display_id = f"[green bold]{self.id}[/] "
         if self.commandId and not stop_library_load:
             self.__load_command_from_library()
             self.commandId = None
@@ -114,14 +121,14 @@ class Step:
         step_type = "step"
         if as_exit:
             step_type = "exit handler"
-        LOGGER.info(f"Starting {step_type} [green bold]{self.id}[/]")
+        LOGGER.info(f"Starting {step_type} {self.display_id}")
         self.status = "Ready"
         if isinstance(previous, dict) and any(map(lambda a: a not in ['Done', 'DryRun'], previous.values())):
-            LOGGER.warning(f"Skipping {step_type} [green bold]{self.id}[/] due to previous errors")
+            LOGGER.warning(f"Skipping {step_type} {self.display_id} due to previous errors")
             self.status = "Skipped"
         if self.status == "Ready":
             if self.skipped:
-                LOGGER.info(f"Skipping {step_type} [green bold]{self.id}[/] as required")
+                LOGGER.info(f"Skipping {step_type} {self.display_id} as required")
                 self.status = "Done"
             elif dry:
                 self.status = "DryRun"
@@ -146,13 +153,13 @@ class Step:
                                        check=True)
                     os.remove(tmp_file.name)
                     if r.returncode != 0:
-                        LOGGER.error(f"Error during {step_type} [green bold]{self.id}[/]")
+                        LOGGER.error(f"Error during {step_type} {self.display_id}")
                         self.status = "RunError"
                     else:
-                        LOGGER.info(f"Done running {step_type} [green bold]{self.id}[/]")
+                        LOGGER.info(f"Done running {step_type} {self.display_id}")
                         self.status = "Done"
                 except subprocess.CalledProcessError:
-                    LOGGER.error(f"Error during {step_type} [green bold]{self.id}[/]")
+                    LOGGER.error(f"Error during {step_type} {self.display_id}")
                     self.status = "RunError"
         return self.status
 
