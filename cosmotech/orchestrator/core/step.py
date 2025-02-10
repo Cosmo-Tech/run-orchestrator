@@ -192,8 +192,14 @@ class Step:
                 else:
                     r.append(f"- {k}{optional_str}")
         if self.useSystemEnvironment:
-            r.append("[yellow]Use system environment variables[/]")
+            if sys.__stdout__.isatty():
+                r.append("[yellow]Use system environment variables[/]")
+            else:
+                r.append("- Use system environment variables")
         if self.skipped:
-            r.append("[red]Skipped by user[/]")
+            if sys.__stdout__.isatty():
+                r.append("[red]Skipped by user[/]")
+            else:
+                r.append("- Skipped by user")
         r.append(f"Status: {self.status}")
         return "\n".join(r)

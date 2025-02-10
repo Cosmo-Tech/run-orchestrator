@@ -10,6 +10,7 @@ import pathlib
 
 import flowpipe
 import jsonschema
+import sys
 
 from cosmotech.orchestrator.core.runner import Runner
 from cosmotech.orchestrator.core.step import Step
@@ -24,7 +25,10 @@ class FileLoader:
     @staticmethod
     def load_step(container, override: bool = False, **step) -> Step:
         _id = step.get('id')
-        LOGGER.debug(f"Loading [green bold]{_id}[/] of type [yellow bold]Step[/]")
+        if sys.__stdout__.isatty():
+            LOGGER.debug(f"Loading [green bold]{_id}[/] of type [yellow bold]Step[/]")
+        else:
+            LOGGER.debug(f"Loading {_id} of type Step")
         if _id in container and not override:
             raise ValueError(f"Step {_id} is already defined")
         _item = Step(**step)
@@ -74,7 +78,10 @@ class Orchestrator(metaclass=Singleton):
         steps = FileLoader(json_file_path)(skipped_steps=skipped_steps)
         Library().display_library(log_function=LOGGER.debug, verbose=False)
         if validate_only:
-            LOGGER.info(f"[green bold]{json_file_path}[/] is a valid orchestration file")
+            if sys.__stdout__.isatty():
+                LOGGER.info(f"[green bold]{json_file_path}[/] is a valid orchestration file")
+            else:
+                LOGGER.info(f"{json_file_path} is a valid orchestration file")
             return None, None
         return self._load_from_json_content(json_file_path, steps, dry, display_env,
                                             ignore_error)
@@ -99,9 +106,15 @@ class Orchestrator(metaclass=Singleton):
         missing_env = dict()
         for _step, _node in _steps.values():
             if _step.precedents:
-                LOGGER.debug(f"Dependencies of [green bold]{_step.id}[/]:")
+                if sys.__stdout__.isatty():
+                    LOGGER.debug(f"Dependencies of [green bold]{_step.id}[/]:")
+                else:
+                    LOGGER.debug(f"Dependencies of {_step.id}:")
             else:
-                LOGGER.debug(f"No dependencies for [green bold]{_step.id}[/]")
+                if sys.__stdout__.isatty():
+                    LOGGER.debug(f"No dependencies for [green bold]{_step.id}[/]")
+                else:
+                    LOGGER.debug(f"No dependencies for {_step.id}")
             for _precedent in _step.precedents:
                 if isinstance(_precedent, str):
                     if _precedent not in _steps:
@@ -109,7 +122,10 @@ class Orchestrator(metaclass=Singleton):
                         raise ValueError(f"Step {_precedent} does not exists")
                     _prec_step, _prec_node = _steps.get(_precedent)
                     _prec_node.outputs['status'].connect(_node.inputs['previous'][_precedent])
-                    LOGGER.debug(f" - Found [green bold]{_precedent}[/]")
+                    if sys.__stdout__.isatty():
+                        LOGGER.debug(f" - Found [green bold]{_precedent}[/]")
+                    else:
+                        LOGGER.debug(f" - Found {_precedent}")
             if _step_missing_env := _step.check_env():
                 missing_env[_step.id] = _step_missing_env
         if display_env:
@@ -124,7 +140,10 @@ class Orchestrator(metaclass=Singleton):
             LOGGER.info(f"Environment variable defined for {_path.name}")
             for k, v in sorted(_env.items(), key=lambda a: a[0]):
                 desc = (":\n  - " + "\n  - ".join(v)) if len(v) > 1 else (": " + list(v)[0] if len(v) else "")
-                LOGGER.info(f" - [yellow]{k}[/]{desc}")
+                if sys.__stdout__.isatty():
+                    LOGGER.info(f" - [yellow]{k}[/]{desc}")
+                else:
+                    LOGGER.info(f"   {k}{desc}")
         elif missing_env and not ignore_error:
             for _step_id, variables in missing_env.items():
                 LOGGER.error(f"Missing environment values for step {_step_id}")
