@@ -139,11 +139,11 @@ class Orchestrator(metaclass=Singleton):
             _path = pathlib.Path(json_file_path)
             LOGGER.info(f"Environment variable defined for {_path.name}")
             for k, v in sorted(_env.items(), key=lambda a: a[0]):
-                desc = (":\n  - " + "\n  - ".join(v)) if len(v) > 1 else (": " + list(v)[0] if len(v) else "")
+                desc = (":\n    - " + "\n    - ".join(v)) if len(v) > 1 else (": " + list(v)[0] if len(v) else "")
                 if sys.__stdout__.isatty():
                     LOGGER.info(f" - [yellow]{k}[/]{desc}")
                 else:
-                    LOGGER.info(f"   {k}{desc}")
+                    LOGGER.info(f" - {k}{desc}")
         elif missing_env and not ignore_error:
             for _step_id, variables in missing_env.items():
                 LOGGER.error(f"Missing environment values for step {_step_id}")

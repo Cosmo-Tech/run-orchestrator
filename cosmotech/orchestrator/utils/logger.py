@@ -23,15 +23,41 @@ if sys.__stdout__.isatty():
                                   )
     HIGLIGHTER = NullHighlighter()
 
-    HANDLER = RichHandler(rich_tracebacks=True,
-                          omit_repeated_times=False,
-                          show_path=False,
-                          markup=True,
-                          highlighter=HIGLIGHTER)
+
+    class CustomRichHandler(RichHandler):
+        def __init__(self, *args, **kwargs):
+            super(CustomRichHandler, self).__init__(*args, **kwargs)
+
+        def emit(self, record):
+            messages = record.msg.split('\n')
+            for message in messages:
+                record.msg = message
+                super(CustomRichHandler, self).emit(record)
+
+
+    HANDLER = CustomRichHandler(rich_tracebacks=True,
+                                omit_repeated_times=False,
+                                show_path=False,
+                                markup=True,
+                                highlighter=HIGLIGHTER)
 else:
-    FORMATTER = logging.Formatter(fmt="%(asctime)s - %(levelname)s - %(message)s",
+    FORMATTER = logging.Formatter(fmt="{asctime} {levelname:<8} {message}",
+                                  style="{",
                                   datefmt="[%Y/%m/%d-%H:%M:%S]")
-    HANDLER = logging.StreamHandler(sys.stdout)
+
+
+    class CustomHandler(logging.StreamHandler):
+        def __init__(self, *args, **kwargs):
+            super(CustomHandler, self).__init__(*args, **kwargs)
+
+        def emit(self, record):
+            messages = record.msg.split('\n')
+            for message in messages:
+                record.msg = message
+                super(CustomHandler, self).emit(record)
+
+
+    HANDLER = CustomHandler(sys.stdout)
 
 HANDLER.setFormatter(FORMATTER)
 
