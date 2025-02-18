@@ -8,16 +8,9 @@
 import click_log
 
 from cosmotech.orchestrator import VERSION
-from cosmotech.orchestrator.console_scripts.adx_scenario_connector import main as adx_cmd
-from cosmotech.orchestrator.console_scripts.download_cloud_steps import main as dl_cloud_cmd
 from cosmotech.orchestrator.console_scripts.entrypoint import main as entrypoint_cmd
-from cosmotech.orchestrator.console_scripts.legacy_json_generator import main as legacy_gen_cmd
-from cosmotech.orchestrator.console_scripts.parameters_generation import main as parameters_cmd
 from cosmotech.orchestrator.console_scripts.run import main as run_cmd
-from cosmotech.orchestrator.console_scripts.run_step import main as run_step_cmd
-from cosmotech.orchestrator.console_scripts.scenario_data_downloader import main as scenario_dl_cmd
-from cosmotech.orchestrator.console_scripts.runner_data_downloader import main as runner_dl_cmd
-from cosmotech.orchestrator.console_scripts.templates_listing import main as tpl_listing
+from cosmotech.orchestrator.console_scripts.templates_listing import main as tpl_listing_cmd
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
@@ -49,16 +42,9 @@ Command toolkit allowing to run Cosmotech Run Templates"""
     pass
 
 
-main.add_command(adx_cmd, "send-to-adx")
-main.add_command(dl_cloud_cmd, "fetch-cloud-steps")
 main.add_command(entrypoint_cmd, "entrypoint")
-main.add_command(legacy_gen_cmd, "gen-from-legacy")
 main.add_command(run_cmd, "run")
-main.add_command(parameters_cmd, "init-parameters")
-main.add_command(run_step_cmd, "run-step")
-main.add_command(scenario_dl_cmd, "fetch-scenariorun-data")
-main.add_command(runner_dl_cmd, "fetch-run-data")
-main.add_command(tpl_listing, "list-templates")
+main.add_command(tpl_listing_cmd, "list-templates")
 
 if __name__ == "__main__":
     main()

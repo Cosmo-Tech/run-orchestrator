@@ -5,19 +5,14 @@
 # etc., to any person is prohibited unless it has been previously and
 # specifically authorized by written means by Cosmo Tech.
 
-import logging
 import os
 import pprint
-
-from rich.logging import RichHandler
 
 from cosmotech.orchestrator.core.orchestrator import FileLoader
 from cosmotech.orchestrator.templates.library import Library
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import web_help
-from cosmotech.orchestrator.utils.logger import _format
-
-LOGGER = logging.getLogger("csm.run.orchestrator.template_list")
+from cosmotech.orchestrator.utils.logger import LOGGER
 
 
 def display_template(template, verbose=False):
