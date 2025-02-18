@@ -17,7 +17,7 @@ _format = "%(message)s"
 def msg_split(message):
     if not isinstance(message, str):
         message = str(message)
-    return message.split("/")
+    return message.split("\n")
 
 if sys.__stdout__.isatty():
     if "PAILLETTES" in os.environ:
