@@ -14,6 +14,11 @@ from rich.logging import RichHandler
 
 _format = "%(message)s"
 
+def msg_split(message):
+    if not isinstance(message, str):
+        message = str(message)
+    return message.split("/")
+
 if sys.__stdout__.isatty():
     if "PAILLETTES" in os.environ:
         paillettes = "[bold yellow blink]***[/]"
@@ -29,7 +34,7 @@ if sys.__stdout__.isatty():
             super(CustomRichHandler, self).__init__(*args, **kwargs)
 
         def emit(self, record):
-            messages = record.msg.split('\n')
+            messages = msg_split(record.msg)
             for message in messages:
                 record.msg = message
                 super(CustomRichHandler, self).emit(record)
@@ -51,7 +56,7 @@ else:
             super(CustomHandler, self).__init__(*args, **kwargs)
 
         def emit(self, record):
-            messages = record.msg.split('\n')
+            messages = msg_split(record.msg)
             for message in messages:
                 record.msg = message
                 super(CustomHandler, self).emit(record)
