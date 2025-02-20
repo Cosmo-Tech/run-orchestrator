@@ -62,6 +62,7 @@ nav:
       - "tutorial/advanced_cosmotech_simulator.md"
       - "tutorial/plugins_and_templates.md"
       - "tutorial/exit_handlers.md"
+      - "tutorial/translations.md"
   - Examples:
       - "examples/index.md"
       - "examples/simple_simulation_run.md"
