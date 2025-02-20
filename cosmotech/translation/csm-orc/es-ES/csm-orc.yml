@@ -1,0 +1,97 @@
+# Mensajes de registro para el Orquestador Cosmotech
+
+logs:
+  # Mensajes relacionados con los pasos
+  step:
+    already_ready: "{step_id} ya está listo"
+    template_not_found: "{step_id} solicita una plantilla inexistente {command_id}"
+    loading_template: "{step_id} carga la plantilla {command_id}"
+    starting: "Iniciando {step_type} {step_id}"
+    skipping_previous_errors: "Omitiendo {step_type} {step_id} debido a errores previos"
+    skipping_as_required: "Omitiendo {step_type} {step_id} según lo requerido"
+    running_command: "Ejecutando: {command}"
+    error_during: "Error durante {step_type} {step_id}"
+    done_running: "Finalizada la ejecución de {step_type} {step_id}"
+    command_required: "Un paso requiere un comando o un ID de comando"
+    template_unavailable: "La plantilla de comando {command_id} no está disponible"
+    info:
+      header: "Paso {id}"
+      command: "Comando: {command}"
+      description_header: "Descripción:"
+      environment_header: "Entorno:"
+      optional: "(Opcional)"
+      use_system_env: "- Usar variables de entorno del sistema"
+      skipped: "- Omitido por el usuario"
+      status: "Estado: {status}"
+      simple_repr: "{id} ({status}): {description}"
+      simple_repr_no_desc: "{id} ({status})"
+
+  # Mensajes del orquestador
+  orchestrator:
+    loading_step: "Cargando {id} de tipo Step"
+    valid_file: "{file_path} es un archivo de orquestación válido"
+    step_already_defined: "El paso {step_id} ya está definido"
+    step_not_exists: "El paso {step_id} no existe"
+    dependencies:
+      header: "Dependencias de {step_id}:"
+      no_dependencies: "No hay dependencias para {step_id}"
+      found: "Encontrado {precedent}"
+    environment:
+      defined: "Variable de entorno definida para {file_name}"
+      variable: "{key}{description}"
+      missing: "Faltan valores de entorno para el paso {step_id}"
+      missing_value: "{key}: {value}"
+
+  # Mensajes de la biblioteca
+  library:
+    content: "Contenido de la biblioteca:"
+    templates_from: "Plantillas de '{plugin_name}':"
+    template_overriden: "- '{template_id}': SOBRESCRITO"
+    template_info: "{template}"
+    template_desc: "- '{id}'{description}"
+    template_invalid: "{template_id} no es un ID de plantilla válido"
+    plugin:
+      loading: "Cargando plugin {name}"
+      loaded_templates: "Cargadas {count} plantillas desde archivos del plugin"
+      template_count: "El plugin contiene {count} plantillas"
+    reloading: "Recargando biblioteca de plantillas"
+    loading: "Cargando biblioteca de plantillas"
+
+  # Mensajes del punto de entrada
+  entrypoint:
+    context: "Estableciendo contexto desde project.csm"
+    simulation:
+      info: "Simulación: {simulation}"
+      probes_topic: "Tema de medidas de sondas: {topic}"
+      no_probes_topic: "Sin tema de medidas de sondas"
+      control_topic: "Tema del plano de control: {topic}. El binario del simulador puede manejar CSM_CONTROL_PLANE_TOPIC directamente, por lo que no se transforma como argumento."
+      no_control_topic: "Sin tema del plano de control"
+      args: "Argumentos del simulador: {args}"
+      no_template: "No hay ID de plantilla de ejecución definido en la variable de entorno \"CSM_RUN_TEMPLATE_ID\", ejecutando modo simulador directo"
+    start: "Punto de entrada Csm-orc"
+
+  # Listado de plantillas
+  templates:
+    template_info: "{template}"
+    template_desc: "- '{id}'{description}"
+    no_templates: "No hay plantillas disponibles para mostrar"
+
+  # Mensajes de ejecución
+  run:
+    starting: "Iniciando orquestador de ejecución versión {version}"
+    sections:
+      run: "===      Ejecución     ==="
+      results: "===     Resultados    ==="
+      exit_handlers: "===   Manejadores de Salida   ==="
+    writing_env: "Escribiendo archivo de entorno \"{target}\""
+
+  # Documentación
+  docs:
+    open_failed: "Error al abrir: {url}"
+    opened: "Abierto {url} en su navegador"
+
+  # Mensajes de error
+  errors:
+    missing_library: "Necesita instalar la biblioteca `cosmotech-run-orchestrator` en su contenedor. Verifique si está configurada en su requirements.txt."
+    no_run_json: "No hay \"run.json\" definido para la plantilla de ejecución {template_id}"
+    missing_env_vars: "Faltan variables de entorno, revise los registros"

@@ -1,0 +1,97 @@
+# Cosmotech Orchestrator的日志消息
+
+logs:
+  # 步骤相关消息
+  step:
+    already_ready: "[green]{step_id}[/] 已准备就绪"
+    template_not_found: "[red]{step_id}[/] 请求不存在的模板 [yellow]{command_id}[/]"
+    loading_template: "[green]{step_id}[/] 加载模板 [cyan]{command_id}[/]"
+    starting: "开始 [bold]{step_type}[/] [green]{step_id}[/]"
+    skipping_previous_errors: "由于之前的错误跳过 [bold]{step_type}[/] [yellow]{step_id}[/]"
+    skipping_as_required: "按要求跳过 [bold]{step_type}[/] [yellow]{step_id}[/]"
+    running_command: "运行：[cyan]{command}[/]"
+    error_during: "[red]错误[/] 在 [bold]{step_type}[/] [yellow]{step_id}[/] 期间"
+    done_running: "[green]完成[/] 运行 [bold]{step_type}[/] [green]{step_id}[/]"
+    command_required: "[red]步骤需要命令或命令ID[/]"
+    template_unavailable: "命令模板 [red]{command_id}[/] 不可用"
+    info:
+      header: "步骤 [cyan]{id}[/]"
+      command: "命令：[cyan]{command}[/]"
+      description_header: "[bold]描述：[/]"
+      environment_header: "[bold]环境：[/]"
+      optional: "[yellow]（可选）[/]"
+      use_system_env: "- [cyan]使用系统环境变量[/]"
+      skipped: "- [yellow]用户已跳过[/]"
+      status: "状态：[cyan]{status}[/]"
+      simple_repr: "[cyan]{id}[/] ([yellow]{status}[/]): {description}"
+      simple_repr_no_desc: "[cyan]{id}[/] ([yellow]{status}[/])"
+
+  # 编排器消息
+  orchestrator:
+    loading_step: "加载 [green]{id}[/] 类型为 [yellow]Step[/]"
+    valid_file: "[green]{file_path}[/] 是有效的编排文件"
+    step_already_defined: "[red]步骤[/] [yellow]{step_id}[/] [red]已定义[/]"
+    step_not_exists: "[red]步骤[/] [yellow]{step_id}[/] [red]不存在[/]"
+    dependencies:
+      header: "[green]{step_id}[/] 的依赖项："
+      no_dependencies: "[green]{step_id}[/] 没有依赖项"
+      found: "找到 [cyan]{precedent}[/]"
+    environment:
+      defined: "为 [cyan]{file_name}[/] 定义的环境变量"
+      variable: "[yellow]{key}[/]{description}"
+      missing: "[red]缺少环境值[/] 对于步骤 [yellow]{step_id}[/]"
+      missing_value: "[red]{key}[/]: {value}"
+
+  # 库消息
+  library:
+    content: "[bold]库内容：[/]"
+    templates_from: "来自 [cyan]'{plugin_name}'[/] 的模板："
+    template_overriden: "- [yellow]'{template_id}'[/]: [red]已覆盖[/]"
+    template_info: "{template}"
+    template_desc: "- [cyan]'{id}'[/]{description}"
+    template_invalid: "[red]{template_id} 不是有效的模板ID[/]"
+    plugin:
+      loading: "加载插件 [cyan]{name}[/]"
+      loaded_templates: "从插件文件加载了 [green]{count}[/] 个模板"
+      template_count: "插件包含 [green]{count}[/] 个模板"
+    reloading: "[yellow]重新加载[/] 模板库"
+    loading: "[green]加载[/] 模板库"
+
+  # 入口点消息
+  entrypoint:
+    context: "从 [cyan]project.csm[/] 设置上下文"
+    simulation:
+      info: "模拟：[cyan]{simulation}[/]"
+      probes_topic: "探测器测量主题：[cyan]{topic}[/]"
+      no_probes_topic: "[yellow]无探测器测量主题[/]"
+      control_topic: "控制平面主题：[cyan]{topic}[/]。模拟器二进制文件能够直接处理 [yellow]CSM_CONTROL_PLANE_TOPIC[/]，因此不会将其转换为参数。"
+      no_control_topic: "[yellow]无控制平面主题[/]"
+      args: "模拟器参数：[cyan]{args}[/]"
+      no_template: "环境变量 [yellow]\"CSM_RUN_TEMPLATE_ID\"[/] 中未定义运行模板ID，运行直接模拟器模式"
+    start: "[bold]Csm-orc 入口点[/]"
+
+  # 模板列表
+  templates:
+    template_info: "{template}"
+    template_desc: "- [cyan]'{id}'[/]{description}"
+    no_templates: "[yellow]没有可显示的模板[/]"
+
+  # 运行消息
+  run:
+    starting: "启动运行编排器版本 [cyan]{version}[/]"
+    sections:
+      run: "[bold cyan]===      运行     ===[/]"
+      results: "[bold green]===     结果    ===[/]"
+      exit_handlers: "[bold yellow]===   退出处理程序   ===[/]"
+    writing_env: "写入环境文件 [cyan]\"{target}\"[/]"
+
+  # 文档
+  docs:
+    open_failed: "[red]打开失败：[/] {url}"
+    opened: "在您的导航器中打开了 [cyan]{url}[/]"
+
+  # 错误消息
+  errors:
+    missing_library: "[red]您需要在容器中安装[/] [cyan]`cosmotech-run-orchestrator`[/] [red]库。请检查您的 requirements.txt 中是否配置了它。[/]"
+    no_run_json: "[red]运行模板[/] [yellow]{template_id}[/] [red]未定义 \"run.json\"[/]"
+    missing_env_vars: "[red]缺少环境变量，请检查日志[/]"

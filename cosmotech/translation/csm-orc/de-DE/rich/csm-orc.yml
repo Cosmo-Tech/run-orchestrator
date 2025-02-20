@@ -1,0 +1,97 @@
+# Protokollmeldungen für den Cosmotech Orchestrator
+
+logs:
+  # Schrittbezogene Meldungen
+  step:
+    already_ready: "[green]{step_id}[/] bereits bereit"
+    template_not_found: "[red]{step_id}[/] fordert eine nicht existierende Vorlage [yellow]{command_id}[/] an"
+    loading_template: "[green]{step_id}[/] lädt Vorlage [cyan]{command_id}[/]"
+    starting: "Starte [bold]{step_type}[/] [green]{step_id}[/]"
+    skipping_previous_errors: "Überspringe [bold]{step_type}[/] [yellow]{step_id}[/] aufgrund vorheriger Fehler"
+    skipping_as_required: "Überspringe [bold]{step_type}[/] [yellow]{step_id}[/] wie erforderlich"
+    running_command: "Ausführung: [cyan]{command}[/]"
+    error_during: "[red]Fehler[/] während [bold]{step_type}[/] [yellow]{step_id}[/]"
+    done_running: "[green]Ausführung[/] von [bold]{step_type}[/] [green]{step_id}[/] abgeschlossen"
+    command_required: "[red]Ein Schritt benötigt entweder einen Befehl oder eine Befehls-ID[/]"
+    template_unavailable: "Befehlsvorlage [red]{command_id}[/] ist nicht verfügbar"
+    info:
+      header: "Schritt [cyan]{id}[/]"
+      command: "Befehl: [cyan]{command}[/]"
+      description_header: "[bold]Beschreibung:[/]"
+      environment_header: "[bold]Umgebung:[/]"
+      optional: "[yellow](Optional)[/]"
+      use_system_env: "- [cyan]Systemumgebungsvariablen verwenden[/]"
+      skipped: "- [yellow]Von Benutzer übersprungen[/]"
+      status: "Status: [cyan]{status}[/]"
+      simple_repr: "[cyan]{id}[/] ([yellow]{status}[/]): {description}"
+      simple_repr_no_desc: "[cyan]{id}[/] ([yellow]{status}[/])"
+
+  # Orchestrator-Meldungen
+  orchestrator:
+    loading_step: "Lade [green]{id}[/] vom Typ [yellow]Step[/]"
+    valid_file: "[green]{file_path}[/] ist eine gültige Orchestrierungsdatei"
+    step_already_defined: "[red]Schritt[/] [yellow]{step_id}[/] [red]ist bereits definiert[/]"
+    step_not_exists: "[red]Schritt[/] [yellow]{step_id}[/] [red]existiert nicht[/]"
+    dependencies:
+      header: "Abhängigkeiten von [green]{step_id}[/]:"
+      no_dependencies: "Keine Abhängigkeiten für [green]{step_id}[/]"
+      found: "Gefunden [cyan]{precedent}[/]"
+    environment:
+      defined: "Umgebungsvariable definiert für [cyan]{file_name}[/]"
+      variable: "[yellow]{key}[/]{description}"
+      missing: "[red]Fehlende Umgebungswerte[/] für Schritt [yellow]{step_id}[/]"
+      missing_value: "[red]{key}[/]: {value}"
+
+  # Bibliotheksmeldungen
+  library:
+    content: "[bold]Bibliotheksinhalt:[/]"
+    templates_from: "Vorlagen von [cyan]'{plugin_name}'[/]:"
+    template_overriden: "- [yellow]'{template_id}'[/]: [red]ÜBERSCHRIEBEN[/]"
+    template_info: "{template}"
+    template_desc: "- [cyan]'{id}'[/]{description}"
+    template_invalid: "[red]{template_id} ist keine gültige Vorlagen-ID[/]"
+    plugin:
+      loading: "Lade Plugin [cyan]{name}[/]"
+      loaded_templates: "[green]{count}[/] Vorlagen aus Plugin-Dateien geladen"
+      template_count: "Plugin enthält [green]{count}[/] Vorlagen"
+    reloading: "[yellow]Lade[/] Vorlagenbibliothek neu"
+    loading: "[green]Lade[/] Vorlagenbibliothek"
+
+  # Einstiegspunkt-Meldungen
+  entrypoint:
+    context: "Setze Kontext aus [cyan]project.csm[/]"
+    simulation:
+      info: "Simulation: [cyan]{simulation}[/]"
+      probes_topic: "Sondenmessungen-Thema: [cyan]{topic}[/]"
+      no_probes_topic: "[yellow]Kein Sondenmessungen-Thema[/]"
+      control_topic: "Steuerungsebenen-Thema: [cyan]{topic}[/]. Simulator-Binärdatei kann [yellow]CSM_CONTROL_PLANE_TOPIC[/] direkt verarbeiten, daher wird es nicht als Argument transformiert."
+      no_control_topic: "[yellow]Kein Steuerungsebenen-Thema[/]"
+      args: "Simulator-Argumente: [cyan]{args}[/]"
+      no_template: "Keine Ausführungsvorlagen-ID in Umgebungsvariable [yellow]\"CSM_RUN_TEMPLATE_ID\"[/] definiert, führe direkten Simulator-Modus aus"
+    start: "[bold]Csm-orc Einstiegspunkt[/]"
+
+  # Vorlagenliste
+  templates:
+    template_info: "{template}"
+    template_desc: "- [cyan]'{id}'[/]{description}"
+    no_templates: "[yellow]Keine Vorlagen zum Anzeigen verfügbar[/]"
+
+  # Ausführungsmeldungen
+  run:
+    starting: "Starte Ausführungs-Orchestrator Version [cyan]{version}[/]"
+    sections:
+      run: "[bold cyan]===      Ausführung     ===[/]"
+      results: "[bold green]===     Ergebnisse    ===[/]"
+      exit_handlers: "[bold yellow]===   Beendigungshandler   ===[/]"
+    writing_env: "Schreibe Umgebungsdatei [cyan]\"{target}\"[/]"
+
+  # Dokumentation
+  docs:
+    open_failed: "[red]Öffnen fehlgeschlagen:[/] {url}"
+    opened: "Geöffnet [cyan]{url}[/] in Ihrem Navigator"
+
+  # Fehlermeldungen
+  errors:
+    missing_library: "[red]Sie müssen die Bibliothek[/] [cyan]`cosmotech-run-orchestrator`[/] [red]in Ihrem Container installieren. Überprüfen Sie, ob Sie sie in Ihrer requirements.txt angegeben haben.[/]"
+    no_run_json: "[red]Keine \"run.json\" für die Ausführungsvorlage[/] [yellow]{template_id}[/] [red]definiert[/]"
+    missing_env_vars: "[red]Fehlende Umgebungsvariablen, überprüfen Sie die Protokolle[/]"

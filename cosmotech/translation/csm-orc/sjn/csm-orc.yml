@@ -1,0 +1,97 @@
+# Tengwar an i Cosmotech Orchestrator
+
+logs:
+  # Tengwar an i Cerir
+  step:
+    already_ready: "{step_id} farad"
+    template_not_found: "{step_id} hirtha ú-nostad {command_id} pattern"
+    loading_template: "{step_id} taetha pattern {command_id}"
+    starting: "Esto {step_type} {step_id}"
+    skipping_previous_errors: "Laba {step_type} {step_id} an raeg"
+    skipping_as_required: "Laba {step_type} {step_id} sui maetha"
+    running_command: "Cerir: {command}"
+    error_during: "Raeg mi {step_type} {step_id}"
+    done_running: "Telitha {step_type} {step_id}"
+    command_required: "Cer bauda command egor command-ID"
+    template_unavailable: "Command-pattern {command_id} ú-fartha"
+    info:
+      header: "Cer {id}"
+      command: "Command: {command}"
+      description_header: "Cannas:"
+      environment_header: "Ambar:"
+      optional: "(Úbauda)"
+      use_system_env: "- Haru ambar-tengwar system"
+      skipped: "- Labad by herdir"
+      status: "Stad: {status}"
+      simple_repr: "{id} ({status}): {description}"
+      simple_repr_no_desc: "{id} ({status})"
+
+  # Tengwar an i Orchestrator
+  orchestrator:
+    loading_step: "Taetha {id} na lû Step"
+    valid_file: "{file_path} na tengwar-orchestration mana"
+    step_already_defined: "Cer {step_id} na farad"
+    step_not_exists: "Cer {step_id} ú-nostad"
+    dependencies:
+      header: "Beriath {step_id}:"
+      no_dependencies: "Ú-beriath an {step_id}"
+      found: "Hirtha {precedent}"
+    environment:
+      defined: "Ambar-tengwar tanna an {file_name}"
+      variable: "{key}{description}"
+      missing: "Ambar-tengwar ú-fartha an cer {step_id}"
+      missing_value: "{key}: {value}"
+
+  # Tengwar an i Parmath
+  library:
+    content: "Parmath-content:"
+    templates_from: "Patterns od '{plugin_name}':"
+    template_overriden: "- '{template_id}': TAETHA"
+    template_info: "{template}"
+    template_desc: "- '{id}'{description}"
+    template_invalid: "{template_id} ú-mana pattern-ID"
+    plugin:
+      loading: "Taetha plugin {name}"
+      loaded_templates: "Taetha {count} patterns od plugin-tengwar"
+      template_count: "Plugin hartha {count} patterns"
+    reloading: "Ad-taetha parmath-patterns"
+    loading: "Taetha parmath-patterns"
+
+  # Tengwar an i Minui-Dôr
+  entrypoint:
+    context: "Tanna context od project.csm"
+    simulation:
+      info: "Simulation: {simulation}"
+      probes_topic: "Probes-topic: {topic}"
+      no_probes_topic: "Ú-probes-topic"
+      control_topic: "Control-topic: {topic}. Simulator-binary hartha CSM_CONTROL_PLANE_TOPIC mina, ú-taetha sui argument."
+      no_control_topic: "Ú-control-topic"
+      args: "Simulator-arguments: {args}"
+      no_template: "Ú-run-pattern-ID tanna mi ambar-tengwar \"CSM_RUN_TEMPLATE_ID\", cerir mina simulator-mode"
+    start: "Minui-Dôr Csm-orc"
+
+  # Tengwar an i Patterns
+  templates:
+    template_info: "{template}"
+    template_desc: "- '{id}'{description}"
+    no_templates: "Ú-patterns an tírad"
+
+  # Tengwar an i Cerir
+  run:
+    starting: "Esto orchestrator version {version}"
+    sections:
+      run: "===      Cerir     ==="
+      results: "===     Thoron    ==="
+      exit_handlers: "===   Exit-Herdir   ==="
+    writing_env: "Teitha ambar-tengwar \"{target}\""
+
+  # Tengwar an i Istanor
+  docs:
+    open_failed: "Ú-edra: {url}"
+    opened: "Edra {url} mi cennin"
+
+  # Tengwar an i Raeg
+  errors:
+    missing_library: "Le bauda sana parmath `cosmotech-run-orchestrator` mi container. Tiro ma na tanna mi requirements.txt."
+    no_run_json: "Ú-\"run.json\" tanna an run-pattern {template_id}"
+    missing_env_vars: "Ambar-tengwar ú-fartha, tiro i tengwar"

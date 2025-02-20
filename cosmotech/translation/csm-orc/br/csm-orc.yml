@@ -1,0 +1,97 @@
+# Kemennadennoù kerzhañ evit an Orchestrator Cosmotech
+
+logs:
+  # Kemennadennoù liammet d'ar pazennoù
+  step:
+    already_ready: "{step_id} prest endeo"
+    template_not_found: "{step_id} o c'houlenn ur patrom n'eus ket {command_id}"
+    loading_template: "{step_id} o kargañ ar patrom {command_id}"
+    starting: "O kregiñ gant {step_type} {step_id}"
+    skipping_previous_errors: "O tremen {step_type} {step_id} abalamour da fazioù kent"
+    skipping_as_required: "O tremen {step_type} {step_id} evel goulennet"
+    running_command: "O seveniñ: {command}"
+    error_during: "Fazi e-pad {step_type} {step_id}"
+    done_running: "Echu seveniñ {step_type} {step_id}"
+    command_required: "Ur bazenn a c'houlenn un urzhiad pe un ID urzhiad"
+    template_unavailable: "Patrom urzhiad {command_id} n'eo ket hegerz"
+    info:
+      header: "Pazenn {id}"
+      command: "Urzhiad: {command}"
+      description_header: "Deskrivadur:"
+      environment_header: "Endro:"
+      optional: "(Diret)"
+      use_system_env: "- Implijout arventennoù endro ar sistem"
+      skipped: "- Tremenet gant an implijer"
+      status: "Stad: {status}"
+      simple_repr: "{id} ({status}): {description}"
+      simple_repr_no_desc: "{id} ({status})"
+
+  # Kemennadennoù an orchestrator
+  orchestrator:
+    loading_step: "O kargañ {id} a seurt Step"
+    valid_file: "{file_path} zo ur restr orchestrañ talvoudek"
+    step_already_defined: "Pazenn {step_id} zo termenet endeo"
+    step_not_exists: "Pazenn {step_id} n'eus ket anezhi"
+    dependencies:
+      header: "Dalc'hioù {step_id}:"
+      no_dependencies: "N'eus dalc'h ebet evit {step_id}"
+      found: "Kavet {precedent}"
+    environment:
+      defined: "Arventenn endro termenet evit {file_name}"
+      variable: "{key}{description}"
+      missing: "Arventennoù endro o vankout evit ar bazenn {step_id}"
+      missing_value: "{key}: {value}"
+
+  # Kemennadennoù al levraoueg
+  library:
+    content: "Endalc'had al levraoueg:"
+    templates_from: "Patromoù eus '{plugin_name}':"
+    template_overriden: "- '{template_id}': ADSKRIVET"
+    template_info: "{template}"
+    template_desc: "- '{id}'{description}"
+    template_invalid: "{template_id} n'eo ket un ID patrom talvoudek"
+    plugin:
+      loading: "O kargañ ar plugin {name}"
+      loaded_templates: "Karget {count} patrom eus restroù ar plugin"
+      template_count: "Ar plugin en deus {count} patrom"
+    reloading: "Oc'h adkargañ al levraoueg patromoù"
+    loading: "O kargañ al levraoueg patromoù"
+
+  # Kemennadennoù ar poent mont-tre
+  entrypoint:
+    context: "O termeniñ ar c'hendestenn eus project.csm"
+    simulation:
+      info: "Simuladur: {simulation}"
+      probes_topic: "Danvez ar sondennoù: {topic}"
+      no_probes_topic: "N'eus danvez sondennoù ebet"
+      control_topic: "Danvez kontroll: {topic}. Ar binary simulator a c'hall merañ CSM_CONTROL_PLANE_TOPIC war-eeun, ne vo ket treuzfurmet da arguzenn."
+      no_control_topic: "N'eus danvez kontroll ebet"
+      args: "Arguzennoù ar simulator: {args}"
+      no_template: "N'eus ID patrom seveniñ ebet termenet en arventenn endro \"CSM_RUN_TEMPLATE_ID\", o seveniñ e mod simulator war-eeun"
+    start: "Poent mont-tre Csm-orc"
+
+  # Roll ar patromoù
+  templates:
+    template_info: "{template}"
+    template_desc: "- '{id}'{description}"
+    no_templates: "N'eus patrom ebet da ziskouez"
+
+  # Kemennadennoù seveniñ
+  run:
+    starting: "O kregiñ gant an orchestrator stumm {version}"
+    sections:
+      run: "===      Seveniñ     ==="
+      results: "===     Disoc'hoù    ==="
+      exit_handlers: "===   Merour Kuitaat   ==="
+    writing_env: "O skrivañ ar restr endro \"{target}\""
+
+  # Teuliadur
+  docs:
+    open_failed: "C'hwitadenn en ur zigeriñ: {url}"
+    opened: "Digoret {url} en ho merdeer"
+
+  # Kemennadennoù fazi
+  errors:
+    missing_library: "Ret eo deoc'h staliañ al levraoueg `cosmotech-run-orchestrator` en ho konteneur. Gwiriit ma'z eo termenet en ho requirements.txt."
+    no_run_json: "N'eus \"run.json\" ebet termenet evit ar patrom seveniñ {template_id}"
+    missing_env_vars: "Arventennoù endro o vankout, gwiriit ar c'herzhlevr"

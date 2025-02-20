@@ -1,0 +1,97 @@
+# Cosmotech Orchestrator的日志消息
+
+logs:
+  # 步骤相关消息
+  step:
+    already_ready: "{step_id} 已准备就绪"
+    template_not_found: "{step_id} 请求不存在的模板 {command_id}"
+    loading_template: "{step_id} 加载模板 {command_id}"
+    starting: "开始 {step_type} {step_id}"
+    skipping_previous_errors: "由于之前的错误跳过 {step_type} {step_id}"
+    skipping_as_required: "按要求跳过 {step_type} {step_id}"
+    running_command: "运行：{command}"
+    error_during: "{step_type} {step_id} 期间出错"
+    done_running: "完成运行 {step_type} {step_id}"
+    command_required: "步骤需要命令或命令ID"
+    template_unavailable: "命令模板 {command_id} 不可用"
+    info:
+      header: "步骤 {id}"
+      command: "命令：{command}"
+      description_header: "描述："
+      environment_header: "环境："
+      optional: "（可选）"
+      use_system_env: "- 使用系统环境变量"
+      skipped: "- 用户已跳过"
+      status: "状态：{status}"
+      simple_repr: "{id} ({status}): {description}"
+      simple_repr_no_desc: "{id} ({status})"
+
+  # 编排器消息
+  orchestrator:
+    loading_step: "加载类型为Step的 {id}"
+    valid_file: "{file_path} 是有效的编排文件"
+    step_already_defined: "步骤 {step_id} 已定义"
+    step_not_exists: "步骤 {step_id} 不存在"
+    dependencies:
+      header: "{step_id} 的依赖项："
+      no_dependencies: "{step_id} 没有依赖项"
+      found: "找到 {precedent}"
+    environment:
+      defined: "为 {file_name} 定义的环境变量"
+      variable: "{key}{description}"
+      missing: "步骤 {step_id} 缺少环境值"
+      missing_value: "{key}: {value}"
+
+  # 库消息
+  library:
+    content: "库内容："
+    templates_from: "来自 '{plugin_name}' 的模板："
+    template_overriden: "- '{template_id}': 已覆盖"
+    template_info: "{template}"
+    template_desc: "- '{id}'{description}"
+    template_invalid: "{template_id} 不是有效的模板ID"
+    plugin:
+      loading: "加载插件 {name}"
+      loaded_templates: "从插件文件加载了 {count} 个模板"
+      template_count: "插件包含 {count} 个模板"
+    reloading: "重新加载模板库"
+    loading: "加载模板库"
+
+  # 入口点消息
+  entrypoint:
+    context: "从 project.csm 设置上下文"
+    simulation:
+      info: "模拟：{simulation}"
+      probes_topic: "探测器测量主题：{topic}"
+      no_probes_topic: "无探测器测量主题"
+      control_topic: "控制平面主题：{topic}。模拟器二进制文件能够直接处理 CSM_CONTROL_PLANE_TOPIC，因此不会将其转换为参数。"
+      no_control_topic: "无控制平面主题"
+      args: "模拟器参数：{args}"
+      no_template: "环境变量 \"CSM_RUN_TEMPLATE_ID\" 中未定义运行模板ID，运行直接模拟器模式"
+    start: "Csm-orc 入口点"
+
+  # 模板列表
+  templates:
+    template_info: "{template}"
+    template_desc: "- '{id}'{description}"
+    no_templates: "没有可显示的模板"
+
+  # 运行消息
+  run:
+    starting: "启动运行编排器版本 {version}"
+    sections:
+      run: "===      运行     ==="
+      results: "===     结果    ==="
+      exit_handlers: "===   退出处理程序   ==="
+    writing_env: "写入环境文件 \"{target}\""
+
+  # 文档
+  docs:
+    open_failed: "打开失败：{url}"
+    opened: "在您的导航器中打开了 {url}"
+
+  # 错误消息
+  errors:
+    missing_library: "您需要在容器中安装 `cosmotech-run-orchestrator` 库。请检查您的 requirements.txt 中是否配置了它。"
+    no_run_json: "运行模板 {template_id} 未定义 \"run.json\""
+    missing_env_vars: "缺少环境变量，请检查日志"
