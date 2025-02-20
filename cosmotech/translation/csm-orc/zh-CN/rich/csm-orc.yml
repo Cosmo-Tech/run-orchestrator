@@ -14,6 +14,15 @@ logs:
     done_running: "[green]完成[/] 运行 [bold]{step_type}[/] [green]{step_id}[/]"
     command_required: "[red]步骤需要命令或命令ID[/]"
     template_unavailable: "命令模板 [red]{command_id}[/] 不可用"
+    input:
+      default_value: "步骤 [cyan]{step_id}[/]：使用输入 [yellow]'{input}'[/] 的默认值：[cyan]{value}[/]"
+      missing_required: "步骤 [cyan]{step_id}[/]：[red]缺少必需的输入[/] [yellow]'{input}'[/]"
+    output:
+      default_value: "步骤 [cyan]{step_id}[/]：使用输出 [yellow]'{output}'[/] 的默认值：[cyan]{value}[/]"
+      captured_values_header: "步骤 [cyan]{step_id}[/]：[green]捕获的输出值：[/]"
+      captured_value: "  - [yellow]{output}[/]：[cyan]{value}[/]"
+      missing_value: "步骤 [cyan]{step_id}[/]：[red]缺少必需的输出[/] [yellow]'{output}'[/]"
+      missing_required: "步骤 [cyan]{step_id}[/]：[red]缺少必需的输出：[/][yellow]{outputs}[/]"
     info:
       header: "步骤 [cyan]{id}[/]"
       command: "命令：[cyan]{command}[/]"
@@ -36,6 +45,8 @@ logs:
       header: "[green]{step_id}[/] 的依赖项："
       no_dependencies: "[green]{step_id}[/] 没有依赖项"
       found: "找到 [cyan]{precedent}[/]"
+    data_flow:
+      connecting: "连接数据流从 [cyan]{from_step}[/]:[yellow]{from_output}[/] 到 [cyan]{to_step}[/]:[yellow]{to_input}[/]"
     environment:
       defined: "为 [cyan]{file_name}[/] 定义的环境变量"
       variable: "[yellow]{key}[/]{description}"

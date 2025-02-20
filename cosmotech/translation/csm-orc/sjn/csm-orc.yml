@@ -14,6 +14,15 @@ logs:
     done_running: "Telitha {step_type} {step_id}"
     command_required: "Cer bauda command egor command-ID"
     template_unavailable: "Command-pattern {command_id} ú-fartha"
+    input:
+      default_value: "Cer {step_id}: Haru default-value an input '{input}': {value}"
+      missing_required: "Cer {step_id}: Bauda input '{input}' ú-fartha"
+    output:
+      default_value: "Cer {step_id}: Haru default-value an output '{output}': {value}"
+      captured_values_header: "Cer {step_id}: Hirtha output-values:"
+      captured_value: "  - {output}: {value}"
+      missing_value: "Cer {step_id}: Bauda output '{output}' ú-fartha"
+      missing_required: "Cer {step_id}: Bauda outputs ú-fartha: {outputs}"
     info:
       header: "Cer {id}"
       command: "Command: {command}"
@@ -36,6 +45,8 @@ logs:
       header: "Beriath {step_id}:"
       no_dependencies: "Ú-beriath an {step_id}"
       found: "Hirtha {precedent}"
+    data_flow:
+      connecting: "Taetha data-flow od {from_step}:{from_output} na {to_step}:{to_input}"
     environment:
       defined: "Ambar-tengwar tanna an {file_name}"
       variable: "{key}{description}"

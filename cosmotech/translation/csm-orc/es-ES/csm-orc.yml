@@ -14,6 +14,18 @@ logs:
     done_running: "Finalizada la ejecución de {step_type} {step_id}"
     command_required: "Un paso requiere un comando o un ID de comando"
     template_unavailable: "La plantilla de comando {command_id} no está disponible"
+    input:
+      default_value: "Paso {step_id}: Usando valor predeterminado para entrada '{input}': {value}"
+      default_value_hidden: "Paso {step_id}: Usando valor predeterminado para entrada oculta '{input}'"
+      missing_required: "Paso {step_id}: Falta entrada requerida '{input}'"
+    output:
+      default_value: "Paso {step_id}: Usando valor predeterminado para salida '{output}': {value}"
+      default_value_hidden: "Paso {step_id}: Usando valor predeterminado para salida oculta '{output}'"
+      captured_values_header: "Paso {step_id}: Valores de salida capturados:"
+      captured_value: "  - {output}: {value}"
+      captured_hidden: "  - {output}: [valor oculto]"
+      missing_value: "Paso {step_id}: Falta salida requerida '{output}'"
+      missing_required: "Paso {step_id}: Faltan salidas requeridas: {outputs}"
     info:
       header: "Paso {id}"
       command: "Comando: {command}"
@@ -36,6 +48,9 @@ logs:
       header: "Dependencias de {step_id}:"
       no_dependencies: "No hay dependencias para {step_id}"
       found: "Encontrado {precedent}"
+    data_flow:
+      connecting: "Conectando flujo de datos desde {from_step}:{from_output} hacia {to_step}:{to_input}"
+      connecting_hidden: "Conectando flujo de datos ocultos desde {from_step}:{from_output} hacia {to_step}:{to_input}"
     environment:
       defined: "Variable de entorno definida para {file_name}"
       variable: "{key}{description}"

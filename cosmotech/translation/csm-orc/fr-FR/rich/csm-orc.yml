@@ -14,6 +14,18 @@ logs:
     done_running: "[green]Terminé[/] l'exécution de [bold]{step_type}[/] [green]{step_id}[/]"
     command_required: "[red]Une étape nécessite soit une commande soit un identifiant de commande[/]"
     template_unavailable: "Le modèle de commande [red]{command_id}[/] n'est pas disponible"
+    input:
+      default_value: "Étape [cyan]{step_id}[/]: Utilisation de la valeur par défaut pour l'entrée [yellow]'{input}'[/]: [cyan]{value}[/]"
+      default_value_hidden: "Étape [cyan]{step_id}[/]: Utilisation de la valeur par défaut pour l'entrée masquée [yellow]'{input}'[/]"
+      missing_required: "Étape [cyan]{step_id}[/]: [red]Entrée requise manquante[/] [yellow]'{input}'[/]"
+    output:
+      default_value: "Étape [cyan]{step_id}[/]: Utilisation de la valeur par défaut pour la sortie [yellow]'{output}'[/]: [cyan]{value}[/]"
+      default_value_hidden: "Étape [cyan]{step_id}[/]: Utilisation de la valeur par défaut pour la sortie masquée [yellow]'{output}'[/]"
+      captured_values_header: "Étape [cyan]{step_id}[/]: [green]Valeurs de sortie capturées:[/]"
+      captured_value: "  - [yellow]{output}[/]: [cyan]{value}[/]"
+      captured_hidden: "  - [yellow]{output}[/]: [dim][valeur masquée][/]"
+      missing_value: "Étape [cyan]{step_id}[/]: [red]Sortie requise manquante[/] [yellow]'{output}'[/]"
+      missing_required: "Étape [cyan]{step_id}[/]: [red]Sorties requises manquantes:[/] [yellow]{outputs}[/]"
     info:
       header: "Étape [cyan]{id}[/]"
       command: "Commande: [cyan]{command}[/]"
@@ -36,6 +48,9 @@ logs:
       header: "Dépendances de [green]{step_id}[/]:"
       no_dependencies: "Pas de dépendances pour [green]{step_id}[/]"
       found: "Trouvé [cyan]{precedent}[/]"
+    data_flow:
+      connecting: "Connexion du flux de données de [cyan]{from_step}[/]:[yellow]{from_output}[/] vers [cyan]{to_step}[/]:[yellow]{to_input}[/]"
+      connecting_hidden: "Connexion du flux de données masquées de [cyan]{from_step}[/]:[yellow]{from_output}[/] vers [cyan]{to_step}[/]:[yellow]{to_input}[/]"
     environment:
       defined: "Variable d'environnement définie pour [cyan]{file_name}[/]"
       variable: "[yellow]{key}[/]{description}"

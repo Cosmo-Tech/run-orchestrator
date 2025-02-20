@@ -9,11 +9,23 @@ logs:
     starting: "Iniciando [bold]{step_type}[/] [green]{step_id}[/]"
     skipping_previous_errors: "Omitiendo [bold]{step_type}[/] [yellow]{step_id}[/] debido a errores previos"
     skipping_as_required: "Omitiendo [bold]{step_type}[/] [yellow]{step_id}[/] según lo requerido"
-    running_command: "Ejecutando: [cyan]{command}[/]"
+    running_command: "Ejecutando:[cyan]{command}[/]"
     error_during: "[red]Error[/] durante [bold]{step_type}[/] [yellow]{step_id}[/]"
     done_running: "[green]Finalizada[/] la ejecución de [bold]{step_type}[/] [green]{step_id}[/]"
     command_required: "[red]Un paso requiere un comando o un ID de comando[/]"
     template_unavailable: "La plantilla de comando [red]{command_id}[/] no está disponible"
+    input:
+      default_value: "Paso [cyan]{step_id}[/]: Usando valor predeterminado para entrada [yellow]'{input}'[/]: [cyan]{value}[/]"
+      default_value_hidden: "Paso [cyan]{step_id}[/]: Usando valor predeterminado para entrada oculta [yellow]'{input}'[/]"
+      missing_required: "Paso [cyan]{step_id}[/]: [red]Falta entrada requerida[/] [yellow]'{input}'[/]"
+    output:
+      default_value: "Paso [cyan]{step_id}[/]: Usando valor predeterminado para salida [yellow]'{output}'[/]: [cyan]{value}[/]"
+      default_value_hidden: "Paso [cyan]{step_id}[/]: Usando valor predeterminado para salida oculta [yellow]'{output}'[/]"
+      captured_values_header: "Paso [cyan]{step_id}[/]: [green]Valores de salida capturados:[/]"
+      captured_value: "  - [yellow]{output}[/]: [cyan]{value}[/]"
+      captured_hidden: "  - [yellow]{output}[/]: [dim][valor oculto][/]"
+      missing_value: "Paso [cyan]{step_id}[/]: [red]Falta salida requerida[/] [yellow]'{output}'[/]"
+      missing_required: "Paso [cyan]{step_id}[/]: [red]Faltan salidas requeridas:[/] [yellow]{outputs}[/]"
     info:
       header: "Paso [cyan]{id}[/]"
       command: "Comando: [cyan]{command}[/]"
@@ -36,6 +48,9 @@ logs:
       header: "Dependencias de [green]{step_id}[/]:"
       no_dependencies: "No hay dependencias para [green]{step_id}[/]"
       found: "Encontrado [cyan]{precedent}[/]"
+    data_flow:
+      connecting: "Conectando flujo de datos desde [cyan]{from_step}[/]:[yellow]{from_output}[/] hacia [cyan]{to_step}[/]:[yellow]{to_input}[/]"
+      connecting_hidden: "Conectando flujo de datos ocultos desde [cyan]{from_step}[/]:[yellow]{from_output}[/] hacia [cyan]{to_step}[/]:[yellow]{to_input}[/]"
     environment:
       defined: "Variable de entorno definida para [cyan]{file_name}[/]"
       variable: "[yellow]{key}[/]{description}"

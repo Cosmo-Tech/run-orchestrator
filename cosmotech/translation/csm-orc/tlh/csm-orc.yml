@@ -14,6 +14,15 @@ logs:
     done_running: "{step_type} {step_id} Qap"
     command_required: "step command pagh command ID lo'"
     template_unavailable: "command template {command_id} Hutlh"
+    input:
+      default_value: "step {step_id}: input '{input}' default value lo': {value}"
+      missing_required: "step {step_id}: required input '{input}' Hutlh"
+    output:
+      default_value: "step {step_id}: output '{output}' default value lo': {value}"
+      captured_values_header: "step {step_id}: captured output values:"
+      captured_value: "  - {output}: {value}"
+      missing_value: "step {step_id}: required output '{output}' Hutlh"
+      missing_required: "step {step_id}: required outputs Hutlh: {outputs}"
     info:
       header: "Step {id}"
       command: "Command: {command}"
@@ -36,6 +45,8 @@ logs:
       header: "{step_id} dependencies:"
       no_dependencies: "{step_id} Hutlh dependencies"
       found: "tu'lu' {precedent}"
+    data_flow:
+      connecting: "data flow vo' {from_step}:{from_output} 'ej {to_step}:{to_input} connect"
     environment:
       defined: "environment variable {file_name} chenmoH"
       variable: "{key}{description}"

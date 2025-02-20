@@ -14,6 +14,18 @@ logs:
     done_running: "Ausführung von {step_type} {step_id} abgeschlossen"
     command_required: "Ein Schritt benötigt entweder einen Befehl oder eine Befehls-ID"
     template_unavailable: "Befehlsvorlage {command_id} ist nicht verfügbar"
+    input:
+      default_value: "Schritt {step_id}: Verwende Standardwert für Eingabe '{input}': {value}"
+      default_value_hidden: "Schritt {step_id}: Verwende Standardwert für versteckte Eingabe '{input}'"
+      missing_required: "Schritt {step_id}: Erforderliche Eingabe '{input}' fehlt"
+    output:
+      default_value: "Schritt {step_id}: Verwende Standardwert für Ausgabe '{output}': {value}"
+      default_value_hidden: "Schritt {step_id}: Verwende Standardwert für versteckte Ausgabe '{output}'"
+      captured_values_header: "Schritt {step_id}: Erfasste Ausgabewerte:"
+      captured_value: "  - {output}: {value}"
+      captured_hidden: "  - {output}: [versteckter Wert]"
+      missing_value: "Schritt {step_id}: Erforderliche Ausgabe '{output}' fehlt"
+      missing_required: "Schritt {step_id}: Erforderliche Ausgaben fehlen: {outputs}"
     info:
       header: "Schritt {id}"
       command: "Befehl: {command}"
@@ -36,6 +48,9 @@ logs:
       header: "Abhängigkeiten von {step_id}:"
       no_dependencies: "Keine Abhängigkeiten für {step_id}"
       found: "Gefunden {precedent}"
+    data_flow:
+      connecting: "Verbinde Datenfluss von {from_step}:{from_output} zu {to_step}:{to_input}"
+      connecting_hidden: "Verbinde versteckten Datenfluss von {from_step}:{from_output} zu {to_step}:{to_input}"
     environment:
       defined: "Umgebungsvariable definiert für {file_name}"
       variable: "{key}{description}"

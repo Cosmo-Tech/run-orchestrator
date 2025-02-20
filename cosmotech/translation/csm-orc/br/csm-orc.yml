@@ -14,6 +14,15 @@ logs:
     done_running: "Echu seveniñ {step_type} {step_id}"
     command_required: "Ur bazenn a c'houlenn un urzhiad pe un ID urzhiad"
     template_unavailable: "Patrom urzhiad {command_id} n'eo ket hegerz"
+    input:
+      default_value: "Pazenn {step_id}: Oc'h implijout an talvoud dre ziouer evit ar monedenn '{input}': {value}"
+      missing_required: "Pazenn {step_id}: Monedenn ret '{input}' o vankout"
+    output:
+      default_value: "Pazenn {step_id}: Oc'h implijout an talvoud dre ziouer evit an ezvonedenn '{output}': {value}"
+      captured_values_header: "Pazenn {step_id}: Talvoudoù ezvonedenn tapet:"
+      captured_value: "  - {output}: {value}"
+      missing_value: "Pazenn {step_id}: Ezvonedenn ret '{output}' o vankout"
+      missing_required: "Pazenn {step_id}: Ezvonadennoù ret o vankout: {outputs}"
     info:
       header: "Pazenn {id}"
       command: "Urzhiad: {command}"
@@ -36,6 +45,8 @@ logs:
       header: "Dalc'hioù {step_id}:"
       no_dependencies: "N'eus dalc'h ebet evit {step_id}"
       found: "Kavet {precedent}"
+    data_flow:
+      connecting: "O kevreañ ar red data eus {from_step}:{from_output} da {to_step}:{to_input}"
     environment:
       defined: "Arventenn endro termenet evit {file_name}"
       variable: "{key}{description}"

@@ -14,6 +14,15 @@ logs:
     done_running: "[green]Qap[/] [bold]{step_type}[/] [green]{step_id}[/]"
     command_required: "[red]step command pagh command ID lo'[/]"
     template_unavailable: "command template [red]{command_id}[/] Hutlh"
+    input:
+      default_value: "step [cyan]{step_id}[/]: input [yellow]'{input}'[/] default value lo': [cyan]{value}[/]"
+      missing_required: "step [cyan]{step_id}[/]: [red]required input[/] [yellow]'{input}'[/] Hutlh"
+    output:
+      default_value: "step [cyan]{step_id}[/]: output [yellow]'{output}'[/] default value lo': [cyan]{value}[/]"
+      captured_values_header: "step [cyan]{step_id}[/]: [green]captured output values:[/]"
+      captured_value: "  - [yellow]{output}[/]: [cyan]{value}[/]"
+      missing_value: "step [cyan]{step_id}[/]: [red]required output[/] [yellow]'{output}'[/] Hutlh"
+      missing_required: "step [cyan]{step_id}[/]: [red]required outputs Hutlh:[/] [yellow]{outputs}[/]"
     info:
       header: "Step [cyan]{id}[/]"
       command: "Command: [cyan]{command}[/]"
@@ -36,6 +45,8 @@ logs:
       header: "[green]{step_id}[/] dependencies:"
       no_dependencies: "[green]{step_id}[/] Hutlh dependencies"
       found: "tu'lu' [cyan]{precedent}[/]"
+    data_flow:
+      connecting: "data flow vo' [cyan]{from_step}[/]:[yellow]{from_output}[/] 'ej [cyan]{to_step}[/]:[yellow]{to_input}[/] connect"
     environment:
       defined: "environment variable [cyan]{file_name}[/] chenmoH"
       variable: "[yellow]{key}[/]{description}"

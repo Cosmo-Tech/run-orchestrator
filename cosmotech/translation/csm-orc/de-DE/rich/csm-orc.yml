@@ -9,11 +9,23 @@ logs:
     starting: "Starte [bold]{step_type}[/] [green]{step_id}[/]"
     skipping_previous_errors: "Überspringe [bold]{step_type}[/] [yellow]{step_id}[/] aufgrund vorheriger Fehler"
     skipping_as_required: "Überspringe [bold]{step_type}[/] [yellow]{step_id}[/] wie erforderlich"
-    running_command: "Ausführung: [cyan]{command}[/]"
+    running_command: "Ausführung:[cyan]{command}[/]"
     error_during: "[red]Fehler[/] während [bold]{step_type}[/] [yellow]{step_id}[/]"
-    done_running: "[green]Ausführung[/] von [bold]{step_type}[/] [green]{step_id}[/] abgeschlossen"
+    done_running: "[green]Abgeschlossen[/] Ausführung von [bold]{step_type}[/] [green]{step_id}[/]"
     command_required: "[red]Ein Schritt benötigt entweder einen Befehl oder eine Befehls-ID[/]"
     template_unavailable: "Befehlsvorlage [red]{command_id}[/] ist nicht verfügbar"
+    input:
+      default_value: "Schritt [cyan]{step_id}[/]: Verwende Standardwert für Eingabe [yellow]'{input}'[/]: [cyan]{value}[/]"
+      default_value_hidden: "Schritt [cyan]{step_id}[/]: Verwende Standardwert für versteckte Eingabe [yellow]'{input}'[/]"
+      missing_required: "Schritt [cyan]{step_id}[/]: [red]Erforderliche Eingabe[/] [yellow]'{input}'[/] fehlt"
+    output:
+      default_value: "Schritt [cyan]{step_id}[/]: Verwende Standardwert für Ausgabe [yellow]'{output}'[/]: [cyan]{value}[/]"
+      default_value_hidden: "Schritt [cyan]{step_id}[/]: Verwende Standardwert für versteckte Ausgabe [yellow]'{output}'[/]"
+      captured_values_header: "Schritt [cyan]{step_id}[/]: [green]Erfasste Ausgabewerte:[/]"
+      captured_value: "  - [yellow]{output}[/]: [cyan]{value}[/]"
+      captured_hidden: "  - [yellow]{output}[/]: [dim][versteckter Wert][/]"
+      missing_value: "Schritt [cyan]{step_id}[/]: [red]Erforderliche Ausgabe[/] [yellow]'{output}'[/] fehlt"
+      missing_required: "Schritt [cyan]{step_id}[/]: [red]Erforderliche Ausgaben fehlen:[/] [yellow]{outputs}[/]"
     info:
       header: "Schritt [cyan]{id}[/]"
       command: "Befehl: [cyan]{command}[/]"
@@ -36,6 +48,9 @@ logs:
       header: "Abhängigkeiten von [green]{step_id}[/]:"
       no_dependencies: "Keine Abhängigkeiten für [green]{step_id}[/]"
       found: "Gefunden [cyan]{precedent}[/]"
+    data_flow:
+      connecting: "Verbinde Datenfluss von [cyan]{from_step}[/]:[yellow]{from_output}[/] zu [cyan]{to_step}[/]:[yellow]{to_input}[/]"
+      connecting_hidden: "Verbinde versteckten Datenfluss von [cyan]{from_step}[/]:[yellow]{from_output}[/] zu [cyan]{to_step}[/]:[yellow]{to_input}[/]"
     environment:
       defined: "Umgebungsvariable definiert für [cyan]{file_name}[/]"
       variable: "[yellow]{key}[/]{description}"
@@ -52,7 +67,7 @@ logs:
     template_invalid: "[red]{template_id} ist keine gültige Vorlagen-ID[/]"
     plugin:
       loading: "Lade Plugin [cyan]{name}[/]"
-      loaded_templates: "[green]{count}[/] Vorlagen aus Plugin-Dateien geladen"
+      loaded_templates: "Geladen [green]{count}[/] Vorlagen aus Plugin-Dateien"
       template_count: "Plugin enthält [green]{count}[/] Vorlagen"
     reloading: "[yellow]Lade[/] Vorlagenbibliothek neu"
     loading: "[green]Lade[/] Vorlagenbibliothek"
@@ -93,5 +108,5 @@ logs:
   # Fehlermeldungen
   errors:
     missing_library: "[red]Sie müssen die Bibliothek[/] [cyan]`cosmotech-run-orchestrator`[/] [red]in Ihrem Container installieren. Überprüfen Sie, ob Sie sie in Ihrer requirements.txt angegeben haben.[/]"
-    no_run_json: "[red]Keine \"run.json\" für die Ausführungsvorlage[/] [yellow]{template_id}[/] [red]definiert[/]"
+    no_run_json: "[red]Keine \"run.json\" für die Ausführungsvorlage[/] [yellow]{template_id}[/] definiert"
     missing_env_vars: "[red]Fehlende Umgebungsvariablen, überprüfen Sie die Protokolle[/]"

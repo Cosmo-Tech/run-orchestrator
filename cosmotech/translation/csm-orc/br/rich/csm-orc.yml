@@ -14,6 +14,15 @@ logs:
     done_running: "[green]Echu[/] seveniñ [bold]{step_type}[/] [green]{step_id}[/]"
     command_required: "[red]Ur bazenn a c'houlenn un urzhiad pe un ID urzhiad[/]"
     template_unavailable: "Patrom urzhiad [red]{command_id}[/] n'eo ket hegerz"
+    input:
+      default_value: "Pazenn [cyan]{step_id}[/]: Oc'h implijout an talvoud dre ziouer evit ar monedenn [yellow]'{input}'[/]: [cyan]{value}[/]"
+      missing_required: "Pazenn [cyan]{step_id}[/]: [red]Monedenn ret[/] [yellow]'{input}'[/] o vankout"
+    output:
+      default_value: "Pazenn [cyan]{step_id}[/]: Oc'h implijout an talvoud dre ziouer evit an ezvonedenn [yellow]'{output}'[/]: [cyan]{value}[/]"
+      captured_values_header: "Pazenn [cyan]{step_id}[/]: [green]Talvoudoù ezvonedenn tapet:[/]"
+      captured_value: "  - [yellow]{output}[/]: [cyan]{value}[/]"
+      missing_value: "Pazenn [cyan]{step_id}[/]: [red]Ezvonedenn ret[/] [yellow]'{output}'[/] o vankout"
+      missing_required: "Pazenn [cyan]{step_id}[/]: [red]Ezvonadennoù ret o vankout:[/] [yellow]{outputs}[/]"
     info:
       header: "Pazenn [cyan]{id}[/]"
       command: "Urzhiad: [cyan]{command}[/]"
@@ -36,6 +45,8 @@ logs:
       header: "Dalc'hioù [green]{step_id}[/]:"
       no_dependencies: "N'eus dalc'h ebet evit [green]{step_id}[/]"
       found: "Kavet [cyan]{precedent}[/]"
+    data_flow:
+      connecting: "O kevreañ ar red data eus [cyan]{from_step}[/]:[yellow]{from_output}[/] da [cyan]{to_step}[/]:[yellow]{to_input}[/]"
     environment:
       defined: "Arventenn endro termenet evit [cyan]{file_name}[/]"
       variable: "[yellow]{key}[/]{description}"

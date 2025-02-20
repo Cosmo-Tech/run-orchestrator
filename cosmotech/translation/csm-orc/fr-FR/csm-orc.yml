@@ -14,6 +14,18 @@ logs:
     done_running: "Exécution terminée de {step_type} {step_id}"
     command_required: "Une étape nécessite soit une commande soit un identifiant de commande"
     template_unavailable: "Le modèle de commande {command_id} n'est pas disponible"
+    input:
+      default_value: "Étape {step_id}: Utilisation de la valeur par défaut pour l'entrée '{input}': {value}"
+      default_value_hidden: "Étape {step_id}: Utilisation de la valeur par défaut pour l'entrée masquée '{input}'"
+      missing_required: "Étape {step_id}: Entrée requise manquante '{input}'"
+    output:
+      default_value: "Étape {step_id}: Utilisation de la valeur par défaut pour la sortie '{output}': {value}"
+      default_value_hidden: "Étape {step_id}: Utilisation de la valeur par défaut pour la sortie masquée '{output}'"
+      captured_values_header: "Étape {step_id}: Valeurs de sortie capturées:"
+      captured_value: "  - {output}: {value}"
+      captured_hidden: "  - {output}: [valeur masquée]"
+      missing_value: "Étape {step_id}: Sortie requise manquante '{output}'"
+      missing_required: "Étape {step_id}: Sorties requises manquantes: {outputs}"
     info:
       header: "Étape {id}"
       command: "Commande: {command}"
@@ -36,6 +48,9 @@ logs:
       header: "Dépendances de {step_id}:"
       no_dependencies: "Pas de dépendances pour {step_id}"
       found: "Trouvé {precedent}"
+    data_flow:
+      connecting: "Connexion du flux de données de {from_step}:{from_output} vers {to_step}:{to_input}"
+      connecting_hidden: "Connexion du flux de données masquées de {from_step}:{from_output} vers {to_step}:{to_input}"
     environment:
       defined: "Variable d'environnement définie pour {file_name}"
       variable: "{key}{description}"
