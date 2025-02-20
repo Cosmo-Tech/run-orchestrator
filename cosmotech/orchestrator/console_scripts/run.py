@@ -82,7 +82,6 @@ In case you are in a python venv, the venv is activated before any command is ru
             LOGGER.info(T("csm-orc.logs.run.sections.run"))
             g.evaluate(mode="threading")
             LOGGER.info(T("csm-orc.logs.run.sections.results"))
-            LOGGER.debug(g)
             for k, v in s.items():
                 LOGGER.info(v[0].simple_repr())
                 LOGGER.debug(str(v[0]))

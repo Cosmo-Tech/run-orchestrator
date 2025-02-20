@@ -14,6 +14,18 @@ logs:
     done_running: "Done running {step_type} {step_id}"
     command_required: "A step requires either a command or a commandId"
     template_unavailable: "Command Template {command_id} is not available"
+    input:
+      default_value: "Step {step_id}: Using default value for input '{input}': {value}"
+      default_value_hidden: "Step {step_id}: Using default value for hidden input '{input}'"
+      missing_required: "Step {step_id}: Missing required input '{input}'"
+    output:
+      default_value: "Step {step_id}: Using default value for output '{output}': {value}"
+      default_value_hidden: "Step {step_id}: Using default value for hidden output '{output}'"
+      captured_values_header: "Step {step_id}: Captured output values:"
+      captured_value: "  - {output}: {value}"
+      captured_hidden: "  - {output}: [hidden value]"
+      missing_value: "Step {step_id}: Missing required output '{output}'"
+      missing_required: "Step {step_id}: Missing required outputs: {outputs}"
     info:
       header: "Step {id}"
       command: "Command: {command}"
@@ -36,6 +48,9 @@ logs:
       header: "Dependencies of {step_id}:"
       no_dependencies: "No dependencies for {step_id}"
       found: "Found {precedent}"
+    data_flow:
+      connecting: "Connecting data flow from {from_step}:{from_output} to {to_step}:{to_input}"
+      connecting_hidden: "Connecting hidden data flow from {from_step}:{from_output} to {to_step}:{to_input}"
     environment:
       defined: "Environment variable defined for {file_name}"
       variable: "{key}{description}"

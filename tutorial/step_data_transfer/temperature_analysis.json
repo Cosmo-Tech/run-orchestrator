@@ -1,0 +1,29 @@
+{
+  "steps": [
+    {
+      "id": "generate-temp",
+      "command": "python generate_data.py",
+      "description": "Generate a random temperature",
+      "outputs": {
+        "temperature": {
+          "description": "Generated temperature value",
+          "defaultValue": "20.0"
+        }
+      }
+    },
+    {
+      "id": "analyze-temp",
+      "command": "python process_data.py",
+      "description": "Analyze the temperature",
+      "inputs": {
+        "temp": {
+          "stepId": "generate-temp",
+          "output": "temperature",
+          "as": "INPUT_TEMP",
+          "defaultValue": "15.0"
+        }
+      },
+      "precedents": ["generate-temp"]
+    }
+  ]
+}

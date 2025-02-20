@@ -19,7 +19,7 @@ def msg_split(message):
         message = str(message)
     return message.split("\n")
 
-if sys.__stdout__.isatty():
+if os.environ.get("CSM_USE_RICH", "False").lower() in ("true", "1", "yes", "t", "y"):
     if "PAILLETTES" in os.environ:
         paillettes = "[bold yellow blink]***[/]"
         _format = f"{paillettes} {_format} {paillettes}"
@@ -66,6 +66,25 @@ else:
 
 HANDLER.setFormatter(FORMATTER)
 
+
+# Create a dedicated logger for data output with a simple formatter
+_data_formatter = logging.Formatter(fmt="%(message)s")
+_data_handler = logging.StreamHandler(sys.stdout)
+_data_handler.setFormatter(_data_formatter)
+_data_logger = logging.getLogger("csm.run.orchestrator.data")
+_data_logger.addHandler(_data_handler)
+_data_logger.setLevel(logging.INFO)
+# Prevent the data logger from propagating to parent loggers
+_data_logger.propagate = False
+
+def log_data(name: str, value: str):
+    """Log a value in the CSM-OUTPUT-DATA format for step-to-step transfer.
+    
+    Args:
+        name: The name of the output variable
+        value: The value to output
+    """
+    _data_logger.info(f"CSM-OUTPUT-DATA:{name}:{value}")
 
 def get_logger(
     logger_name: str,

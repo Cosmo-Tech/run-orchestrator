@@ -116,6 +116,34 @@ class Orchestrator(metaclass=Singleton):
                     _prec_node.outputs['status'].connect(_node.inputs['previous'][_precedent])
                     LOGGER.debug(T("csm-orc.logs.orchestrator.dependencies.found").format(
                         precedent=_precedent))
+                    
+                    # Connect data flows based on input configuration
+                    for input_name, input_config in _step.inputs.items():
+                        if input_config["stepId"] == _precedent:
+                            # Check if either input or output is hidden
+                            is_hidden = (
+                                input_config.get("hidden", False) or
+                                (input_config["stepId"] in steps and
+                                 input_config["output"] in steps[input_config["stepId"]].outputs and
+                                 steps[input_config["stepId"]].outputs[input_config["output"]].get("hidden", False))
+                            )
+                            
+                            if is_hidden:
+                                LOGGER.debug(T("csm-orc.logs.orchestrator.data_flow.connecting_hidden").format(
+                                    from_step=input_config["stepId"],
+                                    from_output=input_config["output"],
+                                    to_step=_step.id,
+                                    to_input=input_name
+                                ))
+                            else:
+                                LOGGER.debug(T("csm-orc.logs.orchestrator.data_flow.connecting").format(
+                                    from_step=input_config["stepId"],
+                                    from_output=input_config["output"],
+                                    to_step=_step.id,
+                                    to_input=input_name
+                                ))
+                            # Connect the output_data to input_data
+                            _prec_node.outputs['output_data'].connect(_node.inputs['input_data'])
             if _step_missing_env := _step.check_env():
                 missing_env[_step.id] = _step_missing_env
         if display_env:

@@ -14,6 +14,18 @@ logs:
     done_running: "[green]Done[/] running [bold]{step_type}[/] [green]{step_id}[/]"
     command_required: "[red]A step requires either a command or a commandId[/]"
     template_unavailable: "Command Template [red]{command_id}[/] is not available"
+    input:
+      default_value: "Step [cyan]{step_id}[/]: Using default value for input [yellow]'{input}'[/]: [cyan]{value}[/]"
+      default_value_hidden: "Step [cyan]{step_id}[/]: Using default value for hidden input [yellow]'{input}'[/]"
+      missing_required: "Step [cyan]{step_id}[/]: [red]Missing required input[/] [yellow]'{input}'[/]"
+    output:
+      default_value: "Step [cyan]{step_id}[/]: Using default value for output [yellow]'{output}'[/]: [cyan]{value}[/]"
+      default_value_hidden: "Step [cyan]{step_id}[/]: Using default value for hidden output [yellow]'{output}'[/]"
+      captured_values_header: "Step [cyan]{step_id}[/]: [green]Captured output values:[/]"
+      captured_value: "  - [yellow]{output}[/]: [cyan]{value}[/]"
+      captured_hidden: "  - [yellow]{output}[/]: [dim][hidden value][/]"
+      missing_value: "Step [cyan]{step_id}[/]: [red]Missing required output[/] [yellow]'{output}'[/]"
+      missing_required: "Step [cyan]{step_id}[/]: [red]Missing required outputs:[/] [yellow]{outputs}[/]"
     info:
       header: "Step [cyan]{id}[/]"
       command: "Command: [cyan]{command}[/]"
@@ -36,6 +48,9 @@ logs:
       header: "Dependencies of [green]{step_id}[/]:"
       no_dependencies: "No dependencies for [green]{step_id}[/]"
       found: "Found [cyan]{precedent}[/]"
+    data_flow:
+      connecting: "Connecting data flow from [cyan]{from_step}[/]:[yellow]{from_output}[/] to [cyan]{to_step}[/]:[yellow]{to_input}[/]"
+      connecting_hidden: "Connecting hidden data flow from [cyan]{from_step}[/]:[yellow]{from_output}[/] to [cyan]{to_step}[/]:[yellow]{to_input}[/]"
     environment:
       defined: "Environment variable defined for [cyan]{file_name}[/]"
       variable: "[yellow]{key}[/]{description}"

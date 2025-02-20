@@ -63,6 +63,7 @@ nav:
       - "tutorial/plugins_and_templates.md"
       - "tutorial/exit_handlers.md"
       - "tutorial/translations.md"
+      - "tutorial/step_data_transfer.md"
   - Examples:
       - "examples/index.md"
       - "examples/simple_simulation_run.md"
