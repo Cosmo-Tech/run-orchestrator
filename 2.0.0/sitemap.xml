@@ -96,6 +96,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cosmo-tech.github.io/run-orchestrator/2.0.0/tutorial/step_data_transfer/</loc>
+         <lastmod>2025-02-20</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cosmo-tech.github.io/run-orchestrator/2.0.0/tutorial/translations/</loc>
          <lastmod>2025-02-20</lastmod>
          <changefreq>daily</changefreq>
