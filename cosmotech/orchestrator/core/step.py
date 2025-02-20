@@ -8,17 +8,19 @@
 import os
 import pathlib
 import subprocess
-import sys
 import tempfile
 from dataclasses import InitVar
 from dataclasses import dataclass
 from dataclasses import field
 from typing import Union
 
+import sys
+
 from cosmotech.orchestrator.core.command_template import CommandTemplate
 from cosmotech.orchestrator.core.environment import EnvironmentVariable
 from cosmotech.orchestrator.templates.library import Library
 from cosmotech.orchestrator.utils.logger import LOGGER
+from cosmotech.orchestrator.utils.translate import T
 
 
 @dataclass
@@ -39,18 +41,18 @@ class Step:
     def __load_command_from_library(self):
         library = Library()
         if not self.commandId or self.loaded:
-            LOGGER.debug(f"{self.display_id} already ready")
+            LOGGER.debug(T("csm-orc.logs.step.already_ready").format(step_id=self.display_id))
             return
 
         self.display_command_id = self.commandId
-        if sys.__stdout__.isatty():
-            self.display_command_id = f"[cyan bold]{self.commandId}[/] "
         command: CommandTemplate = library.find_template_by_name(self.commandId)
         if command is None:
             self.status = "Error"
-            LOGGER.error(f"{self.display_id} asks for a non existing template {self.display_command_id}")
-            raise ValueError(f"Command Template {self.commandId} is not available")
-        LOGGER.debug(f"{self.display_id} loads template {self.display_command_id}")
+            LOGGER.error(T("csm-orc.logs.step.template_not_found").format(step_id=self.display_id,
+                                                                          command_id=self.display_command_id))
+            raise ValueError(T("csm-orc.logs.step.template_unavailable").format(command_id=self.commandId))
+        LOGGER.debug(
+            T("csm-orc.logs.step.loading_template").format(step_id=self.display_id, command_id=self.display_command_id))
         self.command = command.command
         self.arguments = command.arguments[:] + self.arguments
         self.useSystemEnvironment = self.useSystemEnvironment or command.useSystemEnvironment
@@ -65,15 +67,13 @@ class Step:
     def __post_init__(self, stop_library_load):
         if not bool(self.command) ^ bool(self.commandId):
             self.status = "Error"
-            raise ValueError("A step requires either a command or a commandId")
+            raise ValueError(T("csm-orc.logs.step.command_required"))
         tmp_env = dict()
         for k, v in self.environment.items():
             tmp_env[k] = EnvironmentVariable(k, **v)
         self.environment = tmp_env
         self.status = "Init"
         self.display_id = self.id
-        if sys.__stdout__.isatty():
-            self.display_id = f"[green bold]{self.id}[/] "
         if self.commandId and not stop_library_load:
             self.__load_command_from_library()
             self.commandId = None
@@ -121,14 +121,16 @@ class Step:
         step_type = "step"
         if as_exit:
             step_type = "exit handler"
-        LOGGER.info(f"Starting {step_type} {self.display_id}")
+        LOGGER.info(T("csm-orc.logs.step.starting").format(step_type=step_type, step_id=self.display_id))
         self.status = "Ready"
         if isinstance(previous, dict) and any(map(lambda a: a not in ['Done', 'DryRun'], previous.values())):
-            LOGGER.warning(f"Skipping {step_type} {self.display_id} due to previous errors")
+            LOGGER.warning(
+                T("csm-orc.logs.step.skipping_previous_errors").format(step_type=step_type, step_id=self.display_id))
             self.status = "Skipped"
         if self.status == "Ready":
             if self.skipped:
-                LOGGER.info(f"Skipping {step_type} {self.display_id} as required")
+                LOGGER.info(
+                    T("csm-orc.logs.step.skipping_as_required").format(step_type=step_type, step_id=self.display_id))
                 self.status = "Done"
             elif dry:
                 self.status = "DryRun"
@@ -145,7 +147,7 @@ class Step:
                         tmp_file_content.append(f"source {str(venv)}")
                     tmp_file_content.append(f"""{self.command} {" ".join(f'"{a}"' for a in self.arguments)}""")
                     tmp_file.write("\n".join(tmp_file_content))
-                    LOGGER.debug("Running:" + ";".join(tmp_file_content))
+                    LOGGER.debug(T("csm-orc.logs.step.running_command").format(command=";".join(tmp_file_content)))
                     tmp_file.close()
                     r = subprocess.run(f"/bin/bash {tmp_file.name}",
                                        shell=True,
@@ -153,13 +155,16 @@ class Step:
                                        check=True)
                     os.remove(tmp_file.name)
                     if r.returncode != 0:
-                        LOGGER.error(f"Error during {step_type} {self.display_id}")
+                        LOGGER.error(
+                            T("csm-orc.logs.step.error_during").format(step_type=step_type, step_id=self.display_id))
                         self.status = "RunError"
                     else:
-                        LOGGER.info(f"Done running {step_type} {self.display_id}")
+                        LOGGER.info(
+                            T("csm-orc.logs.step.done_running").format(step_type=step_type, step_id=self.display_id))
                         self.status = "Done"
                 except subprocess.CalledProcessError:
-                    LOGGER.error(f"Error during {step_type} {self.display_id}")
+                    LOGGER.error(
+                        T("csm-orc.logs.step.error_during").format(step_type=step_type, step_id=self.display_id))
                     self.status = "RunError"
         return self.status
 
@@ -173,33 +178,29 @@ class Step:
 
     def simple_repr(self):
         if self.description:
-            return f"{self.id} ({self.status}): {self.description}"
-        return f"{self.id} ({self.status})"
+            return T("csm-orc.logs.step.info.simple_repr").format(id=self.id, status=self.status,
+                                                                  description=self.description)
+        return T("csm-orc.logs.step.info.simple_repr_no_desc").format(id=self.id, status=self.status)
 
     def __str__(self):
         r = list()
-        r.append(f"Step {self.id}")
-        r.append(f"Command: {self.command}" + ("" if not self.arguments else " " + " ".join(self.arguments)))
+        r.append(T("csm-orc.logs.step.info.header").format(id=self.id))
+        r.append(T("csm-orc.logs.step.info.command").format(
+            command=self.command + ("" if not self.arguments else " " + " ".join(self.arguments))))
         if self.description:
-            r.append("Description:")
+            r.append(T("csm-orc.logs.step.info.description_header"))
             r.append(f"  {self.description}")
         if self.environment:
-            r.append("Environment:")
+            r.append(T("csm-orc.logs.step.info.environment_header"))
             for k, v in self.environment.items():
-                optional_str = "" if not v.optional else "(Optional)"
+                optional_str = "" if not v.optional else T("csm-orc.logs.step.info.optional")
                 if v.description:
-                    r.append(f"- {k}{optional_str}: {v.description}")
+                    r.append(f"- {k} {optional_str}: {v.description}")
                 else:
-                    r.append(f"- {k}{optional_str}")
+                    r.append(f"- {k} {optional_str}")
         if self.useSystemEnvironment:
-            if sys.__stdout__.isatty():
-                r.append("[yellow]Use system environment variables[/]")
-            else:
-                r.append("- Use system environment variables")
+            r.append(T("csm-orc.logs.step.info.use_system_env"))
         if self.skipped:
-            if sys.__stdout__.isatty():
-                r.append("[red]Skipped by user[/]")
-            else:
-                r.append("- Skipped by user")
-        r.append(f"Status: {self.status}")
+            r.append(T("csm-orc.logs.step.info.skipped"))
+        r.append(T("csm-orc.logs.step.info.status").format(status=self.status))
         return "\n".join(r)

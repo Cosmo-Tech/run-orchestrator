@@ -12,6 +12,7 @@ from functools import wraps
 from cosmotech.orchestrator.utils import WEB_DOCUMENTATION_ROOT
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.logger import LOGGER
+from cosmotech.orchestrator.utils.translate import T
 
 
 def require_env(envvar, envvar_desc):
@@ -37,9 +38,9 @@ def web_help(effective_target="", base_url=WEB_DOCUMENTATION_ROOT):
     def open_documentation(ctx: click.Context, param, value):
         if value:
             if not webbrowser.open(documentation_url):
-                LOGGER.warning(f"Failed to open: {documentation_url}")
+                LOGGER.warning(T("csm-orc.logs.docs.open_failed").format(url=documentation_url))
             else:
-                LOGGER.info(f"Opened {documentation_url} in your navigator")
+                LOGGER.info(T("csm-orc.logs.docs.opened").format(url=documentation_url))
             ctx.exit(0)
 
     def wrap_function(func):

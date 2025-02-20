@@ -13,14 +13,16 @@ from cosmotech.orchestrator.templates.library import Library
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
+from cosmotech.orchestrator.utils.translate import T
 
 
 def display_template(template, verbose=False):
     if verbose:
-        LOGGER.info(pprint.pformat(template, width=os.get_terminal_size().columns))
+        LOGGER.info(T("csm-orc.logs.templates.template_info").format(
+            template=pprint.pformat(template, width=os.get_terminal_size().columns)))
     else:
         _desc = f": '{template.description}'" if template.description else ""
-        LOGGER.info(f"- '{template.id}'{_desc}")
+        LOGGER.info(T("csm-orc.logs.templates.template_desc").format(id=template.id, description=_desc))
 
 
 @click.command()
@@ -48,7 +50,7 @@ def main(templates, orchestration_file, verbose):
         FileLoader(orchestration_file)()
     l = Library()
     if not l.templates:
-        LOGGER.warning("There is no available template to display")
+        LOGGER.warning(T("csm-orc.logs.templates.no_templates"))
         return
     if templates:
         for temp in templates:

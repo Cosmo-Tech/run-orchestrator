@@ -10,6 +10,7 @@ import sys
 
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.logger import LOGGER
+from cosmotech.orchestrator.utils.translate import T
 
 
 class EntrypointException(Exception):
@@ -18,7 +19,7 @@ class EntrypointException(Exception):
 
 
 def get_env():
-    LOGGER.debug("Setting context from project.csm")
+    LOGGER.debug(T("csm-orc.logs.entrypoint.context"))
     project_file = configparser.ConfigParser()
     project_file.read("/pkg/share/project.csm")
     if project_file.has_section("EntrypointEnv"):
@@ -28,29 +29,28 @@ def get_env():
 
 def run_direct_simulator():
     if os.environ.get("CSM_SIMULATION"):
-        LOGGER.info(f"Simulation: {os.environ.get('CSM_SIMULATION')}")
+        LOGGER.info(T("csm-orc.logs.entrypoint.simulation.info").format(simulation=os.environ.get('CSM_SIMULATION')))
 
         args = ["-i", os.environ.get("CSM_SIMULATION")]
         if os.environ.get('CSM_PROBES_MEASURES_TOPIC') is not None:
-            LOGGER.debug(f"Probes measures topic: {os.environ.get('CSM_PROBES_MEASURES_TOPIC')}")
+            LOGGER.debug(T("csm-orc.logs.entrypoint.simulation.probes_topic").format(
+                topic=os.environ.get('CSM_PROBES_MEASURES_TOPIC')))
             args = args + ["--amqp-consumer", os.environ.get('CSM_PROBES_MEASURES_TOPIC')]
         else:
-            LOGGER.warning("No probes measures topic")
+            LOGGER.warning(T("csm-orc.logs.entrypoint.simulation.no_probes_topic"))
 
         if os.environ.get('CSM_CONTROL_PLANE_TOPIC') is not None:
-            LOGGER.debug(f"Control plane topic: {os.environ.get('CSM_CONTROL_PLANE_TOPIC')}."
-                         "Simulator binary is able to handle "
-                         "CSM_CONTROL_PLANE_TOPIC directly so it is not "
-                         "transformed as an argument.")
+            LOGGER.debug(T("csm-orc.logs.entrypoint.simulation.control_topic",
+                           topic=os.environ.get('CSM_CONTROL_PLANE_TOPIC')))
         else:
-            LOGGER.warning("No Control plane topic")
+            LOGGER.warning(T("csm-orc.logs.entrypoint.simulation.no_control_topic"))
     else:
         # Check added for use of legacy entrypoint.py name - to be removed when legacy stack is removed
         if "entrypoint.py" == sys.argv[0]:
             args = sys.argv[1:]
         else:
             args = sys.argv[2:]
-        LOGGER.debug(f"Simulator arguments: {args}")
+        LOGGER.debug(T("csm-orc.logs.entrypoint.simulation.args").format(args=args))
 
     simulator_exe_name = "csm-simulator"
     # Check for old simulator name below SDK version 11.1.0
@@ -90,21 +90,18 @@ def main():
 
         template_id = os.environ.get("CSM_RUN_TEMPLATE_ID")
         if template_id is None:
-            LOGGER.debug("No run template id defined in environment variable \"CSM_RUN_TEMPLATE_ID\" "
-                         "running direct simulator mode")
+            LOGGER.debug(T("csm-orc.logs.entrypoint.simulation.no_template"))
             run_direct_simulator()
             return
         LOGGER.setLevel(logging.DEBUG)
-        LOGGER.info("Csm-orc Entry Point")
+        LOGGER.info(T("csm-orc.logs.entrypoint.start"))
         if importlib.util.find_spec("cosmotech") is None or importlib.util.find_spec(
                 "cosmotech.orchestrator") is None:
-            raise EntrypointException(
-                "You need to install the library `cosmotech-run-orchestrator` in your container. "
-                "Check if you set it in your requirements.txt.")
+            raise EntrypointException(T("csm-orc.logs.errors.missing_library"))
         project_root = Path("/pkg/share")
         orchestrator_json = project_root / "code/run_templates" / template_id / "run.json"
         if not orchestrator_json.is_file():
-            raise EntrypointException(f"No \"run.json\" defined for the run template {template_id}")
+            raise EntrypointException(T("csm-orc.logs.errors.no_run_json").format(template_id=template_id))
         _env = os.environ.copy()
         p = subprocess.Popen(["csm-orc", "run", str(orchestrator_json.absolute())],
                              cwd=project_root,

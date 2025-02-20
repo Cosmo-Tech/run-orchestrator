@@ -3,13 +3,15 @@ import os
 import pathlib
 import pkgutil
 import pprint
-import sys
 from typing import Optional
+
+import sys
 
 import cosmotech.orchestrator_plugins
 from cosmotech.orchestrator.core.command_template import CommandTemplate
 from cosmotech.orchestrator.templates.plugin import Plugin
 from cosmotech.orchestrator.utils.logger import LOGGER
+from cosmotech.orchestrator.utils.translate import T
 
 
 class Library:
@@ -19,27 +21,28 @@ class Library:
     __exit_templates = None
 
     def display_library(self, log_function=LOGGER.info, verbose=False):
-        log_function("Library content:")
+        log_function(T("csm-orc.logs.library.content"))
         for _plugin_name, _plugin in self.__plugins.items():
-            log_function(f"Templates from '{_plugin_name}':")
+            log_function(T("csm-orc.logs.library.templates_from").format(plugin_name=_plugin_name))
             for _template in _plugin.templates.values():
                 if _template in self.__templates.values():
                     self.display_template(_template, log_function=log_function, verbose=verbose)
                 else:
-                    log_function(f"- '{_template.id}': OVERRIDEN")
+                    log_function(T("csm-orc.logs.library.template_overriden").format(template_id=_template.id))
 
     @staticmethod
     def display_template(template, log_function=LOGGER.info, verbose=False):
         if verbose:
-            log_function(pprint.pformat(template, width=os.get_terminal_size().columns))
+            log_function(T("csm-orc.logs.library.template_info").format(
+                template=pprint.pformat(template, width=os.get_terminal_size().columns)))
         else:
             _desc = f": '{template.description}'" if template.description else ""
-            log_function(f"- '{template.id}'{_desc}")
+            log_function(T("csm-orc.logs.library.template_desc").format(id=template.id, description=_desc))
 
     def display_template_by_id(self, template_id, log_function=LOGGER.info, verbose=False):
         tpl = self.find_template_by_name(template_id=template_id)
         if tpl is None:
-            log_function(f"{template_id} is not a valid template id")
+            log_function(T("csm-orc.logs.library.template_invalid").format(template_id=template_id))
             return
         self.display_template(tpl, log_function=LOGGER.info, verbose=verbose)
 
@@ -51,12 +54,12 @@ class Library:
         return self.__templates.get(template_id)
 
     def load_plugin(self, plugin: Plugin, plugin_module: Optional = None):
-        LOGGER.debug(f"Loading plugin {plugin.name}")
+        LOGGER.debug(T("csm-orc.logs.library.plugin.loading").format(name=plugin.name))
         if plugin_module is not None:
             loaded_templates_from_file = plugin.load_folder(pathlib.Path(plugin_module.__path__[0]))
             if loaded_templates_from_file:
-                LOGGER.debug(f" - Loaded {loaded_templates_from_file} templates from plugin files")
-        LOGGER.debug(f" - Plugin contains {len(plugin.templates.values())} templates")
+                LOGGER.debug(T("csm-orc.logs.library.plugin.loaded_templates").format(count=loaded_templates_from_file))
+        LOGGER.debug(T("csm-orc.logs.library.plugin.template_count").format(count=len(plugin.templates.values())))
         self.__templates.update(plugin.templates)
         for command in plugin.exit_commands:
             if command not in self.__exit_templates:
@@ -69,9 +72,9 @@ class Library:
         should only be used after the content of `sys.path` got changed to check for any new template
         """
         if self.__templates:
-            LOGGER.debug("Reloading template library")
+            LOGGER.debug(T("csm-orc.logs.library.reloading"))
         else:
-            LOGGER.debug("Loading template library")
+            LOGGER.debug(T("csm-orc.logs.library.loading"))
         self.__templates = dict()
         self.__plugins = dict()
         self.__exit_templates = list()
