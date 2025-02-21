@@ -1,0 +1,108 @@
+# Kemennadennoù kerzhañ evit an Orchestrator Cosmotech
+
+logs:
+  # Kemennadennoù liammet d'ar pazennoù
+  step:
+    already_ready: "[green]{step_id}[/] prest endeo"
+    template_not_found: "[red]{step_id}[/] o c'houlenn ur patrom n'eus ket [yellow]{command_id}[/]"
+    loading_template: "[green]{step_id}[/] o kargañ ar patrom [cyan]{command_id}[/]"
+    starting: "O kregiñ gant [bold]{step_type}[/] [green]{step_id}[/]"
+    skipping_previous_errors: "O tremen [bold]{step_type}[/] [yellow]{step_id}[/] abalamour da fazioù kent"
+    skipping_as_required: "O tremen [bold]{step_type}[/] [yellow]{step_id}[/] evel goulennet"
+    running_command: "O seveniñ: [cyan]{command}[/]"
+    error_during: "[red]Fazi[/] e-pad [bold]{step_type}[/] [yellow]{step_id}[/]"
+    done_running: "[green]Echu[/] seveniñ [bold]{step_type}[/] [green]{step_id}[/]"
+    command_required: "[red]Ur bazenn a c'houlenn un urzhiad pe un ID urzhiad[/]"
+    template_unavailable: "Patrom urzhiad [red]{command_id}[/] n'eo ket hegerz"
+    input:
+      default_value: "Pazenn [cyan]{step_id}[/]: Oc'h implijout an talvoud dre ziouer evit ar monedenn [yellow]'{input}'[/]: [cyan]{value}[/]"
+      missing_required: "Pazenn [cyan]{step_id}[/]: [red]Monedenn ret[/] [yellow]'{input}'[/] o vankout"
+    output:
+      default_value: "Pazenn [cyan]{step_id}[/]: Oc'h implijout an talvoud dre ziouer evit an ezvonedenn [yellow]'{output}'[/]: [cyan]{value}[/]"
+      captured_values_header: "Pazenn [cyan]{step_id}[/]: [green]Talvoudoù ezvonedenn tapet:[/]"
+      captured_value: "  - [yellow]{output}[/]: [cyan]{value}[/]"
+      missing_value: "Pazenn [cyan]{step_id}[/]: [red]Ezvonedenn ret[/] [yellow]'{output}'[/] o vankout"
+      missing_required: "Pazenn [cyan]{step_id}[/]: [red]Ezvonadennoù ret o vankout:[/] [yellow]{outputs}[/]"
+    info:
+      header: "Pazenn [cyan]{id}[/]"
+      command: "Urzhiad: [cyan]{command}[/]"
+      description_header: "[bold]Deskrivadur:[/]"
+      environment_header: "[bold]Endro:[/]"
+      optional: "[yellow](Diret)[/]"
+      use_system_env: "- [cyan]Implijout arventennoù endro ar sistem[/]"
+      skipped: "- [yellow]Tremenet gant an implijer[/]"
+      status: "Stad: [cyan]{status}[/]"
+      simple_repr: "[cyan]{id}[/] ([yellow]{status}[/]): {description}"
+      simple_repr_no_desc: "[cyan]{id}[/] ([yellow]{status}[/])"
+
+  # Kemennadennoù an orchestrator
+  orchestrator:
+    loading_step: "O kargañ [green]{id}[/] a seurt [yellow]Step[/]"
+    valid_file: "[green]{file_path}[/] zo ur restr orchestrañ talvoudek"
+    step_already_defined: "[red]Pazenn[/] [yellow]{step_id}[/] [red]zo termenet endeo[/]"
+    step_not_exists: "[red]Pazenn[/] [yellow]{step_id}[/] [red]n'eus ket anezhi[/]"
+    dependencies:
+      header: "Dalc'hioù [green]{step_id}[/]:"
+      no_dependencies: "N'eus dalc'h ebet evit [green]{step_id}[/]"
+      found: "Kavet [cyan]{precedent}[/]"
+    data_flow:
+      connecting: "O kevreañ ar red data eus [cyan]{from_step}[/]:[yellow]{from_output}[/] da [cyan]{to_step}[/]:[yellow]{to_input}[/]"
+    environment:
+      defined: "Arventenn endro termenet evit [cyan]{file_name}[/]"
+      variable: "[yellow]{key}[/]{description}"
+      missing: "[red]Arventennoù endro o vankout[/] evit ar bazenn [yellow]{step_id}[/]"
+      missing_value: "[red]{key}[/]: {value}"
+
+  # Kemennadennoù al levraoueg
+  library:
+    content: "[bold]Endalc'had al levraoueg:[/]"
+    templates_from: "Patromoù eus [cyan]'{plugin_name}'[/]:"
+    template_overriden: "- [yellow]'{template_id}'[/]: [red]ADSKRIVET[/]"
+    template_info: "{template}"
+    template_desc: "- [cyan]'{id}'[/]{description}"
+    template_invalid: "[red]{template_id} n'eo ket un ID patrom talvoudek[/]"
+    plugin:
+      loading: "O kargañ ar plugin [cyan]{name}[/]"
+      loaded_templates: "Karget [green]{count}[/] patrom eus restroù ar plugin"
+      template_count: "Ar plugin en deus [green]{count}[/] patrom"
+    reloading: "[yellow]Oc'h adkargañ[/] al levraoueg patromoù"
+    loading: "[green]O kargañ[/] al levraoueg patromoù"
+
+  # Kemennadennoù ar poent mont-tre
+  entrypoint:
+    context: "O termeniñ ar c'hendestenn eus [cyan]project.csm[/]"
+    simulation:
+      info: "Simuladur: [cyan]{simulation}[/]"
+      probes_topic: "Danvez ar sondennoù: [cyan]{topic}[/]"
+      no_probes_topic: "[yellow]N'eus danvez sondennoù ebet[/]"
+      control_topic: "Danvez kontroll: [cyan]{topic}[/]. Ar binary simulator a c'hall merañ [yellow]CSM_CONTROL_PLANE_TOPIC[/] war-eeun, ne vo ket treuzfurmet da arguzenn."
+      no_control_topic: "[yellow]N'eus danvez kontroll ebet[/]"
+      args: "Arguzennoù ar simulator: [cyan]{args}[/]"
+      no_template: "N'eus ID patrom seveniñ ebet termenet en arventenn endro [yellow]\"CSM_RUN_TEMPLATE_ID\"[/], o seveniñ e mod simulator war-eeun"
+    start: "[bold]Poent mont-tre Csm-orc[/]"
+
+  # Roll ar patromoù
+  templates:
+    template_info: "{template}"
+    template_desc: "- [cyan]'{id}'[/]{description}"
+    no_templates: "[yellow]N'eus patrom ebet da ziskouez[/]"
+
+  # Kemennadennoù seveniñ
+  run:
+    starting: "O kregiñ gant an orchestrator stumm [cyan]{version}[/]"
+    sections:
+      run: "[bold cyan]===      Seveniñ     ===[/]"
+      results: "[bold green]===     Disoc'hoù    ===[/]"
+      exit_handlers: "[bold yellow]===   Merour Kuitaat   ===[/]"
+    writing_env: "O skrivañ ar restr endro [cyan]\"{target}\"[/]"
+
+  # Teuliadur
+  docs:
+    open_failed: "[red]C'hwitadenn en ur zigeriñ:[/] {url}"
+    opened: "Digoret [cyan]{url}[/] en ho merdeer"
+
+  # Kemennadennoù fazi
+  errors:
+    missing_library: "[red]Ret eo deoc'h staliañ al levraoueg[/] [cyan]`cosmotech-run-orchestrator`[/] [red]en ho konteneur. Gwiriit ma'z eo termenet en ho requirements.txt.[/]"
+    no_run_json: "[red]N'eus \"run.json\" ebet termenet evit ar patrom seveniñ[/] [yellow]{template_id}[/]"
+    missing_env_vars: "[red]Arventennoù endro o vankout, gwiriit ar c'herzhlevr[/]"

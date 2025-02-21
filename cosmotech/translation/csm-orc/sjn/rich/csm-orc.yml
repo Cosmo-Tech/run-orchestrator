@@ -1,0 +1,108 @@
+# Tengwar an i Cosmotech Orchestrator
+
+logs:
+  # Tengwar an i Cerir
+  step:
+    already_ready: "[green]{step_id}[/] farad"
+    template_not_found: "[red]{step_id}[/] hirtha ú-nostad [yellow]{command_id}[/] pattern"
+    loading_template: "[green]{step_id}[/] taetha pattern [cyan]{command_id}[/]"
+    starting: "Esto [bold]{step_type}[/] [green]{step_id}[/]"
+    skipping_previous_errors: "Laba [bold]{step_type}[/] [yellow]{step_id}[/] an raeg"
+    skipping_as_required: "Laba [bold]{step_type}[/] [yellow]{step_id}[/] sui maetha"
+    running_command: "Cerir: [cyan]{command}[/]"
+    error_during: "[red]Raeg[/] mi [bold]{step_type}[/] [yellow]{step_id}[/]"
+    done_running: "[green]Telitha[/] [bold]{step_type}[/] [green]{step_id}[/]"
+    command_required: "[red]Cer bauda command egor command-ID[/]"
+    template_unavailable: "Command-pattern [red]{command_id}[/] ú-fartha"
+    input:
+      default_value: "Cer [cyan]{step_id}[/]: Haru default-value an input [yellow]'{input}'[/]: [cyan]{value}[/]"
+      missing_required: "Cer [cyan]{step_id}[/]: [red]Bauda input[/] [yellow]'{input}'[/] ú-fartha"
+    output:
+      default_value: "Cer [cyan]{step_id}[/]: Haru default-value an output [yellow]'{output}'[/]: [cyan]{value}[/]"
+      captured_values_header: "Cer [cyan]{step_id}[/]: [green]Hirtha output-values:[/]"
+      captured_value: "  - [yellow]{output}[/]: [cyan]{value}[/]"
+      missing_value: "Cer [cyan]{step_id}[/]: [red]Bauda output[/] [yellow]'{output}'[/] ú-fartha"
+      missing_required: "Cer [cyan]{step_id}[/]: [red]Bauda outputs ú-fartha:[/] [yellow]{outputs}[/]"
+    info:
+      header: "Cer [cyan]{id}[/]"
+      command: "Command: [cyan]{command}[/]"
+      description_header: "[bold]Cannas:[/]"
+      environment_header: "[bold]Ambar:[/]"
+      optional: "[yellow](Úbauda)[/]"
+      use_system_env: "- [cyan]Haru ambar-tengwar system[/]"
+      skipped: "- [yellow]Labad by herdir[/]"
+      status: "Stad: [cyan]{status}[/]"
+      simple_repr: "[cyan]{id}[/] ([yellow]{status}[/]): {description}"
+      simple_repr_no_desc: "[cyan]{id}[/] ([yellow]{status}[/])"
+
+  # Tengwar an i Orchestrator
+  orchestrator:
+    loading_step: "Taetha [green]{id}[/] na lû [yellow]Step[/]"
+    valid_file: "[green]{file_path}[/] na tengwar-orchestration mana"
+    step_already_defined: "[red]Cer[/] [yellow]{step_id}[/] [red]na farad[/]"
+    step_not_exists: "[red]Cer[/] [yellow]{step_id}[/] [red]ú-nostad[/]"
+    dependencies:
+      header: "Beriath [green]{step_id}[/]:"
+      no_dependencies: "Ú-beriath an [green]{step_id}[/]"
+      found: "Hirtha [cyan]{precedent}[/]"
+    data_flow:
+      connecting: "Taetha data-flow od [cyan]{from_step}[/]:[yellow]{from_output}[/] na [cyan]{to_step}[/]:[yellow]{to_input}[/]"
+    environment:
+      defined: "Ambar-tengwar tanna an [cyan]{file_name}[/]"
+      variable: "[yellow]{key}[/]{description}"
+      missing: "[red]Ambar-tengwar ú-fartha[/] an cer [yellow]{step_id}[/]"
+      missing_value: "[red]{key}[/]: {value}"
+
+  # Tengwar an i Parmath
+  library:
+    content: "[bold]Parmath-content:[/]"
+    templates_from: "Patterns od [cyan]'{plugin_name}'[/]:"
+    template_overriden: "- [yellow]'{template_id}'[/]: [red]TAETHA[/]"
+    template_info: "{template}"
+    template_desc: "- [cyan]'{id}'[/]{description}"
+    template_invalid: "[red]{template_id} ú-mana pattern-ID[/]"
+    plugin:
+      loading: "Taetha plugin [cyan]{name}[/]"
+      loaded_templates: "Taetha [green]{count}[/] patterns od plugin-tengwar"
+      template_count: "Plugin hartha [green]{count}[/] patterns"
+    reloading: "[yellow]Ad-taetha[/] parmath-patterns"
+    loading: "[green]Taetha[/] parmath-patterns"
+
+  # Tengwar an i Minui-Dôr
+  entrypoint:
+    context: "Tanna context od [cyan]project.csm[/]"
+    simulation:
+      info: "Simulation: [cyan]{simulation}[/]"
+      probes_topic: "Probes-topic: [cyan]{topic}[/]"
+      no_probes_topic: "[yellow]Ú-probes-topic[/]"
+      control_topic: "Control-topic: [cyan]{topic}[/]. Simulator-binary hartha [yellow]CSM_CONTROL_PLANE_TOPIC[/] mina, ú-taetha sui argument."
+      no_control_topic: "[yellow]Ú-control-topic[/]"
+      args: "Simulator-arguments: [cyan]{args}[/]"
+      no_template: "Ú-run-pattern-ID tanna mi ambar-tengwar [yellow]\"CSM_RUN_TEMPLATE_ID\"[/], cerir mina simulator-mode"
+    start: "[bold]Minui-Dôr Csm-orc[/]"
+
+  # Tengwar an i Patterns
+  templates:
+    template_info: "{template}"
+    template_desc: "- [cyan]'{id}'[/]{description}"
+    no_templates: "[yellow]Ú-patterns an tírad[/]"
+
+  # Tengwar an i Cerir
+  run:
+    starting: "Esto orchestrator version [cyan]{version}[/]"
+    sections:
+      run: "[bold cyan]===      Cerir     ===[/]"
+      results: "[bold green]===     Thoron    ===[/]"
+      exit_handlers: "[bold yellow]===   Exit-Herdir   ===[/]"
+    writing_env: "Teitha ambar-tengwar [cyan]\"{target}\"[/]"
+
+  # Tengwar an i Istanor
+  docs:
+    open_failed: "[red]Ú-edra:[/] {url}"
+    opened: "Edra [cyan]{url}[/] mi cennin"
+
+  # Tengwar an i Raeg
+  errors:
+    missing_library: "[red]Le bauda sana parmath[/] [cyan]`cosmotech-run-orchestrator`[/] [red]mi container. Tiro ma na tanna mi requirements.txt.[/]"
+    no_run_json: "[red]Ú-\"run.json\" tanna an run-pattern[/] [yellow]{template_id}[/]"
+    missing_env_vars: "[red]Ambar-tengwar ú-fartha, tiro i tengwar[/]"

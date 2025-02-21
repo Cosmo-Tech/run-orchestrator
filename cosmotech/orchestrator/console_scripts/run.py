@@ -1,4 +1,4 @@
-# Copyright (C) - 2023 - 2024 - Cosmo Tech
+# Copyright (C) - 2023 - 2025 - Cosmo Tech
 # This document and all information contained herein is the exclusive property -
 # including all intellectual property rights pertaining thereto - of Cosmo Tech.
 # Any use, reproduction, translation, broadcasting, transmission, distribution,
@@ -14,6 +14,7 @@ from cosmotech.orchestrator.core.step import Step
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
+from cosmotech.orchestrator.utils.translate import T
 
 
 @click.command()
@@ -65,7 +66,7 @@ def main(
     """Runs the given `TEMPLATE` file  
 Commands are run as subprocess using `bash -c "<command> <arguments>"`.  
 In case you are in a python venv, the venv is activated before any command is run."""
-    LOGGER.info(f"Starting run orchestrator version {VERSION}")
+    LOGGER.info(T("csm-orc.logs.run.starting").format(version=VERSION))
     f = Orchestrator()
     try:
         s, g = f.load_json_file(template, dry_run, display_env, skipped_steps, validate_only,
@@ -78,10 +79,9 @@ In case you are in a python venv, the venv is activated before any command is ru
             return
         success = True
         if not display_env and gen_env_target is None:
-            LOGGER.info("===      Run     ===")
+            LOGGER.info(T("csm-orc.logs.run.sections.run"))
             g.evaluate(mode="threading")
-            LOGGER.info("===     Results    ===")
-            LOGGER.debug(g)
+            LOGGER.info(T("csm-orc.logs.run.sections.results"))
             for k, v in s.items():
                 LOGGER.info(v[0].simple_repr())
                 LOGGER.debug(str(v[0]))
@@ -97,13 +97,13 @@ In case you are in a python venv, the venv is activated before any command is ru
                     _s.run(as_exit=True)
                     exit_steps.append(_s)
                 if exit_steps:
-                    LOGGER.info("===   Exit Handlers   ===")
+                    LOGGER.info(T("csm-orc.logs.run.sections.exit_handlers"))
                 for _s in exit_steps:
                     LOGGER.info(_s.simple_repr())
             if not success:
                 raise click.Abort()
         elif gen_env_target is not None:
-            LOGGER.info(f'Writing environment file "{gen_env_target}"')
+            LOGGER.info(T("csm-orc.logs.run.writing_env").format(target=gen_env_target))
             _fp = pathlib.Path(gen_env_target)
             _fp.parent.mkdir(parents=True, exist_ok=True)
             with _fp.open("w") as _f:

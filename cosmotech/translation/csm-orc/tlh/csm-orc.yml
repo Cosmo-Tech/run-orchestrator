@@ -1,0 +1,108 @@
+# Cosmotech Orchestrator De' QonoS
+
+logs:
+  # Step De' mIw
+  step:
+    already_ready: "{step_id} rIn"
+    template_not_found: "{step_id} Hutlh {command_id} template"
+    loading_template: "{step_id} template {command_id} load"
+    starting: "{step_type} {step_id} taH"
+    skipping_previous_errors: "{step_type} {step_id} skip 'e' Qagh"
+    skipping_as_required: "{step_type} {step_id} skip 'e' Daj"
+    running_command: "run: {command}"
+    error_during: "Qagh {step_type} {step_id}"
+    done_running: "{step_type} {step_id} Qap"
+    command_required: "step command pagh command ID lo'"
+    template_unavailable: "command template {command_id} Hutlh"
+    input:
+      default_value: "step {step_id}: input '{input}' default value lo': {value}"
+      missing_required: "step {step_id}: required input '{input}' Hutlh"
+    output:
+      default_value: "step {step_id}: output '{output}' default value lo': {value}"
+      captured_values_header: "step {step_id}: captured output values:"
+      captured_value: "  - {output}: {value}"
+      missing_value: "step {step_id}: required output '{output}' Hutlh"
+      missing_required: "step {step_id}: required outputs Hutlh: {outputs}"
+    info:
+      header: "Step {id}"
+      command: "Command: {command}"
+      description_header: "Description:"
+      environment_header: "Environment:"
+      optional: "(optional)"
+      use_system_env: "- system environment variables lo'"
+      skipped: "- user skip"
+      status: "Status: {status}"
+      simple_repr: "{id} ({status}): {description}"
+      simple_repr_no_desc: "{id} ({status})"
+
+  # Orchestrator De' mIw
+  orchestrator:
+    loading_step: "load {id} Step type"
+    valid_file: "{file_path} orchestration file valid"
+    step_already_defined: "step {step_id} rIn"
+    step_not_exists: "step {step_id} Hutlh"
+    dependencies:
+      header: "{step_id} dependencies:"
+      no_dependencies: "{step_id} Hutlh dependencies"
+      found: "tu'lu' {precedent}"
+    data_flow:
+      connecting: "data flow vo' {from_step}:{from_output} 'ej {to_step}:{to_input} connect"
+    environment:
+      defined: "environment variable {file_name} chenmoH"
+      variable: "{key}{description}"
+      missing: "step {step_id} Hutlh environment values"
+      missing_value: "{key}: {value}"
+
+  # Library De' mIw
+  library:
+    content: "Library content:"
+    templates_from: "templates vo' '{plugin_name}':"
+    template_overriden: "- '{template_id}': OVERRIDE"
+    template_info: "{template}"
+    template_desc: "- '{id}'{description}"
+    template_invalid: "{template_id} template ID invalid"
+    plugin:
+      loading: "plugin {name} load"
+      loaded_templates: "{count} templates vo' plugin files load"
+      template_count: "plugin {count} templates ghaj"
+    reloading: "library reload"
+    loading: "library load"
+
+  # Entry point De' mIw
+  entrypoint:
+    context: "context vo' project.csm chenmoH"
+    simulation:
+      info: "Simulation: {simulation}"
+      probes_topic: "probes topic: {topic}"
+      no_probes_topic: "Hutlh probes topic"
+      control_topic: "control topic: {topic}. simulator binary CSM_CONTROL_PLANE_TOPIC handle direct, not transform argument."
+      no_control_topic: "Hutlh control topic"
+      args: "simulator arguments: {args}"
+      no_template: "Hutlh run template ID environment variable \"CSM_RUN_TEMPLATE_ID\", direct simulator mode run"
+    start: "Csm-orc Entry Point"
+
+  # Templates listing
+  templates:
+    template_info: "{template}"
+    template_desc: "- '{id}'{description}"
+    no_templates: "Hutlh templates display"
+
+  # Run De' mIw
+  run:
+    starting: "run orchestrator version {version} taH"
+    sections:
+      run: "===      Run     ==="
+      results: "===     Results    ==="
+      exit_handlers: "===   Exit Handlers   ==="
+    writing_env: "environment file \"{target}\" write"
+
+  # Documentation
+  docs:
+    open_failed: "open Qagh: {url}"
+    opened: "{url} navigator Qap"
+
+  # Qagh De' mIw
+  errors:
+    missing_library: "`cosmotech-run-orchestrator` library container lo' install. requirements.txt check."
+    no_run_json: "run template {template_id} \"run.json\" Hutlh"
+    missing_env_vars: "environment variables Hutlh, logs check"

@@ -1,31 +1,28 @@
-# Copyright (C) - 2023 - 2024 - Cosmo Tech
+# Copyright (C) - 2023 - 2025 - Cosmo Tech
 # This document and all information contained herein is the exclusive property -
 # including all intellectual property rights pertaining thereto - of Cosmo Tech.
 # Any use, reproduction, translation, broadcasting, transmission, distribution,
 # etc., to any person is prohibited unless it has been previously and
 # specifically authorized by written means by Cosmo Tech.
 
-import logging
 import os
 import pprint
-
-from rich.logging import RichHandler
 
 from cosmotech.orchestrator.core.orchestrator import FileLoader
 from cosmotech.orchestrator.templates.library import Library
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import web_help
-from cosmotech.orchestrator.utils.logger import _format
-
-LOGGER = logging.getLogger("csm.run.orchestrator.template_list")
+from cosmotech.orchestrator.utils.logger import LOGGER
+from cosmotech.orchestrator.utils.translate import T
 
 
 def display_template(template, verbose=False):
     if verbose:
-        LOGGER.info(pprint.pformat(template, width=os.get_terminal_size().columns))
+        LOGGER.info(T("csm-orc.logs.templates.template_info").format(
+            template=pprint.pformat(template, width=os.get_terminal_size().columns)))
     else:
         _desc = f": '{template.description}'" if template.description else ""
-        LOGGER.info(f"- '{template.id}'{_desc}")
+        LOGGER.info(T("csm-orc.logs.templates.template_desc").format(id=template.id, description=_desc))
 
 
 @click.command()
@@ -53,7 +50,7 @@ def main(templates, orchestration_file, verbose):
         FileLoader(orchestration_file)()
     l = Library()
     if not l.templates:
-        LOGGER.warning("There is no available template to display")
+        LOGGER.warning(T("csm-orc.logs.templates.no_templates"))
         return
     if templates:
         for temp in templates:

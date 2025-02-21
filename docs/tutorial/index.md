@@ -95,4 +95,32 @@ How to add exit handlers on your orchestration systems using the library
 </div>
 </article>
 
+<article markdown>
+<div class="text" markdown>
+:material-translate: __Adding translations__
+
+---
+Learn how to add and use translations in the run-orchestrator
+
+---
+<footer markdown>
+[:octicons-arrow-right-24: Adding translations](./translations.md)
+</footer>
+</div>
+</article>
+
+<article markdown>
+<div class="text" markdown>
+:material-data-matrix: __Step Data Transfer__
+
+---
+Learn how to pass data between steps in your orchestration workflow
+
+---
+<footer markdown>
+[:octicons-arrow-right-24: Step Data Transfer](./step_data_transfer.md)
+</footer>
+</div>
+</article>
+
 </main>

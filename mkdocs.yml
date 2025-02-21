@@ -62,6 +62,8 @@ nav:
       - "tutorial/advanced_cosmotech_simulator.md"
       - "tutorial/plugins_and_templates.md"
       - "tutorial/exit_handlers.md"
+      - "tutorial/translations.md"
+      - "tutorial/step_data_transfer.md"
   - Examples:
       - "examples/index.md"
       - "examples/simple_simulation_run.md"
@@ -69,21 +71,11 @@ nav:
       - "examples/legacy_run.md"
       - "examples/git_run.md"
       - "examples/minimal_docker.md"
-  - Command Templates: "command_templates/*"
   - Semantic Validator: "Validator.md"
   - Commands:
       - Orchestrator: 
         - "commands/orchestrator.md"
         - "commands/list_templates.md"
-      - Legacy help:
-        - "commands/scenario_data_downloader.md"
-        - "commands/download_cloud_steps.md"
-        - "commands/run_step.md"
-        - "commands/simulation_to_adx.md"
-        - "commands/legacy_json_generator.md"
-      - Helpers:
-        - "commands/parameters_generator.md"
-        - "commands/run_data_downloader.md"
 
 markdown_extensions:
     - admonition
@@ -129,7 +121,6 @@ plugins:
           - scripts/generate_index.py
           - scripts/generate_helps.py
           - scripts/generate_requirements.py
-          - scripts/generate_templates.py
     - literate-nav
     - mike
     - social

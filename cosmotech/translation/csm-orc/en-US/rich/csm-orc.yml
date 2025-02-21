@@ -1,0 +1,112 @@
+# Logging messages for the Cosmotech Orchestrator
+
+logs:
+  # Step related messages
+  step:
+    already_ready: "[green]{step_id}[/] already ready"
+    template_not_found: "[red]{step_id}[/] asks for a non existing template [yellow]{command_id}[/]"
+    loading_template: "[green]{step_id}[/] loads template [cyan]{command_id}[/]"
+    starting: "Starting [bold]{step_type}[/] [green]{step_id}[/]"
+    skipping_previous_errors: "Skipping [bold]{step_type}[/] [yellow]{step_id}[/] due to previous errors"
+    skipping_as_required: "Skipping [bold]{step_type}[/] [yellow]{step_id}[/] as required"
+    running_command: "Running:[cyan]{command}[/]"
+    error_during: "[red]Error[/] during [bold]{step_type}[/] [yellow]{step_id}[/]"
+    done_running: "[green]Done[/] running [bold]{step_type}[/] [green]{step_id}[/]"
+    command_required: "[red]A step requires either a command or a commandId[/]"
+    template_unavailable: "Command Template [red]{command_id}[/] is not available"
+    input:
+      default_value: "Step [cyan]{step_id}[/]: Using default value for input [yellow]'{input}'[/]: [cyan]{value}[/]"
+      default_value_hidden: "Step [cyan]{step_id}[/]: Using default value for hidden input [yellow]'{input}'[/]"
+      missing_required: "Step [cyan]{step_id}[/]: [red]Missing required input[/] [yellow]'{input}'[/]"
+    output:
+      default_value: "Step [cyan]{step_id}[/]: Using default value for output [yellow]'{output}'[/]: [cyan]{value}[/]"
+      default_value_hidden: "Step [cyan]{step_id}[/]: Using default value for hidden output [yellow]'{output}'[/]"
+      captured_values_header: "Step [cyan]{step_id}[/]: [green]Captured output values:[/]"
+      captured_value: "  - [yellow]{output}[/]: [cyan]{value}[/]"
+      captured_hidden: "  - [yellow]{output}[/]: [dim][hidden value][/]"
+      missing_value: "Step [cyan]{step_id}[/]: [red]Missing required output[/] [yellow]'{output}'[/]"
+      missing_required: "Step [cyan]{step_id}[/]: [red]Missing required outputs:[/] [yellow]{outputs}[/]"
+    info:
+      header: "Step [cyan]{id}[/]"
+      command: "Command: [cyan]{command}[/]"
+      description_header: "[bold]Description:[/]"
+      environment_header: "[bold]Environment:[/]"
+      optional: "[yellow](Optional)[/]"
+      use_system_env: "- [cyan]Use system environment variables[/]"
+      skipped: "- [yellow]Skipped by user[/]"
+      status: "Status: [cyan]{status}[/]"
+      simple_repr: "[cyan]{id}[/] ([yellow]{status}[/]): {description}"
+      simple_repr_no_desc: "[cyan]{id}[/] ([yellow]{status}[/])"
+
+  # Orchestrator messages
+  orchestrator:
+    loading_step: "Loading [green]{id}[/] of type [yellow]Step[/]"
+    valid_file: "[green]{file_path}[/] is a valid orchestration file"
+    step_already_defined: "[red]Step[/] [yellow]{step_id}[/] [red]is already defined[/]"
+    step_not_exists: "[red]Step[/] [yellow]{step_id}[/] [red]does not exists[/]"
+    dependencies:
+      header: "Dependencies of [green]{step_id}[/]:"
+      no_dependencies: "No dependencies for [green]{step_id}[/]"
+      found: "Found [cyan]{precedent}[/]"
+    data_flow:
+      connecting: "Connecting data flow from [cyan]{from_step}[/]:[yellow]{from_output}[/] to [cyan]{to_step}[/]:[yellow]{to_input}[/]"
+      connecting_hidden: "Connecting hidden data flow from [cyan]{from_step}[/]:[yellow]{from_output}[/] to [cyan]{to_step}[/]:[yellow]{to_input}[/]"
+    environment:
+      defined: "Environment variable defined for [cyan]{file_name}[/]"
+      variable: "[yellow]{key}[/]{description}"
+      missing: "[red]Missing environment values[/] for step [yellow]{step_id}[/]"
+      missing_value: "[red]{key}[/]: {value}"
+
+  # Error messages
+  errors:
+    missing_library: "[red]You need to install the library[/] [cyan]`cosmotech-run-orchestrator`[/] [red]in your container. Check if you set it in your requirements.txt.[/]"
+    no_run_json: "[red]No \"run.json\" defined for the run template[/] [yellow]{template_id}[/]"
+    missing_env_vars: "[red]Missing environment variables, check the logs[/]"
+
+  # Library messages
+  library:
+    content: "[bold]Library content:[/]"
+    templates_from: "Templates from [cyan]'{plugin_name}'[/]:"
+    template_overriden: "- [yellow]'{template_id}'[/]: [red]OVERRIDEN[/]"
+    template_info: "{template}"
+    template_desc: "- [cyan]'{id}'[/]{description}"
+    template_invalid: "[red]{template_id} is not a valid template id[/]"
+    plugin:
+      loading: "Loading plugin [cyan]{name}[/]"
+      loaded_templates: "Loaded [green]{count}[/] templates from plugin files"
+      template_count: "Plugin contains [green]{count}[/] templates"
+    reloading: "[yellow]Reloading[/] template library"
+    loading: "[green]Loading[/] template library"
+
+  # Entry point messages
+  entrypoint:
+    context: "Setting context from [cyan]project.csm[/]"
+    simulation:
+      info: "Simulation: [cyan]{simulation}[/]"
+      probes_topic: "Probes measures topic: [cyan]{topic}[/]"
+      no_probes_topic: "[yellow]No probes measures topic[/]"
+      control_topic: "Control plane topic: [cyan]{topic}[/]. Simulator binary is able to handle [yellow]CSM_CONTROL_PLANE_TOPIC[/] directly so it is not transformed as an argument."
+      no_control_topic: "[yellow]No Control plane topic[/]"
+      args: "Simulator arguments: [cyan]{args}[/]"
+      no_template: "No run template id defined in environment variable [yellow]\"CSM_RUN_TEMPLATE_ID\"[/] running direct simulator mode"
+    start: "[bold]Csm-orc Entry Point[/]"
+
+  # Templates listing
+  templates:
+    template_info: "{template}"
+    template_desc: "- [cyan]'{id}'[/]{description}"
+    no_templates: "[yellow]There is no available template to display[/]"
+
+  # Run messages
+  run:
+    starting: "Starting run orchestrator version [cyan]{version}[/]"
+    sections:
+      run: "[bold cyan]===      Run     ===[/]"
+      results: "[bold green]===     Results    ===[/]"
+      exit_handlers: "[bold yellow]===   Exit Handlers   ===[/]"
+    writing_env: "Writing environment file [cyan]\"{target}\"[/]"
+
+  # Documentation
+  docs:
+    open_failed: "[red]Failed to open:[/] {url}"
+    opened: "Opened [cyan]{url}[/] in your navigator"
