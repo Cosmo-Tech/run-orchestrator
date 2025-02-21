@@ -5,4 +5,4 @@
 # etc., to any person is prohibited unless it has been previously and
 # specifically authorized by written means by Cosmo Tech.
 
-VERSION = '2.0.0'
+VERSION = '2.0.0rc0'
