@@ -1,0 +1,112 @@
+# Messages de journalisation pour l'Orchestrateur Cosmotech
+
+logs:
+  # Messages relatifs aux étapes
+  step:
+    already_ready: "{step_id} déjà prêt"
+    template_not_found: "{step_id} demande un modèle inexistant {command_id}"
+    loading_template: "{step_id} charge le modèle {command_id}"
+    starting: "Démarrage de {step_type} {step_id}"
+    skipping_previous_errors: "Ignoré {step_type} {step_id} en raison d'erreurs précédentes"
+    skipping_as_required: "Ignoré {step_type} {step_id} comme demandé"
+    running_command: "Exécution:{command}"
+    error_during: "Erreur pendant {step_type} {step_id}"
+    done_running: "Exécution terminée de {step_type} {step_id}"
+    command_required: "Une étape nécessite soit une commande soit un identifiant de commande"
+    template_unavailable: "Le modèle de commande {command_id} n'est pas disponible"
+    input:
+      default_value: "Étape {step_id}: Utilisation de la valeur par défaut pour l'entrée '{input}': {value}"
+      default_value_hidden: "Étape {step_id}: Utilisation de la valeur par défaut pour l'entrée masquée '{input}'"
+      missing_required: "Étape {step_id}: Entrée requise manquante '{input}'"
+    output:
+      default_value: "Étape {step_id}: Utilisation de la valeur par défaut pour la sortie '{output}': {value}"
+      default_value_hidden: "Étape {step_id}: Utilisation de la valeur par défaut pour la sortie masquée '{output}'"
+      captured_values_header: "Étape {step_id}: Valeurs de sortie capturées:"
+      captured_value: "  - {output}: {value}"
+      captured_hidden: "  - {output}: [valeur masquée]"
+      missing_value: "Étape {step_id}: Sortie requise manquante '{output}'"
+      missing_required: "Étape {step_id}: Sorties requises manquantes: {outputs}"
+    info:
+      header: "Étape {id}"
+      command: "Commande: {command}"
+      description_header: "Description:"
+      environment_header: "Environnement:"
+      optional: "(Optionnel)"
+      use_system_env: "- Utiliser les variables d'environnement système"
+      skipped: "- Ignoré par l'utilisateur"
+      status: "Statut: {status}"
+      simple_repr: "{id} ({status}): {description}"
+      simple_repr_no_desc: "{id} ({status})"
+
+  # Messages de l'orchestrateur
+  orchestrator:
+    loading_step: "Chargement de {id} de type Step"
+    valid_file: "{file_path} est un fichier d'orchestration valide"
+    step_already_defined: "L'étape {step_id} est déjà définie"
+    step_not_exists: "L'étape {step_id} n'existe pas"
+    dependencies:
+      header: "Dépendances de {step_id}:"
+      no_dependencies: "Pas de dépendances pour {step_id}"
+      found: "Trouvé {precedent}"
+    data_flow:
+      connecting: "Connexion du flux de données de {from_step}:{from_output} vers {to_step}:{to_input}"
+      connecting_hidden: "Connexion du flux de données masquées de {from_step}:{from_output} vers {to_step}:{to_input}"
+    environment:
+      defined: "Variable d'environnement définie pour {file_name}"
+      variable: "{key}{description}"
+      missing: "Valeurs d'environnement manquantes pour l'étape {step_id}"
+      missing_value: "{key}: {value}"
+
+  # Messages de la bibliothèque
+  library:
+    content: "Contenu de la bibliothèque:"
+    templates_from: "Modèles de '{plugin_name}':"
+    template_overriden: "- '{template_id}': REMPLACÉ"
+    template_info: "{template}"
+    template_desc: "- '{id}'{description}"
+    template_invalid: "{template_id} n'est pas un identifiant de modèle valide"
+    plugin:
+      loading: "Chargement du plugin {name}"
+      loaded_templates: "Chargé {count} modèles depuis les fichiers du plugin"
+      template_count: "Le plugin contient {count} modèles"
+    reloading: "Rechargement de la bibliothèque de modèles"
+    loading: "Chargement de la bibliothèque de modèles"
+
+  # Messages du point d'entrée
+  entrypoint:
+    context: "Configuration du contexte depuis project.csm"
+    simulation:
+      info: "Simulation: {simulation}"
+      probes_topic: "Topic des sondes de mesure: {topic}"
+      no_probes_topic: "Pas de topic de sondes de mesure"
+      control_topic: "Topic de contrôle: {topic}. Le binaire du simulateur peut gérer CSM_CONTROL_PLANE_TOPIC directement donc il n'est pas transformé en argument."
+      no_control_topic: "Pas de topic de contrôle"
+      args: "Arguments du simulateur: {args}"
+      no_template: "Pas d'identifiant de modèle d'exécution défini dans la variable d'environnement \"CSM_RUN_TEMPLATE_ID\" exécution en mode simulateur direct"
+    start: "Point d'entrée Csm-orc"
+
+  # Liste des modèles
+  templates:
+    template_info: "{template}"
+    template_desc: "- '{id}'{description}"
+    no_templates: "Il n'y a aucun modèle disponible à afficher"
+
+  # Messages d'exécution
+  run:
+    starting: "Démarrage de l'orchestrateur version {version}"
+    sections:
+      run: "===   Exécution   ==="
+      results: "===   Résultats   ==="
+      exit_handlers: "=== Gestionnaires de sortie ==="
+    writing_env: "Écriture du fichier d'environnement \"{target}\""
+
+  # Documentation
+  docs:
+    open_failed: "Échec de l'ouverture: {url}"
+    opened: "Ouvert {url} dans votre navigateur"
+
+  # Messages d'erreur
+  errors:
+    missing_library: "Vous devez installer la bibliothèque `cosmotech-run-orchestrator` dans votre conteneur. Vérifiez si elle est configurée dans votre requirements.txt."
+    no_run_json: "Pas de \"run.json\" défini pour le modèle d'exécution {template_id}"
+    missing_env_vars: "Variables d'environnement manquantes, vérifiez les journaux"

@@ -1,0 +1,112 @@
+# Messages de journalisation pour l'Orchestrateur Cosmotech
+
+logs:
+  # Messages relatifs aux étapes
+  step:
+    already_ready: "[green]{step_id}[/] déjà prêt"
+    template_not_found: "[red]{step_id}[/] demande un modèle inexistant [yellow]{command_id}[/]"
+    loading_template: "[green]{step_id}[/] charge le modèle [cyan]{command_id}[/]"
+    starting: "Démarrage de [bold]{step_type}[/] [green]{step_id}[/]"
+    skipping_previous_errors: "Ignoré [bold]{step_type}[/] [yellow]{step_id}[/] en raison d'erreurs précédentes"
+    skipping_as_required: "Ignoré [bold]{step_type}[/] [yellow]{step_id}[/] comme demandé"
+    running_command: "Exécution:[cyan]{command}[/]"
+    error_during: "[red]Erreur[/] pendant [bold]{step_type}[/] [yellow]{step_id}[/]"
+    done_running: "[green]Terminé[/] l'exécution de [bold]{step_type}[/] [green]{step_id}[/]"
+    command_required: "[red]Une étape nécessite soit une commande soit un identifiant de commande[/]"
+    template_unavailable: "Le modèle de commande [red]{command_id}[/] n'est pas disponible"
+    input:
+      default_value: "Étape [cyan]{step_id}[/]: Utilisation de la valeur par défaut pour l'entrée [yellow]'{input}'[/]: [cyan]{value}[/]"
+      default_value_hidden: "Étape [cyan]{step_id}[/]: Utilisation de la valeur par défaut pour l'entrée masquée [yellow]'{input}'[/]"
+      missing_required: "Étape [cyan]{step_id}[/]: [red]Entrée requise manquante[/] [yellow]'{input}'[/]"
+    output:
+      default_value: "Étape [cyan]{step_id}[/]: Utilisation de la valeur par défaut pour la sortie [yellow]'{output}'[/]: [cyan]{value}[/]"
+      default_value_hidden: "Étape [cyan]{step_id}[/]: Utilisation de la valeur par défaut pour la sortie masquée [yellow]'{output}'[/]"
+      captured_values_header: "Étape [cyan]{step_id}[/]: [green]Valeurs de sortie capturées:[/]"
+      captured_value: "  - [yellow]{output}[/]: [cyan]{value}[/]"
+      captured_hidden: "  - [yellow]{output}[/]: [dim][valeur masquée][/]"
+      missing_value: "Étape [cyan]{step_id}[/]: [red]Sortie requise manquante[/] [yellow]'{output}'[/]"
+      missing_required: "Étape [cyan]{step_id}[/]: [red]Sorties requises manquantes:[/] [yellow]{outputs}[/]"
+    info:
+      header: "Étape [cyan]{id}[/]"
+      command: "Commande: [cyan]{command}[/]"
+      description_header: "[bold]Description:[/]"
+      environment_header: "[bold]Environnement:[/]"
+      optional: "[yellow](Optionnel)[/]"
+      use_system_env: "- [cyan]Utiliser les variables d'environnement système[/]"
+      skipped: "- [yellow]Ignoré par l'utilisateur[/]"
+      status: "Statut: [cyan]{status}[/]"
+      simple_repr: "[cyan]{id}[/] ([yellow]{status}[/]): {description}"
+      simple_repr_no_desc: "[cyan]{id}[/] ([yellow]{status}[/])"
+
+  # Messages de l'orchestrateur
+  orchestrator:
+    loading_step: "Chargement de [green]{id}[/] de type [yellow]Step[/]"
+    valid_file: "[green]{file_path}[/] est un fichier d'orchestration valide"
+    step_already_defined: "[red]L'étape[/] [yellow]{step_id}[/] [red]est déjà définie[/]"
+    step_not_exists: "[red]L'étape[/] [yellow]{step_id}[/] [red]n'existe pas[/]"
+    dependencies:
+      header: "Dépendances de [green]{step_id}[/]:"
+      no_dependencies: "Pas de dépendances pour [green]{step_id}[/]"
+      found: "Trouvé [cyan]{precedent}[/]"
+    data_flow:
+      connecting: "Connexion du flux de données de [cyan]{from_step}[/]:[yellow]{from_output}[/] vers [cyan]{to_step}[/]:[yellow]{to_input}[/]"
+      connecting_hidden: "Connexion du flux de données masquées de [cyan]{from_step}[/]:[yellow]{from_output}[/] vers [cyan]{to_step}[/]:[yellow]{to_input}[/]"
+    environment:
+      defined: "Variable d'environnement définie pour [cyan]{file_name}[/]"
+      variable: "[yellow]{key}[/]{description}"
+      missing: "[red]Valeurs d'environnement manquantes[/] pour l'étape [yellow]{step_id}[/]"
+      missing_value: "[red]{key}[/]: {value}"
+
+  # Messages de la bibliothèque
+  library:
+    content: "[bold]Contenu de la bibliothèque:[/]"
+    templates_from: "Modèles de [cyan]'{plugin_name}'[/]:"
+    template_overriden: "- [yellow]'{template_id}'[/]: [red]REMPLACÉ[/]"
+    template_info: "{template}"
+    template_desc: "- [cyan]'{id}'[/]{description}"
+    template_invalid: "[red]{template_id} n'est pas un identifiant de modèle valide[/]"
+    plugin:
+      loading: "Chargement du plugin [cyan]{name}[/]"
+      loaded_templates: "Chargé [green]{count}[/] modèles depuis les fichiers du plugin"
+      template_count: "Le plugin contient [green]{count}[/] modèles"
+    reloading: "[yellow]Rechargement[/] de la bibliothèque de modèles"
+    loading: "[green]Chargement[/] de la bibliothèque de modèles"
+
+  # Messages du point d'entrée
+  entrypoint:
+    context: "Configuration du contexte depuis [cyan]project.csm[/]"
+    simulation:
+      info: "Simulation: [cyan]{simulation}[/]"
+      probes_topic: "Topic des sondes de mesure: [cyan]{topic}[/]"
+      no_probes_topic: "[yellow]Pas de topic de sondes de mesure[/]"
+      control_topic: "Topic de contrôle: [cyan]{topic}[/]. Le binaire du simulateur peut gérer [yellow]CSM_CONTROL_PLANE_TOPIC[/] directement donc il n'est pas transformé en argument."
+      no_control_topic: "[yellow]Pas de topic de contrôle[/]"
+      args: "Arguments du simulateur: [cyan]{args}[/]"
+      no_template: "Pas d'identifiant de modèle d'exécution défini dans la variable d'environnement [yellow]\"CSM_RUN_TEMPLATE_ID\"[/] exécution en mode simulateur direct"
+    start: "[bold]Point d'entrée Csm-orc[/]"
+
+  # Liste des modèles
+  templates:
+    template_info: "{template}"
+    template_desc: "- [cyan]'{id}'[/]{description}"
+    no_templates: "[yellow]Il n'y a aucun modèle disponible à afficher[/]"
+
+  # Messages d'exécution
+  run:
+    starting: "Démarrage de l'orchestrateur version [cyan]{version}[/]"
+    sections:
+      run: "[bold cyan]===   Exécution   ===[/]"
+      results: "[bold green]===   Résultats   ===[/]"
+      exit_handlers: "[bold yellow]=== Gestionnaires de sortie ===[/]"
+    writing_env: "Écriture du fichier d'environnement [cyan]\"{target}\"[/]"
+
+  # Documentation
+  docs:
+    open_failed: "[red]Échec de l'ouverture:[/] {url}"
+    opened: "Ouvert [cyan]{url}[/] dans votre navigateur"
+
+  # Messages d'erreur
+  errors:
+    missing_library: "[red]Vous devez installer la bibliothèque[/] [cyan]`cosmotech-run-orchestrator`[/] [red]dans votre conteneur. Vérifiez si elle est configurée dans votre requirements.txt.[/]"
+    no_run_json: "[red]Pas de \"run.json\" défini pour le modèle d'exécution[/] [yellow]{template_id}[/]"
+    missing_env_vars: "[red]Variables d'environnement manquantes, vérifiez les journaux[/]"
