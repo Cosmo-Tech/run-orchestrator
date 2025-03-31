@@ -3,8 +3,6 @@ description: Advanced tutorial to package csm-orc plugins with customized comman
 ---
 # Plugins and Command Templates
 
---8<-- "partials/misc/new_1.2.0.md"
-
 !!! notes "Objectives"
     - Present the Plugins and Library system added in version 1.2.0
 
