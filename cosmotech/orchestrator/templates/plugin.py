@@ -1,3 +1,10 @@
+# Copyright (C) - 2023 - 2025 - Cosmo Tech
+# This document and all information contained herein is the exclusive property -
+# including all intellectual property rights pertaining thereto - of Cosmo Tech.
+# Any use, reproduction, translation, broadcasting, transmission, distribution,
+# etc., to any person is prohibited unless it has been previously and
+# specifically authorized by written means by Cosmo Tech.
+
 import json
 import pathlib
 
@@ -5,7 +12,6 @@ from cosmotech.orchestrator.core.command_template import CommandTemplate
 
 
 class Plugin:
-
     def __init__(self, __file: str):
         self.name: str = pathlib.Path(__file).parent.name
 
@@ -26,6 +32,8 @@ class Plugin:
             self.__register_template(_template_name, _template)
         except ValueError:
             return False
+        except TypeError:
+            return False
         return _template
 
     def load_folder(self, plugin_folder: pathlib.Path):
@@ -37,7 +45,7 @@ class Plugin:
                         _file_content = json.load(_file)
                     except json.JSONDecodeError:
                         pass
-                    finally:
+                    else:
                         if not isinstance(_file_content, dict):
                             continue
                         is_exit_command = "templates/on_exit/" in str(_path)
