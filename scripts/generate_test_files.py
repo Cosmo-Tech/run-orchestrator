@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Set, Tuple
 
-# Import the find_untested_functions script
+# Import the find_untested_functions script from the same directory
 import find_untested_functions
 
 # Colors for terminal output
