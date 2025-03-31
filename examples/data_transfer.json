@@ -1,0 +1,45 @@
+{
+  "steps": [
+    {
+      "id": "generate_data",
+      "command": "echo 'Processing...' && echo 'CSM-OUTPUT-DATA:data:42' && echo 'Done!'",
+      "description": "Generate some data",
+      "outputs": {
+        "data": {
+          "description": "Generated data value",
+          "defaultValue": "0"
+        },
+        "data2": {
+          "description": "Generated data value",
+          "defaultValue": "0"
+        }
+      }
+    },
+    {
+      "id": "process_data",
+      "command": "echo \"Processing values: $INPUT_VALUE $INPUT_VALUE2 $INPUT_VALUE3\"",
+      "description": "Process the generated data",
+      "inputs": {
+        "value": {
+          "stepId": "generate_data",
+          "output": "data",
+          "as": "INPUT_VALUE",
+          "defaultValue": "-1"
+        },
+        "value2": {
+          "stepId": "generate_data",
+          "output": "data2",
+          "as": "INPUT_VALUE2",
+          "defaultValue": "-1"
+        },
+        "value3": {
+          "stepId": "generate_data",
+          "output": "data3",
+          "as": "INPUT_VALUE3",
+          "defaultValue": "-1"
+        }
+      },
+      "precedents": ["generate_data"]
+    }
+  ]
+}
