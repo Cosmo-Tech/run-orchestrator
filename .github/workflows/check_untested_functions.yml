@@ -25,7 +25,7 @@ jobs:
 
     - name: Run untested functions check
       run: |
-        python scripts/find_untested_functions.py
+        csm-orc utils find-untested
         # This is informational only for now, will not fail the build
         # In the future, we can make this fail the build by adding:
         # exit $(python scripts/find_untested_functions.py | grep "Total untested functions:" | awk '{print $4}')

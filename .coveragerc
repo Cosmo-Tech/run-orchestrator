@@ -4,7 +4,7 @@ omit =
     */tests/*
     */site-packages/*
     */__pycache__/*
-
+    cosmotech/orchestrator/utils/scripts/*
 [report]
 exclude_lines =
     pragma: no cover
