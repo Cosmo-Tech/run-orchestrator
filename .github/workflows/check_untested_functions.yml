@@ -25,7 +25,7 @@ jobs:
 
     - name: Run untested functions check
       run: |
-        python find_untested_functions.py
+        python scripts/find_untested_functions.py
         # This is informational only for now, will not fail the build
         # In the future, we can make this fail the build by adding:
-        # exit $(python find_untested_functions.py | grep "Total untested functions:" | awk '{print $4}')
+        # exit $(python scripts/find_untested_functions.py | grep "Total untested functions:" | awk '{print $4}')
