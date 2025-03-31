@@ -46,8 +46,11 @@ def gen_doc(template: CommandTemplate):
 
 
 for _template in library.templates:
-    with mkdocs_gen_files.open(
-        f"command_templates/" f"{_template.sourcePlugin}/" f"{_template.id.replace(' ', '_')}.md", "w"
-    ) as _md_file, open("scripts/command_template.template.md") as tpl_file:
+    with (
+        mkdocs_gen_files.open(
+            f"command_templates/" f"{_template.sourcePlugin}/" f"{_template.id.replace(' ', '_')}.md", "w"
+        ) as _md_file,
+        open("scripts/command_template.template.md") as tpl_file,
+    ):
         _tpl = Template(tpl_file.read())
         _md_file.write(_tpl.safe_substitute(gen_doc(_template)))
