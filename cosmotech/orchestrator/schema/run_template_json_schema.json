@@ -105,6 +105,73 @@
             "items": {
               "type": "string"
             }
+          },
+          "outputs": {
+            "type": "object",
+            "description": "Defines named outputs that this step produces",
+            "patternProperties": {
+              ".+": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "Description of what this output represents"
+                  },
+                  "defaultValue": {
+                    "type": "string",
+                    "description": "Default value if no output is produced"
+                  },
+                  "optional": {
+                    "type": "boolean",
+                    "description": "Whether this output is optional",
+                    "default": false
+                  },
+                  "hidden": {
+                    "type": "boolean",
+                    "description": "Whether this output should be hidden from logs",
+                    "default": false
+                  }
+                }
+              }
+            }
+          },
+          "inputs": {
+            "type": "object",
+            "description": "Maps input names to outputs from other steps",
+            "patternProperties": {
+              ".+": {
+                "type": "object",
+                "properties": {
+                  "stepId": {
+                    "type": "string",
+                    "description": "ID of the step to take output from"
+                  },
+                  "output": {
+                    "type": "string",
+                    "description": "Name of the output to use from the referenced step"
+                  },
+                  "as": {
+                    "type": "string",
+                    "description": "Name of environment variable to receive the input"
+                  },
+                  "defaultValue": {
+                    "type": "string",
+                    "description": "Default value if the referenced output is not available"
+                  },
+                  "optional": {
+                    "type": "boolean",
+                    "description": "Whether this input is optional",
+                    "default": false
+                  },
+                  "hidden": {
+                    "type": "boolean",
+                    "description": "Whether this input should be hidden from logs",
+                    "default": false
+                  }
+                },
+                "required": ["stepId", "output", "as"]
+              }
+            }
           }
         },
         "additionalProperties": false,
@@ -154,4 +221,3 @@
     }
   }
 }
-

@@ -1,4 +1,4 @@
-# Copyright (C) - 2023 - 2024 - Cosmo Tech
+# Copyright (C) - 2023 - 2025 - Cosmo Tech
 # This document and all information contained herein is the exclusive property -
 # including all intellectual property rights pertaining thereto - of Cosmo Tech.
 # Any use, reproduction, translation, broadcasting, transmission, distribution,
@@ -27,7 +27,7 @@ class EnvironmentVariable:
             return str(v)
         return None
 
-    def join(self, other: 'EnvironmentVariable'):
+    def join(self, other: "EnvironmentVariable"):
         self.defaultValue = self.defaultValue or other.defaultValue
         self.value = self.value or other.value
         self.description = self.description or other.description
@@ -36,11 +36,11 @@ class EnvironmentVariable:
     def serialize(self):
         r = {}
         if self.value:
-            r['value'] = self.value
+            r["value"] = self.value
         if self.defaultValue:
-            r['defaultValue'] = self.defaultValue
+            r["defaultValue"] = self.defaultValue
         if self.description:
-            r['description'] = self.description
+            r["description"] = self.description
         if self.optional:
-            r['optional'] = self.optional
+            r["optional"] = self.optional
         return r
