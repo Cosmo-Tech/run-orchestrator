@@ -1,0 +1,29 @@
+{
+  "steps": [
+    {
+      "id": "generate_data",
+      "command": "python3 -c \"from cosmotech.orchestrator.utils.logger import log_data; log_data('data', '42')\"",
+      "description": "Generate some data using the logger function",
+      "outputs": {
+        "data": {
+          "description": "Generated data value",
+          "defaultValue": "0"
+        }
+      }
+    },
+    {
+      "id": "process_data",
+      "command": "echo \"Processing value: $INPUT_VALUE\"",
+      "description": "Process the generated data",
+      "inputs": {
+        "value": {
+          "stepId": "generate_data",
+          "output": "data",
+          "as": "INPUT_VALUE",
+          "defaultValue": "-1"
+        }
+      },
+      "precedents": ["generate_data"]
+    }
+  ]
+}
