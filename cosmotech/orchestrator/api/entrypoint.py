@@ -199,7 +199,7 @@ def run_entrypoint() -> int:
         return run_template_with_id(template_id)
 
     except EntrypointException as e:
-        LOGGER.error(e.message)
+        LOGGER.error(e)
         return 1
     except subprocess.CalledProcessError:
         return 1

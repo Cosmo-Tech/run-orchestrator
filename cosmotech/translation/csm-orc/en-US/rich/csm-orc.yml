@@ -96,6 +96,7 @@ logs:
     template_info: "{template}"
     template_desc: "- [cyan]'{id}'[/]{description}"
     no_templates: "[yellow]There is no available template to display[/]"
+    template_invalid: "[red]{template_id} is not a valid template id[/]"
 
   # Run messages
   run:

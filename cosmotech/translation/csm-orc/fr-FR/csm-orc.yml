@@ -90,6 +90,7 @@ logs:
     template_info: "{template}"
     template_desc: "- '{id}'{description}"
     no_templates: "Il n'y a aucun modèle disponible à afficher"
+    template_invalid: "{template_id} n'est pas un identifiant de modèle valide"
 
   # Messages d'exécution
   run:
