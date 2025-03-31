@@ -2,13 +2,10 @@ import argparse
 import os
 
 parser = argparse.ArgumentParser(description="Fibonacci printer")
-parser.add_argument("n",
-                    type=int,
-                    help="The max rank of the fibonacci sequence to write")
-parser.add_argument("--filename",
-                    type=argparse.FileType('w'),
-                    help="The file to write to",
-                    default=os.environ.get("FIBO_FILE_PATH"))
+parser.add_argument("n", type=int, help="The max rank of the fibonacci sequence to write")
+parser.add_argument(
+    "--filename", type=argparse.FileType("w"), help="The file to write to", default=os.environ.get("FIBO_FILE_PATH")
+)
 
 
 def fibonacci_sequence(n: int = 0):
