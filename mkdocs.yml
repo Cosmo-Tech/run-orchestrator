@@ -50,7 +50,7 @@ extra:
     provider: mike
 
 nav:
-  - Home: 
+  - Home:
     - Cosmo Tech Run Orchestrator: 'index.md'
     - License: 'License.md'
     - Dependencies: 'dependencies.md'
@@ -73,7 +73,7 @@ nav:
       - "examples/minimal_docker.md"
   - Semantic Validator: "Validator.md"
   - Commands:
-      - Orchestrator: 
+      - Orchestrator:
         - "commands/orchestrator.md"
         - "commands/list_templates.md"
 
@@ -115,13 +115,15 @@ plugins:
           python:
             options:
               docstring_style: sphinx
-              line_lenth: 120
+              line_length: 120
     - gen-files:
         scripts:
           - scripts/generate_index.py
           - scripts/generate_helps.py
           - scripts/generate_requirements.py
     - literate-nav
+    - autorefs:
+        link_titles: false
     - mike
     - social
     - table-reader
