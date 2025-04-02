@@ -38,7 +38,7 @@ def load_translation_files(base_dir: str) -> Dict[str, Dict]:
     translation_files = {}
 
     # Find all translation directories
-    translation_dir = Path(base_dir) / "cosmotech" / "translation"
+    translation_dir = Path(base_dir) / "translation"
     if not translation_dir.exists():
         return translation_files
 
