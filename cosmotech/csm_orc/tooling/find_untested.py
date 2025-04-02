@@ -9,8 +9,6 @@ from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.logger import LOGGER
 from cosmotech.orchestrator.utils.scripts.ast_utils import extract_functions_from_file
 from cosmotech.orchestrator.utils.scripts.ast_utils import extract_test_functions_from_file
-
-# Import utility modules
 from cosmotech.orchestrator.utils.scripts.colors import BLUE
 from cosmotech.orchestrator.utils.scripts.colors import GREEN
 from cosmotech.orchestrator.utils.scripts.colors import RED
