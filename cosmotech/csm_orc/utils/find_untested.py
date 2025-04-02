@@ -5,28 +5,22 @@
 # etc., to any person is prohibited unless it has been previously and
 # specifically authorized by written means by Cosmo Tech.
 
-import importlib
-import inspect
-import os
-import sys
-from pathlib import Path
-from typing import Dict, List, Set, Tuple
-
 from cosmotech.orchestrator.utils.click import click
-from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
-from cosmotech.orchestrator.utils.translate import T
+from cosmotech.orchestrator.utils.scripts.ast_utils import extract_functions_from_file
+from cosmotech.orchestrator.utils.scripts.ast_utils import extract_test_functions_from_file
 
 # Import utility modules
-from cosmotech.orchestrator.utils.scripts.colors import RED, GREEN, YELLOW, BLUE, RESET
+from cosmotech.orchestrator.utils.scripts.colors import BLUE
+from cosmotech.orchestrator.utils.scripts.colors import GREEN
+from cosmotech.orchestrator.utils.scripts.colors import RED
+from cosmotech.orchestrator.utils.scripts.colors import RESET
 from cosmotech.orchestrator.utils.scripts.file_utils import find_python_files
-from cosmotech.orchestrator.utils.scripts.ast_utils import extract_functions_from_file, extract_test_functions_from_file
 
 
 @click.command()
 @click.option("--source-dir", default="cosmotech/orchestrator", help="Source directory to scan")
 @click.option("--test-dir", default="tests/unit/orchestrator", help="Test directory to scan")
-@web_help("commands/utils/find_untested")
 def find_untested_command(source_dir, test_dir):
     """Find functions in the source code that don't have corresponding tests"""
 
