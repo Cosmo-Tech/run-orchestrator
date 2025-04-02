@@ -133,3 +133,6 @@ tmp/
 
 generated/
 .vscode/
+
+# sonarcube folders
+.scannerwork/
