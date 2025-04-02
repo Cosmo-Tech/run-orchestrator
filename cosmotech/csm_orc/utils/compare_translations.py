@@ -6,18 +6,15 @@
 # specifically authorized by written means by Cosmo Tech.
 
 import os
-import argparse
-from typing import Dict, List, Set, Tuple
 
 from cosmotech.orchestrator.utils.click import click
-from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
-from cosmotech.orchestrator.utils.translate import T
+from cosmotech.orchestrator.utils.scripts.file_utils import find_translation_files
+from cosmotech.orchestrator.utils.scripts.translation_utils import compare_yaml_files
 
 # Import utility modules
 from cosmotech.orchestrator.utils.scripts.yaml_utils import load_yaml_file
-from cosmotech.orchestrator.utils.scripts.file_utils import find_translation_files
-from cosmotech.orchestrator.utils.scripts.translation_utils import compare_yaml_files
+from cosmotech.orchestrator.utils.translate import T
 
 
 @click.command()
@@ -26,7 +23,6 @@ from cosmotech.orchestrator.utils.scripts.translation_utils import compare_yaml_
 @click.option("--dir", default=".", help="Base directory to scan for translation files")
 @click.option("--list", "list_flag", is_flag=True, help="List available translation files")
 @click.option("--namespace", help="Compare all files in a specific namespace")
-@web_help("commands/utils/compare_translations")
 def compare_translations_command(file1, file2, dir, list_flag, namespace):
     """Compare translation files for missing keys"""
 

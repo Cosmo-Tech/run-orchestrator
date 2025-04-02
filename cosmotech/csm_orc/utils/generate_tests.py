@@ -8,23 +8,23 @@
 import importlib
 import inspect
 import os
-import sys
-from pathlib import Path
-from typing import Dict, List, Set, Tuple
+from typing import Dict
+from typing import List
+from typing import Tuple
 
 from cosmotech.orchestrator.utils.click import click
-from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
-from cosmotech.orchestrator.utils.translate import T
-
-# Import utility modules
-from cosmotech.orchestrator.utils.scripts.colors import RED, GREEN, YELLOW, BLUE, RESET
-from cosmotech.orchestrator.utils.scripts.file_utils import find_python_files
 from cosmotech.orchestrator.utils.scripts.ast_utils import extract_functions_from_file
 
-# Import the find_untested functionality
-from cosmotech.csm_orc.utils.find_untested import find_untested_command
+# Import utility modules
+from cosmotech.orchestrator.utils.scripts.colors import GREEN
+from cosmotech.orchestrator.utils.scripts.colors import RED
+from cosmotech.orchestrator.utils.scripts.colors import RESET
+from cosmotech.orchestrator.utils.scripts.colors import YELLOW
+from cosmotech.orchestrator.utils.scripts.file_utils import find_python_files
+from cosmotech.orchestrator.utils.translate import T
 
+# Import the find_untested functionality
 
 # Directories
 SOURCE_DIR = "cosmotech/orchestrator"
@@ -241,7 +241,6 @@ def generate_test_files_for_all_untested(source_dir: str, test_dir: str) -> List
 @click.option("--test-dir", default=TEST_DIR, help="Test directory to scan")
 @click.option("--module", help="Generate test files for a specific module")
 @click.option("--all", "generate_all", is_flag=True, help="Generate test files for all untested functions")
-@web_help("commands/utils/generate_tests")
 def generate_tests_command(source_dir, test_dir, module, generate_all):
     """Generate test files for untested functions"""
 
