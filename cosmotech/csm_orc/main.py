@@ -11,7 +11,6 @@ from cosmotech.orchestrator import VERSION
 from cosmotech.csm_orc.entrypoint import entrypoint_command
 from cosmotech.csm_orc.run import run_command
 from cosmotech.csm_orc.list_templates import list_templates_command
-from cosmotech.csm_orc.tooling import tooling_group
 from cosmotech.orchestrator.utils.click import click
 from cosmotech.orchestrator.utils.decorators import web_help
 from cosmotech.orchestrator.utils.logger import LOGGER
@@ -45,7 +44,6 @@ def main():
 main.add_command(entrypoint_command, "entrypoint")
 main.add_command(run_command, "run")
 main.add_command(list_templates_command, "list-templates")
-main.add_command(tooling_group, "tooling")
 
 if __name__ == "__main__":
     main()
