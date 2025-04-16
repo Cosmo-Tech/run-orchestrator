@@ -4,17 +4,18 @@
 # Any use, reproduction, translation, broadcasting, transmission, distribution,
 # etc., to any person is prohibited unless it has been previously and
 # specifically authorized by written means by Cosmo Tech.
-
+import logging
 import os
 import pathlib
+import queue
 import subprocess
 import tempfile
 import threading
-import queue
 from dataclasses import InitVar
 from dataclasses import dataclass
 from dataclasses import field
-from typing import Union, Dict, TextIO, Optional
+from typing import TextIO
+from typing import Union
 
 import sys
 
@@ -77,9 +78,9 @@ class Step:
                 # Get output with timeout to allow checking process status
                 is_stderr, line = output_queue.get(timeout=0.1)
                 if is_stderr:
-                    LOGGER.error(line)
+                    self.logger.error(line)
                 else:
-                    LOGGER.info(line)
+                    self.logger.info(line)
                 output_queue.task_done()
             except queue.Empty:
                 continue
@@ -128,6 +129,11 @@ class Step:
             self.__load_command_from_library()
             self.commandId = None
         self.loaded = True
+        self.logger = logging.getLogger("run_step_output_parser")
+        handler = logging.StreamHandler(sys.stdout)
+        handler.setLevel(logging.INFO)
+        handler.setFormatter(logging.Formatter("%(message)s"))
+        self.logger.addHandler(handler)
 
     def serialize(self):
         r = {

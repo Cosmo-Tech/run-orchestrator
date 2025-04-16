@@ -23,8 +23,13 @@ from typing import Dict
 
 import sys
 
-from cosmotech.orchestrator.utils.logger import LOGGER
 from cosmotech.orchestrator.utils.translate import T
+
+LOGGER = logging.getLogger("csm.run.entrypoint")
+HANDLER = logging.StreamHandler(sys.stdout)
+HANDLER.setFormatter(logging.Formatter("%(message)s"))
+LOGGER.addHandler(HANDLER)
+LOGGER.setLevel(logging.INFO)
 
 
 class EntrypointException(Exception):

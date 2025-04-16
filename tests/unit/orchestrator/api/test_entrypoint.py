@@ -174,9 +174,7 @@ class TestSetupLokiLogging:
         import logging_loki
 
         setup_loki_logging()
-
-        # Verify handler was added to logger
-        from cosmotech.orchestrator.utils.logger import LOGGER
+        LOGGER = logging.getLogger("csm.run.entrypoint")
 
         assert isinstance(LOGGER.handlers.pop(), logging_loki.LokiHandler)
 
