@@ -61,7 +61,6 @@ else:
 
 HANDLER.setFormatter(FORMATTER)
 
-
 # Create a dedicated logger for data output with a simple formatter
 _data_formatter = logging.Formatter(fmt="%(message)s")
 _data_handler = logging.StreamHandler(sys.stdout)
@@ -87,6 +86,8 @@ def get_logger(logger_name: str, level=logging.INFO) -> logging.Logger:
     _logger = logging.getLogger(logger_name)
     if not _logger.hasHandlers():
         _logger.addHandler(HANDLER)
+    if isinstance(level, str):
+        level = logging.getLevelNamesMapping().get(level.upper(), logging.INFO)
     _logger.setLevel(level)
     return _logger
 
