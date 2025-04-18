@@ -78,9 +78,9 @@ class Step:
                 # Get output with timeout to allow checking process status
                 is_stderr, line = output_queue.get(timeout=0.1)
                 if is_stderr:
-                    self.logger.error(line)
+                    self.processed_output_logger.error(line)
                 else:
-                    self.logger.info(line)
+                    self.processed_output_logger.info(line)
                 output_queue.task_done()
             except queue.Empty:
                 continue
@@ -129,11 +129,12 @@ class Step:
             self.__load_command_from_library()
             self.commandId = None
         self.loaded = True
-        self.logger = logging.getLogger("run_step_output_parser")
-        handler = logging.StreamHandler(sys.stdout)
-        handler.setLevel(logging.INFO)
-        handler.setFormatter(logging.Formatter("%(message)s"))
-        self.logger.addHandler(handler)
+        self.processed_output_logger = logging.getLogger("csm-orc.run.step.output_parser")
+        if not self.processed_output_logger.hasHandlers():
+            __handler = logging.StreamHandler(sys.stdout)
+            __handler.setFormatter(logging.Formatter("{message}", style="{"))
+            self.processed_output_logger.addHandler(__handler)
+            self.processed_output_logger.setLevel(logging.INFO)
 
     def serialize(self):
         r = {
