@@ -9,9 +9,11 @@
 YAML file utilities for loading and processing YAML files.
 """
 
-import yaml
 from pathlib import Path
-from typing import Dict, Any, Set
+from typing import Dict
+from typing import Set
+
+import yaml
 
 
 def load_yaml_file(file_path: str) -> Dict:
@@ -59,16 +61,25 @@ def load_translation_files(base_dir: str) -> Dict[str, Dict]:
             # Format: {namespace}/{locale}/{filename}.yml
             namespace = components[0]
             locale = components[1]
+            key = f"{namespace}/{locale}"
+            translation_files.setdefault(key, {})
+            remaining_components = components[2:]
+            if namespace in remaining_components:
+                remaining_components.remove(namespace)
 
             try:
                 with open(yml_file, "r", encoding="utf-8") as f:
                     data = yaml.safe_load(f)
-
-                key = f"{namespace}/{locale}"
-                translation_files[key] = data
+                tar = translation_files[key]
+                for comp in remaining_components:
+                    _comp = comp.replace(".yml", "")
+                    if _comp == namespace:
+                        continue
+                    tar.setdefault(_comp, {})
+                    tar = tar.get(_comp)
+                tar.update(data)
             except Exception as e:
                 print(f"Error loading {yml_file}: {e}")
-
     return translation_files
 
 
