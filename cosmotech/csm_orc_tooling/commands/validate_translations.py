@@ -28,18 +28,13 @@ def validate_translations_command(dir, debug):
     _formatter = logging.Formatter(fmt="{message}", style="{")
 
     LOGGER.handlers[0].setFormatter(_formatter)
+    LOGGER.setLevel(logging.DEBUG if debug else logging.INFO)
     base_dir = dir
 
     # Load all translation files
     LOGGER.info(T("Loading translation files..."))
     translation_files = load_translation_files(base_dir)
     LOGGER.info(T(f"Loaded {len(translation_files)} translation files"))
-
-    if debug:
-        LOGGER.info(T("\nTranslation file structure:"))
-        for file_key, data in translation_files.items():
-            LOGGER.info(f"\n{file_key}:")
-            print_yaml_structure(data)
 
     # Find all Python files
     LOGGER.info(T("Finding Python files..."))
@@ -63,18 +58,15 @@ def validate_translations_command(dir, debug):
                 if debug:
                     LOGGER.debug(T(f"Skipping exception log at {rel_path}:{line_number}"))
                 continue
-
             if not translation_key:
                 logs_without_translation.append((rel_path, line_number, log_level))
                 continue
 
             # Check if the translation key exists in all files
             key_exists = check_translation_key_exists(translation_key, translation_files)
-
-            if debug and key_exists:
-                LOGGER.debug(T(f"\nChecking key: {translation_key}"))
-                for file_key, exists in key_exists.items():
-                    LOGGER.debug(T(f"  {file_key}: {'Found' if exists else 'Not found'}"))
+            LOGGER.debug(T(f"\nChecking key: {translation_key}"))
+            for file_key, exists in key_exists.items():
+                LOGGER.debug(T(f"  {file_key}: {'Found' if exists else 'Not found'}"))
 
             # If key doesn't exist in any file, report it
             if key_exists and not all(key_exists.values()):
@@ -89,7 +81,12 @@ def validate_translations_command(dir, debug):
     LOGGER.info(T("\nLogging calls without translation:"))
     if logs_without_translation:
         for file_path, line_number, log_level in logs_without_translation:
-            LOGGER.info(T(f"  {file_path}:{line_number} - LOGGER.{log_level}()"))
+            if log_level == "option":
+                LOGGER.info(T(f"  {file_path}:{line_number} - @click.option(help=...)"))
+            elif log_level == "translation_help":
+                LOGGER.info(T(f"  {file_path}:{line_number} - @translation_help()"))
+            else:
+                LOGGER.info(T(f"  {file_path}:{line_number} - LOGGER.{log_level}()"))
     else:
         LOGGER.info(T("  None found"))
 
