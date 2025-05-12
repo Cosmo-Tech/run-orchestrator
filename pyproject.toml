@@ -14,7 +14,7 @@ readme = {file = "README.md", content-type = "text/markdown"}
 [project.scripts]
 csm-orc = "cosmotech.csm_orc.main:main"
 "entrypoint.py" = "cosmotech.csm_orc.entrypoint:entrypoint_command"
-csm-tooling = "cosmotech.csm_orc_tooling:main [dev]"
+csm-tooling = "cosmotech.csm_orc_tooling.commands.validate_translations:validate_translations_command [dev]"
 
 [tool.pytest.ini_options]
 pythonpath = ["."]

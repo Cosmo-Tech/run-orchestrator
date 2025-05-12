@@ -11,7 +11,9 @@ AST (Abstract Syntax Tree) utilities for parsing and analyzing Python files.
 
 import ast
 import re
-from typing import Dict, List, Set, Tuple, Optional
+from typing import List
+from typing import Optional
+from typing import Tuple
 
 
 def extract_functions_from_file(file_path: str) -> List[Tuple[str, str]]:
@@ -85,6 +87,8 @@ class LoggingCallVisitor(ast.NodeVisitor):
         self.in_except_block = False
         self.current_exception_name = None
         self.except_stack = []  # Stack to handle nested except blocks
+        self.translate_help_calls = []
+        self.option_calls = []
 
     def visit_Try(self, node):
         # Visit the try block normally
@@ -135,8 +139,26 @@ class LoggingCallVisitor(ast.NodeVisitor):
                 is_exception_log = self._is_logging_exception(node)
 
             self.logging_calls.append((node, is_exception_log))
-
         # Continue visiting other nodes
+        self.generic_visit(node)
+
+    def visit_FunctionDef(self, node):
+        decorators = node.decorator_list
+        for decorator in decorators:
+            if (
+                isinstance(decorator, ast.Call)
+                and isinstance(decorator.func, ast.Name)
+                and decorator.func.id == "translate_help"
+            ):
+                self.translate_help_calls.append((node, decorator))
+            elif (
+                isinstance(decorator, ast.Call)
+                and isinstance(decorator.func, ast.Attribute)
+                and decorator.func.value.id == "click"
+                and isinstance(decorator.func.value, ast.Name)
+                and decorator.func.attr in ["option"]
+            ):
+                self.option_calls.append((node, decorator))
         self.generic_visit(node)
 
     def _is_logging_exception(self, node):
@@ -267,6 +289,42 @@ def find_logging_calls_in_file(file_path: str) -> List[Tuple[int, str, Optional[
                     translation_key = extract_translation_key(first_arg.func.value)
 
             results.append((line_number, log_level, translation_key, is_exception_log))
+
+        for call_node, decorator in visitor.translate_help_calls:
+            line_number = call_node.lineno
+            results.append((line_number, "translation_help", decorator.args[0].value, False))
+
+        for call_node, decorator in visitor.option_calls:
+            if decorator.keywords:
+                help_kw = None
+                for kw in decorator.keywords:
+                    if kw.arg == "help":
+                        help_kw = kw
+
+                if help_kw is None:
+                    continue
+
+                translation_key = None
+                line_number = help_kw.lineno
+                # Direct T() call
+                if (
+                    isinstance(help_kw.value, ast.Call)
+                    and isinstance(help_kw.value.func, ast.Name)
+                    and help_kw.value.func.id == "T"
+                ):
+                    translation_key = extract_translation_key(help_kw.value)
+
+                # T().format() call
+                elif (
+                    isinstance(help_kw.value, ast.Call)
+                    and isinstance(help_kw.value.func, ast.Attribute)
+                    and help_kw.value.func.attr == "format"
+                    and isinstance(help_kw.value.func.value, ast.Call)
+                    and isinstance(help_kw.value.func.value.func, ast.Name)
+                    and help_kw.value.func.value.func.id == "T"
+                ):
+                    translation_key = extract_translation_key(help_kw.value.func.value)
+                results.append((line_number, "option", translation_key, False))
 
         # If AST parsing didn't find all calls, use regex as fallback
         if not results:
