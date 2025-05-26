@@ -88,7 +88,7 @@ class Step:
     def __load_command_from_library(self):
         library = Library()
         if not self.commandId or self.loaded:
-            LOGGER.debug(T("csm-orc.logs.step.already_ready").format(step_id=self.display_id))
+            LOGGER.debug(T("csm-orc.orchestrator.core.step.already_ready").format(step_id=self.display_id))
             return
 
         self.display_command_id = self.commandId
@@ -96,13 +96,15 @@ class Step:
         if command is None:
             self.status = "Error"
             LOGGER.error(
-                T("csm-orc.logs.step.template_not_found").format(
+                T("csm-orc.orchestrator.core.step.template_not_found").format(
                     step_id=self.display_id, command_id=self.display_command_id
                 )
             )
-            raise ValueError(T("csm-orc.logs.step.template_unavailable").format(command_id=self.commandId))
+            raise ValueError(T("csm-orc.orchestrator.core.step.template_unavailable").format(command_id=self.commandId))
         LOGGER.debug(
-            T("csm-orc.logs.step.loading_template").format(step_id=self.display_id, command_id=self.display_command_id)
+            T("csm-orc.orchestrator.core.step.loading_template").format(
+                step_id=self.display_id, command_id=self.display_command_id
+            )
         )
         self.command = command.command
         self.arguments = command.arguments[:] + self.arguments
@@ -118,7 +120,7 @@ class Step:
     def __post_init__(self, stop_library_load):
         if not bool(self.command) ^ bool(self.commandId):
             self.status = "Error"
-            raise ValueError(T("csm-orc.logs.step.command_required"))
+            raise ValueError(T("csm-orc.orchestrator.core.step.command_required"))
         tmp_env = dict()
         for k, v in self.environment.items():
             tmp_env[k] = EnvironmentVariable(k, **v)
@@ -182,19 +184,23 @@ class Step:
         if as_exit:
             step_type = "exit handler"
 
-        LOGGER.info(T("csm-orc.logs.step.starting").format(step_type=step_type, step_id=self.display_id))
+        LOGGER.info(T("csm-orc.orchestrator.core.step.starting").format(step_type=step_type, step_id=self.display_id))
         self.status = "Ready"
 
         if isinstance(previous, dict) and any(map(lambda a: a not in ["Done", "DryRun"], previous.values())):
             LOGGER.warning(
-                T("csm-orc.logs.step.skipping_previous_errors").format(step_type=step_type, step_id=self.display_id)
+                T("csm-orc.orchestrator.core.step.skipping_previous_errors").format(
+                    step_type=step_type, step_id=self.display_id
+                )
             )
             self.status = "Skipped"
 
         if self.status == "Ready":
             if self.skipped:
                 LOGGER.info(
-                    T("csm-orc.logs.step.skipping_as_required").format(step_type=step_type, step_id=self.display_id)
+                    T("csm-orc.orchestrator.core.step.skipping_as_required").format(
+                        step_type=step_type, step_id=self.display_id
+                    )
                 )
                 self.status = "Done"
             elif dry:
@@ -208,13 +214,13 @@ class Step:
                         value = input_config["defaultValue"]
                         if input_config.get("hidden", False):
                             LOGGER.debug(
-                                T("csm-orc.logs.step.input.default_value_hidden").format(
+                                T("csm-orc.orchestrator.core.step.input.default_value_hidden").format(
                                     step_id=self.id, input=input_name
                                 )
                             )
                         else:
                             LOGGER.debug(
-                                T("csm-orc.logs.step.input.default_value").format(
+                                T("csm-orc.orchestrator.core.step.input.default_value").format(
                                     step_id=self.id, input=input_name, value=value
                                 )
                             )
@@ -223,7 +229,9 @@ class Step:
                         _e[input_config["as"]] = value
                     elif not input_config.get("optional", False):
                         raise ValueError(
-                            T("csm-orc.logs.step.input.missing_required").format(step_id=self.id, input=input_name)
+                            T("csm-orc.orchestrator.core.step.input.missing_required").format(
+                                step_id=self.id, input=input_name
+                            )
                         )
 
                 if self.useSystemEnvironment:
@@ -238,7 +246,9 @@ class Step:
                         tmp_file_content.append(f"source {str(venv)}")
                     tmp_file_content.append(f"""{self.command} {" ".join(f'"{a}"' for a in self.arguments)}""")
                     tmp_file.write("\n".join(tmp_file_content))
-                    LOGGER.debug(T("csm-orc.logs.step.running_command").format(command=";".join(tmp_file_content)))
+                    LOGGER.debug(
+                        T("csm-orc.orchestrator.core.step.running_command").format(command=";".join(tmp_file_content))
+                    )
                     tmp_file.close()
 
                     # Start process with pipes
@@ -288,13 +298,13 @@ class Step:
                             self.captured_output[output_name] = output_config["defaultValue"]
                             if output_config.get("hidden", False):
                                 LOGGER.debug(
-                                    T("csm-orc.logs.step.output.default_value_hidden").format(
+                                    T("csm-orc.orchestrator.core.step.output.default_value_hidden").format(
                                         step_id=self.id, output=output_name
                                     )
                                 )
                             else:
                                 LOGGER.debug(
-                                    T("csm-orc.logs.step.output.default_value").format(
+                                    T("csm-orc.orchestrator.core.step.output.default_value").format(
                                         step_id=self.id, output=output_name, value=output_config["defaultValue"]
                                     )
                                 )
@@ -303,13 +313,19 @@ class Step:
                     self.captured_output.update(stdout_parser.outputs)
 
                     # Log all final output values
-                    LOGGER.debug(T("csm-orc.logs.step.output.captured_values_header").format(step_id=self.id))
+                    LOGGER.debug(
+                        T("csm-orc.orchestrator.core.step.output.captured_values_header").format(step_id=self.id)
+                    )
                     for output_name, value in self.captured_output.items():
                         if output_name in self.outputs and self.outputs[output_name].get("hidden", False):
-                            LOGGER.debug(T("csm-orc.logs.step.output.captured_hidden").format(output=output_name))
+                            LOGGER.debug(
+                                T("csm-orc.orchestrator.core.step.output.captured_hidden").format(output=output_name)
+                            )
                         else:
                             LOGGER.debug(
-                                T("csm-orc.logs.step.output.captured_value").format(output=output_name, value=value)
+                                T("csm-orc.orchestrator.core.step.output.captured_value").format(
+                                    output=output_name, value=value
+                                )
                             )
 
                     # Validate required outputs
@@ -322,24 +338,30 @@ class Step:
                         ):
                             missing_outputs.append(output_name)
                             LOGGER.debug(
-                                T("csm-orc.logs.step.output.missing_value").format(step_id=self.id, output=output_name)
+                                T("csm-orc.orchestrator.core.step.output.missing_value").format(
+                                    step_id=self.id, output=output_name
+                                )
                             )
 
                     if missing_outputs:
                         raise ValueError(
-                            T("csm-orc.logs.step.output.missing_required").format(
+                            T("csm-orc.orchestrator.core.step.output.missing_required").format(
                                 step_id=self.id, outputs=", ".join(missing_outputs)
                             )
                         )
 
                     LOGGER.info(
-                        T("csm-orc.logs.step.done_running").format(step_type=step_type, step_id=self.display_id)
+                        T("csm-orc.orchestrator.core.step.done_running").format(
+                            step_type=step_type, step_id=self.display_id
+                        )
                     )
                     self.status = "Done"
 
                 except subprocess.CalledProcessError as e:
                     LOGGER.error(
-                        T("csm-orc.logs.step.error_during").format(step_type=step_type, step_id=self.display_id)
+                        T("csm-orc.orchestrator.core.step.error_during").format(
+                            step_type=step_type, step_id=self.display_id
+                        )
                     )
                     LOGGER.error(str(e))
                     self.status = "RunError"
@@ -356,33 +378,33 @@ class Step:
 
     def simple_repr(self):
         if self.description:
-            return T("csm-orc.logs.step.info.simple_repr").format(
+            return T("csm-orc.orchestrator.core.step.info.simple_repr").format(
                 id=self.id, status=self.status, description=self.description
             )
-        return T("csm-orc.logs.step.info.simple_repr_no_desc").format(id=self.id, status=self.status)
+        return T("csm-orc.orchestrator.core.step.info.simple_repr_no_desc").format(id=self.id, status=self.status)
 
     def __str__(self):
         r = list()
-        r.append(T("csm-orc.logs.step.info.header").format(id=self.id))
+        r.append(T("csm-orc.orchestrator.core.step.info.header").format(id=self.id))
         r.append(
-            T("csm-orc.logs.step.info.command").format(
+            T("csm-orc.orchestrator.core.step.info.command").format(
                 command=self.command + ("" if not self.arguments else " " + " ".join(self.arguments))
             )
         )
         if self.description:
-            r.append(T("csm-orc.logs.step.info.description_header"))
+            r.append(T("csm-orc.orchestrator.core.step.info.description_header"))
             r.append(f"  {self.description}")
         if self.environment:
-            r.append(T("csm-orc.logs.step.info.environment_header"))
+            r.append(T("csm-orc.orchestrator.core.step.info.environment_header"))
             for k, v in self.environment.items():
-                optional_str = "" if not v.optional else T("csm-orc.logs.step.info.optional")
+                optional_str = "" if not v.optional else T("csm-orc.orchestrator.core.step.info.optional")
                 if v.description:
                     r.append(f"- {k} {optional_str}: {v.description}")
                 else:
                     r.append(f"- {k} {optional_str}")
         if self.useSystemEnvironment:
-            r.append(T("csm-orc.logs.step.info.use_system_env"))
+            r.append(T("csm-orc.orchestrator.core.step.info.use_system_env"))
         if self.skipped:
-            r.append(T("csm-orc.logs.step.info.skipped"))
-        r.append(T("csm-orc.logs.step.info.status").format(status=self.status))
+            r.append(T("csm-orc.orchestrator.core.step.info.skipped"))
+        r.append(T("csm-orc.orchestrator.core.step.info.status").format(status=self.status))
         return "\n".join(r)

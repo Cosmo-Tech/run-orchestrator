@@ -37,9 +37,9 @@ def web_help(effective_target="", base_url=WEB_DOCUMENTATION_ROOT):
     def open_documentation(ctx: click.Context, param, value):
         if value:
             if not webbrowser.open(documentation_url):
-                LOGGER.warning(T("csm-orc.logs.docs.open_failed").format(url=documentation_url))
+                LOGGER.warning(T("csm-orc.orchestrator.docs.open_failed").format(url=documentation_url))
             else:
-                LOGGER.info(T("csm-orc.logs.docs.opened").format(url=documentation_url))
+                LOGGER.info(T("csm-orc.orchestrator.docs.opened").format(url=documentation_url))
             ctx.exit(0)
 
     def wrap_function(func):

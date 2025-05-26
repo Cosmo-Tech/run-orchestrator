@@ -39,7 +39,7 @@ def validate_template(template_path: str) -> bool:
     try:
         f = Orchestrator()
         f.load_json_file(template_path, validate_only=True)
-        LOGGER.info(T("csm-orc.logs.orchestrator.valid_file").format(file_path=template_path))
+        LOGGER.info(T("csm-orc.orchestrator.core.orchestrator.valid_file").format(file_path=template_path))
         return True
     except ValueError as e:
         LOGGER.error(e)
@@ -79,7 +79,7 @@ def generate_env_file(template_path: str, target_path: str) -> bool:
     f = Orchestrator()
     try:
         s, g = f.load_json_file(template_path, display_env=True)
-        LOGGER.info(T("csm-orc.logs.run.writing_env").format(target=target_path))
+        LOGGER.info(T("csm-orc.cli.run.writing_env").format(target=target_path))
         _fp = pathlib.Path(target_path)
         _fp.parent.mkdir(parents=True, exist_ok=True)
 
@@ -122,7 +122,7 @@ def run_template(
     if skipped_steps is None:
         skipped_steps = []
 
-    LOGGER.info(T("csm-orc.logs.run.starting").format(version=VERSION))
+    LOGGER.info(T("csm-orc.cli.run.starting").format(version=VERSION))
     f = Orchestrator()
     try:
         s, g = f.load_json_file(template_path, dry_run, display_env, skipped_steps)
@@ -136,9 +136,9 @@ def run_template(
         success = True
         results = {}
 
-        LOGGER.info(T("csm-orc.logs.run.sections.run"))
+        LOGGER.info(T("csm-orc.cli.run.sections.run"))
         g.evaluate(mode="threading")
-        LOGGER.info(T("csm-orc.logs.run.sections.results"))
+        LOGGER.info(T("csm-orc.cli.run.sections.results"))
 
         for k, v in s.items():
             LOGGER.info(v[0].simple_repr())
@@ -162,7 +162,7 @@ def run_template(
                 exit_steps.append(_s)
 
             if exit_steps:
-                LOGGER.info(T("csm-orc.logs.run.sections.exit_handlers"))
+                LOGGER.info(T("csm-orc.cli.run.sections.exit_handlers"))
 
             for _s in exit_steps:
                 LOGGER.info(_s.simple_repr())

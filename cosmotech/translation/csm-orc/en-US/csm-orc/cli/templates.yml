@@ -1,0 +1,6 @@
+# Templates listing messages for the Cosmotech Orchestrator CLI
+
+template_info: "{template}"
+template_desc: "- '{id}'{description}"
+no_templates: "There is no available template to display"
+template_invalid: "{template_id} is not a valid template id"

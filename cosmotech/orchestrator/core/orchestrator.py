@@ -24,9 +24,9 @@ class FileLoader:
     @staticmethod
     def load_step(container, override: bool = False, **step) -> Step:
         _id = step.get("id")
-        LOGGER.debug(T("csm-orc.logs.orchestrator.loading_step").format(id=f"{_id} of type Step"))
+        LOGGER.debug(T("csm-orc.orchestrator.core.orchestrator.loading_step").format(id=f"{_id} of type Step"))
         if _id in container and not override:
-            raise ValueError(T("csm-orc.logs.orchestrator.step_already_defined").format(step_id=_id))
+            raise ValueError(T("csm-orc.orchestrator.core.orchestrator.step_already_defined").format(step_id=_id))
         _item = Step(**step)
         container[_id] = _item
         return _item
@@ -74,7 +74,7 @@ class Orchestrator(metaclass=Singleton):
         steps = FileLoader(json_file_path)(skipped_steps=skipped_steps)
         Library().display_library(log_function=LOGGER.debug, verbose=False)
         if validate_only:
-            LOGGER.info(T("csm-orc.logs.orchestrator.valid_file").format(file_path=json_file_path))
+            LOGGER.info(T("csm-orc.orchestrator.core.orchestrator.valid_file").format(file_path=json_file_path))
             return None, None
         return self._load_from_json_content(json_file_path, steps, dry, display_env, ignore_error)
 
@@ -94,17 +94,23 @@ class Orchestrator(metaclass=Singleton):
         missing_env = dict()
         for _step, _node in _steps.values():
             if _step.precedents:
-                LOGGER.debug(T("csm-orc.logs.orchestrator.dependencies.header").format(step_id=_step.id))
+                LOGGER.debug(T("csm-orc.orchestrator.core.orchestrator.dependencies.header").format(step_id=_step.id))
             else:
-                LOGGER.debug(T("csm-orc.logs.orchestrator.dependencies.no_dependencies").format(step_id=_step.id))
+                LOGGER.debug(
+                    T("csm-orc.orchestrator.core.orchestrator.dependencies.no_dependencies").format(step_id=_step.id)
+                )
             for _precedent in _step.precedents:
                 if isinstance(_precedent, str):
                     if _precedent not in _steps:
                         _step.status = "Error"
-                        raise ValueError(T("csm-orc.logs.orchestrator.step_not_exists").format(step_id=_precedent))
+                        raise ValueError(
+                            T("csm-orc.orchestrator.core.orchestrator.step_not_exists").format(step_id=_precedent)
+                        )
                     _prec_step, _prec_node = _steps.get(_precedent)
                     _prec_node.outputs["status"].connect(_node.inputs["previous"][_precedent])
-                    LOGGER.debug(T("csm-orc.logs.orchestrator.dependencies.found").format(precedent=_precedent))
+                    LOGGER.debug(
+                        T("csm-orc.orchestrator.core.orchestrator.dependencies.found").format(precedent=_precedent)
+                    )
 
                     # Connect data flows based on input configuration
                     for input_name, input_config in _step.inputs.items():
@@ -118,7 +124,7 @@ class Orchestrator(metaclass=Singleton):
 
                             if is_hidden:
                                 LOGGER.debug(
-                                    T("csm-orc.logs.orchestrator.data_flow.connecting_hidden").format(
+                                    T("csm-orc.orchestrator.core.orchestrator.data_flow.connecting_hidden").format(
                                         from_step=input_config["stepId"],
                                         from_output=input_config["output"],
                                         to_step=_step.id,
@@ -127,7 +133,7 @@ class Orchestrator(metaclass=Singleton):
                                 )
                             else:
                                 LOGGER.debug(
-                                    T("csm-orc.logs.orchestrator.data_flow.connecting").format(
+                                    T("csm-orc.orchestrator.core.orchestrator.data_flow.connecting").format(
                                         from_step=input_config["stepId"],
                                         from_output=input_config["output"],
                                         to_step=_step.id,
@@ -147,16 +153,20 @@ class Orchestrator(metaclass=Singleton):
                     if v.description:
                         _env[k].add(v.description)
             _path = pathlib.Path(json_file_path)
-            LOGGER.info(T("csm-orc.logs.orchestrator.environment.defined").format(file_name=_path.name))
+            LOGGER.info(T("csm-orc.orchestrator.core.orchestrator.environment.defined").format(file_name=_path.name))
             for k, v in sorted(_env.items(), key=lambda a: a[0]):
                 desc = (":\n    - " + "\n    - ".join(v)) if len(v) > 1 else (": " + list(v)[0] if len(v) else "")
-                LOGGER.info(T("csm-orc.logs.orchestrator.environment.variable").format(key=k, description=desc))
+                LOGGER.info(
+                    T("csm-orc.orchestrator.core.orchestrator.environment.variable").format(key=k, description=desc)
+                )
         elif missing_env and not ignore_error:
             for _step_id, variables in missing_env.items():
-                LOGGER.error(T("csm-orc.logs.orchestrator.environment.missing").format(step_id=_step_id))
+                LOGGER.error(T("csm-orc.orchestrator.core.orchestrator.environment.missing").format(step_id=_step_id))
                 for k, v in variables.items():
                     LOGGER.error(
-                        T("csm-orc.logs.orchestrator.environment.missing_value").format(key=k, value=v if v else "")
+                        T("csm-orc.orchestrator.core.orchestrator.environment.missing_value").format(
+                            key=k, value=v if v else ""
+                        )
                     )
-            raise ValueError(T("csm-orc.logs.errors.missing_env_vars"))
+            raise ValueError(T("csm-orc.orchestrator.errors.missing_env_vars"))
         return _steps, _graph

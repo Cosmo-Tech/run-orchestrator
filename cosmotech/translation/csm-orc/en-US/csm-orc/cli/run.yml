@@ -1,0 +1,8 @@
+# Run messages for the Cosmotech Orchestrator CLI
+
+starting: "Starting run orchestrator version {version}"
+sections:
+  run: "===      Run     ==="
+  results: "===     Results    ==="
+  exit_handlers: "===   Exit Handlers   ==="
+writing_env: "Writing environment file \"{target}\""

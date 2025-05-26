@@ -1,0 +1,12 @@
+# Entry point messages for the Cosmotech Orchestrator CLI
+
+context: "Setting context from project.csm"
+simulation:
+  info: "Simulation: {simulation}"
+  probes_topic: "Probes measures topic: {topic}"
+  no_probes_topic: "No probes measures topic"
+  control_topic: "Control plane topic: {topic}. Simulator binary is able to handle CSM_CONTROL_PLANE_TOPIC directly so it is not transformed as an argument."
+  no_control_topic: "No Control plane topic"
+  args: "Simulator arguments: {args}"
+  no_template: "No run template id defined in environment variable \"CSM_RUN_TEMPLATE_ID\" running direct simulator mode"
+start: "Csm-orc Entry Point"

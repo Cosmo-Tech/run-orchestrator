@@ -1,0 +1,19 @@
+# Core messages for the Cosmotech Orchestrator
+
+# Orchestrator messages
+loading_step: "Loading {id} of type Step"
+valid_file: "{file_path} is a valid orchestration file"
+step_already_defined: "Step {step_id} is already defined"
+step_not_exists: "Step {step_id} does not exists"
+dependencies:
+  header: "Dependencies of {step_id}:"
+  no_dependencies: "No dependencies for {step_id}"
+  found: "Found {precedent}"
+data_flow:
+  connecting: "Connecting data flow from {from_step}:{from_output} to {to_step}:{to_input}"
+  connecting_hidden: "Connecting hidden data flow from {from_step}:{from_output} to {to_step}:{to_input}"
+environment:
+  defined: "Environment variable defined for {file_name}"
+  variable: "{key}{description}"
+  missing: "Missing environment values for step {step_id}"
+  missing_value: "{key}: {value}"

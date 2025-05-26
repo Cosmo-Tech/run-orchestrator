@@ -1,0 +1,4 @@
+# Documentation messages for the Cosmotech Orchestrator
+
+open_failed: "Failed to open: {url}"
+opened: "Opened {url} in your navigator"

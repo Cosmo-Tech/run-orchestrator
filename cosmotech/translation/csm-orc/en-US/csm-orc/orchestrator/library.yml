@@ -1,0 +1,14 @@
+# Library messages for the Cosmotech Orchestrator
+
+content: "Library content:"
+templates_from: "Templates from '{plugin_name}':"
+template_overriden: "- '{template_id}': OVERRIDEN"
+template_info: "{template}"
+template_desc: "- '{id}'{description}"
+template_invalid: "{template_id} is not a valid template id"
+plugin:
+  loading: "Loading plugin {name}"
+  loaded_templates: "Loaded {count} templates from plugin files"
+  template_count: "Plugin contains {count} templates"
+reloading: "Reloading template library"
+loading: "Loading template library"

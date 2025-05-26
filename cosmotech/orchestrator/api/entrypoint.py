@@ -47,7 +47,7 @@ def get_entrypoint_env() -> Dict[str, str]:
     Returns:
         Dictionary of environment variables
     """
-    LOGGER.debug(T("csm-orc.logs.entrypoint.context"))
+    LOGGER.debug(T("csm-orc.cli.entrypoint.context"))
     project_file = configparser.ConfigParser()
     project_file.read("/pkg/share/project.csm")
 
@@ -78,34 +78,34 @@ def run_direct_simulator() -> int:
         Exit code from the simulator
     """
     if os.environ.get("CSM_SIMULATION"):
-        LOGGER.info(T("csm-orc.logs.entrypoint.simulation.info").format(simulation=os.environ.get("CSM_SIMULATION")))
+        LOGGER.info(T("csm-orc.cli.entrypoint.simulation.info").format(simulation=os.environ.get("CSM_SIMULATION")))
 
         args = ["-i", os.environ.get("CSM_SIMULATION")]
         if os.environ.get("CSM_PROBES_MEASURES_TOPIC") is not None:
             LOGGER.debug(
-                T("csm-orc.logs.entrypoint.simulation.probes_topic").format(
+                T("csm-orc.cli.entrypoint.simulation.probes_topic").format(
                     topic=os.environ.get("CSM_PROBES_MEASURES_TOPIC")
                 )
             )
             args = args + ["--amqp-consumer", os.environ.get("CSM_PROBES_MEASURES_TOPIC")]
         else:
-            LOGGER.warning(T("csm-orc.logs.entrypoint.simulation.no_probes_topic"))
+            LOGGER.warning(T("csm-orc.cli.entrypoint.simulation.no_probes_topic"))
 
         if os.environ.get("CSM_CONTROL_PLANE_TOPIC") is not None:
             LOGGER.debug(
-                T("csm-orc.logs.entrypoint.simulation.control_topic").format(
+                T("csm-orc.cli.entrypoint.simulation.control_topic").format(
                     topic=os.environ.get("CSM_CONTROL_PLANE_TOPIC")
                 )
             )
         else:
-            LOGGER.warning(T("csm-orc.logs.entrypoint.simulation.no_control_topic"))
+            LOGGER.warning(T("csm-orc.cli.entrypoint.simulation.no_control_topic"))
     else:
         # Check added for use of legacy entrypoint.py name - to be removed when legacy stack is removed
         if sys.argv[0].endswith("entrypoint.py"):
             args = sys.argv[1:]
         else:
             args = sys.argv[2:]
-        LOGGER.debug(T("csm-orc.logs.entrypoint.simulation.args").format(args=args))
+        LOGGER.debug(T("csm-orc.cli.entrypoint.simulation.args").format(args=args))
 
     try:
         return subprocess.check_call([get_simulator_executable_name()] + args)
@@ -149,14 +149,14 @@ def run_template_with_id(template_id: str, project_root: Path = Path("/pkg/share
         Exit code from the template run
     """
     LOGGER.setLevel(logging.DEBUG)
-    LOGGER.info(T("csm-orc.logs.entrypoint.start"))
+    LOGGER.info(T("csm-orc.cli.entrypoint.start"))
 
     if importlib.util.find_spec("cosmotech") is None or importlib.util.find_spec("cosmotech.orchestrator") is None:
-        raise EntrypointException(T("csm-orc.logs.errors.missing_library"))
+        raise EntrypointException(T("csm-orc.orchestrator.errors.missing_library"))
 
     orchestrator_json = project_root / "code/run_templates" / template_id / "run.json"
     if not orchestrator_json.is_file():
-        raise EntrypointException(T("csm-orc.logs.errors.no_run_json").format(template_id=template_id))
+        raise EntrypointException(T("csm-orc.orchestrator.errors.no_run_json").format(template_id=template_id))
 
     _env = os.environ.copy()
     p = subprocess.Popen(
@@ -198,7 +198,7 @@ def run_entrypoint() -> int:
 
         template_id = os.environ.get("CSM_RUN_TEMPLATE_ID")
         if template_id is None:
-            LOGGER.debug(T("csm-orc.logs.entrypoint.simulation.no_template"))
+            LOGGER.debug(T("csm-orc.cli.entrypoint.simulation.no_template"))
             return run_direct_simulator()
 
         return run_template_with_id(template_id)

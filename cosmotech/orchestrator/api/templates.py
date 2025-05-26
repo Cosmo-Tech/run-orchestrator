@@ -69,7 +69,7 @@ def get_template_details(template_id: str, verbose: bool = True) -> Optional[Dic
     template = library.find_template_by_name(template_id)
 
     if template is None:
-        LOGGER.warning(T("csm-orc.logs.templates.template_invalid").format(template_id=template_id))
+        LOGGER.warning(T("csm-orc.cli.templates.template_invalid").format(template_id=template_id))
         return None
 
     return template_to_dict(template, verbose)
@@ -116,7 +116,7 @@ def list_templates(
     library = Library()
 
     if not library.templates:
-        LOGGER.warning(T("csm-orc.logs.templates.no_templates"))
+        LOGGER.warning(T("csm-orc.cli.templates.no_templates"))
         return []
 
     result = []
@@ -152,10 +152,10 @@ def display_template(template: Union[CommandTemplate, Dict[str, Any]], verbose: 
 
     if verbose:
         LOGGER.info(
-            T("csm-orc.logs.templates.template_info").format(
+            T("csm-orc.cli.templates.template_info").format(
                 template=pprint.pformat(template_dict, width=os.get_terminal_size().columns)
             )
         )
     else:
         _desc = f": '{template_dict['description']}'" if template_dict.get("description") else ""
-        LOGGER.info(T("csm-orc.logs.templates.template_desc").format(id=template_dict["id"], description=_desc))
+        LOGGER.info(T("csm-orc.cli.templates.template_desc").format(id=template_dict["id"], description=_desc))

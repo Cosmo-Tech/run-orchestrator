@@ -1,0 +1,37 @@
+# Core messages for the Cosmotech Orchestrator
+
+# Step related messages
+already_ready: "{step_id} already ready"
+template_not_found: "{step_id} asks for a non existing template {command_id}"
+loading_template: "{step_id} loads template {command_id}"
+starting: "Starting {step_type} {step_id}"
+skipping_previous_errors: "Skipping {step_type} {step_id} due to previous errors"
+skipping_as_required: "Skipping {step_type} {step_id} as required"
+running_command: "Running:{command}"
+error_during: "Error during {step_type} {step_id}"
+done_running: "Done running {step_type} {step_id}"
+command_required: "A step requires either a command or a commandId"
+template_unavailable: "Command Template {command_id} is not available"
+input:
+  default_value: "Step {step_id}: Using default value for input '{input}': {value}"
+  default_value_hidden: "Step {step_id}: Using default value for hidden input '{input}'"
+  missing_required: "Step {step_id}: Missing required input '{input}'"
+output:
+  default_value: "Step {step_id}: Using default value for output '{output}': {value}"
+  default_value_hidden: "Step {step_id}: Using default value for hidden output '{output}'"
+  captured_values_header: "Step {step_id}: Captured output values:"
+  captured_value: "  - {output}: {value}"
+  captured_hidden: "  - {output}: [hidden value]"
+  missing_value: "Step {step_id}: Missing required output '{output}'"
+  missing_required: "Step {step_id}: Missing required outputs: {outputs}"
+info:
+  header: "Step {id}"
+  command: "Command: {command}"
+  description_header: "Description:"
+  environment_header: "Environment:"
+  optional: "(Optional)"
+  use_system_env: "- Use system environment variables"
+  skipped: "- Skipped by user"
+  status: "Status: {status}"
+  simple_repr: "{id} ({status}): {description}"
+  simple_repr_no_desc: "{id} ({status})"
