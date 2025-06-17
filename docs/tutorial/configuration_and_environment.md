@@ -1,5 +1,5 @@
 ---
-description: Simple tutorial to learn about Environment Variables and csm-orc 
+description: Simple tutorial to learn about Environment Variables and csm-orc
 ---
 # Concerning configuration
 
@@ -9,9 +9,26 @@ description: Simple tutorial to learn about Environment Variables and csm-orc
     + Use environment variables in our orchestration
     + Use CommandTemplate to combine close commands
 
+
+???+ info "Use of `dotenv`"
+
+    In most scenarios you may want to have capabilities of controling your environment variables, you can install the python package `dotenv-cli` for ease of use
+
+    On UNIX system you can make a "global" installation of this cli by running the following commands :
+
+    ```bash
+    cd ~
+    python -m venv dotenv_venv
+    source dotenv_venv/bin/activate
+    pip install dotenv-cli
+    ln -s ~/dotenv_venv/bin/dotenv ~/.local/bin/dotenv
+    ```
+
+    Running those will make the `dotenv` command available everywhere for your session
+
 ## Taking a look at Environment Variables
 
-We will start in the same folder as the previous tutorial : `MyFirstOrchestrationProject` 
+We will start in the same folder as the previous tutorial : `MyFirstOrchestrationProject`
 and augment it to use some Environment Variables to configure our commands.
 
 First we will start by modifying our scripts to now accept an environment variable for the file path
@@ -67,7 +84,7 @@ We added 2 definitions of our `FIBO_FILE_PATH` to the steps, so we can try to ru
 unset FIBO_FILE_PATH
 csm-orc run run_env.json
 # [YYYY/MM/DD-HH:mm:SS] ERROR    Missing environment values
-# [YYYY/MM/DD-HH:mm:SS] ERROR     - FIBO_FILE_PATH 
+# [YYYY/MM/DD-HH:mm:SS] ERROR     - FIBO_FILE_PATH
 # [YYYY/MM/DD-HH:mm:SS] ERROR    Missing environment variables, check the logs
 ```
 
@@ -119,10 +136,10 @@ To add more configuration to our file lets use an environment variable for the `
 --8<-- "tutorial/configuration_and_environment/run_env_arg.json"
 ```
 
-In this file we defined an environment variable that will be used as an argument for our command (by using it as an argument preceded by `$`), 
+In this file we defined an environment variable that will be used as an argument for our command (by using it as an argument preceded by `$`),
 that way we don't need to modify our script.
 
-We also defined a `defaultValue` for the argument, 
+We also defined a `defaultValue` for the argument,
 ensuring that even if the environment variable is not defined a default value is used.
 
 === "Run without the new variable"
@@ -174,21 +191,21 @@ ensuring that even if the environment variable is not defined a default value is
 
 ## Use CommandTemplate to reduce copy
 
-We now have 2 `steps` that use the same base `command` and a common Environment Variable. 
+We now have 2 `steps` that use the same base `command` and a common Environment Variable.
 Let's make use of the `CommandTemplate` to reduce the number of time we need to impact our steps.
 
 ```json title="run_with_template.json" hl_lines="5 16 21-31"
 --8<-- "tutorial/configuration_and_environment/run_with_template.json"
 ```
 
-We grouped the common part of the steps in a new command template called `python-with-fibo-file`, 
+We grouped the common part of the steps in a new command template called `python-with-fibo-file`,
 then replaced the `command` of our steps by its `commandId`.
 
 Now we can call the new file as previously
 
 ```bash title="Run the orchestrator with a command template"
 export FIBO_FILE_PATH=fib_second.txt
-export FIBO_COUNT=8 
+export FIBO_COUNT=8
 csm-orc run run_with_template.json
 # [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===
 # [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo
@@ -212,11 +229,11 @@ Now you can create command templates, use environment variables to configure you
 
 ## Make use of optional Environment Variables
 
-In some case you may want to have optional effects that can be used to change your script only if present 
+In some case you may want to have optional effects that can be used to change your script only if present
 (the use of a `defaultValue` does not make sense for those)
 
-For example, we will make a change to the run-display step to either print the content of the file as is, 
-or if an Environment Variable `DISPLAY_SYMBOL` is set it will instead display that symbol on each line X times, 
+For example, we will make a change to the run-display step to either print the content of the file as is,
+or if an Environment Variable `DISPLAY_SYMBOL` is set it will instead display that symbol on each line X times,
 where X is the number read from the file.
 
 So `DISPLAY_SYMBOL=X` and `FIBO_COUNT=5` would look like that:
@@ -242,7 +259,7 @@ And to make use of that new script we can update our `.json` file as following
 === "Run without `DISPLAY_SYMBOL`"
     ```bash
     export FIBO_FILE_PATH=fib_second.txt
-    export FIBO_COUNT=8 
+    export FIBO_COUNT=8
     csm-orc run optional_envvar.json
     # [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===
     # [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo
@@ -265,14 +282,14 @@ And to make use of that new script we can update our `.json` file as following
 === "Run with `DISPLAY_SYMBOL`"
     ```bash
     export FIBO_FILE_PATH=fib_second.txt
-    export FIBO_COUNT=8 
-    export DISPLAY_SYMBOL=X 
+    export FIBO_COUNT=8
+    export DISPLAY_SYMBOL=X
     csm-orc run optional_envvar.json
     # [YYYY/MM/DD-HH:mm:SS] INFO     ===      Run     ===
     # [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-fibo
     # [YYYY/MM/DD-HH:mm:SS] INFO     Done running step run-fibo
     # [YYYY/MM/DD-HH:mm:SS] INFO     Starting step run-display
-    # 
+    #
     # X
     # X
     # XX
