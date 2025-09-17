@@ -116,7 +116,7 @@ It will be attained by using our `apply_parameters.py` on the same input and out
 
 A safer way would be to make a back-up of the dataset and to restore it after the run, but we won't go over this possibility in this tutorial.
 
-To run the simulator we can either make use of `csmcli`, the `main` executable or `csm-orc run-step`; we will only cover the `csm-orc` use in this tutorial.
+To run the simulator we can either make use of `csmcli`, the `csm-simulator` executable or `csm-orc run-step`; we will only cover the `csm-orc` use in this tutorial.
 
 By writing our code in the folder `code/run_templates/orchestrator_tutorial_1` we declared a Run Template named `orchestrator_tutorial_1` that we can call in `csm-orc` commands.
 
