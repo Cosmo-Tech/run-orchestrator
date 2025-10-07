@@ -121,7 +121,7 @@ def setup_loki_logging() -> None:
         import logging_loki
 
         handler = logging_loki.LokiHandler(
-            url=os.environ.get("CSM_LOKI_URL"),
+            url=os.environ.get("CSM_LOKI_URL", ""),
             tags={
                 "organization_id": os.environ.get("CSM_ORGANIZATION_ID"),
                 "workspace_id": os.environ.get("CSM_WORKSPACE_ID"),
@@ -133,7 +133,7 @@ def setup_loki_logging() -> None:
             },
             version="1",
         )
-        handler.emitter.session.headers.setdefault("X-Scope-OrgId", os.environ.get("CSM_NAMESPACE_NAME"))
+        handler.emitter.session.headers.setdefault("X-Scope-OrgId", os.environ.get("CSM_NAMESPACE_NAME", ""))
         LOGGER.addHandler(handler)
 
 
@@ -185,6 +185,19 @@ def run_template_with_id(template_id: str, project_root: Path = Path("/pkg/share
     return return_code
 
 
+def get_project_path() -> Path:
+    """
+    Get the project path if it exists.
+
+    Returns:
+        The project path if it exists, otherwise the default path.
+    """
+    default_docker_path = Path("/pkg/share")
+    current_folder = os.getcwd()
+    project_csm_path = Path(current_folder) / "project.csm"
+    return Path(current_folder) if project_csm_path.is_file() else default_docker_path
+
+
 def run_entrypoint() -> int:
     """
     Run the Docker entrypoint logic.
@@ -201,7 +214,7 @@ def run_entrypoint() -> int:
             LOGGER.debug(T("csm-orc.cli.entrypoint.simulation.no_template"))
             return run_direct_simulator()
 
-        return run_template_with_id(template_id)
+        return run_template_with_id(template_id, project_root=get_project_path())
 
     except EntrypointException as e:
         LOGGER.error(e)

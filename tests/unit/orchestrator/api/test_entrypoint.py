@@ -1,3 +1,5 @@
+import pathlib
+
 import pytest
 from unittest.mock import MagicMock, patch, mock_open
 import os
@@ -31,7 +33,6 @@ class TestGetEntrypointEnv:
         result = get_entrypoint_env()
 
         # Verify
-        assert mock_read.called_with("/pkg/share/project.csm")
         assert "TEST_KEY" in result
         assert result["TEST_KEY"] == "test_value"
         assert "ANOTHER_KEY" in result
@@ -47,7 +48,6 @@ class TestGetEntrypointEnv:
         result = get_entrypoint_env()
 
         # Verify
-        assert mock_read.called_with("/pkg/share/project.csm")
         assert result == {}
 
 
@@ -263,7 +263,7 @@ class TestRunEntrypoint:
         # Verify
         mock_setup_loki.assert_called_once()
         mock_get_env.assert_called_once()
-        mock_run_template.assert_called_once_with("test_template")
+        mock_run_template.assert_called_once_with("test_template", project_root=pathlib.Path("/pkg/share"))
         assert result == 0
 
     @patch("cosmotech.orchestrator.api.entrypoint.setup_loki_logging")
