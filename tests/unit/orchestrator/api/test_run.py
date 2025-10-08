@@ -8,6 +8,7 @@ from cosmotech.orchestrator.api.run import display_environment
 from cosmotech.orchestrator.api.run import generate_env_file
 from cosmotech.orchestrator.api.run import run_template
 from cosmotech.orchestrator.api.run import validate_template
+from cosmotech.orchestrator.core.step import StepStatus
 
 
 class TestValidateTemplate:
@@ -151,11 +152,11 @@ class TestRunTemplate:
 
         # Create mock steps and graph
         mock_step1 = MagicMock()
-        mock_step1.status = "Done"
+        mock_step1.status = StepStatus.SUCCESS
         mock_step1.simple_repr.return_value = "Step 1 Done"
 
         mock_step2 = MagicMock()
-        mock_step2.status = "Done"
+        mock_step2.status = StepStatus.SUCCESS
         mock_step2.simple_repr.return_value = "Step 2 Done"
 
         mock_graph = MagicMock()
@@ -185,11 +186,11 @@ class TestRunTemplate:
 
         # Create mock steps and graph
         mock_step1 = MagicMock()
-        mock_step1.status = "Done"
+        mock_step1.status = StepStatus.SUCCESS
         mock_step1.simple_repr.return_value = "Step 1 Done"
 
         mock_step2 = MagicMock()
-        mock_step2.status = "RunError"
+        mock_step2.status = StepStatus.ERROR
         mock_step2.simple_repr.return_value = "Step 2 Error"
 
         mock_graph = MagicMock()
@@ -221,7 +222,7 @@ class TestRunTemplate:
 
         # Create mock steps and graph
         mock_step1 = MagicMock()
-        mock_step1.status = "Done"
+        mock_step1.status = StepStatus.SUCCESS
         mock_step1.simple_repr.return_value = "Step 1 Done"
 
         mock_graph = MagicMock()
@@ -262,7 +263,7 @@ class TestRunTemplate:
 
         # Create mock steps and graph
         mock_step1 = MagicMock()
-        mock_step1.status = "DryRun"
+        mock_step1.status = StepStatus.DRY_RUN
         mock_step1.simple_repr.return_value = "Step 1 DryRun"
 
         mock_graph = MagicMock()
@@ -287,7 +288,7 @@ class TestRunTemplate:
 
         # Create mock steps and graph
         mock_step1 = MagicMock()
-        mock_step1.status = "Done"
+        mock_step1.status = StepStatus.SUCCESS
         mock_step1.simple_repr.return_value = "Step 1 Done"
 
         mock_graph = MagicMock()
@@ -312,11 +313,11 @@ class TestRunTemplate:
 
         # Create mock steps and graph
         mock_step1 = MagicMock()
-        mock_step1.status = "Done"
+        mock_step1.status = StepStatus.SUCCESS
         mock_step1.simple_repr.return_value = "Step 1 Done"
 
         mock_step2 = MagicMock()
-        mock_step2.status = "Skipped"
+        mock_step2.status = StepStatus.SKIPPED_BY_USER
         mock_step2.simple_repr.return_value = "Step 2 Skipped"
 
         mock_graph = MagicMock()

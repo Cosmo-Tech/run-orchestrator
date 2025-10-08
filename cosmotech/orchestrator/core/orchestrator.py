@@ -13,6 +13,7 @@ import jsonschema
 
 from cosmotech.orchestrator.core.runner import Runner
 from cosmotech.orchestrator.core.step import Step
+from cosmotech.orchestrator.core.step import StepStatus
 from cosmotech.orchestrator.templates.library import Library
 from cosmotech.orchestrator.templates.plugin import Plugin
 from cosmotech.orchestrator.utils.logger import LOGGER
@@ -102,7 +103,7 @@ class Orchestrator(metaclass=Singleton):
             for _precedent in _step.precedents:
                 if isinstance(_precedent, str):
                     if _precedent not in _steps:
-                        _step.status = "Error"
+                        _step.status = StepStatus.ERROR
                         raise ValueError(
                             T("csm-orc.orchestrator.core.orchestrator.step_not_exists").format(step_id=_precedent)
                         )

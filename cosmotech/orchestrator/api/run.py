@@ -21,7 +21,7 @@ from typing import Tuple
 
 from cosmotech.orchestrator import VERSION
 from cosmotech.orchestrator.core.orchestrator import Orchestrator
-from cosmotech.orchestrator.core.step import Step
+from cosmotech.orchestrator.core.step import Step, StepStatus
 from cosmotech.orchestrator.utils.logger import LOGGER
 from cosmotech.orchestrator.utils.translate import T
 
@@ -144,7 +144,7 @@ def run_template(
             LOGGER.info(v[0].simple_repr())
             LOGGER.debug(str(v[0]))
             results[k] = v[0]
-            if v[0].status == "RunError":
+            if v[0].status == StepStatus.ERROR:
                 success = False
 
         if exit_handlers:

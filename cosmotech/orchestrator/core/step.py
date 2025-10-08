@@ -26,6 +26,19 @@ from cosmotech.orchestrator.utils.logger import LOGGER
 from cosmotech.orchestrator.utils.translate import T
 
 
+from enum import Enum
+
+
+class StepStatus(Enum):
+    CREATED = 0
+    INITIALIZED = 1
+    SUCCESS = 2
+    SKIPPED_BY_USER = 3
+    SKIPPED_AFTER_FAILURE = 4
+    ERROR = 5
+    DRY_RUN = 6
+
+
 @dataclass
 class Step:
     id: str = field()
@@ -40,7 +53,7 @@ class Step:
     inputs: dict = field(default_factory=dict)
     captured_output: dict = field(default_factory=dict)
     loaded = False
-    status = None
+    status: StepStatus = StepStatus.CREATED
     skipped = False
     stop_library_load: InitVar[bool] = field(default=False, repr=False)
 
@@ -94,7 +107,7 @@ class Step:
         self.display_command_id = self.commandId
         command: CommandTemplate = library.find_template_by_name(self.commandId)
         if command is None:
-            self.status = "Error"
+            self.StepStatus = StepStatus.ERROR
             LOGGER.error(
                 T("csm-orc.orchestrator.core.step.template_not_found").format(
                     step_id=self.display_id, command_id=self.display_command_id
@@ -119,13 +132,13 @@ class Step:
 
     def __post_init__(self, stop_library_load):
         if not bool(self.command) ^ bool(self.commandId):
-            self.status = "Error"
+            self.status = StepStatus.ERROR
             raise ValueError(T("csm-orc.orchestrator.core.step.command_required"))
         tmp_env = dict()
         for k, v in self.environment.items():
             tmp_env[k] = EnvironmentVariable(k, **v)
         self.environment = tmp_env
-        self.status = "Init"
+        self.status = StepStatus.INITIALIZED
         self.display_id = self.id
         if self.commandId and not stop_library_load:
             self.__load_command_from_library()
@@ -185,26 +198,30 @@ class Step:
             step_type = "exit handler"
 
         LOGGER.info(T("csm-orc.orchestrator.core.step.starting").format(step_type=step_type, step_id=self.display_id))
-        self.status = "Ready"
 
-        if isinstance(previous, dict) and any(map(lambda a: a not in ["Done", "DryRun"], previous.values())):
+        if isinstance(previous, dict) and any(
+            map(
+                lambda a: a not in [StepStatus.SUCCESS, StepStatus.DRY_RUN, StepStatus.SKIPPED_BY_USER],
+                previous.values(),
+            )
+        ):
             LOGGER.warning(
                 T("csm-orc.orchestrator.core.step.skipping_previous_errors").format(
                     step_type=step_type, step_id=self.display_id
                 )
             )
-            self.status = "Skipped"
+            self.status = StepStatus.SKIPPED_AFTER_FAILURE
 
-        if self.status == "Ready":
+        if self.status == StepStatus.INITIALIZED:
             if self.skipped:
                 LOGGER.info(
                     T("csm-orc.orchestrator.core.step.skipping_as_required").format(
                         step_type=step_type, step_id=self.display_id
                     )
                 )
-                self.status = "Done"
+                self.status = StepStatus.SKIPPED_BY_USER
             elif dry:
-                self.status = "DryRun"
+                self.status = StepStatus.DRY_RUN
             else:
                 # Set up environment with input data
                 _e = self._effective_env()
@@ -355,7 +372,7 @@ class Step:
                             step_type=step_type, step_id=self.display_id
                         )
                     )
-                    self.status = "Done"
+                    self.status = StepStatus.SUCCESS
 
                 except subprocess.CalledProcessError as e:
                     LOGGER.error(
@@ -364,7 +381,7 @@ class Step:
                         )
                     )
                     LOGGER.error(str(e))
-                    self.status = "RunError"
+                    self.status = StepStatus.ERROR
 
         return self.status
 
@@ -379,9 +396,9 @@ class Step:
     def simple_repr(self):
         if self.description:
             return T("csm-orc.orchestrator.core.step.info.simple_repr").format(
-                id=self.id, status=self.status, description=self.description
+                id=self.id, status=self.status.name, description=self.description
             )
-        return T("csm-orc.orchestrator.core.step.info.simple_repr_no_desc").format(id=self.id, status=self.status)
+        return T("csm-orc.orchestrator.core.step.info.simple_repr_no_desc").format(id=self.id, status=self.status.name)
 
     def __str__(self):
         r = list()
@@ -406,5 +423,5 @@ class Step:
             r.append(T("csm-orc.orchestrator.core.step.info.use_system_env"))
         if self.skipped:
             r.append(T("csm-orc.orchestrator.core.step.info.skipped"))
-        r.append(T("csm-orc.orchestrator.core.step.info.status").format(status=self.status))
+        r.append(T("csm-orc.orchestrator.core.step.info.status").format(status=self.status.name))
         return "\n".join(r)

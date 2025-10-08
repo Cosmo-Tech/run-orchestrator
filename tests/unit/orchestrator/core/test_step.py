@@ -8,7 +8,7 @@ import queue
 import sys
 from pathlib import Path
 
-from cosmotech.orchestrator.core.step import Step
+from cosmotech.orchestrator.core.step import Step, StepStatus
 from cosmotech.orchestrator.core.environment import EnvironmentVariable
 from cosmotech.orchestrator.templates.library import Library
 
@@ -203,8 +203,8 @@ class TestStep:
         result = step.run()
 
         # Verify
-        assert result == "Done"
-        assert step.status == "Done"
+        assert result == StepStatus.SUCCESS
+        assert step.status == StepStatus.SUCCESS
         assert "output1" in step.captured_output
         assert step.captured_output["output1"] == "value1"
         mock_temp_file.assert_called_once()
@@ -233,8 +233,8 @@ class TestStep:
         result = step.run()
 
         # Verify
-        assert result == "RunError"
-        assert step.status == "RunError"
+        assert result == StepStatus.ERROR
+        assert step.status == StepStatus.ERROR
         mock_temp_file.assert_called_once()
         mock_popen.assert_called_once()
         mock_remove.assert_called_once_with("/tmp/test_file")
@@ -247,8 +247,8 @@ class TestStep:
         result = step.run(dry=True)
 
         # Verify
-        assert result == "DryRun"
-        assert step.status == "DryRun"
+        assert result == StepStatus.DRY_RUN
+        assert step.status == StepStatus.DRY_RUN
 
     def test_run_with_skipped_step(self):
         # Setup
@@ -259,19 +259,19 @@ class TestStep:
         result = step.run()
 
         # Verify
-        assert result == "Done"
-        assert step.status == "Done"
+        assert result == StepStatus.SKIPPED_BY_USER
+        assert step.status == StepStatus.SKIPPED_BY_USER
 
     def test_run_with_previous_errors(self):
         # Setup
         step = Step(id="test-step", command="echo", arguments=["Hello", "World"])
 
         # Execute
-        result = step.run(previous={"step1": "RunError"})
+        result = step.run(previous={"step1": StepStatus.ERROR})
 
         # Verify
-        assert result == "Skipped"
-        assert step.status == "Skipped"
+        assert result == StepStatus.SKIPPED_AFTER_FAILURE
+        assert step.status == StepStatus.SKIPPED_AFTER_FAILURE
 
     @patch("tempfile.NamedTemporaryFile")
     @patch("subprocess.Popen")
@@ -300,7 +300,7 @@ class TestStep:
         result = step.run(input_data={"input1": "input_value1"})
 
         # Verify
-        assert result == "Done"
+        assert result == StepStatus.SUCCESS
         mock_popen.assert_called_once()
         # Check that environment variables were set correctly
         env = mock_popen.call_args[1]["env"]
@@ -352,7 +352,7 @@ class TestStep:
         result = step.run(input_data={})
 
         # Verify
-        assert result == "Done"
+        assert result == StepStatus.SUCCESS
         # Check that environment variables were set correctly
         env = mock_popen.call_args[1]["env"]
         assert "INPUT_VAR1" in env
@@ -397,14 +397,14 @@ class TestStep:
     def test_simple_repr(self):
         # Setup
         step = Step(id="test-step", command="echo", description="Test step")
-        step.status = "Done"
+        step.status = StepStatus.SUCCESS
 
         # Execute
         result = step.simple_repr()
 
         # Verify
         assert "test-step" in result
-        assert "Done" in result
+        assert StepStatus.SUCCESS.name in result
         assert "Test step" in result
 
     def test_str_representation(self):
@@ -417,7 +417,7 @@ class TestStep:
             environment={"TEST_VAR": {"value": "test_value", "description": "Test var"}},
             useSystemEnvironment=True,
         )
-        step.status = "Done"
+        step.status = StepStatus.SUCCESS
 
         # Execute
         result = str(step)
@@ -428,7 +428,7 @@ class TestStep:
         assert "Test step" in result
         assert "TEST_VAR" in result
         assert "Test var" in result
-        assert "Done" in result
+        assert StepStatus.SUCCESS.name in result
 
 
 class TestOutputParser:
