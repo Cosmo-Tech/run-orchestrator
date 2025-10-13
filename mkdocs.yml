@@ -126,7 +126,6 @@ plugins:
         link_titles: false
     - mike
     - social
-    - table-reader
     - include_dir_to_nav
 
 watch:
