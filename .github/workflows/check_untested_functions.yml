@@ -1,5 +1,8 @@
 name: Check Untested Functions
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [ main ]

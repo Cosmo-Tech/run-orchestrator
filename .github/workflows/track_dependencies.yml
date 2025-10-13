@@ -1,10 +1,13 @@
 name: Track Dependencies
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
       - main
-      
+
 jobs:
   generate-sbom:
     runs-on: ubuntu-latest
@@ -28,4 +31,3 @@ jobs:
           apikey: ${{ secrets.DEPENDENCY_TRACK_API_KEY }}
           project: '1e001e58-586c-4f01-b5f6-3b94a7c34c43'
           bomfilename: 'sbom.json'
-    
