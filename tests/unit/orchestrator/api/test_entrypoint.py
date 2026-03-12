@@ -221,6 +221,7 @@ class TestRunTemplateWithId:
 
     @patch("importlib.util.find_spec")
     @patch("pathlib.Path.is_file")
+    @patch.dict(os.environ, {}, clear=True)
     def test_missing_run_json(self, mock_is_file, mock_find_spec):
         # Setup
         mock_find_spec.return_value = MagicMock()
@@ -229,6 +230,67 @@ class TestRunTemplateWithId:
         # Execute and verify
         with pytest.raises(EntrypointException):
             run_template_with_id("test_template")
+
+    @patch("subprocess.Popen")
+    @patch("importlib.util.find_spec")
+    @patch("pathlib.Path.is_file")
+    @patch.dict(os.environ, {"CSM_RUN_TYPE": "delete"})
+    def test_delete_run_type_uses_delete_json(self, mock_is_file, mock_find_spec, mock_popen):
+        # Setup
+        mock_find_spec.return_value = MagicMock()
+        mock_is_file.return_value = True
+
+        mock_process = MagicMock()
+        mock_process.stdout.readline.side_effect = [""]
+        mock_process.wait.return_value = 0
+        mock_popen.return_value = mock_process
+
+        # Execute
+        result = run_template_with_id("test_template")
+
+        # Verify
+        assert result == 0
+        assert mock_popen.call_args[0][0] == [
+            "csm-orc",
+            "run",
+            "/pkg/share/code/run_templates/test_template/delete.json",
+        ]
+
+    @patch("importlib.util.find_spec")
+    @patch("pathlib.Path.is_file")
+    @patch.dict(os.environ, {"CSM_RUN_TYPE": "delete"})
+    def test_missing_delete_json_returns_zero(self, mock_is_file, mock_find_spec):
+        # Setup
+        mock_find_spec.return_value = MagicMock()
+        mock_is_file.return_value = False
+
+        # Execute — should NOT raise, should return 0 (graceful skip)
+        result = run_template_with_id("test_template")
+
+        assert result == 0
+
+    @patch("subprocess.Popen")
+    @patch("importlib.util.find_spec")
+    @patch("pathlib.Path.is_file")
+    @patch.dict(os.environ, {}, clear=True)
+    def test_default_run_type_uses_run_json(self, mock_is_file, mock_find_spec, mock_popen):
+        # No CSM_RUN_TYPE set — should default to run.json
+        mock_find_spec.return_value = MagicMock()
+        mock_is_file.return_value = True
+
+        mock_process = MagicMock()
+        mock_process.stdout.readline.side_effect = [""]
+        mock_process.wait.return_value = 0
+        mock_popen.return_value = mock_process
+
+        result = run_template_with_id("test_template")
+
+        assert result == 0
+        assert mock_popen.call_args[0][0] == [
+            "csm-orc",
+            "run",
+            "/pkg/share/code/run_templates/test_template/run.json",
+        ]
 
 
 class TestRunEntrypoint:
