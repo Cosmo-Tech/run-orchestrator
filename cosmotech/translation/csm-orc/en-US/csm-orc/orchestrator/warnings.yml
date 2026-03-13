@@ -1,0 +1,3 @@
+# Error messages for the Cosmotech Orchestrator
+
+no_template_json_skip: "No \"{filename}\" defined for the run template {template_id} (run type: {run_type}) - skipping"

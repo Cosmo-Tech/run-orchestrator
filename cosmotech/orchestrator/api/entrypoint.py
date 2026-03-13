@@ -157,7 +157,11 @@ def run_template_with_id(template_id: str, project_root: Path = Path("/pkg/share
     run_type = os.environ.get("CSM_RUN_TYPE", "run").lower()
     template_filename = f"{run_type}.json"
 
-    LOGGER.debug(f"Run type: {run_type}, loading template: {template_filename}")
+    LOGGER.debug(
+        T("csm-orc.orchestrator.cli.entrypoint.run_template.debug").format(
+            run_type=run_type, template_filename=template_filename
+        )
+    )
 
     orchestrator_json = project_root / "code/run_templates" / template_id / template_filename
     if not orchestrator_json.is_file():
@@ -171,7 +175,11 @@ def run_template_with_id(template_id: str, project_root: Path = Path("/pkg/share
             )
         else:
             LOGGER.warning(
-                f"No {template_filename} found for template '{template_id}' " f"(run type: {run_type}) - skipping."
+                T("csm-orc.orchestrator.warnings.no_template_json_skip").format(
+                    template_id=template_id,
+                    run_type=run_type,
+                    filename=template_filename,
+                )
             )
             return 0
 
