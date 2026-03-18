@@ -9,4 +9,6 @@ simulation:
   no_control_topic: "No Control plane topic"
   args: "Simulator arguments: {args}"
   no_template: "No run template id defined in environment variable \"CSM_RUN_TEMPLATE_ID\" running direct simulator mode"
+run_template:
+  debug: "Run type: {run_type}, loading template: {template_filename}"
 start: "Csm-orc Entry Point"

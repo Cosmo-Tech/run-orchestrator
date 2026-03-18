@@ -154,9 +154,34 @@ def run_template_with_id(template_id: str, project_root: Path = Path("/pkg/share
     if importlib.util.find_spec("cosmotech") is None or importlib.util.find_spec("cosmotech.orchestrator") is None:
         raise EntrypointException(T("csm-orc.orchestrator.errors.missing_library"))
 
-    orchestrator_json = project_root / "code/run_templates" / template_id / "run.json"
+    run_type = os.environ.get("CSM_RUN_TYPE", "run").lower()
+    template_filename = f"{run_type}.json"
+
+    LOGGER.debug(
+        T("csm-orc.orchestrator.cli.entrypoint.run_template.debug").format(
+            run_type=run_type, template_filename=template_filename
+        )
+    )
+
+    orchestrator_json = project_root / "code/run_templates" / template_id / template_filename
     if not orchestrator_json.is_file():
-        raise EntrypointException(T("csm-orc.orchestrator.errors.no_run_json").format(template_id=template_id))
+        if run_type == "run":
+            raise EntrypointException(
+                T("csm-orc.orchestrator.errors.no_template_json").format(
+                    template_id=template_id,
+                    run_type=run_type,
+                    filename=template_filename,
+                )
+            )
+        else:
+            LOGGER.warning(
+                T("csm-orc.orchestrator.warnings.no_template_json_skip").format(
+                    template_id=template_id,
+                    run_type=run_type,
+                    filename=template_filename,
+                )
+            )
+            return 0
 
     _env = os.environ.copy()
     p = subprocess.Popen(

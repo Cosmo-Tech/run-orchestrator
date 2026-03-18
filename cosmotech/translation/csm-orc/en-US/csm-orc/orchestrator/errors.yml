@@ -2,4 +2,5 @@
 
 missing_library: "You need to install the library `cosmotech-run-orchestrator` in your container. Check if you set it in your requirements.txt."
 no_run_json: "No \"run.json\" defined for the run template {template_id}"
+no_template_json: "No \"{filename}\" defined for the run template {template_id} (run type: {run_type})"
 missing_env_vars: "Missing environment variables, check the logs"
