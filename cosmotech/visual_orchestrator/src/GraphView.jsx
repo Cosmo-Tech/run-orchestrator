@@ -1450,6 +1450,7 @@ function GraphViewInner({ projectName }) {
   const [envLoading, setEnvLoading] = useState(false);
   const [customEnvVars, setCustomEnvVars] = useState([]); // [{name, value}]
   const [newCustomName, setNewCustomName] = useState('');
+  const [skippedSteps, setSkippedSteps] = useState(new Set());
 
   const fetchEnvVars = () => {
     setEnvLoading(true);
@@ -1460,10 +1461,10 @@ function GraphViewInner({ projectName }) {
       })
       .then((data) => {
         setEnvVars(data);
-        // Pre-fill values from API data
+        // Pre-fill values from API data (matching orchestrator resolution: value → system → default)
         const prefilled = {};
         for (const [name, def] of Object.entries(data)) {
-          prefilled[name] = def.value || def.defaultValue || '';
+          prefilled[name] = def.value || def.systemValue || def.defaultValue || '';
         }
         setEnvValues((prev) => {
           // Keep any previously user-entered values
@@ -1490,7 +1491,7 @@ function GraphViewInner({ projectName }) {
   const getUnfilledRequired = () => {
     if (!envVars) return [];
     return Object.entries(envVars)
-      .filter(([name, def]) => !def.optional && !envValues[name] && !def.defaultValue && !def.value)
+      .filter(([name, def]) => !def.optional && !envValues[name] && !def.defaultValue && !def.value && !def.systemValue)
       .map(([name]) => name);
   };
 
@@ -1512,7 +1513,7 @@ function GraphViewInner({ projectName }) {
     fetch(`/project/${projectName}/run`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ environment: allEnv }),
+      body: JSON.stringify({ environment: allEnv, skippedSteps: [...skippedSteps] }),
     })
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -1670,6 +1671,31 @@ function GraphViewInner({ projectName }) {
               </div>
             </div>
             <div className="env-bottom-body">
+              {/* Skipped Steps section */}
+              {nodes.length > 0 && (
+                <div className="env-skip-section">
+                  <h4 className="panel-section-title">Skip Steps</h4>
+                  <div className="env-skip-list">
+                    {nodes.map((node) => (
+                      <label key={node.id} className="env-skip-item">
+                        <input
+                          type="checkbox"
+                          checked={skippedSteps.has(node.id)}
+                          onChange={(e) => {
+                            setSkippedSteps((prev) => {
+                              const next = new Set(prev);
+                              if (e.target.checked) next.add(node.id);
+                              else next.delete(node.id);
+                              return next;
+                            });
+                          }}
+                        />
+                        <span className="mono">{node.id}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
               {envLoading && <p className="status">Loading environment…</p>}
               {!envLoading && envVars && (
                 <table className="panel-table env-table">
@@ -1677,6 +1703,7 @@ function GraphViewInner({ projectName }) {
                     <tr>
                       <th>Variable</th>
                       <th>Value</th>
+                      <th>System</th>
                       <th>Default</th>
                       <th>Required</th>
                       <th>Source</th>
@@ -1684,7 +1711,7 @@ function GraphViewInner({ projectName }) {
                   </thead>
                   <tbody>
                     {Object.entries(envVars).map(([name, def]) => {
-                      const isMissing = !def.optional && !envValues[name] && !def.defaultValue && !def.value;
+                      const isMissing = !def.optional && !envValues[name] && !def.defaultValue && !def.value && !def.systemValue;
                       return (
                         <tr key={name} className={isMissing ? 'env-row-missing' : ''}>
                           <td className="mono">{name}</td>
@@ -1694,9 +1721,10 @@ function GraphViewInner({ projectName }) {
                               className="edit-input env-table-input"
                               value={envValues[name] || ''}
                               onChange={(e) => setEnvValues((prev) => ({ ...prev, [name]: e.target.value }))}
-                              placeholder={def.defaultValue || ''}
+                              placeholder={def.systemValue || def.defaultValue || ''}
                             />
                           </td>
+                          <td className="mono">{def.systemValue || <EmptyValue />}</td>
                           <td className="mono">{def.defaultValue || <EmptyValue />}</td>
                           <td>{def.optional ? 'No' : <span className="env-required">Yes</span>}</td>
                           <td>
@@ -1733,6 +1761,7 @@ function GraphViewInner({ projectName }) {
                             placeholder="value"
                           />
                         </td>
+                        <td><EmptyValue /></td>
                         <td><EmptyValue /></td>
                         <td>—</td>
                         <td>

@@ -10,6 +10,22 @@
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --hover-bg: #f3f4f6;
+  --danger-bg: #fef2f2;
+  --danger-bg-hover: #fee2e2;
+  --danger-text: #ef4444;
+  --danger-border: #fca5a5;
+  --danger-banner-bg: #fef2f2;
+  --danger-banner-text: #b91c1c;
+  --danger-banner-border: #fca5a5;
+  --success-badge-bg: #ecfdf5;
+  --success-badge-text: #059669;
+  --success-badge-border: #6ee7b7;
+  --warn-badge-bg: #fef3c7;
+  --warn-badge-text: #d97706;
+  --warn-badge-border: #fcd34d;
+  --skip-checked-bg: #fef3c7;
+  --skip-checked-border: #f59e0b;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -30,8 +46,9 @@
   }
 }
 
+/* Dark theme variables — applied via media query OR manual toggle */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --text: #9ca3af;
     --text-h: #f3f4f6;
     --bg: #16171d;
@@ -43,11 +60,54 @@
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+    --hover-bg: rgba(255, 255, 255, 0.05);
+    --danger-bg: rgba(239, 68, 68, 0.12);
+    --danger-bg-hover: rgba(239, 68, 68, 0.2);
+    --danger-text: #f87171;
+    --danger-border: rgba(239, 68, 68, 0.4);
+    --danger-banner-bg: rgba(239, 68, 68, 0.1);
+    --danger-banner-text: #f87171;
+    --danger-banner-border: rgba(239, 68, 68, 0.3);
+    --success-badge-bg: rgba(5, 150, 105, 0.15);
+    --success-badge-text: #6ee7b7;
+    --success-badge-border: rgba(110, 231, 183, 0.4);
+    --warn-badge-bg: rgba(217, 119, 6, 0.15);
+    --warn-badge-text: #fcd34d;
+    --warn-badge-border: rgba(252, 211, 77, 0.4);
+    --skip-checked-bg: rgba(245, 158, 11, 0.15);
+    --skip-checked-border: #f59e0b;
   }
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+/* Manual dark toggle override */
+:root[data-theme="dark"] {
+  --text: #9ca3af;
+  --text-h: #f3f4f6;
+  --bg: #16171d;
+  --border: #2e303a;
+  --code-bg: #1f2028;
+  --accent: #c084fc;
+  --accent-bg: rgba(192, 132, 252, 0.15);
+  --accent-border: rgba(192, 132, 252, 0.5);
+  --social-bg: rgba(47, 48, 58, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --danger-bg: rgba(239, 68, 68, 0.12);
+  --danger-bg-hover: rgba(239, 68, 68, 0.2);
+  --danger-text: #f87171;
+  --danger-border: rgba(239, 68, 68, 0.4);
+  --danger-banner-bg: rgba(239, 68, 68, 0.1);
+  --danger-banner-text: #f87171;
+  --danger-banner-border: rgba(239, 68, 68, 0.3);
+  --success-badge-bg: rgba(5, 150, 105, 0.15);
+  --success-badge-text: #6ee7b7;
+  --success-badge-border: rgba(110, 231, 183, 0.4);
+  --warn-badge-bg: rgba(217, 119, 6, 0.15);
+  --warn-badge-text: #fcd34d;
+  --warn-badge-border: rgba(252, 211, 77, 0.4);
+  --skip-checked-bg: rgba(245, 158, 11, 0.15);
+  --skip-checked-border: #f59e0b;
 }
 
 body {

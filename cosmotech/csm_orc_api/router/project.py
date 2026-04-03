@@ -23,6 +23,31 @@ async def list_projects(project_files: projectListDependency):
     return project_names
 
 
+@project_router.post("/create")
+async def create_project(project_data: dict = Body(...), project_files: projectListDependency = None):
+    name = project_data.get("name", "").strip()
+    if not name:
+        raise HTTPException(status_code=400, detail="Project name is required")
+    # Validate name (alphanumeric, hyphens, underscores)
+    import re
+
+    if not re.match(r"^[a-zA-Z0-9_-]+$", name):
+        raise HTTPException(
+            status_code=400, detail="Project name must contain only letters, numbers, hyphens, and underscores"
+        )
+    # Check if project already exists
+    existing = [p.parent.name for p in project_files]
+    if name in existing:
+        raise HTTPException(status_code=409, detail=f"Project '{name}' already exists")
+    # Create project directory and run.json
+    project_dir = pathlib.Path(".") / name
+    project_dir.mkdir(parents=True, exist_ok=False)
+    run_json = project_dir / "run.json"
+    with open(run_json, "w") as f:
+        json.dump({"steps": []}, f, indent=4)
+    return {"name": name}
+
+
 @project_router.get("/{project_name}/step/{step_id}")
 async def get_step(project_name, step_id, project_files: projectListDependency):
     project_path = next((p for p in project_files if p.parent.name == project_name), None)
@@ -231,7 +256,7 @@ async def get_project_environment(project_name, project_files: projectListDepend
 
     library = Library()
 
-    env_vars = {}  # name -> { value, defaultValue, optional, description, sources: [] }
+    env_vars = {}  # name -> { value, defaultValue, optional, description, systemValue, sources: [] }
 
     for step in project_content["steps"]:
         step_id = step["id"]
@@ -285,6 +310,11 @@ async def get_project_environment(project_name, project_files: projectListDepend
                 }
             )
 
+    # Add system environment values for each defined variable
+    for var_name in env_vars:
+        system_val = os.environ.get(var_name)
+        env_vars[var_name]["systemValue"] = system_val if system_val is not None else ""
+
     return env_vars
 
 
@@ -301,10 +331,17 @@ async def run_project(project_name, run_data: dict = Body(default={}), project_f
         if v is not None and v != "":
             env[k] = str(v)
 
+    # Build skip-step arguments
+    skipped_steps = run_data.get("skippedSteps", [])
+    skip_args = []
+    for step_id in skipped_steps:
+        skip_args.extend(["--skip-step", step_id])
+
     async def event_stream():
         proc = await asyncio.create_subprocess_exec(
             "csm-orc",
             "run",
+            *skip_args,
             str(project_path),
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.STDOUT,

@@ -1,11 +1,18 @@
-import os
 import pathlib
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.routing import APIRoute
 from cosmotech.orchestrator.utils.logger import LOGGER
 from cosmotech.orchestrator import __version__ as orchestrator_version
+
+STATIC_DIR = pathlib.Path(__file__).parent / "static"
+VISUAL_ORC_SRC_DIR = pathlib.Path(__file__).parent.parent / "visual_orchestrator"
+
+
+def is_dev_mode() -> bool:
+    """Detect dev mode: no built static files but visual_orchestrator source exists."""
+    return not (STATIC_DIR / "index.html").exists() and (VISUAL_ORC_SRC_DIR / "package.json").exists()
 
 
 @asynccontextmanager
@@ -60,6 +67,26 @@ from .router.templates import template_router
 
 app.include_router(project_router)
 app.include_router(template_router)
+
+# Serve built static files in release mode
+if (STATIC_DIR / "index.html").exists():
+    from starlette.staticfiles import StaticFiles
+    from starlette.responses import FileResponse, Response
+    from starlette.types import Scope, Receive, Send
+    import anyio
+
+    class SPAStaticFiles(StaticFiles):
+        """StaticFiles that falls back to index.html for SPA routing."""
+
+        async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+            try:
+                await super().__call__(scope, receive, send)
+            except Exception:
+                # If file not found, serve index.html for SPA client-side routing
+                response = FileResponse(self.directory / "index.html")
+                await response(scope, receive, send)
+
+    app.mount("/", SPAStaticFiles(directory=STATIC_DIR, html=False), name="static")
 
 
 def use_route_names_as_operation_ids(app: FastAPI) -> None:

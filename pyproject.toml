@@ -54,6 +54,7 @@ package-data."*" = [
   "requirements.extra.txt",
   "requirements.all.txt"
 ]
+package-data."cosmotech.csm_orc_api" = ["static/**/*"]
 zip-safe = false
 
 

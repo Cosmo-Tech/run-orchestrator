@@ -5,5 +5,8 @@ include README.md
 include LICENSE
 graft cosmotech/orchestrator_plugins
 graft cosmotech/translation
+graft cosmotech/csm_orc_api/static
+graft cosmotech/visual_orchestrator
+prune cosmotech/visual_orchestrator/node_modules
 global-exclude */__pycache__/*
 global-exclude *.pyc

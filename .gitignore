@@ -136,3 +136,6 @@ generated/
 
 # sonarcube folders
 .scannerwork/
+
+# Built visual orchestrator static files
+cosmotech/csm_orc_api/static/
