@@ -417,7 +417,7 @@ function getAncestors(stepId, links) {
   return visited;
 }
 
-function StepDetailPanel({ projectName, stepId, onClose, onStepUpdated, onStepIdChanged, allStepIds, allLinks, allStepOutputs }) {
+function StepDetailPanel({ projectName, stepId, onClose, onStepUpdated, onStepIdChanged, allStepIds, allLinks, allStepOutputs, refreshKey }) {
   const [stepData, setStepData] = useState(null);
   const [editData, setEditData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -457,7 +457,7 @@ function StepDetailPanel({ projectName, stepId, onClose, onStepUpdated, onStepId
         setError(err.message);
         setLoading(false);
       });
-  }, [projectName, stepId]);
+  }, [projectName, stepId, refreshKey]);
 
   const startEditing = () => {
     const useCommandId = !stepData.command && !!stepData.commandId;
@@ -1377,9 +1377,12 @@ function GraphViewInner({ projectName }) {
     setStepStatuses({});
   }, []);
 
+  const [stepRefreshKey, setStepRefreshKey] = useState(0);
+
   const refreshGraph = useCallback(() => {
     resetRunState();
     fetchGraph(false);
+    setStepRefreshKey((k) => k + 1);
   }, [fetchGraph, resetRunState]);
 
   const [graphError, setGraphError] = useState(null);
@@ -1991,6 +1994,7 @@ function GraphViewInner({ projectName }) {
           allStepIds={nodes.map((n) => n.id)}
           allLinks={edges.map((e) => [e.source, e.target])}
           allStepOutputs={stepOutputs}
+          refreshKey={stepRefreshKey}
         />
       )}
       <div className="collapse-bar right" onClick={() => { if (runLogs.length > 0 || showLogs) setShowLogs((v) => !v); }} title={showLogs ? 'Hide Logs' : 'Show Logs'}>

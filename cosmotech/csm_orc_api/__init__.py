@@ -58,7 +58,7 @@ app = FastAPI(
     openapi_url="/openapi.json",
     title="Visual Orchestrator API",
     description="API for Visual Orchestrator",
-    root_path="/",
+    root_path="",
     lifespan=lifespan,
 )
 

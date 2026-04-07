@@ -8,6 +8,9 @@
 import subprocess
 import signal
 import sys
+import threading
+import webbrowser
+import time
 
 from cosmotech.csm_orc_api import STATIC_DIR, VISUAL_ORC_SRC_DIR, is_dev_mode
 from cosmotech.orchestrator.utils.click import click
@@ -62,12 +65,30 @@ def gui_command(host: str, port: int, dev_mode: bool):
         _start_release_mode(host, port)
 
 
+def _open_browser_when_ready(url: str, timeout: float = 30.0, interval: float = 0.5):
+    """Try to open the browser once the server is accepting connections."""
+    import urllib.request
+    import urllib.error
+
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        try:
+            urllib.request.urlopen(url, timeout=2)
+            webbrowser.open(url)
+            return
+        except (urllib.error.URLError, OSError):
+            time.sleep(interval)
+    # Timeout — open anyway and let the user see an error if the server isn't up
+    webbrowser.open(url)
+
+
 def _start_release_mode(host: str, port: int):
     """Start uvicorn serving the FastAPI app with built static files."""
     import uvicorn
 
+    browse_url = f"http://localhost:{port}"
     LOGGER.info(f"Starting Visual Orchestrator in release mode on http://{host}:{port}")
-    LOGGER.info(f"Open your browser at http://localhost:{port}")
+    threading.Thread(target=_open_browser_when_ready, args=(browse_url,), daemon=True).start()
     uvicorn.run("cosmotech.csm_orc_api:app", host=host, port=port)
 
 
@@ -95,7 +116,9 @@ def _start_dev_mode(host: str, port: int):
     LOGGER.info(f"Starting Visual Orchestrator in dev mode")
     LOGGER.info(f"API server on http://{host}:{port}")
     LOGGER.info(f"Vite dev server will start on http://localhost:5173")
-    LOGGER.info(f"Open your browser at http://localhost:5173")
+
+    browse_url = "http://localhost:5173"
+    threading.Thread(target=_open_browser_when_ready, args=(browse_url,), daemon=True).start()
 
     # Start Vite dev server as a subprocess
     vite_process = subprocess.Popen(
