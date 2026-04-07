@@ -32,6 +32,9 @@ function ProjectSelector({ selectedProject, onSelect }) {
   const [newName, setNewName] = useState('')
   const [createError, setCreateError] = useState(null)
   const [submitting, setSubmitting] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const [deleteError, setDeleteError] = useState(null)
+  const [deleteSubmitting, setDeleteSubmitting] = useState(false)
 
   const fetchProjects = useCallback(() => {
     fetch('/project/list')
@@ -52,6 +55,28 @@ function ProjectSelector({ selectedProject, onSelect }) {
   useEffect(() => {
     fetchProjects()
   }, [fetchProjects])
+
+  const handleDelete = () => {
+    if (!selectedProject) return
+    setDeleteSubmitting(true)
+    setDeleteError(null)
+    fetch(`/project/${encodeURIComponent(selectedProject)}`, { method: 'DELETE' })
+      .then((res) => {
+        if (!res.ok) return res.json().then((d) => { throw new Error(d.detail || `HTTP ${res.status}`) })
+        return res.json()
+      })
+      .then(() => {
+        setDeleting(false)
+        setDeleteSubmitting(false)
+        setDeleteError(null)
+        onSelect(null)
+        fetchProjects()
+      })
+      .catch((err) => {
+        setDeleteError(err.message)
+        setDeleteSubmitting(false)
+      })
+  }
 
   const handleCreate = () => {
     const name = newName.trim()
@@ -98,13 +123,42 @@ function ProjectSelector({ selectedProject, onSelect }) {
         ))}
       </select>
 
-      {!creating ? (
-        <button
-          className="panel-btn panel-btn-primary new-project-btn"
-          onClick={() => { setCreating(true); setCreateError(null); setNewName(''); }}
-        >
-          + New
-        </button>
+      {!creating && !deleting ? (
+        <>
+          <button
+            className="panel-btn panel-btn-primary new-project-btn"
+            onClick={() => { setCreating(true); setCreateError(null); setNewName(''); }}
+          >
+            + New
+          </button>
+          {selectedProject && (
+            <button
+              className="panel-btn panel-btn-danger new-project-btn"
+              onClick={() => { setDeleting(true); setDeleteError(null); }}
+            >
+              🗑 Delete
+            </button>
+          )}
+        </>
+      ) : deleting ? (
+        <div className="new-project-inline">
+          <span className="delete-confirm-label">Delete &lsquo;{selectedProject}&rsquo;?</span>
+          <button
+            className="panel-btn panel-btn-danger"
+            onClick={handleDelete}
+            disabled={deleteSubmitting}
+          >
+            {deleteSubmitting ? '…' : 'Confirm'}
+          </button>
+          <button
+            className="panel-btn"
+            onClick={() => { setDeleting(false); setDeleteError(null); }}
+            disabled={deleteSubmitting}
+          >
+            Cancel
+          </button>
+          {deleteError && <span className="toolbar-error">{deleteError}</span>}
+        </div>
       ) : (
         <div className="new-project-inline">
           <input

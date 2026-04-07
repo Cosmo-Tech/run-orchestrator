@@ -1383,6 +1383,7 @@ function GraphViewInner({ projectName }) {
   }, [fetchGraph, resetRunState]);
 
   const [graphError, setGraphError] = useState(null);
+  const [pendingLinkDelete, setPendingLinkDelete] = useState(null); // { edge, affectedInputs }
 
   const showGraphError = useCallback((msg) => {
     setGraphError(msg);
@@ -1410,26 +1411,69 @@ function GraphViewInner({ projectName }) {
     [setEdges, projectName, refreshGraph, showGraphError],
   );
 
-  const onEdgesDelete = useCallback(
-    (deletedEdges) => {
-      for (const edge of deletedEdges) {
-        fetch(`/project/${projectName}/link`, {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ source: edge.source, target: edge.target }),
+  const doDeleteLink = useCallback(
+    (edge, removeInputs = false) => {
+      fetch(`/project/${projectName}/link`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ source: edge.source, target: edge.target, removeInputs }),
+      })
+        .then((res) => {
+          if (!res.ok) return res.json().then((d) => { throw new Error(d.detail || `HTTP ${res.status}`); });
+          refreshGraph();
         })
-          .then((res) => {
-            if (!res.ok) return res.json().then((d) => { throw new Error(d.detail || `HTTP ${res.status}`); });
-            refreshGraph();
-          })
-          .catch((err) => {
-            showGraphError(`Failed to delete link: ${err.message}`);
-            refreshGraph();
-          });
-      }
+        .catch((err) => {
+          showGraphError(`Failed to delete link: ${err.message}`);
+          refreshGraph();
+        });
     },
     [projectName, refreshGraph, showGraphError],
   );
+
+  const onEdgesDelete = useCallback(
+    (deletedEdges) => {
+      for (const edge of deletedEdges) {
+        // Check if the target step has inputs referencing the source step
+        fetch(`/project/${projectName}/step/${edge.target}`)
+          .then((res) => {
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return res.json();
+          })
+          .then((stepData) => {
+            const inputs = stepData.inputs || {};
+            const affected = Object.entries(inputs)
+              .filter(([, def]) => def.stepId === edge.source)
+              .map(([name]) => name);
+            if (affected.length > 0) {
+              // Show confirmation dialog
+              setPendingLinkDelete({ edge, affectedInputs: affected });
+            } else {
+              // No inputs affected, delete directly
+              doDeleteLink(edge, false);
+            }
+          })
+          .catch(() => {
+            // If we can't fetch step data, just delete the link
+            doDeleteLink(edge, false);
+          });
+      }
+    },
+    [projectName, doDeleteLink],
+  );
+
+  const handleConfirmLinkDelete = useCallback(
+    (removeInputs) => {
+      if (!pendingLinkDelete) return;
+      doDeleteLink(pendingLinkDelete.edge, removeInputs);
+      setPendingLinkDelete(null);
+    },
+    [pendingLinkDelete, doDeleteLink],
+  );
+
+  const handleCancelLinkDelete = useCallback(() => {
+    setPendingLinkDelete(null);
+    refreshGraph(); // restore the edge visually
+  }, [refreshGraph]);
 
   const onNodeClick = useCallback((_event, node) => {
     setSelectedStep(node.id);
@@ -1691,6 +1735,42 @@ function GraphViewInner({ projectName }) {
 
   return (
     <div className="graph-wrapper">
+      {pendingLinkDelete && (
+        <div className="link-delete-overlay">
+          <div className="link-delete-dialog">
+            <h4 className="link-delete-title">Remove link?</h4>
+            <p className="link-delete-text">
+              Step <code>{pendingLinkDelete.edge.target}</code> has inputs from <code>{pendingLinkDelete.edge.source}</code>:
+            </p>
+            <ul className="link-delete-inputs">
+              {pendingLinkDelete.affectedInputs.map((name) => (
+                <li key={name} className="mono">{name}</li>
+              ))}
+            </ul>
+            <p className="link-delete-text">Do you also want to remove these inputs?</p>
+            <div className="link-delete-actions">
+              <button
+                className="panel-btn panel-btn-danger"
+                onClick={() => handleConfirmLinkDelete(true)}
+              >
+                Remove link &amp; inputs
+              </button>
+              <button
+                className="panel-btn panel-btn-primary"
+                onClick={() => handleConfirmLinkDelete(false)}
+              >
+                Remove link only
+              </button>
+              <button
+                className="panel-btn"
+                onClick={handleCancelLinkDelete}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {graphError && (
         <div className="graph-error-banner">
           <span>{graphError}</span>

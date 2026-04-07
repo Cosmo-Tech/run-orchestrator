@@ -197,6 +197,7 @@ async def add_link(project_path: projectPathDependency, link_data: dict = Body(.
 async def remove_link(project_path: projectPathDependency, link_data: dict = Body(...)):
     source = link_data.get("source")
     target = link_data.get("target")
+    remove_inputs = link_data.get("removeInputs", False)
     if not source or not target:
         raise HTTPException(status_code=400, detail="Both 'source' and 'target' are required")
     with open(project_path) as f:
@@ -209,9 +210,17 @@ async def remove_link(project_path: projectPathDependency, link_data: dict = Bod
         raise HTTPException(status_code=404, detail=f"Link not found")
     precedents.remove(source)
     target_step["precedents"] = precedents
+    removed_inputs = []
+    if remove_inputs and "inputs" in target_step:
+        inputs_to_remove = [name for name, defn in target_step["inputs"].items() if defn.get("stepId") == source]
+        for name in inputs_to_remove:
+            del target_step["inputs"][name]
+            removed_inputs.append(name)
+        if not target_step["inputs"]:
+            del target_step["inputs"]
     with open(project_path, "w") as f:
         json.dump(project_content, f, indent=4)
-    return {"source": source, "target": target}
+    return {"source": source, "target": target, "removedInputs": removed_inputs}
 
 
 @project_router.get("/{project_name}/links")
