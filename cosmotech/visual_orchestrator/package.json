@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "generate-memes": "node scripts/generate-meme-manifest.cjs",
+    "predev": "npm run generate-memes",
+    "prebuild": "npm run generate-memes",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",

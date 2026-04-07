@@ -142,6 +142,10 @@ function App() {
     localStorage.setItem('theme', theme)
   }, [theme])
 
+  useEffect(() => {
+    document.documentElement.classList.toggle('comic-sans', selectedProject === 'ComicSans')
+  }, [selectedProject])
+
   const toggleTheme = useCallback(() => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
   }, [])

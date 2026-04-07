@@ -40,7 +40,7 @@ async def create_project(project_data: dict = Body(...), project_files: projectL
     if name in existing:
         raise HTTPException(status_code=409, detail=f"Project '{name}' already exists")
     # Create project directory and run.json
-    project_dir = pathlib.Path(".") / name
+    project_dir = pathlib.Path("code/run_templates/") / name
     project_dir.mkdir(parents=True, exist_ok=False)
     run_json = project_dir / "run.json"
     with open(run_json, "w") as f:

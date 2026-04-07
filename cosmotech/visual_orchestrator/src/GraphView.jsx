@@ -1,17 +1,102 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ReactFlow,
   ReactFlowProvider,
   addEdge,
   Background,
   Controls,
+  Handle,
   MiniMap,
+  Position,
   useNodesState,
   useEdgesState,
   useReactFlow,
 } from '@xyflow/react';
 import Dagre from '@dagrejs/dagre';
 import '@xyflow/react/dist/style.css';
+import MEME_GIFS from './memeList.json';
+const MEME_SET = new Set(MEME_GIFS);
+
+function MemeNode({ data }) {
+  const gifName = MEME_GIFS.find((g) => g === data.label);
+  return (
+    <div className="meme-node">
+      <Handle type="target" position={Position.Top} />
+      {gifName && (
+        <img
+          src={`/memes/${gifName}.gif`}
+          alt={gifName}
+          className="meme-node-bg"
+        />
+      )}
+      <Handle type="source" position={Position.Bottom} />
+    </div>
+  );
+}
+
+const KONAMI_CODE = [
+  'ArrowUp','ArrowUp','ArrowDown','ArrowDown',
+  'ArrowLeft','ArrowRight','ArrowLeft','ArrowRight',
+  'b','a',
+];
+
+const EGG_EMOJIS = ['🥚','🐣','🐥','🪺','🐔','🐤','🍳'];
+
+function useKonamiCode() {
+  const [activated, setActivated] = useState(false);
+  const buffer = useRef([]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      buffer.current = [...buffer.current, e.key].slice(-KONAMI_CODE.length);
+      if (buffer.current.length === KONAMI_CODE.length &&
+          buffer.current.every((k, i) => k === KONAMI_CODE[i])) {
+        setActivated(true);
+        buffer.current = [];
+        // Auto-hide after 10 seconds
+        setTimeout(() => setActivated(false), 10000);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
+  return activated;
+}
+
+function FallingEggs() {
+  const eggs = useRef(
+    Array.from({ length: 30 }, (_, i) => ({
+      id: i,
+      emoji: EGG_EMOJIS[Math.floor(Math.random() * EGG_EMOJIS.length)],
+      left: Math.random() * 100,
+      delay: Math.random() * 3,
+      duration: 3 + Math.random() * 4,
+      size: 16 + Math.random() * 24,
+      rotation: Math.random() * 360,
+    }))
+  ).current;
+
+  return (
+    <div className="falling-eggs-container">
+      {eggs.map((egg) => (
+        <span
+          key={egg.id}
+          className="falling-egg"
+          style={{
+            left: `${egg.left}%`,
+            animationDelay: `${egg.delay}s`,
+            animationDuration: `${egg.duration}s`,
+            fontSize: `${egg.size}px`,
+            '--egg-rotation': `${egg.rotation}deg`,
+          }}
+        >
+          {egg.emoji}
+        </span>
+      ))}
+    </div>
+  );
+}
 
 const NODE_WIDTH = 172;
 const NODE_HEIGHT = 36;
@@ -47,6 +132,7 @@ function getLayoutedElements(nodes, edges) {
 function stepsToNodes(steps) {
   return steps.map((stepId) => ({
     id: stepId,
+    type: MEME_SET.has(stepId) ? 'meme' : undefined,
     data: { label: stepId },
     position: { x: 0, y: 0 },
   }));
@@ -1596,6 +1682,10 @@ function GraphViewInner({ projectName }) {
     return () => clearTimeout(timer);
   }, [showLogs, showTemplates, selectedStep, showEnvPanel, fitView]);
 
+  const konamiActive = useKonamiCode();
+
+  const nodeTypes = useMemo(() => ({ meme: MemeNode }), []);
+
   if (loading) return <p className="status">Loading steps…</p>;
   if (error) return <p className="status error">Error: {error}</p>;
 
@@ -1624,6 +1714,7 @@ function GraphViewInner({ projectName }) {
           <ReactFlow
             nodes={styledNodes}
             edges={edges}
+            nodeTypes={nodeTypes}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
@@ -1644,6 +1735,7 @@ function GraphViewInner({ projectName }) {
                 title="Add new step"
               >+</button>
             </div>
+            {konamiActive && <FallingEggs />}
           </ReactFlow>
         </div>
         <div className="collapse-bar bottom" onClick={() => { if (!running) { setShowEnvPanel((v) => { if (!v) fetchEnvVars(); return !v; }); } }} title={showEnvPanel ? 'Hide Environment' : 'Show Environment / Run'}>
