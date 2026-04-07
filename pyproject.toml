@@ -61,6 +61,7 @@ zip-safe = false
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["cosmotech.*"]
+exclude = ["cosmotech.visual_orchestrator", "cosmotech.visual_orchestrator.*"]
 
 [tool.setuptools.dynamic]
 version.attr = "cosmotech.orchestrator.__version__"
