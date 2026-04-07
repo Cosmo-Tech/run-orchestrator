@@ -17,6 +17,16 @@ projectListDependency = Annotated[list, Depends(find_projects)]
 project_router = APIRouter(prefix="/project", tags=["Project"])
 
 
+def find_project_path(project_name: str, project_files: projectListDependency):
+    project_path = next((p for p in project_files if p.parent.name == project_name), None)
+    if project_path is None:
+        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
+    return project_path
+
+
+projectPathDependency = Annotated[pathlib.Path, Depends(find_project_path)]
+
+
 @project_router.get("/list")
 async def list_projects(project_files: projectListDependency):
     project_names = [p.parent.name for p in project_files]
@@ -49,10 +59,7 @@ async def create_project(project_data: dict = Body(...), project_files: projectL
 
 
 @project_router.get("/{project_name}/step/{step_id}")
-async def get_step(project_name, step_id, project_files: projectListDependency):
-    project_path = next((p for p in project_files if p.parent.name == project_name), None)
-    if project_path is None:
-        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
+async def get_step(step_id, project_path: projectPathDependency):
     with open(project_path) as f:
         project_content = json.load(f)
     step = next((s for s in project_content["steps"] if s["id"] == step_id), None)
@@ -62,10 +69,7 @@ async def get_step(project_name, step_id, project_files: projectListDependency):
 
 
 @project_router.put("/{project_name}/step/{step_id}")
-async def update_step(project_name, step_id, step_data: dict = Body(...), project_files: projectListDependency = None):
-    project_path = next((p for p in project_files if p.parent.name == project_name), None)
-    if project_path is None:
-        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
+async def update_step(step_id, project_path: projectPathDependency, step_data: dict = Body(...)):
     with open(project_path) as f:
         project_content = json.load(f)
     step_index = next((i for i, s in enumerate(project_content["steps"]) if s["id"] == step_id), None)
@@ -84,10 +88,7 @@ async def update_step(project_name, step_id, step_data: dict = Body(...), projec
 
 
 @project_router.post("/{project_name}/step")
-async def create_step(project_name, step_data: dict = Body(...), project_files: projectListDependency = None):
-    project_path = next((p for p in project_files if p.parent.name == project_name), None)
-    if project_path is None:
-        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
+async def create_step(project_path: projectPathDependency, step_data: dict = Body(...)):
     with open(project_path) as f:
         project_content = json.load(f)
     if not step_data.get("id"):
@@ -102,10 +103,7 @@ async def create_step(project_name, step_data: dict = Body(...), project_files: 
 
 
 @project_router.delete("/{project_name}/step/{step_id}")
-async def remove_step(project_name, step_id, project_files: projectListDependency = None):
-    project_path = next((p for p in project_files if p.parent.name == project_name), None)
-    if project_path is None:
-        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
+async def remove_step(step_id, project_path: projectPathDependency):
     with open(project_path) as f:
         project_content = json.load(f)
     step_index = next((i for i, s in enumerate(project_content["steps"]) if s["id"] == step_id), None)
@@ -123,10 +121,7 @@ async def remove_step(project_name, step_id, project_files: projectListDependenc
 
 
 @project_router.get("/{project_name}/steps")
-async def get_steps(project_name, project_files: projectListDependency):
-    project_path = next((p for p in project_files if p.parent.name == project_name), None)
-    if project_path is None:
-        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
+async def get_steps(project_path: projectPathDependency):
     with open(project_path) as f:
         project_content = json.load(f)
     steps = [s["id"] for s in project_content["steps"]]
@@ -134,10 +129,7 @@ async def get_steps(project_name, project_files: projectListDependency):
 
 
 @project_router.get("/{project_name}/precedents")
-async def get_steps_with_precedents(project_name, project_files: projectListDependency):
-    project_path = next((p for p in project_files if p.parent.name == project_name), None)
-    if project_path is None:
-        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
+async def get_steps_with_precedents(project_path: projectPathDependency):
     with open(project_path) as f:
         project_content = json.load(f)
     precedents = {s["id"]: s.get("precedents", []) for s in project_content["steps"]}
@@ -145,10 +137,7 @@ async def get_steps_with_precedents(project_name, project_files: projectListDepe
 
 
 @project_router.get("/{project_name}/outputs")
-async def get_step_outputs(project_name, project_files: projectListDependency):
-    project_path = next((p for p in project_files if p.parent.name == project_name), None)
-    if project_path is None:
-        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
+async def get_step_outputs(project_path: projectPathDependency):
     with open(project_path) as f:
         project_content = json.load(f)
     result = {}
@@ -160,10 +149,7 @@ async def get_step_outputs(project_name, project_files: projectListDependency):
 
 
 @project_router.post("/{project_name}/link")
-async def add_link(project_name, link_data: dict = Body(...), project_files: projectListDependency = None):
-    project_path = next((p for p in project_files if p.parent.name == project_name), None)
-    if project_path is None:
-        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
+async def add_link(project_path: projectPathDependency, link_data: dict = Body(...)):
     source = link_data.get("source")
     target = link_data.get("target")
     if not source or not target:
@@ -208,10 +194,7 @@ async def add_link(project_name, link_data: dict = Body(...), project_files: pro
 
 
 @project_router.delete("/{project_name}/link")
-async def remove_link(project_name, link_data: dict = Body(...), project_files: projectListDependency = None):
-    project_path = next((p for p in project_files if p.parent.name == project_name), None)
-    if project_path is None:
-        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
+async def remove_link(project_path: projectPathDependency, link_data: dict = Body(...)):
     source = link_data.get("source")
     target = link_data.get("target")
     if not source or not target:
@@ -232,10 +215,7 @@ async def remove_link(project_name, link_data: dict = Body(...), project_files: 
 
 
 @project_router.get("/{project_name}/links")
-async def get_step_links(project_name, project_files: projectListDependency):
-    project_path = next((p for p in project_files if p.parent.name == project_name), None)
-    if project_path is None:
-        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
+async def get_step_links(project_path: projectPathDependency):
     with open(project_path) as f:
         project_content = json.load(f)
     links = [(precedent, step["id"]) for step in project_content["steps"] for precedent in step.get("precedents", [])]
@@ -243,11 +223,8 @@ async def get_step_links(project_name, project_files: projectListDependency):
 
 
 @project_router.get("/{project_name}/environment")
-async def get_project_environment(project_name, project_files: projectListDependency = None):
+async def get_project_environment(project_path: projectPathDependency):
     """Collect all environment variables from steps and their templates."""
-    project_path = next((p for p in project_files if p.parent.name == project_name), None)
-    if project_path is None:
-        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
     with open(project_path) as f:
         project_content = json.load(f)
 
@@ -319,11 +296,7 @@ async def get_project_environment(project_name, project_files: projectListDepend
 
 
 @project_router.post("/{project_name}/run")
-async def run_project(project_name, run_data: dict = Body(default={}), project_files: projectListDependency = None):
-    project_path = next((p for p in project_files if p.parent.name == project_name), None)
-    if project_path is None:
-        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
-
+async def run_project(project_path: projectPathDependency, run_data: dict = Body(default={})):
     # Build environment for the subprocess
     env = os.environ.copy()
     user_env = run_data.get("environment", {})
@@ -360,10 +333,19 @@ async def run_project(project_name, run_data: dict = Body(default={}), project_f
 
 
 @project_router.get("/{project_name}")
-async def get_content(project_name, project_files: projectListDependency):
-    project_path = next((p for p in project_files if p.parent.name == project_name), None)
-    if project_path is None:
-        raise HTTPException(status_code=404, detail=f"Project '{project_name}' not found")
+async def get_content(project_path: projectPathDependency):
     with open(project_path) as f:
         project_content = json.load(f)
     return project_content
+
+
+@project_router.delete("/{project_name}")
+async def delete_project(project_path: projectPathDependency):
+    try:
+        # Remove the entire project directory
+        import shutil
+
+        shutil.rmtree(project_path.parent)
+        return {"detail": f"Project '{project_path.parent.name}' deleted successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error deleting project: {str(e)}")
