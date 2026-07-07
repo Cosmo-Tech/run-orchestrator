@@ -66,5 +66,6 @@ docker run example_orc
 The Cosmo Tech API can send the following list of environment variable to your docker image which will be 
 available for any orchestration file you may want to run in it
 
-??? notes "List of environment variables"
-    {{ read_yaml('partials/tutorial/advanced_cosmotech_simulator/api_envvars.yaml') }}
+**List of environment variables**
+
+{!partials/tutorial/advanced_cosmotech_simulator/api_envvars.md!lines=1-222}

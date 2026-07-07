@@ -52,8 +52,9 @@ Every `Environment Variable` passed to the command will be forwarded to the
 
 The Cosmo Tech API will forward a set of environment variables to any Simulator containers. You can find the full list in the following table.
 
-??? notes "List of environment variables"
-    {{ read_yaml('partials/tutorial/advanced_cosmotech_simulator/api_envvars.yaml') }}
+**List of environment variables**
+
+{!partials/tutorial/advanced_cosmotech_simulator/api_envvars.md!lines=1-222}
 
 ## Connect to the API to get our `Scenario` data
 
