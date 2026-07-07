@@ -8,6 +8,7 @@
 | CSM_API_SCOPE                           | An identifier scope used to get permission to your API
 | CSM_DATASET_ABSOLUTE_PATH               | A local folder path to which an external volume is mounted to and in which you can write datasets
 | CSM_PARAMETERS_ABSOLUTE_PATH            | A local folder path to which an external volume is mounted to and in which you can write parameters
+| CSM_RUN_TYPE                            | A parameter injected by the API into every Argo run, either `run` (default) or `delete`, used by csm-orc to launch either a `run.json` or `delete.json`
 | TWIN_CACHE_HOST                         | The URL to the twin cache service inside the platform (deprecated)
 | TWIN_CACHE_PORT                         | The port to the twin cache service inside the platform (deprecated)
 | TWIN_CACHE_PASSWORD                     | The password to the twin cache service inside the platform (deprecated)
