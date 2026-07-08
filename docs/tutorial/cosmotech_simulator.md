@@ -137,14 +137,14 @@ Now we can simply run both commands to update our dataset then run the updated s
 
 ```bash title="Apply parameters and run simulation"
 python code/run_templates/orchestrator_tutorial_1/apply_parameters.py Simulation/Resource/scenariorun-data Simulation/Resource/scenariorun-data code/run_templates/orchestrator_tutorial_1/parameters.json
-CSM_SIMULATION=CSV_Simulation csm-orc run-step --template ochestrator_tutorial_1 --steps engine 
+CSM_SIMULATION=CSV_Simulation csm-orc run-step --template orchestrator_tutorial_1 --steps engine 
 ```
 
 A different set of charts should appear this time, corresponding to our updated dataset values..
 
 Now we can write our `run.json` file to run those step in a single command.
 
-```bash title="core/run_templates/orchestrator_tutorial_1/run.json"
+```bash title="code/run_templates/orchestrator_tutorial_1/run.json"
 --8<-- "tutorial/cosmotech_simulator/run.json"
 ```
 
