@@ -3,8 +3,8 @@
 | AZURE_CLIENT_ID                         | An identifier to an Azure identity defined during the installation of the platform
 | AZURE_CLIENT_SECRET                     | A secret tied to the given client ID allowing to connect with it
 | AZURE_TENANT_ID                         | An identifier of your Azure tenant to be able to connect to it
-| IDENTITY_PROVIDER                       | Will be set to  `azure` in an Azure based API
-| CSM_API_URL                             | The url to the Cosmo Tech API your are connecting to
+| IDENTITY_PROVIDER                       | Will be set to  `azure` in an Azure-based API
+| CSM_API_URL                             | The URL to the Cosmo Tech API you are connecting to
 | CSM_API_SCOPE                           | An identifier scope used to get permission to your API
 | CSM_DATASET_ABSOLUTE_PATH               | A local folder path to which an external volume is mounted to and in which you can write datasets
 | CSM_PARAMETERS_ABSOLUTE_PATH            | A local folder path to which an external volume is mounted to and in which you can write parameters

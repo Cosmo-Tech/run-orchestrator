@@ -54,7 +54,7 @@ The Cosmo Tech API will forward a set of environment variables to any Simulator 
 
 **List of environment variables**
 
-{!partials/tutorial/advanced_cosmotech_simulator/api_envvars.md!lines=1-222}
+--8<-- "partials/tutorial/advanced_cosmotech_simulator/api_envvars.md"
 
 ## Connect to the API to get our `Scenario` data
 

@@ -68,4 +68,4 @@ available for any orchestration file you may want to run in it
 
 **List of environment variables**
 
-{!partials/tutorial/advanced_cosmotech_simulator/api_envvars.md!lines=1-222}
+--8<-- "partials/tutorial/advanced_cosmotech_simulator/api_envvars.md"
