@@ -224,11 +224,10 @@ Then we grouped our `parameters` in a `parametersGroup` "bar_parameters". Parame
 --8<-- "tutorial/advanced_cosmotech_simulator/Solution.yaml:runTemplates"
 ```
 
-In this part we finally define our `Run Template` for the API. We have three main elements to define:
+In this part we finally define our `Run Template` for the API. We have two main elements to define:
 
 * `id`: the `id` of a run template is the name of a folder inside `code/run_templates` that will contain a `run.json` file, along with one sub-folder for each step in the run template.
 * `parameterGroups`: list of parameter groups available for the run template. Parameters declared in those groups can be changed by users in order to create new scenarios.
-* `csmSimulation`: the name of a simulation file (without the ```.sml.xml``` suffix), to be set in the `CSM_SIMULATION_ID` environment variable. This simulation will run as part of the run template execution.
 
 ### Define a `Workspace`
 

@@ -33,5 +33,4 @@ runTemplates:
     description: "Basic what-if simulation"
     parameterGroups:
       - bar_parameters
-    csmSimulation: BusinessApp_Simulation
 # --8<-- [end:runTemplates]
