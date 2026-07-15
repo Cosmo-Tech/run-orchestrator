@@ -1456,10 +1456,121 @@
 <h2 id="possible-environment-variables-with-the-cosmo-tech-api">Possible environment variables with the Cosmo Tech API<a class="headerlink" href="#possible-environment-variables-with-the-cosmo-tech-api" title="Permanent link">&para;</a></h2>
 <p>The Cosmo Tech API can send the following list of environment variable to your docker image which will be 
 available for any orchestration file you may want to run in it</p>
-<details class="notes">
-<summary>List of environment variables</summary>
-<p>{{ read_yaml('partials/tutorial/advanced_cosmotech_simulator/api_envvars.yaml') }}</p>
-</details>
+<p><strong>List of environment variables</strong></p>
+<table>
+<thead>
+<tr>
+<th>Environment Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AZURE_CLIENT_ID</td>
+<td>An identifier to an Azure identity defined during the installation of the platform</td>
+</tr>
+<tr>
+<td>AZURE_CLIENT_SECRET</td>
+<td>A secret tied to the given client ID allowing to connect with it</td>
+</tr>
+<tr>
+<td>AZURE_TENANT_ID</td>
+<td>An identifier of your Azure tenant to be able to connect to it</td>
+</tr>
+<tr>
+<td>IDENTITY_PROVIDER</td>
+<td>Will be set to <code>azure</code> in an Azure-based API</td>
+</tr>
+<tr>
+<td>CSM_API_URL</td>
+<td>The URL to the Cosmo Tech API you are connecting to</td>
+</tr>
+<tr>
+<td>CSM_API_SCOPE</td>
+<td>An identifier scope used to get permission to your API</td>
+</tr>
+<tr>
+<td>CSM_DATASET_ABSOLUTE_PATH</td>
+<td>A local folder path to which an external volume is mounted to and in which you can write datasets</td>
+</tr>
+<tr>
+<td>CSM_PARAMETERS_ABSOLUTE_PATH</td>
+<td>A local folder path to which an external volume is mounted to and in which you can write parameters</td>
+</tr>
+<tr>
+<td>CSM_RUN_TYPE</td>
+<td>A parameter injected by the API into every Argo run, either <code>run</code> (default) or <code>delete</code>, used by csm-orc to launch either a <code>run.json</code> or <code>delete.json</code></td>
+</tr>
+<tr>
+<td>TWIN_CACHE_HOST</td>
+<td>The URL to the twin cache service inside the platform (deprecated)</td>
+</tr>
+<tr>
+<td>TWIN_CACHE_PORT</td>
+<td>The port to the twin cache service inside the platform (deprecated)</td>
+</tr>
+<tr>
+<td>TWIN_CACHE_PASSWORD</td>
+<td>The password to the twin cache service inside the platform (deprecated)</td>
+</tr>
+<tr>
+<td>TWIN_CACHE_USERNAME</td>
+<td>The username to the twin cache service inside the platform (deprecated)</td>
+</tr>
+<tr>
+<td>CSM_SIMULATION_ID</td>
+<td>The <code>Simulation</code> ID for your current scenario run</td>
+</tr>
+<tr>
+<td>AZURE_DATA_EXPLORER_RESOURCE_URI</td>
+<td>The URI used to query an Azure Data Explorer Cluster tied to your <code>Workspace</code></td>
+</tr>
+<tr>
+<td>AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI</td>
+<td>The URI used to send data to an <code>Azure Data Explorer</code> Cluster tied to your <code>Workspace</code></td>
+</tr>
+<tr>
+<td>AZURE_DATA_EXPLORER_DATABASE_NAME</td>
+<td>The name of the database of your <code>Workspace</code> in <code>Azure Data Explorer</code></td>
+</tr>
+<tr>
+<td>CSM_ORGANIZATION_ID</td>
+<td>The ID of your <code>Organization</code> in the Cosmo Tech API</td>
+</tr>
+<tr>
+<td>CSM_WORKSPACE_ID</td>
+<td>The ID of your <code>Workspace</code> in the Cosmo Tech API</td>
+</tr>
+<tr>
+<td>CSM_SCENARIO_ID</td>
+<td>The ID of your <code>Scenario</code> in the Cosmo Tech API</td>
+</tr>
+<tr>
+<td>CSM_RUN_TEMPLATE_ID</td>
+<td>The ID of your <code>Run Template</code> in the Cosmo Tech API (as defined in your Solution)</td>
+</tr>
+<tr>
+<td>CSM_CONTAINER_MODE</td>
+<td>Will always be <code>csm-orc</code> left for compatibility with pre 3.0 API</td>
+</tr>
+<tr>
+<td>CSM_ENTRYPOINT_LEGACY</td>
+<td>Will always be <code>false</code></td>
+</tr>
+<tr>
+<td>CSM_PROBES_MEASURES_TOPIC</td>
+<td>An <code>amqp</code> address used by the simulator to send your probe data to ADX via Event Hub</td>
+</tr>
+<tr>
+<td>CSM_CONTROL_PLANE_TOPIC</td>
+<td>An <code>amqp</code> address used by the simulator to send your control info to ADX via Event Hub (mostly number of measures sent)</td>
+</tr>
+<tr>
+<td>CSM_SIMULATION</td>
+<td>The <code>Simulation</code> file that should be used to run your simulation (this value is defined in your <code>Run Template</code> and targets one of the files in the <code>Simulation/</code> folder)</td>
+</tr>
+</tbody>
+</table>
 
 
 

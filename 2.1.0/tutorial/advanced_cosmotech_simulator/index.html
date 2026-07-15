@@ -1624,10 +1624,121 @@ the <code>docker</code> image.</p>
 <code>csm-orc run</code> command inside, and the command will be run with the working directory set to <code>/pkg/share</code>.</p>
 <h2 id="which-environment-variables-are-made-available-by-the-api">Which <code>Environment Variables</code> are made available by the API?<a class="headerlink" href="#which-environment-variables-are-made-available-by-the-api" title="Permanent link">&para;</a></h2>
 <p>The Cosmo Tech API will forward a set of environment variables to any Simulator containers. You can find the full list in the following table.</p>
-<details class="notes">
-<summary>List of environment variables</summary>
-<p>{{ read_yaml('partials/tutorial/advanced_cosmotech_simulator/api_envvars.yaml') }}</p>
-</details>
+<p><strong>List of environment variables</strong></p>
+<table>
+<thead>
+<tr>
+<th>Environment Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AZURE_CLIENT_ID</td>
+<td>An identifier to an Azure identity defined during the installation of the platform</td>
+</tr>
+<tr>
+<td>AZURE_CLIENT_SECRET</td>
+<td>A secret tied to the given client ID allowing to connect with it</td>
+</tr>
+<tr>
+<td>AZURE_TENANT_ID</td>
+<td>An identifier of your Azure tenant to be able to connect to it</td>
+</tr>
+<tr>
+<td>IDENTITY_PROVIDER</td>
+<td>Will be set to <code>azure</code> in an Azure-based API</td>
+</tr>
+<tr>
+<td>CSM_API_URL</td>
+<td>The URL to the Cosmo Tech API you are connecting to</td>
+</tr>
+<tr>
+<td>CSM_API_SCOPE</td>
+<td>An identifier scope used to get permission to your API</td>
+</tr>
+<tr>
+<td>CSM_DATASET_ABSOLUTE_PATH</td>
+<td>A local folder path to which an external volume is mounted to and in which you can write datasets</td>
+</tr>
+<tr>
+<td>CSM_PARAMETERS_ABSOLUTE_PATH</td>
+<td>A local folder path to which an external volume is mounted to and in which you can write parameters</td>
+</tr>
+<tr>
+<td>CSM_RUN_TYPE</td>
+<td>A parameter injected by the API into every Argo run, either <code>run</code> (default) or <code>delete</code>, used by csm-orc to launch either a <code>run.json</code> or <code>delete.json</code></td>
+</tr>
+<tr>
+<td>TWIN_CACHE_HOST</td>
+<td>The URL to the twin cache service inside the platform (deprecated)</td>
+</tr>
+<tr>
+<td>TWIN_CACHE_PORT</td>
+<td>The port to the twin cache service inside the platform (deprecated)</td>
+</tr>
+<tr>
+<td>TWIN_CACHE_PASSWORD</td>
+<td>The password to the twin cache service inside the platform (deprecated)</td>
+</tr>
+<tr>
+<td>TWIN_CACHE_USERNAME</td>
+<td>The username to the twin cache service inside the platform (deprecated)</td>
+</tr>
+<tr>
+<td>CSM_SIMULATION_ID</td>
+<td>The <code>Simulation</code> ID for your current scenario run</td>
+</tr>
+<tr>
+<td>AZURE_DATA_EXPLORER_RESOURCE_URI</td>
+<td>The URI used to query an Azure Data Explorer Cluster tied to your <code>Workspace</code></td>
+</tr>
+<tr>
+<td>AZURE_DATA_EXPLORER_RESOURCE_INGEST_URI</td>
+<td>The URI used to send data to an <code>Azure Data Explorer</code> Cluster tied to your <code>Workspace</code></td>
+</tr>
+<tr>
+<td>AZURE_DATA_EXPLORER_DATABASE_NAME</td>
+<td>The name of the database of your <code>Workspace</code> in <code>Azure Data Explorer</code></td>
+</tr>
+<tr>
+<td>CSM_ORGANIZATION_ID</td>
+<td>The ID of your <code>Organization</code> in the Cosmo Tech API</td>
+</tr>
+<tr>
+<td>CSM_WORKSPACE_ID</td>
+<td>The ID of your <code>Workspace</code> in the Cosmo Tech API</td>
+</tr>
+<tr>
+<td>CSM_SCENARIO_ID</td>
+<td>The ID of your <code>Scenario</code> in the Cosmo Tech API</td>
+</tr>
+<tr>
+<td>CSM_RUN_TEMPLATE_ID</td>
+<td>The ID of your <code>Run Template</code> in the Cosmo Tech API (as defined in your Solution)</td>
+</tr>
+<tr>
+<td>CSM_CONTAINER_MODE</td>
+<td>Will always be <code>csm-orc</code> left for compatibility with pre 3.0 API</td>
+</tr>
+<tr>
+<td>CSM_ENTRYPOINT_LEGACY</td>
+<td>Will always be <code>false</code></td>
+</tr>
+<tr>
+<td>CSM_PROBES_MEASURES_TOPIC</td>
+<td>An <code>amqp</code> address used by the simulator to send your probe data to ADX via Event Hub</td>
+</tr>
+<tr>
+<td>CSM_CONTROL_PLANE_TOPIC</td>
+<td>An <code>amqp</code> address used by the simulator to send your control info to ADX via Event Hub (mostly number of measures sent)</td>
+</tr>
+<tr>
+<td>CSM_SIMULATION</td>
+<td>The <code>Simulation</code> file that should be used to run your simulation (this value is defined in your <code>Run Template</code> and targets one of the files in the <code>Simulation/</code> folder)</td>
+</tr>
+</tbody>
+</table>
 <h2 id="connect-to-the-api-to-get-our-scenario-data">Connect to the API to get our <code>Scenario</code> data<a class="headerlink" href="#connect-to-the-api-to-get-our-scenario-data" title="Permanent link">&para;</a></h2>
 <p>Multiple ways exists to connect to the API and query some data, but for simplicity there exists a command in <code>csm-data</code> that will make use of known API environment variables and do the work for you.</p>
 <div class="admonition info">
@@ -1924,7 +2035,6 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Basic</span><span class="nv"> </span><span class="s">what-if</span><span class="nv"> </span><span class="s">simulation&quot;</span>
 <span class="w">    </span><span class="nt">parameterGroups</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar_parameters</span>
-<span class="w">    </span><span class="nt">csmSimulation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BusinessApp_Simulation</span>
 </code></pre></div>
 <p>Full Open API description of a <code>Solution</code> is available <a href="https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/3.0.0/solution/src/main/openapi/solution.yaml">here</a>.</p>
 <details class="info">
@@ -2671,13 +2781,11 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Basic</span><span class="nv"> </span><span class="s">what-if</span><span class="nv"> </span><span class="s">simulation&quot;</span>
 <span class="w">    </span><span class="nt">parameterGroups</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar_parameters</span>
-<span class="w">    </span><span class="nt">csmSimulation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BusinessApp_Simulation</span>
 </code></pre></div>
-<p>In this part we finally define our <code>Run Template</code> for the API. We have three main elements to define:</p>
+<p>In this part we finally define our <code>Run Template</code> for the API. We have two main elements to define:</p>
 <ul>
 <li><code>id</code>: the <code>id</code> of a run template is the name of a folder inside <code>code/run_templates</code> that will contain a <code>run.json</code> file, along with one sub-folder for each step in the run template.</li>
 <li><code>parameterGroups</code>: list of parameter groups available for the run template. Parameters declared in those groups can be changed by users in order to create new scenarios.</li>
-<li><code>csmSimulation</code>: the name of a simulation file (without the <code>.sml.xml</code> suffix), to be set in the <code>CSM_SIMULATION_ID</code> environment variable. This simulation will run as part of the run template execution.</li>
 </ul>
 <h3 id="define-a-workspace">Define a <code>Workspace</code><a class="headerlink" href="#define-a-workspace" title="Permanent link">&para;</a></h3>
 <p>An example of <code>Workspace.yaml</code> which is a file used by the Cosmo Tech API for our current solution would be:</p>

@@ -1536,11 +1536,11 @@ and need to keep that in mind for future uses.</p>
 <p>Since we did not update our dataset files in place of the original ones (only the <code>engine</code> step was executed) we will get our usual simulation results.</p>
 <p>Now we can simply run both commands to update our dataset then run the updated simulation:</p>
 <div class="highlight"><span class="filename">Apply parameters and run simulation</span><pre><span></span><code>python<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/apply_parameters.py<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/parameters.json
-<span class="nv">CSM_SIMULATION</span><span class="o">=</span>CSV_Simulation<span class="w"> </span>csm-orc<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>ochestrator_tutorial_1<span class="w"> </span>--steps<span class="w"> </span>engine<span class="w"> </span>
+<span class="nv">CSM_SIMULATION</span><span class="o">=</span>CSV_Simulation<span class="w"> </span>csm-orc<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>orchestrator_tutorial_1<span class="w"> </span>--steps<span class="w"> </span>engine<span class="w"> </span>
 </code></pre></div>
 <p>A different set of charts should appear this time, corresponding to our updated dataset values..</p>
 <p>Now we can write our <code>run.json</code> file to run those step in a single command.</p>
-<div class="highlight"><span class="filename">core/run_templates/orchestrator_tutorial_1/run.json</span><pre><span></span><code><span class="o">{</span>
+<div class="highlight"><span class="filename">code/run_templates/orchestrator_tutorial_1/run.json</span><pre><span></span><code><span class="o">{</span>
 <span class="w">  </span><span class="s2">&quot;steps&quot;</span>:<span class="w"> </span><span class="o">[</span>
 <span class="w">    </span><span class="o">{</span>
 <span class="w">      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;ApplyParameters&quot;</span>,
