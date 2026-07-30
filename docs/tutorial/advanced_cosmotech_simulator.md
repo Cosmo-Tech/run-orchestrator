@@ -48,6 +48,18 @@ The `entrypoint.py` command (and its equivalent `csm-orc entrypoint`) works usin
 Every `Environment Variable` passed to the command will be forwarded to the
 `csm-orc run` command inside, and the command will be run with the working directory set to `/pkg/share`.
 
+### Selecting the JSON template file with `CSM_RUN_TYPE`
+
+When running in general entrypoint mode, the entrypoint reads the `CSM_RUN_TYPE` environment variable to decide **which JSON file** inside the run template folder it will execute:
+
+| `CSM_RUN_TYPE` value | File executed | Behaviour if absent |
+|---|---|---|
+| `run` *(default)* | `<template_id>/run.json` | Error — the run fails |
+| `delete` | `<template_id>/delete.json` | Warning — the run is skipped gracefully |
+| any other value | `<template_id>/<value>.json` | Warning — the run is skipped gracefully |
+
+This allows a single Docker image to support multiple operation modes (e.g. a standard simulation run and a delete/clean-up operation) without any code change — the platform injects the appropriate `CSM_RUN_TYPE` value at execution time.
+
 ## Which `Environment Variables` are made available by the API?
 
 The Cosmo Tech API will forward a set of environment variables to any Simulator containers. You can find the full list in the following table.

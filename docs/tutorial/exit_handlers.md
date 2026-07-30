@@ -29,3 +29,20 @@ more.
 
 But one environment variable is added to their list by csm-orc : `CSM_ORC_IS_SUCCESS` which is a boolean value set to
 `True` if the orchestration was a success, and set to `False` if ANY step failed.
+
+## Skipping exit handlers
+
+In some situations you may want to run without executing the exit handlers (e.g. during local development or testing).
+You can disable them with the `--no-exit-handlers` flag:
+
+```bash title="Run without exit handlers"
+csm-orc run my_template.json --no-exit-handlers
+```
+
+The same behaviour can be triggered via the `CSM_ORCHESTRATOR_USE_EXIT_HANDLERS` environment variable:
+
+```bash title="Disable exit handlers via env var"
+CSM_ORCHESTRATOR_USE_EXIT_HANDLERS=false csm-orc run my_template.json
+```
+
+Exit handlers are **enabled by default**. Pass `--exit-handlers` (or set the env var to `true`) to make the default explicit.
