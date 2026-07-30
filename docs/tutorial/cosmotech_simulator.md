@@ -56,11 +56,8 @@ To store our parameters we will define a JSON file containing them.
 ```
 
 ???+ info "About the JSON file format"
-    In prevision of future use, we will define a json format close to the one returned by the command:  
-    ```bash
-    csm-data api scenariorun-load-data
-    ```  
-    This command will be used later to download data from the Cosmo Tech API.
+    The JSON format used here follows the structure expected by the `csm-orc` run template system.
+    Each parameter entry contains a `parameterId` and a `value` field.
 
 ## Apply our parameters
 
@@ -116,19 +113,16 @@ It will be attained by using our `apply_parameters.py` on the same input and out
 
 A safer way would be to make a back-up of the dataset and to restore it after the run, but we won't go over this possibility in this tutorial.
 
-To run the simulator we can either make use of `csmcli`, the `csm-simulator` executable or `csm-orc run-step`; we will only cover the `csm-orc` use in this tutorial.
+To run the simulator we can either make use of `csmcli` or the `csm-simulator` executable; we will only cover the `csm-simulator` use in this tutorial.
 
-By writing our code in the folder `code/run_templates/orchestrator_tutorial_1` we declared a Run Template named `orchestrator_tutorial_1` that we can call in `csm-orc` commands.
+By writing our code in the folder `code/run_templates/orchestrator_tutorial_1` we declared a Run Template named `orchestrator_tutorial_1` that we can reference in our `run.json`.
 
-The simulator run can be configured by using some options of the `csm-orc run-step` command:
-
-- `--template orchestrator_tutorial_1` is necessary to target a run template (dependency for non-simulator run steps)
-- `--steps engine` will either look for a file `engine/main.py` in target run template or (if not found and the environment variable `CSM_SIMULATION` is set) try to run the simulator using a CoSML simulation file.
+The simulator is invoked with `-i <simulation_file>` where the simulation file is defined by the environment variable `CSM_SIMULATION`:
 
 So the following command will run our `CSV_Simulation` defined by the `Simulation/CSV_Simulation.sml.xml`:
 
-```bash title="run CSV_Simulation using csm-orc"
-CSM_SIMULATION=CSV_Simulation csm-orc run-step --template orchestrator_tutorial_1 --steps engine
+```bash title="run CSV_Simulation using csm-simulator"
+CSM_SIMULATION=CSV_Simulation csm-simulator -i $CSM_SIMULATION
 ```
 
 Since we did not update our dataset files in place of the original ones (only the `engine` step was executed) we will get our usual simulation results.
@@ -137,7 +131,7 @@ Now we can simply run both commands to update our dataset then run the updated s
 
 ```bash title="Apply parameters and run simulation"
 python code/run_templates/orchestrator_tutorial_1/apply_parameters.py Simulation/Resource/scenariorun-data Simulation/Resource/scenariorun-data code/run_templates/orchestrator_tutorial_1/parameters.json
-CSM_SIMULATION=CSV_Simulation csm-orc run-step --template orchestrator_tutorial_1 --steps engine 
+CSM_SIMULATION=CSV_Simulation csm-simulator -i $CSM_SIMULATION
 ```
 
 A different set of charts should appear this time, corresponding to our updated dataset values..
