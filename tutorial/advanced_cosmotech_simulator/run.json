@@ -1,6 +1,39 @@
 {
   "steps": [
     {
+      "id": "DownloadRunnerData",
+      "command": "csm-data",
+      "description": "Connect to the Cosmo Tech API to download dataset and parameters",
+      "arguments": [
+        "api", 
+        "run-load-data",
+      ],
+      "useSystemEnvironment": true,
+      "environment": {
+        "CSM_API_URL": {
+          "description": "The URL used to query your Cosmo Tech API instance"
+        },
+        "CSM_API_SCOPE": {
+          "description": "The scope of identification used to request access token for your Cosmo Tech API instance"
+        },
+        "CSM_ORGANIZATION_ID": {
+          "description": "The id of the organization in the Cosmo Tech API"
+        },
+        "CSM_WORKSPACE_ID": {
+          "description": "The id of the workspace in the Cosmo Tech API"
+        },
+        "CSM_RUNNER_ID": {
+          "description": "The id of the runner in the Cosmo Tech API"
+        },
+        "CSM_DATASET_ABSOLUTE_PATH": {
+          "description": "The path used to store the datasets of the scenario"
+        },
+        "CSM_PARAMETERS_ABSOLUTE_PATH": {
+          "description": "The path used to store the parameters of the runner"
+        }
+      }
+    },
+    {
       "id": "ApplyParameters",
       "command": "python",
       "arguments": [
@@ -19,13 +52,20 @@
           "description": "The path to a folder containing our parameters.json file",
           "defaultValue": "code/run_templates/orchestrator_tutorial_2"
         }
-      }
+      },
+      "precedents": [
+        "DownloadRunnerData"
+      ]
     },
     {
       "id": "SimulationRun",
-      "command": "csm-simulator",
+      "command": "csm-orc",
       "arguments": [
-        "-i", "$CSM_SIMULATION"
+        "run-step",
+        "--template",
+        "orchestrator_tutorial_2",
+        "--steps",
+        "engine"
       ],
       "description": "Runs the simulation targeted by CSM_SIMULATION",
       "useSystemEnvironment": true,

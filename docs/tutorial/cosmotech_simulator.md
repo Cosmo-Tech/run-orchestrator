@@ -56,8 +56,11 @@ To store our parameters we will define a JSON file containing them.
 ```
 
 ???+ info "About the JSON file format"
-    The JSON format used here follows the structure expected by the `csm-orc` run template system.
-    Each parameter entry contains a `parameterId` and a `value` field.
+    In prevision of future use, we will define a json format close to the one returned by the command:  
+    ```bash
+    csm-data api run-load-data
+    ```  
+    This command will be used later to download data from the Cosmo Tech API.
 
 ## Apply our parameters
 

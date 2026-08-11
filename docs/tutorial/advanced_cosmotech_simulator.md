@@ -68,14 +68,40 @@ The Cosmo Tech API will forward a set of environment variables to any Simulator 
 
 --8<-- "partials/tutorial/advanced_cosmotech_simulator/api_envvars.md"
 
+## Connect to the API to get our `Scenario` data
+
+Multiple ways exists to connect to the API and query some data, but for simplicity there exists a command in `csm-data` that will make use of known API environment variables and do the work for you.
+
+!!! info "What is `csm-data`"
+    `csm-data` is a data oriented CLI part of the library `CosmoTech-Acceleration-Library` (abreviated as `CoAL`)  
+
+    It is made to have pre-made commands to facilitate use of most of the services a modelisator/integrator could require while working on a run template  
+
+    You can get it by installing `CoAL` starting with version `0.7.0`
+    ```bash title="How to install CoAL and csm-data"
+    pip install CosmoTech-Acceleration-Library~=0.7.0
+    ```
+
+That command is `csm-data api run-load-data` (documentation of the command is available [here](https://cosmo-tech.github.io/CosmoTech-Acceleration-Library/0.7.0/csm-data/api/scenariorun-load-data/)).
+
+The command makes use of 5 environment variables set by the API (as described in the previous section):
+
+- `CSM_ORGANIZATION_ID`
+- `CSM_WORKSPACE_ID`
+- `CSM_RUNNER_ID`
+- `CSM_DATASET_ABSOLUTE_PATH`
+- `CSM_PARAMETERS_ABSOLUTE_PATH`
+
+
 ## Combine everything in a `Run Template`
 
 Using all those new information we can see that most of the actions needed to run our code based on API data are already prepackaged.
 
 We can:
 
+- Download our scenario information using `csm-data api run-load-data`.
 - Apply our parameters with our `apply_parameters.py`.
-- Run our simulation using `csm-simulator`.
+- Run our simulation using `csm-simulator` called with `-i $CSM_SIMULATION`
 
 It is then easy to update our previous `run.json` to take those changes into account.
 
@@ -278,10 +304,14 @@ If a variable is set multiple times, only the last one will be taken into accoun
 ```bash title="use of --gen-env-target"
 csm-orc run code/run_templates/orchestrator_tutorial_2/run.json --gen-env-target code/run_templates/orchestrator_tutorial_2/vars.env
 cat code/run_templates/orchestrator_tutorial_2/vars.env
+# CSM_API_SCOPE=The scope of identification used to request access token for your Cosmo Tech API instance
+# CSM_API_URL=The URL used to query your Cosmo Tech API instance
 # CSM_DATASET_ABSOLUTE_PATH=Simulation/Resource/scenariorun-data
+# CSM_ORGANIZATION_ID=The identifier of the organization in the Cosmo Tech API
 # CSM_PARAMETERS_ABSOLUTE_PATH=code/run_templates/orchestrator_tutorial_2
+# CSM_SCENARIO_ID=The identifier of the scenario in the Cosmo Tech API
 # CSM_SIMULATION=BusinessApp_Simulation
-```
+# CSM_WORKSPACE_ID=The id of the workspace in the Cosmo Tech API
 
 This `.env` file can then be used as a parameter of the `docker run` command with `--env-file` 
 or can be used with a tool like `dotenv` (`pip install dotenv`) to temporary set the environment variables of commands. 
