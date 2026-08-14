@@ -77,12 +77,12 @@ Multiple ways exists to connect to the API and query some data, but for simplici
 
     It is made to have pre-made commands to facilitate use of most of the services a modelisator/integrator could require while working on a run template  
 
-    You can get it by installing `CoAL` starting with version `0.7.0`
+    You can get it by installing `CoAL` starting with version `2.3.1`
     ```bash title="How to install CoAL and csm-data"
-    pip install CosmoTech-Acceleration-Library~=0.7.0
+    pip install CosmoTech-Acceleration-Library~=2.3.1
     ```
 
-That command is `csm-data api run-load-data` (documentation of the command is available [here](https://cosmo-tech.github.io/CosmoTech-Acceleration-Library/0.7.0/csm-data/api/scenariorun-load-data/)).
+That command is `csm-data api run-load-data` (documentation of the command is available [here](https://cosmo-tech.github.io/CosmoTech-Acceleration-Library/2.3.1/csm-data/api/run-load-data/)).
 
 The command makes use of 5 environment variables set by the API (as described in the previous section):
 
