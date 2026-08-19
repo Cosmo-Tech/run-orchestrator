@@ -44,6 +44,19 @@ A `Plugin` needs the following structure
 And in the `templates` folder you can put any `.json` file containing either one single `CommandTemplate` 
 or an orchestration file containing valid `CommandTemplate`
 
+!!! tip "Sub-folder organisation"
+    Since version **1.4.3**, the Library also scans **sub-folders** of the `templates/` directory recursively.
+    This lets you organise your templates into categories:
+    ```text
+    templates/
+    ├── fetch/
+    │   └── download_data.json
+    ├── process/
+    │   └── apply_parameters.json
+    └── on_exit/
+        └── send_report.json   # automatically registered as an exit handler
+    ```
+
 === "json file containing a single `CommandTemplate`"
     ```json
     --8<-- "tutorial/plugins_and_templates/single_template.json"

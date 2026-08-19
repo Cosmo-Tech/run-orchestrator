@@ -1,0 +1,42 @@
+services:
+  run-orchestrator-github-io:
+    image: aks-dev-pmu.azure.platform.cosmotech.com/tenant-hippodrome/bma_debian_env:BMA_with_SDK_csm-orc_2026-08-05
+    container_name: csm-orc-github-io
+    ports:
+      - "8000:8000"
+    volumes:
+      - type: bind
+        source: ./docs
+        target: /home/Tooling/run-orchestrator/docs
+        read_only: true
+      - type: bind
+        source: ./examples
+        target: /home/Tooling/run-orchestrator/examples
+        read_only: true
+      - type: bind
+        source: ./overrides
+        target: /home/Tooling/run-orchestrator/overrides
+        read_only: true
+      - type: bind
+        source: ./partials
+        target: /home/Tooling/run-orchestrator/partials
+        read_only: true
+      - type: bind
+        source: ./tutorial
+        target: /home/Tooling/run-orchestrator/tutorial
+        read_only: true
+      - type: bind
+        source: ./scripts/command_template.template.md
+        target: /home/Tooling/run-orchestrator/scripts/command_template.template.md
+        read_only: true
+      - type: bind
+        source: ./scripts/index.template.md
+        target: /home/Tooling/run-orchestrator/scripts/index.template.md
+        read_only: true
+      - type: bind
+        source: ./mkdocs.yml
+        target: /home/Tooling/run-orchestrator/mkdocs.yml
+        read_only: true
+    command: /bin/sh -c "cd /home/Tooling/run-orchestrator/ && .csmorcenv/bin/python -m mkdocs serve -a 0.0.0.0:8000 -w ./overrides/ -w ./scripts/"
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t

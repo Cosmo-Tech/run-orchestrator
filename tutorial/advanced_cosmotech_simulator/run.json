@@ -1,13 +1,12 @@
 {
   "steps": [
     {
-      "id": "DownloadScenarioData",
+      "id": "DownloadRunnerData",
       "command": "csm-data",
       "description": "Connect to the Cosmo Tech API to download dataset and parameters",
       "arguments": [
         "api", 
-        "scenariorun-load-data",
-        "--write-json"
+        "run-load-data",
       ],
       "useSystemEnvironment": true,
       "environment": {
@@ -23,14 +22,14 @@
         "CSM_WORKSPACE_ID": {
           "description": "The id of the workspace in the Cosmo Tech API"
         },
-        "CSM_SCENARIO_ID": {
-          "description": "The id of the scenario in the Cosmo Tech API"
+        "CSM_RUNNER_ID": {
+          "description": "The id of the runner in the Cosmo Tech API"
         },
         "CSM_DATASET_ABSOLUTE_PATH": {
           "description": "The path used to store the datasets of the scenario"
         },
         "CSM_PARAMETERS_ABSOLUTE_PATH": {
-          "description": "The path used to store the parameters of the scenario"
+          "description": "The path used to store the parameters of the runner"
         }
       }
     },
@@ -55,7 +54,7 @@
         }
       },
       "precedents": [
-        "DownloadScenarioData"
+        "DownloadRunnerData"
       ]
     },
     {

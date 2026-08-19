@@ -23,11 +23,9 @@
     },
     {
       "id": "SimulationRun",
-      "command": "csm-orc",
+      "command": "csm-simulator",
       "arguments": [
-        "run-step",
-        "--template", "orchestrator_tutorial_1",
-        "--steps", "engine"
+        "-i", "$CSM_SIMULATION"
       ],
       "description": "Runs the simulation targeted by CSM_SIMULATION",
       "useSystemEnvironment": true,

@@ -54,6 +54,7 @@ nav:
     - Cosmo Tech Run Orchestrator: 'index.md'
     - License: 'License.md'
     - Dependencies: 'dependencies.md'
+    - Changelog: 'changelog.md'
   - Tutorials:
       - "tutorial/index.md"
       - "tutorial/getting_started.md"

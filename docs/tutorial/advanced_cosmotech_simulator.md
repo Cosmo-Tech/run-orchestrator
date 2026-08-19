@@ -48,6 +48,18 @@ The `entrypoint.py` command (and its equivalent `csm-orc entrypoint`) works usin
 Every `Environment Variable` passed to the command will be forwarded to the
 `csm-orc run` command inside, and the command will be run with the working directory set to `/pkg/share`.
 
+### Selecting the JSON template file with `CSM_RUN_TYPE`
+
+When running in general entrypoint mode, the entrypoint reads the `CSM_RUN_TYPE` environment variable to decide **which JSON file** inside the run template folder it will execute:
+
+| `CSM_RUN_TYPE` value | File executed | Behaviour if absent |
+|---|---|---|
+| `run` *(default)* | `<template_id>/run.json` | Error — the run fails |
+| `delete` | `<template_id>/delete.json` | Warning — the run is skipped gracefully |
+| any other value | `<template_id>/<value>.json` | Warning — the run is skipped gracefully |
+
+This allows a single Docker image to support multiple operation modes (e.g. a standard simulation run and a delete/clean-up operation) without any code change — the platform injects the appropriate `CSM_RUN_TYPE` value at execution time.
+
 ## Which `Environment Variables` are made available by the API?
 
 The Cosmo Tech API will forward a set of environment variables to any Simulator containers. You can find the full list in the following table.
@@ -65,33 +77,21 @@ Multiple ways exists to connect to the API and query some data, but for simplici
 
     It is made to have pre-made commands to facilitate use of most of the services a modelisator/integrator could require while working on a run template  
 
-    You can get it by installing `CoAL` starting with version `0.7.0`
+    You can get it by installing `CoAL` starting with version `2.3.1`
     ```bash title="How to install CoAL and csm-data"
-    pip install CosmoTech-Acceleration-Library~=0.7.0
+    pip install CosmoTech-Acceleration-Library~=2.3.1
     ```
 
-That command is `csm-data api scenariorun-load-data` (documentation of the command is available [here](https://cosmo-tech.github.io/CosmoTech-Acceleration-Library/0.7.0/csm-data/api/scenariorun-load-data/)).
+That command is `csm-data api run-load-data` (documentation of the command is available [here](https://cosmo-tech.github.io/CosmoTech-Acceleration-Library/2.3.1/csm-data/api/run-load-data/)).
 
 The command makes use of 5 environment variables set by the API (as described in the previous section):
 
 - `CSM_ORGANIZATION_ID`
 - `CSM_WORKSPACE_ID`
-- `CSM_SCENARIO_ID`
+- `CSM_RUNNER_ID`
 - `CSM_DATASET_ABSOLUTE_PATH`
 - `CSM_PARAMETERS_ABSOLUTE_PATH`
 
-And uses 3 control environment variables:
-
-- `WRITE_JSON`: If set to `true` will write a `parameters.json` file in `CSM_PARAMETERS_ABSOLUTE_PATH`.
-- `WRITE_CSV`: If set to `true` will write a `parameters.csv` file in `CSM_PARAMETERS_ABSOLUTE_PATH`.
-- `FETCH_DATASET`: If set to `true` will download all the `Datasets` tied to your scenario, 
-     will write the main ones (not defined as a `Parameter`) in `CSM_DATASET_ABSOLUTE_PATH` 
-     and will write the others in `CSM_PARAMETERS_ABSOLUTE_PATH/[parameter name]` 
-     where `[parameter name]` is the name of the `Parameter` targeting the `Dataset` (with a type set to `%DATASETID%`).
-
-With that command one can easily download any dataset defined in the Cosmo Tech API, 
-as long as those datasets use one of the standard connections defined in the API 
-(as of version 3.0: `Azure Blob Storage`, `Azure Digital Twin`, `TwinGraph Storage`).
 
 ## Combine everything in a `Run Template`
 
@@ -99,10 +99,9 @@ Using all those new information we can see that most of the actions needed to ru
 
 We can:
 
-- Download our scenario information using `csm-data api scenariorun-load-data`.
+- Download our scenario information using `csm-data api run-load-data`.
 - Apply our parameters with our `apply_parameters.py`.
-- Run our simulation using `csm-orc run-step`.
-- And send our simulation results to an external system (here Azure Data Explorer) by setting environment variables during the `run-step`.
+- Run our simulation using `csm-simulator` called with `-i $CSM_SIMULATION`
 
 It is then easy to update our previous `run.json` to take those changes into account.
 
@@ -116,23 +115,17 @@ It is then easy to update our previous `run.json` to take those changes into acc
     cp -r code/run_templates/orchestrator_tutorial_1 code/run_templates/orchestrator_tutorial_2
     ```
 
-```json title="code/run_templates/orchestrator_tutorial2/run.json" linenums="1" hl_lines="3-36 41-44 48 52 57-59 67 76"
+```json title="code/run_templates/orchestrator_tutorial2/run.json" linenums="1"
 --8<-- "tutorial/advanced_cosmotech_simulator/run.json"
 ```
 
 We can see a few changes and additions compared to the previous `run.json` file:
 
-- We created a new `step` called `DownloadScenarioData` that makes use of `csm-data api scenariorun-load-data`:
-    + In this step we defined a few environment variables required to run it, 
-      but we still added `useSystemEnvironment` to `true` to ensure any environment variable required 
-      to connect to the API is made available as well.
 - In the `ApplyParameters` we made a few changes:
     + `DATASET/PARAMETERS_PATH` became `CSM_DATASET/PARAMETERS_ABSOLUTE_PATH`.
     + We added `/parameters.json` in the arguments for the parameters path.
-    + We added a precendent step to schedule it after the
-    `DownloadScenarioData`.
-- In the `SimulatorRun` step changes are minimal:
-    + The template targeted is the new `orchestrator_tutorial_2`.
+- In the `SimulationRun` step changes are minimal:
+    + The command is now `csm-simulator` called with `-i $CSM_SIMULATION`.
     + The default value of `CSM_SIMULATION` has been changed to `BusinessApp_Simulation` 
       since `docker` simulation can't make use of visual consumers.
 
@@ -319,7 +312,6 @@ cat code/run_templates/orchestrator_tutorial_2/vars.env
 # CSM_SCENARIO_ID=The identifier of the scenario in the Cosmo Tech API
 # CSM_SIMULATION=BusinessApp_Simulation
 # CSM_WORKSPACE_ID=The id of the workspace in the Cosmo Tech API
-```
 
 This `.env` file can then be used as a parameter of the `docker run` command with `--env-file` 
 or can be used with a tool like `dotenv` (`pip install dotenv`) to temporary set the environment variables of commands. 
@@ -341,14 +333,14 @@ You can also just load it to get all values in your current environment.
     dotenv -e code/run_templates/orchestrator_tutorial_2/vars.env csm-orc run code/run_templates/orchestrator_tutorial_2/run.json
     ```
 
-## I want to use my local data instead of needing a `Scenario`
+## I want to use my local data instead of running `ApplyParameters`
 
 The `csm-orc run` command comes with an optional parameter `--skip-step` that can be set 
 in an environment variable `CSM_SKIP_STEPS`. This parameter can be given a list of steps that will be ignored during the run.
 
-Since the "only" step used to download distant data from our run is `DownloadScenarioData` we can simply run locally by skipping it:
+Since `ApplyParameters` is only required when you want to update the dataset with scenario parameters, you can skip it to run the simulation directly against the existing dataset:
 
 ```bash title="Running only the SimulationRun step"
-csm-orc run --skip-step DownloadScenarioData --skip-step ApplyParameters code/run_templates/orchestrator_tutorial_2/run.json
+csm-orc run --skip-step ApplyParameters code/run_templates/orchestrator_tutorial_2/run.json
 ```
 
