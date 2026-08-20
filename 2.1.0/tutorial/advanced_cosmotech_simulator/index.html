@@ -432,6 +432,8 @@
       
         
       
+        
+      
     
     
     
@@ -515,6 +517,29 @@
   
   <span class="md-ellipsis">
     Dependencies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Changelog
     
   </span>
   
@@ -754,6 +779,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="How does entrypoint.py works?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selecting-the-json-template-file-with-csm_run_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selecting the JSON template file with CSM_RUN_TYPE
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -880,15 +920,6 @@
   <a href="#run-our-distant-scenario" class="md-nav__link">
     <span class="md-ellipsis">
       Run our distant Scenario
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#i-want-to-use-my-local-data-instead-of-needing-a-scenario" class="md-nav__link">
-    <span class="md-ellipsis">
-      I want to use my local data instead of needing a Scenario
     </span>
   </a>
   
@@ -1421,6 +1452,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="How does entrypoint.py works?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selecting-the-json-template-file-with-csm_run_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selecting the JSON template file with CSM_RUN_TYPE
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1552,15 +1598,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#i-want-to-use-my-local-data-instead-of-needing-a-scenario" class="md-nav__link">
-    <span class="md-ellipsis">
-      I want to use my local data instead of needing a Scenario
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1622,6 +1659,35 @@ the <code>docker</code> image.</p>
 </ul>
 <p>Every <code>Environment Variable</code> passed to the command will be forwarded to the
 <code>csm-orc run</code> command inside, and the command will be run with the working directory set to <code>/pkg/share</code>.</p>
+<h3 id="selecting-the-json-template-file-with-csm_run_type">Selecting the JSON template file with <code>CSM_RUN_TYPE</code><a class="headerlink" href="#selecting-the-json-template-file-with-csm_run_type" title="Permanent link">&para;</a></h3>
+<p>When running in general entrypoint mode, the entrypoint reads the <code>CSM_RUN_TYPE</code> environment variable to decide <strong>which JSON file</strong> inside the run template folder it will execute:</p>
+<table>
+<thead>
+<tr>
+<th><code>CSM_RUN_TYPE</code> value</th>
+<th>File executed</th>
+<th>Behaviour if absent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>run</code> <em>(default)</em></td>
+<td><code>&lt;template_id&gt;/run.json</code></td>
+<td>Error — the run fails</td>
+</tr>
+<tr>
+<td><code>delete</code></td>
+<td><code>&lt;template_id&gt;/delete.json</code></td>
+<td>Warning — the run is skipped gracefully</td>
+</tr>
+<tr>
+<td>any other value</td>
+<td><code>&lt;template_id&gt;/&lt;value&gt;.json</code></td>
+<td>Warning — the run is skipped gracefully</td>
+</tr>
+</tbody>
+</table>
+<p>This allows a single Docker image to support multiple operation modes (e.g. a standard simulation run and a delete/clean-up operation) without any code change — the platform injects the appropriate <code>CSM_RUN_TYPE</code> value at execution time.</p>
 <h2 id="which-environment-variables-are-made-available-by-the-api">Which <code>Environment Variables</code> are made available by the API?<a class="headerlink" href="#which-environment-variables-are-made-available-by-the-api" title="Permanent link">&para;</a></h2>
 <p>The Cosmo Tech API will forward a set of environment variables to any Simulator containers. You can find the full list in the following table.</p>
 <p><strong>List of environment variables</strong></p>
@@ -1745,39 +1811,26 @@ the <code>docker</code> image.</p>
 <p class="admonition-title">What is <code>csm-data</code></p>
 <p><code>csm-data</code> is a data oriented CLI part of the library <code>CosmoTech-Acceleration-Library</code> (abreviated as <code>CoAL</code>)  </p>
 <p>It is made to have pre-made commands to facilitate use of most of the services a modelisator/integrator could require while working on a run template  </p>
-<p>You can get it by installing <code>CoAL</code> starting with version <code>0.7.0</code>
-<div class="highlight"><span class="filename">How to install CoAL and csm-data</span><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>CosmoTech-Acceleration-Library~<span class="o">=</span><span class="m">0</span>.7.0
+<p>You can get it by installing <code>CoAL</code> starting with version <code>2.3.1</code>
+<div class="highlight"><span class="filename">How to install CoAL and csm-data</span><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>CosmoTech-Acceleration-Library~<span class="o">=</span><span class="m">2</span>.3.1
 </code></pre></div></p>
 </div>
-<p>That command is <code>csm-data api scenariorun-load-data</code> (documentation of the command is available <a href="https://cosmo-tech.github.io/CosmoTech-Acceleration-Library/0.7.0/csm-data/api/scenariorun-load-data/">here</a>).</p>
+<p>That command is <code>csm-data api run-load-data</code> (documentation of the command is available <a href="https://cosmo-tech.github.io/CosmoTech-Acceleration-Library/2.3.1/csm-data/api/run-load-data/">here</a>).</p>
 <p>The command makes use of 5 environment variables set by the API (as described in the previous section):</p>
 <ul>
 <li><code>CSM_ORGANIZATION_ID</code></li>
 <li><code>CSM_WORKSPACE_ID</code></li>
-<li><code>CSM_SCENARIO_ID</code></li>
+<li><code>CSM_RUNNER_ID</code></li>
 <li><code>CSM_DATASET_ABSOLUTE_PATH</code></li>
 <li><code>CSM_PARAMETERS_ABSOLUTE_PATH</code></li>
 </ul>
-<p>And uses 3 control environment variables:</p>
-<ul>
-<li><code>WRITE_JSON</code>: If set to <code>true</code> will write a <code>parameters.json</code> file in <code>CSM_PARAMETERS_ABSOLUTE_PATH</code>.</li>
-<li><code>WRITE_CSV</code>: If set to <code>true</code> will write a <code>parameters.csv</code> file in <code>CSM_PARAMETERS_ABSOLUTE_PATH</code>.</li>
-<li><code>FETCH_DATASET</code>: If set to <code>true</code> will download all the <code>Datasets</code> tied to your scenario, 
-     will write the main ones (not defined as a <code>Parameter</code>) in <code>CSM_DATASET_ABSOLUTE_PATH</code> 
-     and will write the others in <code>CSM_PARAMETERS_ABSOLUTE_PATH/[parameter name]</code> 
-     where <code>[parameter name]</code> is the name of the <code>Parameter</code> targeting the <code>Dataset</code> (with a type set to <code>%DATASETID%</code>).</li>
-</ul>
-<p>With that command one can easily download any dataset defined in the Cosmo Tech API, 
-as long as those datasets use one of the standard connections defined in the API 
-(as of version 3.0: <code>Azure Blob Storage</code>, <code>Azure Digital Twin</code>, <code>TwinGraph Storage</code>).</p>
 <h2 id="combine-everything-in-a-run-template">Combine everything in a <code>Run Template</code><a class="headerlink" href="#combine-everything-in-a-run-template" title="Permanent link">&para;</a></h2>
 <p>Using all those new information we can see that most of the actions needed to run our code based on API data are already prepackaged.</p>
 <p>We can:</p>
 <ul>
-<li>Download our scenario information using <code>csm-data api scenariorun-load-data</code>.</li>
+<li>Download our scenario information using <code>csm-data api run-load-data</code>.</li>
 <li>Apply our parameters with our <code>apply_parameters.py</code>.</li>
-<li>Run our simulation using <code>csm-orc run-step</code>.</li>
-<li>And send our simulation results to an external system (here Azure Data Explorer) by setting environment variables during the <code>run-step</code>.</li>
+<li>Run our simulation using <code>csm-simulator</code> called with <code>-i $CSM_SIMULATION</code></li>
 </ul>
 <p>It is then easy to update our previous <code>run.json</code> to take those changes into account.</p>
 <details class="question" open="open">
@@ -1871,87 +1924,85 @@ which is an exact copy of the folder <code>code/run_templates/orchestrator_tutor
 <span class="normal">80</span>
 <span class="normal">81</span>
 <span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="hll"><span class="w">    </span><span class="p">{</span>
-</span><span class="hll"><span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DownloadScenarioData&quot;</span><span class="p">,</span>
-</span><span class="hll"><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;csm-data&quot;</span><span class="p">,</span>
-</span><span class="hll"><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Connect to the Cosmo Tech API to download dataset and parameters&quot;</span><span class="p">,</span>
-</span><span class="hll"><span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span class="hll"><span class="w">        </span><span class="s2">&quot;api&quot;</span><span class="p">,</span><span class="w"> </span>
-</span><span class="hll"><span class="w">        </span><span class="s2">&quot;scenariorun-load-data&quot;</span><span class="p">,</span>
-</span><span class="hll"><span class="w">        </span><span class="s2">&quot;--write-json&quot;</span>
-</span><span class="hll"><span class="w">      </span><span class="p">],</span>
-</span><span class="hll"><span class="w">      </span><span class="nt">&quot;useSystemEnvironment&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span class="hll"><span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_API_URL&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The URL used to query your Cosmo Tech API instance&quot;</span>
-</span><span class="hll"><span class="w">        </span><span class="p">},</span>
-</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_API_SCOPE&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The scope of identification used to request access token for your Cosmo Tech API instance&quot;</span>
-</span><span class="hll"><span class="w">        </span><span class="p">},</span>
-</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_ORGANIZATION_ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The id of the organization in the Cosmo Tech API&quot;</span>
-</span><span class="hll"><span class="w">        </span><span class="p">},</span>
-</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_WORKSPACE_ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The id of the workspace in the Cosmo Tech API&quot;</span>
-</span><span class="hll"><span class="w">        </span><span class="p">},</span>
-</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_SCENARIO_ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The id of the scenario in the Cosmo Tech API&quot;</span>
-</span><span class="hll"><span class="w">        </span><span class="p">},</span>
-</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The path used to store the datasets of the scenario&quot;</span>
-</span><span class="hll"><span class="w">        </span><span class="p">},</span>
-</span><span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_PARAMETERS_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span class="hll"><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The path used to store the parameters of the scenario&quot;</span>
-</span><span class="hll"><span class="w">        </span><span class="p">}</span>
-</span><span class="hll"><span class="w">      </span><span class="p">}</span>
-</span><span class="hll"><span class="w">    </span><span class="p">},</span>
-</span><span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ApplyParameters&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;python&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="hll"><span class="w">        </span><span class="s2">&quot;code/run_templates/orchestrator_tutorial_2/apply_parameters.py&quot;</span><span class="p">,</span>
-</span><span class="hll"><span class="w">        </span><span class="s2">&quot;$CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">,</span>
-</span><span class="hll"><span class="w">        </span><span class="s2">&quot;$CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">,</span>
-</span><span class="hll"><span class="w">        </span><span class="s2">&quot;$CSM_PARAMETERS_ABSOLUTE_PATH/parameters.json&quot;</span>
-</span><span class="w">      </span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Apply our parameters to the dataset&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_DATASET_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The path to the dataset to update&quot;</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span>
+<span class="normal">83</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"steps"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DownloadRunnerData"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"csm-data"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Connect to the Cosmo Tech API to download dataset and parameters"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"api"</span><span class="p">,</span><span class="w"> </span>
+<span class="w">        </span><span class="s2">"run-load-data"</span><span class="p">,</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"useSystemEnvironment"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"environment"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"CSM_API_URL"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The URL used to query your Cosmo Tech API instance"</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="hll"><span class="w">        </span><span class="nt">&quot;CSM_PARAMETERS_ABSOLUTE_PATH&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The path to a folder containing our parameters.json file&quot;</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;code/run_templates/orchestrator_tutorial_2&quot;</span>
+<span class="w">        </span><span class="nt">"CSM_API_SCOPE"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The scope of identification used to request access token for your Cosmo Tech API instance"</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"CSM_ORGANIZATION_ID"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The id of the organization in the Cosmo Tech API"</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"CSM_WORKSPACE_ID"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The id of the workspace in the Cosmo Tech API"</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"CSM_RUNNER_ID"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The id of the runner in the Cosmo Tech API"</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"CSM_DATASET_ABSOLUTE_PATH"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The path used to store the datasets of the scenario"</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"CSM_PARAMETERS_ABSOLUTE_PATH"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The path used to store the parameters of the runner"</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ApplyParameters"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"python"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"code/run_templates/orchestrator_tutorial_2/apply_parameters.py"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"$CSM_DATASET_ABSOLUTE_PATH"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"$CSM_DATASET_ABSOLUTE_PATH"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"$CSM_PARAMETERS_ABSOLUTE_PATH/parameters.json"</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apply our parameters to the dataset"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"environment"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"CSM_DATASET_ABSOLUTE_PATH"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The path to the dataset to update"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"defaultValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Simulation/Resource/scenariorun-data"</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"CSM_PARAMETERS_ABSOLUTE_PATH"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The path to a folder containing our parameters.json file"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"defaultValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"code/run_templates/orchestrator_tutorial_2"</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">      </span><span class="p">},</span>
-<span class="hll"><span class="w">      </span><span class="nt">&quot;precedents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span class="hll"><span class="w">        </span><span class="s2">&quot;DownloadScenarioData&quot;</span>
-</span><span class="hll"><span class="w">      </span><span class="p">]</span>
-</span><span class="w">    </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"precedents"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"DownloadRunnerData"</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SimulationRun&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;csm-orc&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;run-step&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;--template&quot;</span><span class="p">,</span>
-<span class="hll"><span class="w">        </span><span class="s2">&quot;orchestrator_tutorial_2&quot;</span><span class="p">,</span>
-</span><span class="w">        </span><span class="s2">&quot;--steps&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;engine&quot;</span>
+<span class="w">      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SimulationRun"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"csm-orc"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"run-step"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"--template"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"orchestrator_tutorial_2"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"--steps"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"engine"</span>
 <span class="w">      </span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Runs the simulation targeted by CSM_SIMULATION&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;useSystemEnvironment&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;CSM_SIMULATION&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The simulation file to run&quot;</span><span class="p">,</span>
-<span class="hll"><span class="w">          </span><span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BusinessApp_Simulation&quot;</span>
-</span><span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Runs the simulation targeted by CSM_SIMULATION"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"useSystemEnvironment"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"environment"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"CSM_SIMULATION"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The simulation file to run"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"defaultValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BusinessApp_Simulation"</span>
+<span class="w">        </span><span class="p">}</span>
 <span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="nt">&quot;precedents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;ApplyParameters&quot;</span>
+<span class="w">      </span><span class="nt">"precedents"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"ApplyParameters"</span>
 <span class="w">      </span><span class="p">]</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">]</span>
@@ -1959,21 +2010,13 @@ which is an exact copy of the folder <code>code/run_templates/orchestrator_tutor
 </code></pre></div></td></tr></table></div>
 <p>We can see a few changes and additions compared to the previous <code>run.json</code> file:</p>
 <ul>
-<li>We created a new <code>step</code> called <code>DownloadScenarioData</code> that makes use of <code>csm-data api scenariorun-load-data</code>:<ul>
-<li>In this step we defined a few environment variables required to run it, 
-  but we still added <code>useSystemEnvironment</code> to <code>true</code> to ensure any environment variable required 
-  to connect to the API is made available as well.</li>
-</ul>
-</li>
 <li>In the <code>ApplyParameters</code> we made a few changes:<ul>
 <li><code>DATASET/PARAMETERS_PATH</code> became <code>CSM_DATASET/PARAMETERS_ABSOLUTE_PATH</code>.</li>
 <li>We added <code>/parameters.json</code> in the arguments for the parameters path.</li>
-<li>We added a precendent step to schedule it after the
-<code>DownloadScenarioData</code>.</li>
 </ul>
 </li>
-<li>In the <code>SimulatorRun</code> step changes are minimal:<ul>
-<li>The template targeted is the new <code>orchestrator_tutorial_2</code>.</li>
+<li>In the <code>SimulationRun</code> step changes are minimal:<ul>
+<li>The command is now <code>csm-simulator</code> called with <code>-i $CSM_SIMULATION</code>.</li>
 <li>The default value of <code>CSM_SIMULATION</code> has been changed to <code>BusinessApp_Simulation</code> 
   since <code>docker</code> simulation can't make use of visual consumers.</li>
 </ul>
@@ -2005,23 +2048,23 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <p>The following sections give you simple examples of <code>.yaml</code> files used to define resources in the Cosmo Tech API.</p>
 <h3 id="define-a-solution">Define a <code>Solution</code><a class="headerlink" href="#define-a-solution" title="Permanent link">&para;</a></h3>
 <p>An example of <code>Solution.yaml</code> (a file used by the Cosmo Tech API) for our current solution would be:</p>
-<div class="highlight"><span class="filename">Solution.yaml</span><pre><span></span><code><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;brewery&quot;</span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Demo</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">Solution,</span><span class="nv"> </span><span class="s">csm-orc</span><span class="nv"> </span><span class="s">tutorial&quot;</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;A</span><span class="nv"> </span><span class="s">simple</span><span class="nv"> </span><span class="s">example</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">Cosmo</span><span class="nv"> </span><span class="s">Tech</span><span class="nv"> </span><span class="s">solution</span><span class="nv"> </span><span class="s">built</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">model&quot;</span>
+<div class="highlight"><span class="filename">Solution.yaml</span><pre><span></span><code><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">"brewery"</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"Demo</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">Solution,</span><span class="nv"> </span><span class="s">csm-orc</span><span class="nv"> </span><span class="s">tutorial"</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"A</span><span class="nv"> </span><span class="s">simple</span><span class="nv"> </span><span class="s">example</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">Cosmo</span><span class="nv"> </span><span class="s">Tech</span><span class="nv"> </span><span class="s">solution</span><span class="nv"> </span><span class="s">built</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">model"</span>
 <span class="nt">tags</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;csm-orc&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Brewery&quot;</span>
-<span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mybrewery_simulator&quot;</span>
-<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.0.1&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"csm-orc"</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Brewery"</span>
+<span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="s">"mybrewery_simulator"</span>
+<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"0.0.1"</span>
 <span class="nt">parameters</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Stock&quot;</span>
-<span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;int&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">"Stock"</span>
+<span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">"int"</span>
 <span class="w">    </span><span class="nt">defaultValue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;RestockQty&quot;</span>
-<span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;int&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">"RestockQty"</span>
+<span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">"int"</span>
 <span class="w">    </span><span class="nt">defaultValue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">25</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;NbWaiters&quot;</span>
-<span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;int&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">"NbWaiters"</span>
+<span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">"int"</span>
 <span class="w">    </span><span class="nt">defaultValue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="nt">parameterGroups</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar_parameters</span>
@@ -2030,9 +2073,9 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RestockQty</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NbWaiters</span>
 <span class="nt">runTemplates</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;orchestrator_tutorial_2&quot;</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Basic</span><span class="nv"> </span><span class="s">what-if&quot;</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Basic</span><span class="nv"> </span><span class="s">what-if</span><span class="nv"> </span><span class="s">simulation&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">"orchestrator_tutorial_2"</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"Basic</span><span class="nv"> </span><span class="s">what-if"</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Basic</span><span class="nv"> </span><span class="s">what-if</span><span class="nv"> </span><span class="s">simulation"</span>
 <span class="w">    </span><span class="nt">parameterGroups</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar_parameters</span>
 </code></pre></div>
@@ -2383,16 +2426,16 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="normal">342</span>
 <span class="normal">343</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">    </span><span class="nt">Solution</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
-<span class="w">      </span><span class="nt">x-class-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Document&quot;</span>
+<span class="w">      </span><span class="nt">x-class-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Document"</span>
 <span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">a version of a Solution</span>
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">id</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@org.springframework.data.annotation.Id&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@org.springframework.data.annotation.Id"</span>
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Solution version unique identifier</span>
 <span class="w">        </span><span class="nt">organizationId</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Organization unique identifier</span>
@@ -2401,7 +2444,7 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Solution key which group Solution versions</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Searchable&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Searchable"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Solution name</span>
 <span class="w">        </span><span class="nt">description</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
@@ -2434,21 +2477,21 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the list of Run Template Parameters</span>
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/RunTemplateParameter&#39;</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/RunTemplateParameter'</span>
 <span class="w">        </span><span class="nt">parameterGroups</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the list of parameters groups for the Run Templates</span>
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/RunTemplateParameterGroup&#39;</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/RunTemplateParameterGroup'</span>
 <span class="w">        </span><span class="nt">runTemplates</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list of Run Template</span>
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/RunTemplate&#39;</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/RunTemplate'</span>
 <span class="w">        </span><span class="nt">security</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">allOf</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/SolutionSecurity&#39;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/SolutionSecurity'</span>
 <span class="w">  </span><span class="c1">#       required:</span>
 <span class="w">  </span><span class="c1">#         - key</span>
 <span class="w">  </span><span class="c1">#         - name</span>
@@ -2461,14 +2504,14 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">default</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the role by default</span>
 <span class="w">        </span><span class="nt">accessControlList</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the list which can access this Solution with detailed access control information</span>
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/SolutionAccessControl&#39;</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/SolutionAccessControl'</span>
 <span class="w">      </span><span class="nt">required</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">accessControlList</span>
@@ -2478,7 +2521,7 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">id</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the identity id</span>
 <span class="w">        </span><span class="nt">role</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
@@ -2507,7 +2550,7 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Run Template name</span>
 <span class="w">          </span><span class="nt">deprecated</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">        </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/TranslatedLabels&#39;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/TranslatedLabels'</span>
 <span class="w">        </span><span class="nt">description</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Run Template description</span>
@@ -2524,7 +2567,7 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the compute size needed for this Run Template. Standard sizes are basic and highcpu. Default is basic</span>
 <span class="w">        </span><span class="nt">runSizing</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">definition of resources needed for the scenario run</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/RunTemplateResourceSizing&quot;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">"#/components/schemas/RunTemplateResourceSizing"</span>
 <span class="w">        </span><span class="nt">noDataIngestionState</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">boolean</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">set to true if the run template does not want to check data ingestion state (no probes or not control plane)</span>
@@ -2562,17 +2605,17 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">boolean</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">whether or not to store the scenario parameters in json instead of csv</span>
 <span class="w">        </span><span class="nt">parametersHandlerSource</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/RunTemplateStepSource&quot;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">"#/components/schemas/RunTemplateStepSource"</span>
 <span class="w">        </span><span class="nt">datasetValidatorSource</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/RunTemplateStepSource&quot;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">"#/components/schemas/RunTemplateStepSource"</span>
 <span class="w">        </span><span class="nt">preRunSource</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/RunTemplateStepSource&quot;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">"#/components/schemas/RunTemplateStepSource"</span>
 <span class="w">        </span><span class="nt">runSource</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/RunTemplateStepSource&quot;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">"#/components/schemas/RunTemplateStepSource"</span>
 <span class="w">        </span><span class="nt">postRunSource</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/RunTemplateStepSource&quot;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">"#/components/schemas/RunTemplateStepSource"</span>
 <span class="w">        </span><span class="nt">scenariodataTransformSource</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/RunTemplateStepSource&quot;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">"#/components/schemas/RunTemplateStepSource"</span>
 <span class="w">        </span><span class="nt">parameterGroups</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the ordered list of parameters groups for the Run Template</span>
@@ -2592,12 +2635,12 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">an optional directory where to find the run template source</span>
 <span class="w">        </span><span class="nt">orchestratorType</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/RunTemplateOrchestrator&quot;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">"#/components/schemas/RunTemplateOrchestrator"</span>
 <span class="w">        </span><span class="nt">executionTimeout</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">an optional duration in seconds in which a workflow is allowed to run</span>
 <span class="w">        </span><span class="nt">deleteHistoricalData</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/DeleteHistoricalData&quot;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">"#/components/schemas/DeleteHistoricalData"</span>
 <span class="w">      </span><span class="nt">required</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">id</span>
 <span class="c1">#         - name</span>
@@ -2629,19 +2672,19 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">    </span><span class="nt">RunTemplateHandlerId</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Run Template step handler identifier</span>
-<span class="w">      </span><span class="nt">enum</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;parameters_handler&quot;</span><span class="p p-Indicator">,</span><span class="s">&quot;validator&quot;</span><span class="p p-Indicator">,</span><span class="s">&quot;prerun&quot;</span><span class="p p-Indicator">,</span><span class="s">&quot;engine&quot;</span><span class="p p-Indicator">,</span><span class="s">&quot;postrun&quot;</span><span class="p p-Indicator">,</span><span class="s">&quot;scenariodata_transform&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">enum</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"parameters_handler"</span><span class="p p-Indicator">,</span><span class="s">"validator"</span><span class="p p-Indicator">,</span><span class="s">"prerun"</span><span class="p p-Indicator">,</span><span class="s">"engine"</span><span class="p p-Indicator">,</span><span class="s">"postrun"</span><span class="p p-Indicator">,</span><span class="s">"scenariodata_transform"</span><span class="p p-Indicator">]</span>
 <span class="w">    </span><span class="nt">RunTemplateStepSource</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the source local, cloud or git repository</span>
-<span class="w">      </span><span class="nt">enum</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;cloud&quot;</span><span class="p p-Indicator">,</span><span class="s">&quot;git&quot;</span><span class="p p-Indicator">,</span><span class="s">&quot;local&quot;</span><span class="p p-Indicator">,</span><span class="s">&quot;platform&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">enum</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"cloud"</span><span class="p p-Indicator">,</span><span class="s">"git"</span><span class="p p-Indicator">,</span><span class="s">"local"</span><span class="p p-Indicator">,</span><span class="s">"platform"</span><span class="p p-Indicator">]</span>
 <span class="w">    </span><span class="nt">RunTemplateResourceSizing</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
 <span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">a description object for resource requests and limits (default same configuration as basic sizing)</span>
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ResourceSizeInfo&#39;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ResourceSizeInfo'</span>
 <span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ResourceSizeInfo&#39;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ResourceSizeInfo'</span>
 <span class="w">      </span><span class="nt">required</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">requests</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">limits</span>
@@ -2666,7 +2709,7 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Parameter Group id</span>
 <span class="w">        </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/TranslatedLabels&#39;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/TranslatedLabels'</span>
 <span class="w">        </span><span class="nt">isTable</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">boolean</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">does the group define a table</span>
@@ -2695,7 +2738,7 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Parameter id</span>
 <span class="w">        </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/TranslatedLabels&#39;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/TranslatedLabels'</span>
 <span class="w">        </span><span class="nt">varType</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the variable type for the parameter. Basic types or special type %DATASETID%</span>
@@ -2730,14 +2773,14 @@ csm<span class="w"> </span>docker<span class="w"> </span>build
 which will allow us to create further elements inside the API referencing our solution.</p>
 <p>Now let's look deeper at how to create our <code>Solution.yaml</code>.</p>
 <h4 id="solution-description"><code>Solution</code> description<a class="headerlink" href="#solution-description" title="Permanent link">&para;</a></h4>
-<div class="highlight"><span class="filename">Solution.yaml - description</span><pre><span></span><code><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;brewery&quot;</span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Demo</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">Solution,</span><span class="nv"> </span><span class="s">csm-orc</span><span class="nv"> </span><span class="s">tutorial&quot;</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;A</span><span class="nv"> </span><span class="s">simple</span><span class="nv"> </span><span class="s">example</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">Cosmo</span><span class="nv"> </span><span class="s">Tech</span><span class="nv"> </span><span class="s">solution</span><span class="nv"> </span><span class="s">built</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">model&quot;</span>
+<div class="highlight"><span class="filename">Solution.yaml - description</span><pre><span></span><code><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">"brewery"</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"Demo</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">Solution,</span><span class="nv"> </span><span class="s">csm-orc</span><span class="nv"> </span><span class="s">tutorial"</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"A</span><span class="nv"> </span><span class="s">simple</span><span class="nv"> </span><span class="s">example</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">Cosmo</span><span class="nv"> </span><span class="s">Tech</span><span class="nv"> </span><span class="s">solution</span><span class="nv"> </span><span class="s">built</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Brewery</span><span class="nv"> </span><span class="s">model"</span>
 <span class="nt">tags</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;csm-orc&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Brewery&quot;</span>
-<span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mybrewery_simulator&quot;</span>
-<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.0.1&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"csm-orc"</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Brewery"</span>
+<span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="s">"mybrewery_simulator"</span>
+<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"0.0.1"</span>
 </code></pre></div>
 <p>We can see a few important properties in this part of the <code>Solution</code> file:</p>
 <ul>
@@ -2750,14 +2793,14 @@ which will allow us to create further elements inside the API referencing our so
 </ul>
 <h4 id="parameters-and-parametergroups"><code>parameters</code> and <code>parameterGroups</code><a class="headerlink" href="#parameters-and-parametergroups" title="Permanent link">&para;</a></h4>
 <div class="highlight"><span class="filename">Solution.yaml - parameters</span><pre><span></span><code><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Stock&quot;</span>
-<span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;int&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">"Stock"</span>
+<span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">"int"</span>
 <span class="w">    </span><span class="nt">defaultValue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;RestockQty&quot;</span>
-<span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;int&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">"RestockQty"</span>
+<span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">"int"</span>
 <span class="w">    </span><span class="nt">defaultValue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">25</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;NbWaiters&quot;</span>
-<span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;int&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">"NbWaiters"</span>
+<span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="s">"int"</span>
 <span class="w">    </span><span class="nt">defaultValue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="nt">parameterGroups</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar_parameters</span>
@@ -2776,9 +2819,9 @@ which will allow us to create further elements inside the API referencing our so
 Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "bar_parameters". Parameter groups will make our parameters available in further part of the <code>Solution</code>.</p>
 <h4 id="runtemplates"><code>runTemplates</code><a class="headerlink" href="#runtemplates" title="Permanent link">&para;</a></h4>
 <div class="highlight"><span class="filename">Solution.yaml - runTemplates</span><pre><span></span><code><span class="nt">runTemplates</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;orchestrator_tutorial_2&quot;</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Basic</span><span class="nv"> </span><span class="s">what-if&quot;</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Basic</span><span class="nv"> </span><span class="s">what-if</span><span class="nv"> </span><span class="s">simulation&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">"orchestrator_tutorial_2"</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"Basic</span><span class="nv"> </span><span class="s">what-if"</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Basic</span><span class="nv"> </span><span class="s">what-if</span><span class="nv"> </span><span class="s">simulation"</span>
 <span class="w">    </span><span class="nt">parameterGroups</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar_parameters</span>
 </code></pre></div>
@@ -2792,7 +2835,7 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <div class="highlight"><span class="filename">Workspace.yaml</span><pre><span></span><code><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">brewery_orchestrator_tutorial</span>
 <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Brewery tutorial workspace</span>
 <span class="nt">solution</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">solutionId</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sol-xxxxxxxx&quot;</span>
+<span class="w">  </span><span class="nt">solutionId</span><span class="p">:</span><span class="w"> </span><span class="s">"sol-xxxxxxxx"</span>
 </code></pre></div>
 <p>Full Open API description of a <code>Workspace</code> is available <a href="https://raw.githubusercontent.com/Cosmo-Tech/cosmotech-api/3.0.0/workspace/src/main/openapi/workspace.yaml">here</a>.</p>
 <details class="info">
@@ -2976,30 +3019,30 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="normal">177</span>
 <span class="normal">178</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">    </span><span class="nt">Workspace</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
-<span class="w">      </span><span class="nt">x-class-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Document&quot;</span>
+<span class="w">      </span><span class="nt">x-class-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Document"</span>
 <span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">a Workspace</span>
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">id</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@org.springframework.data.annotation.Id&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@org.springframework.data.annotation.Id"</span>
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Workspace unique identifier generated by the API</span>
-<span class="w">          </span><span class="nt">example</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;w-0123456789ab&quot;</span>
+<span class="w">          </span><span class="nt">example</span><span class="p">:</span><span class="w"> </span><span class="s">"w-0123456789ab"</span>
 <span class="w">        </span><span class="nt">organizationId</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Organization unique identifier under which the workspace resides</span>
-<span class="w">          </span><span class="nt">example</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;o-0123456789ab&quot;</span>
+<span class="w">          </span><span class="nt">example</span><span class="p">:</span><span class="w"> </span><span class="s">"o-0123456789ab"</span>
 <span class="w">        </span><span class="nt">key</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">technical key for resource name convention and version grouping. Must be unique</span>
-<span class="w">          </span><span class="nt">example</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;MyKey&quot;</span>
+<span class="w">          </span><span class="nt">example</span><span class="p">:</span><span class="w"> </span><span class="s">"MyKey"</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Searchable&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Searchable"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Workspace name. This name is display in the sample webApp</span>
-<span class="w">          </span><span class="nt">example</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;FranceOffice&quot;</span>
+<span class="w">          </span><span class="nt">example</span><span class="p">:</span><span class="w"> </span><span class="s">"FranceOffice"</span>
 <span class="w">        </span><span class="nt">description</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Workspace description</span>
@@ -3011,7 +3054,7 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">        </span><span class="nt">version</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Workspace version MAJOR.MINOR.PATCH.</span>
-<span class="w">          </span><span class="nt">example</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1.0.0&quot;</span>
+<span class="w">          </span><span class="nt">example</span><span class="p">:</span><span class="w"> </span><span class="s">"1.0.0"</span>
 <span class="w">        </span><span class="nt">tags</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the list of tags</span>
@@ -3022,9 +3065,9 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the user id which own this workspace. set by the API from Authentification service receved id</span>
 <span class="w">        </span><span class="nt">solution</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/WorkspaceSolution&#39;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/WorkspaceSolution'</span>
 <span class="w">        </span><span class="nt">webApp</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/WorkspaceWebApp&#39;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/WorkspaceWebApp'</span>
 <span class="w">        </span><span class="nt">sendInputToDataWarehouse</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">boolean</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default setting for all Scenarios and Run Templates to set whether or not the Dataset values and the input parameters values are send to the DataWarehouse prior to the ScenarioRun</span>
@@ -3032,8 +3075,8 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">boolean</span>
 <span class="w">          </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set this property to true to use a dedicated Azure Event Hub Namespace for this Workspace.</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">The Event Hub Namespace must be named \&#39;&lt;organization_id\&gt;-&lt;workspace_id\&gt;\&#39; (in lower case).</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">This Namespace must also contain two Event Hubs named \&#39;probesmeasures\&#39; and \&#39;scenariorun\&#39;.</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">The Event Hub Namespace must be named \'&lt;organization_id\&gt;-&lt;workspace_id\&gt;\' (in lower case).</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">This Namespace must also contain two Event Hubs named \'probesmeasures\' and \'scenariorun\'.</span>
 <span class="w">        </span><span class="nt">dedicatedEventHubSasKeyName</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Dedicated Event Hub SAS key name, default to RootManageSharedAccessKey. Use the /secret endpoint to set the key value</span>
@@ -3048,17 +3091,17 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">boolean</span>
 <span class="w">          </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set this property to false to not send scenario metada to Azure Event Hub Namespace for this Workspace.</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">The Event Hub Namespace must be named \&#39;&lt;organization_id\&gt;-&lt;workspace_id\&gt;\&#39; (in lower case).</span>
-<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">This Namespace must also contain two Event Hubs named \&#39;scenariometadata\&#39; and \&#39;scenariorunmetadata\&#39;.</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">The Event Hub Namespace must be named \'&lt;organization_id\&gt;-&lt;workspace_id\&gt;\' (in lower case).</span>
+<span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">This Namespace must also contain two Event Hubs named \'scenariometadata\' and \'scenariorunmetadata\'.</span>
 <span class="w">        </span><span class="nt">datasetCopy</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">boolean</span>
 <span class="w">          </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Activate the copy of dataset on scenario creation, meaning that each scenario created in this workspace</span>
 <span class="w">            </span><span class="l l-Scalar l-Scalar-Plain">will make this copy. when false, scenario use directly the dataset specified.</span>
 <span class="w">        </span><span class="nt">security</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">allOf</span><span class="p">:</span>
-<span class="w">           </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/WorkspaceSecurity&#39;</span>
+<span class="w">           </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/WorkspaceSecurity'</span>
 <span class="w">      </span><span class="nt">required</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">key</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">name</span>
@@ -3069,14 +3112,14 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">default</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the role by default</span>
 <span class="w">        </span><span class="nt">accessControlList</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the list which can access this Workspace with detailed access control information</span>
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/WorkspaceAccessControl&#39;</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/WorkspaceAccessControl'</span>
 <span class="w">      </span><span class="nt">required</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">accessControlList</span>
@@ -3086,7 +3129,7 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">id</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the identity id</span>
 <span class="w">        </span><span class="nt">role</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
@@ -3591,12 +3634,12 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list of filename found on nodes folder</span>
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/FileUploadMetadata&#39;</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/FileUploadMetadata'</span>
 <span class="w">        </span><span class="nt">edges</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list of filename found on edges folder</span>
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/FileUploadMetadata&#39;</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/FileUploadMetadata'</span>
 <span class="w">    </span><span class="nt">FileUploadMetadata</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
@@ -3617,16 +3660,16 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">datasetTags</span>
 <span class="w">    </span><span class="nt">Dataset</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
-<span class="w">      </span><span class="nt">x-class-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Document&quot;</span>
+<span class="w">      </span><span class="nt">x-class-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Document"</span>
 <span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">a Dataset</span>
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">id</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@org.springframework.data.annotation.Id&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@org.springframework.data.annotation.Id"</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Dataset unique identifier</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Searchable&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Searchable"</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Dataset name</span>
 <span class="w">        </span><span class="nt">description</span><span class="p">:</span>
@@ -3641,7 +3684,7 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the name of the owner</span>
 <span class="w">        </span><span class="nt">organizationId</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Organization Id related to this Dataset</span>
@@ -3670,9 +3713,9 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the last time a refresh was done</span>
 <span class="w">        </span><span class="nt">sourceType</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/DatasetSourceType&#39;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/DatasetSourceType'</span>
 <span class="w">        </span><span class="nt">source</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/SourceInfo&#39;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/SourceInfo'</span>
 <span class="w">        </span><span class="nt">ingestionStatus</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Dataset ingestion status</span>
@@ -3693,23 +3736,23 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">        </span><span class="nt">tags</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the list of tags</span>
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">        </span><span class="nt">connector</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Connector setup bound to a Dataset</span>
 <span class="w">          </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">id</span><span class="p">:</span>
 <span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">              </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">              </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">              </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Connector id</span>
 <span class="w">            </span><span class="nt">name</span><span class="p">:</span>
 <span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">              </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">              </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">              </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Connector name</span>
 <span class="w">            </span><span class="nt">version</span><span class="p">:</span>
 <span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
@@ -3732,11 +3775,11 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the list of compatible Solutions versions</span>
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/DatasetCompatibility&#39;</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/DatasetCompatibility'</span>
 <span class="w">        </span><span class="nt">security</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">allOf</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/DatasetSecurity&#39;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/DatasetSecurity'</span>
 <span class="w">    </span><span class="c1">#      required:</span>
 <span class="w">    </span><span class="c1">#        - name</span>
 <span class="w">    </span><span class="c1">#        - connector</span>
@@ -3746,14 +3789,14 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">default</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the role by default</span>
 <span class="w">        </span><span class="nt">accessControlList</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the list which can access this Dataset with detailed access control information</span>
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/DatasetAccessControl&#39;</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/DatasetAccessControl'</span>
 <span class="w">      </span><span class="nt">required</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">accessControlList</span>
@@ -3763,7 +3806,7 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">id</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the identity id</span>
 <span class="w">        </span><span class="nt">role</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
@@ -3897,7 +3940,7 @@ Then we grouped our <code>parameters</code> in a <code>parametersGroup</code> "b
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Validator Run state</span>
-<span class="w">          </span><span class="nt">enum</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;Running&quot;</span><span class="p p-Indicator">,</span><span class="s">&quot;Finished&quot;</span><span class="p p-Indicator">,</span><span class="s">&quot;OnError&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">          </span><span class="nt">enum</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"Running"</span><span class="p p-Indicator">,</span><span class="s">"Finished"</span><span class="p p-Indicator">,</span><span class="s">"OnError"</span><span class="p p-Indicator">]</span>
 <span class="w">        </span><span class="nt">containerId</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
@@ -4006,7 +4049,7 @@ After creating your <code>Dataset</code> you will get an identifier of the form 
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Orchestrator Tutorial</span>
 <span class="nt">runTemplateId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">orchestrator_tutorial_2</span>
 <span class="nt">datasetList</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;d-xxxxxxxx&#39;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'d-xxxxxxxx'</span>
 <span class="nt">parametersValues</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">parameterId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Stock</span>
 <span class="w">    </span><span class="nt">varType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int</span>
@@ -4319,17 +4362,17 @@ After creating your <code>Dataset</code> you will get an identifier of the form 
 <span class="normal">296</span>
 <span class="normal">297</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="w">    </span><span class="nt">Scenario</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
-<span class="w">      </span><span class="nt">x-class-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Document&quot;</span>
+<span class="w">      </span><span class="nt">x-class-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Document"</span>
 <span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">a Scenario with base information</span>
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">id</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@org.springframework.data.annotation.Id&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@org.springframework.data.annotation.Id"</span>
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Scenario unique identifier</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Searchable&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Searchable"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Scenario name</span>
 <span class="w">        </span><span class="nt">description</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
@@ -4341,16 +4384,16 @@ After creating your <code>Dataset</code> you will get an identifier of the form 
 <span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">        </span><span class="nt">parentId</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Scenario parent id</span>
 <span class="w">        </span><span class="nt">ownerId</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the user id which own this Scenario</span>
 <span class="w">        </span><span class="nt">rootId</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the scenario root id</span>
 <span class="w">        </span><span class="nt">solutionId</span><span class="p">:</span>
@@ -4362,16 +4405,16 @@ After creating your <code>Dataset</code> you will get an identifier of the form 
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Solution Run Template Id associated with this Scenario</span>
 <span class="w">        </span><span class="nt">organizationId</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">            </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">            </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">            </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">            </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the associated Organization Id</span>
 <span class="w">        </span><span class="nt">workspaceId</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the associated Workspace Id</span>
 <span class="w">        </span><span class="nt">state</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ScenarioJobState&#39;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ScenarioJobState'</span>
 <span class="w">        </span><span class="nt">creationDate</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
 <span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">int64</span>
@@ -4401,35 +4444,35 @@ After creating your <code>Dataset</code> you will get an identifier of the form 
 <span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <span class="w">        </span><span class="nt">runSizing</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">definition of resources needed for the scenario run</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#/components/schemas/ScenarioResourceSizing&quot;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">"#/components/schemas/ScenarioResourceSizing"</span>
 <span class="w">        </span><span class="nt">parametersValues</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the list of Solution Run Template parameters values</span>
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ScenarioRunTemplateParameterValue&#39;</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ScenarioRunTemplateParameterValue'</span>
 <span class="w">        </span><span class="nt">lastRun</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">allOf</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ScenarioLastRun&#39;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ScenarioLastRun'</span>
 <span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
 <span class="w">              </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the last Scenario Run for this Scenario</span>
 <span class="w">        </span><span class="nt">parentLastRun</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">allOf</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ScenarioLastRun&#39;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ScenarioLastRun'</span>
 <span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
 <span class="w">              </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the last Scenario Run for the parent of this Scenario</span>
 <span class="w">        </span><span class="nt">rootLastRun</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">allOf</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ScenarioLastRun&#39;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ScenarioLastRun'</span>
 <span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
 <span class="w">              </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the last Scenario Run for the root (master) of Scenario</span>
 <span class="w">        </span><span class="nt">validationStatus</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Searchable&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Searchable"</span>
 <span class="w">          </span><span class="nt">allOf</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ScenarioValidationStatus&#39;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ScenarioValidationStatus'</span>
 <span class="w">        </span><span class="nt">security</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">allOf</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ScenarioSecurity&#39;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ScenarioSecurity'</span>
 <span class="c1">#      required:</span>
 <span class="c1">#        - name</span>
 <span class="c1">#        - runTemplateId</span>
@@ -4439,14 +4482,14 @@ After creating your <code>Dataset</code> you will get an identifier of the form 
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">default</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the role by default</span>
 <span class="w">        </span><span class="nt">accessControlList</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">array</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the list which can access this Scenario with detailed access control information</span>
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ScenarioAccessControl&#39;</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ScenarioAccessControl'</span>
 <span class="w">      </span><span class="nt">required</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">accessControlList</span>
@@ -4456,11 +4499,11 @@ After creating your <code>Dataset</code> you will get an identifier of the form 
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">id</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the identity id</span>
 <span class="w">        </span><span class="nt">role</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;@com.redis.om.spring.annotations.Indexed&quot;</span>
+<span class="w">          </span><span class="nt">x-field-extra-annotation</span><span class="p">:</span><span class="w"> </span><span class="s">"@com.redis.om.spring.annotations.Indexed"</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">a role</span>
 <span class="w">      </span><span class="nt">required</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">id</span>
@@ -4479,9 +4522,9 @@ After creating your <code>Dataset</code> you will get an identifier of the form 
 <span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">a description object for resource requests and limits (default same configuration as basic sizing)</span>
 <span class="w">      </span><span class="nt">properties</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ResourceSizeInfo&#39;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ResourceSizeInfo'</span>
 <span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ResourceSizeInfo&#39;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ResourceSizeInfo'</span>
 <span class="w">      </span><span class="nt">required</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">requests</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">limits</span>
@@ -4550,7 +4593,7 @@ After creating your <code>Dataset</code> you will get an identifier of the form 
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the list of changed values for parameters</span>
 <span class="w">          </span><span class="nt">items</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ScenarioChangedParameterValue&#39;</span>
+<span class="w">            </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ScenarioChangedParameterValue'</span>
 <span class="w">    </span><span class="nt">ScenarioChangedParameterValue</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
 <span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the difference between the values of a parameter</span>
@@ -4580,7 +4623,7 @@ After creating your <code>Dataset</code> you will get an identifier of the form 
 <span class="w">          </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">the Scenario Data Download URL</span>
 <span class="w">        </span><span class="nt">state</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#/components/schemas/ScenarioJobState&#39;</span>
+<span class="w">          </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/schemas/ScenarioJobState'</span>
 <span class="w">    </span><span class="nt">ScenarioDataDownloadJob</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
 <span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Scenario data download job</span>
@@ -4645,34 +4688,36 @@ cat<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env
 <span class="c1"># CSM_SCENARIO_ID=The identifier of the scenario in the Cosmo Tech API</span>
 <span class="c1"># CSM_SIMULATION=BusinessApp_Simulation</span>
 <span class="c1"># CSM_WORKSPACE_ID=The id of the workspace in the Cosmo Tech API</span>
-</code></pre></div>
-<p>This <code>.env</code> file can then be used as a parameter of the <code>docker run</code> command with <code>--env-file</code> 
-or can be used with a tool like <code>dotenv</code> (<code>pip install dotenv</code>) to temporary set the environment variables of commands. 
-You can also just load it to get all values in your current environment.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">load a <code>.env</code> file in bash then run <code>csm-orc</code></label><label for="__tabbed_1_2"><code>docker run</code> with <code>.env</code></label><label for="__tabbed_1_3"><code>csm-orc run</code> with <code>.env</code> and <code>dotenv</code></label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="w"> </span>-o<span class="w"> </span>allexport
-<span class="nb">source</span><span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env<span class="w"> </span><span class="nb">set</span>
-+o<span class="w"> </span>allexport
-csm-orc<span class="w"> </span>run<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/run.json
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--env-file<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env<span class="w"> </span>cosmotech/mybrewery_simulator
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>dotenv<span class="w"> </span>-e<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env<span class="w"> </span>csm-orc<span class="w"> </span>run<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/run.json
-</code></pre></div>
-</div>
-</div>
-</div>
-<h2 id="i-want-to-use-my-local-data-instead-of-needing-a-scenario">I want to use my local data instead of needing a <code>Scenario</code><a class="headerlink" href="#i-want-to-use-my-local-data-instead-of-needing-a-scenario" title="Permanent link">&para;</a></h2>
-<p>The <code>csm-orc run</code> command comes with an optional parameter <code>--skip-step</code> that can be set 
-in an environment variable <code>CSM_SKIP_STEPS</code>. This parameter can be given a list of steps that will be ignored during the run.</p>
-<p>Since the "only" step used to download distant data from our run is <code>DownloadScenarioData</code> we can simply run locally by skipping it:</p>
-<div class="highlight"><span class="filename">Running only the SimulationRun step</span><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>--skip-step<span class="w"> </span>DownloadScenarioData<span class="w"> </span>--skip-step<span class="w"> </span>ApplyParameters<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/run.json
+
+This<span class="w"> </span><span class="sb">`</span>.env<span class="sb">`</span><span class="w"> </span>file<span class="w"> </span>can<span class="w"> </span><span class="k">then</span><span class="w"> </span>be<span class="w"> </span>used<span class="w"> </span>as<span class="w"> </span>a<span class="w"> </span>parameter<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span><span class="sb">`</span>docker<span class="w"> </span>run<span class="sb">`</span><span class="w"> </span><span class="nb">command</span><span class="w"> </span>with<span class="w"> </span><span class="sb">`</span>--env-file<span class="sb">`</span><span class="w"> </span>
+or<span class="w"> </span>can<span class="w"> </span>be<span class="w"> </span>used<span class="w"> </span>with<span class="w"> </span>a<span class="w"> </span>tool<span class="w"> </span>like<span class="w"> </span><span class="sb">`</span>dotenv<span class="sb">`</span><span class="w"> </span><span class="o">(</span><span class="sb">`</span>pip<span class="w"> </span>install<span class="w"> </span>dotenv<span class="sb">`</span><span class="o">)</span><span class="w"> </span>to<span class="w"> </span>temporary<span class="w"> </span><span class="nb">set</span><span class="w"> </span>the<span class="w"> </span>environment<span class="w"> </span>variables<span class="w"> </span>of<span class="w"> </span>commands.<span class="w"> </span>
+You<span class="w"> </span>can<span class="w"> </span>also<span class="w"> </span>just<span class="w"> </span>load<span class="w"> </span>it<span class="w"> </span>to<span class="w"> </span>get<span class="w"> </span>all<span class="w"> </span>values<span class="w"> </span><span class="k">in</span><span class="w"> </span>your<span class="w"> </span>current<span class="w"> </span>environment.
+
+<span class="o">===</span><span class="w"> </span><span class="s2">"load a `.env` file in bash then run `csm-orc`"</span>
+<span class="w">    </span><span class="sb">```</span>bash
+<span class="w">    </span><span class="nb">set</span><span class="w"> </span>-o<span class="w"> </span>allexport
+<span class="w">    </span><span class="nb">source</span><span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env<span class="w"> </span><span class="nb">set</span>
+<span class="w">    </span>+o<span class="w"> </span>allexport
+<span class="w">    </span>csm-orc<span class="w"> </span>run<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/run.json
+<span class="w">    </span><span class="sb">```</span>
+<span class="o">===</span><span class="w"> </span><span class="s2">"`docker run` with `.env`"</span>
+<span class="w">    </span><span class="sb">```</span>bash
+<span class="w">    </span>docker<span class="w"> </span>run<span class="w"> </span>--env-file<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env<span class="w"> </span>cosmotech/mybrewery_simulator
+<span class="w">    </span><span class="sb">```</span>
+<span class="o">===</span><span class="w"> </span><span class="s2">"`csm-orc run` with `.env` and `dotenv`"</span>
+<span class="w">    </span><span class="sb">```</span>bash
+<span class="w">    </span>dotenv<span class="w"> </span>-e<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/vars.env<span class="w"> </span>csm-orc<span class="w"> </span>run<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/run.json
+<span class="w">    </span><span class="sb">```</span>
+
+<span class="c1">## I want to use my local data instead of running `ApplyParameters`</span>
+
+The<span class="w"> </span><span class="sb">`</span>csm-orc<span class="w"> </span>run<span class="sb">`</span><span class="w"> </span><span class="nb">command</span><span class="w"> </span>comes<span class="w"> </span>with<span class="w"> </span>an<span class="w"> </span>optional<span class="w"> </span>parameter<span class="w"> </span><span class="sb">`</span>--skip-step<span class="sb">`</span><span class="w"> </span>that<span class="w"> </span>can<span class="w"> </span>be<span class="w"> </span><span class="nb">set</span><span class="w"> </span>
+<span class="k">in</span><span class="w"> </span>an<span class="w"> </span>environment<span class="w"> </span>variable<span class="w"> </span><span class="sb">`</span>CSM_SKIP_STEPS<span class="sb">`</span>.<span class="w"> </span>This<span class="w"> </span>parameter<span class="w"> </span>can<span class="w"> </span>be<span class="w"> </span>given<span class="w"> </span>a<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>steps<span class="w"> </span>that<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>ignored<span class="w"> </span>during<span class="w"> </span>the<span class="w"> </span>run.
+
+Since<span class="w"> </span><span class="sb">`</span>ApplyParameters<span class="sb">`</span><span class="w"> </span>is<span class="w"> </span>only<span class="w"> </span>required<span class="w"> </span>when<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>update<span class="w"> </span>the<span class="w"> </span>dataset<span class="w"> </span>with<span class="w"> </span>scenario<span class="w"> </span>parameters,<span class="w"> </span>you<span class="w"> </span>can<span class="w"> </span>skip<span class="w"> </span>it<span class="w"> </span>to<span class="w"> </span>run<span class="w"> </span>the<span class="w"> </span>simulation<span class="w"> </span>directly<span class="w"> </span>against<span class="w"> </span>the<span class="w"> </span>existing<span class="w"> </span>dataset:
+
+<span class="sb">```</span>bash<span class="w"> </span><span class="nv">title</span><span class="o">=</span><span class="s2">"Running only the SimulationRun step"</span>
+csm-orc<span class="w"> </span>run<span class="w"> </span>--skip-step<span class="w"> </span>ApplyParameters<span class="w"> </span>code/run_templates/orchestrator_tutorial_2/run.json
 </code></pre></div>
 
 

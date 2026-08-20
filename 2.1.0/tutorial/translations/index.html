@@ -432,6 +432,8 @@
       
         
       
+        
+      
     
     
     
@@ -515,6 +517,29 @@
   
   <span class="md-ellipsis">
     Dependencies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Changelog
     
   </span>
   
@@ -1464,11 +1489,11 @@
 <p>Translation files use a simple YAML structure with nested keys:</p>
 <div class="highlight"><span class="filename">Example: en-US/csm-orc.yml</span><pre><span></span><code><span class="nt">csm-orc</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">error</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">missing_env</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Missing</span><span class="nv"> </span><span class="s">environment</span><span class="nv"> </span><span class="s">values&quot;</span>
-<span class="w">    </span><span class="nt">missing_env_var</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Missing</span><span class="nv"> </span><span class="s">environment</span><span class="nv"> </span><span class="s">variables,</span><span class="nv"> </span><span class="s">check</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">logs&quot;</span>
+<span class="w">    </span><span class="nt">missing_env</span><span class="p">:</span><span class="w"> </span><span class="s">"Missing</span><span class="nv"> </span><span class="s">environment</span><span class="nv"> </span><span class="s">values"</span>
+<span class="w">    </span><span class="nt">missing_env_var</span><span class="p">:</span><span class="w"> </span><span class="s">"Missing</span><span class="nv"> </span><span class="s">environment</span><span class="nv"> </span><span class="s">variables,</span><span class="nv"> </span><span class="s">check</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">logs"</span>
 <span class="w">  </span><span class="nt">info</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">run_start</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;===</span><span class="nv">      </span><span class="s">Run</span><span class="nv">     </span><span class="s">===&quot;</span>
-<span class="w">    </span><span class="nt">run_end</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;===</span><span class="nv">     </span><span class="s">Results</span><span class="nv">    </span><span class="s">===&quot;</span>
+<span class="w">    </span><span class="nt">run_start</span><span class="p">:</span><span class="w"> </span><span class="s">"===</span><span class="nv">      </span><span class="s">Run</span><span class="nv">     </span><span class="s">==="</span>
+<span class="w">    </span><span class="nt">run_end</span><span class="p">:</span><span class="w"> </span><span class="s">"===</span><span class="nv">     </span><span class="s">Results</span><span class="nv">    </span><span class="s">==="</span>
 </code></pre></div>
 <h3 id="using-translations-in-code">Using translations in code<a class="headerlink" href="#using-translations-in-code" title="Permanent link">&para;</a></h3>
 <p>The translation function <code>T</code> is your main tool for accessing translations. Here are real examples from the run-orchestrator project:</p>
@@ -1476,19 +1501,19 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">cosmotech.orchestrator.utils.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">LOGGER</span>
 
 <span class="c1"># Simple log message</span>
-<span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="s2">&quot;csm-orc.logs.step.starting&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="n">step_type</span><span class="o">=</span><span class="s2">&quot;step&quot;</span><span class="p">,</span>
+<span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="s2">"csm-orc.logs.step.starting"</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">step_type</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span>
     <span class="n">step_id</span><span class="o">=</span><span class="n">step</span><span class="o">.</span><span class="n">id</span>
 <span class="p">))</span>
 
 <span class="c1"># Error message with variable</span>
-<span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="s2">&quot;csm-orc.logs.step.template_not_found&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="s2">"csm-orc.logs.step.template_not_found"</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
     <span class="n">step_id</span><span class="o">=</span><span class="n">step</span><span class="o">.</span><span class="n">display_id</span><span class="p">,</span>
     <span class="n">command_id</span><span class="o">=</span><span class="n">step</span><span class="o">.</span><span class="n">display_command_id</span>
 <span class="p">))</span>
 
 <span class="c1"># Status messages</span>
-<span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="s2">&quot;csm-orc.logs.orchestrator.valid_file&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="s2">"csm-orc.logs.orchestrator.valid_file"</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
     <span class="n">file_path</span><span class="o">=</span><span class="n">json_file_path</span>
 <span class="p">))</span>
 </code></pre></div>
@@ -1496,10 +1521,10 @@
 <div class="highlight"><span class="filename">Translation key structure</span><pre><span></span><code><span class="nt">csm-orc</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">logs</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">step</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">starting</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Starting</span><span class="nv"> </span><span class="s">{step_type}</span><span class="nv"> </span><span class="s">{step_id}&quot;</span>
-<span class="w">      </span><span class="nt">template_not_found</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Template</span><span class="nv"> </span><span class="s">{command_id}</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">found</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">step</span><span class="nv"> </span><span class="s">{step_id}&quot;</span>
+<span class="w">      </span><span class="nt">starting</span><span class="p">:</span><span class="w"> </span><span class="s">"Starting</span><span class="nv"> </span><span class="s">{step_type}</span><span class="nv"> </span><span class="s">{step_id}"</span>
+<span class="w">      </span><span class="nt">template_not_found</span><span class="p">:</span><span class="w"> </span><span class="s">"Template</span><span class="nv"> </span><span class="s">{command_id}</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">found</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">step</span><span class="nv"> </span><span class="s">{step_id}"</span>
 <span class="w">    </span><span class="nt">orchestrator</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">valid_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;File</span><span class="nv"> </span><span class="s">{file_path}</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">valid&quot;</span>
+<span class="w">      </span><span class="nt">valid_file</span><span class="p">:</span><span class="w"> </span><span class="s">"File</span><span class="nv"> </span><span class="s">{file_path}</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">valid"</span>
 </code></pre></div></p>
 <div class="admonition tip">
 <p class="admonition-title">Translation formatting</p>
@@ -1534,11 +1559,11 @@ csm-orc<span class="w"> </span>run<span class="w"> </span>my_template.json
 <p>Create the main translation file:
 <div class="highlight"><span class="filename">goa-uld/csm-orc.yml</span><pre><span></span><code><span class="nt">csm-orc</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">error</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">missing_env</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Kree!</span><span class="nv"> </span><span class="s">Environment</span><span class="nv"> </span><span class="s">values</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">found&quot;</span>
-<span class="w">    </span><span class="nt">missing_env_var</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Jaffa!</span><span class="nv"> </span><span class="s">Environment</span><span class="nv"> </span><span class="s">variables</span><span class="nv"> </span><span class="s">missing,</span><span class="nv"> </span><span class="s">check</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">logs&quot;</span>
+<span class="w">    </span><span class="nt">missing_env</span><span class="p">:</span><span class="w"> </span><span class="s">"Kree!</span><span class="nv"> </span><span class="s">Environment</span><span class="nv"> </span><span class="s">values</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">found"</span>
+<span class="w">    </span><span class="nt">missing_env_var</span><span class="p">:</span><span class="w"> </span><span class="s">"Jaffa!</span><span class="nv"> </span><span class="s">Environment</span><span class="nv"> </span><span class="s">variables</span><span class="nv"> </span><span class="s">missing,</span><span class="nv"> </span><span class="s">check</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">logs"</span>
 <span class="w">  </span><span class="nt">info</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">run_start</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;===</span><span class="nv"> </span><span class="s">Tau&#39;ri</span><span class="nv"> </span><span class="s">Run</span><span class="nv"> </span><span class="s">Initiated</span><span class="nv"> </span><span class="s">===&quot;</span>
-<span class="w">    </span><span class="nt">run_end</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;===</span><span class="nv"> </span><span class="s">Shol&#39;va</span><span class="nv"> </span><span class="s">Results</span><span class="nv"> </span><span class="s">===&quot;</span>
+<span class="w">    </span><span class="nt">run_start</span><span class="p">:</span><span class="w"> </span><span class="s">"===</span><span class="nv"> </span><span class="s">Tau'ri</span><span class="nv"> </span><span class="s">Run</span><span class="nv"> </span><span class="s">Initiated</span><span class="nv"> </span><span class="s">==="</span>
+<span class="w">    </span><span class="nt">run_end</span><span class="p">:</span><span class="w"> </span><span class="s">"===</span><span class="nv"> </span><span class="s">Shol'va</span><span class="nv"> </span><span class="s">Results</span><span class="nv"> </span><span class="s">==="</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -1595,10 +1620,10 @@ csm-orc<span class="w"> </span>run<span class="w"> </span>my_template.json
 <p>Create your translation files:
 <div class="highlight"><span class="filename">my-project/en-US/my-project.yml</span><pre><span></span><code><span class="nt">my-project</span><span class="p">:</span><span class="w">  </span><span class="c1"># Your namespace</span>
 <span class="w">  </span><span class="nt">info</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">start_message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Starting</span><span class="nv"> </span><span class="s">process...&quot;</span>
-<span class="w">    </span><span class="nt">complete_message</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Process</span><span class="nv"> </span><span class="s">complete&quot;</span>
+<span class="w">    </span><span class="nt">start_message</span><span class="p">:</span><span class="w"> </span><span class="s">"Starting</span><span class="nv"> </span><span class="s">process..."</span>
+<span class="w">    </span><span class="nt">complete_message</span><span class="p">:</span><span class="w"> </span><span class="s">"Process</span><span class="nv"> </span><span class="s">complete"</span>
 <span class="w">  </span><span class="nt">error</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">invalid_input</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Invalid</span><span class="nv"> </span><span class="s">input:</span><span class="nv"> </span><span class="s">{input}&quot;</span>
+<span class="w">    </span><span class="nt">invalid_input</span><span class="p">:</span><span class="w"> </span><span class="s">"Invalid</span><span class="nv"> </span><span class="s">input:</span><span class="nv"> </span><span class="s">{input}"</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -1607,11 +1632,11 @@ csm-orc<span class="w"> </span>run<span class="w"> </span>my_template.json
 
 <span class="k">def</span><span class="w"> </span><span class="nf">process_data</span><span class="p">(</span><span class="n">input_value</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">validate_input</span><span class="p">(</span><span class="n">input_value</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="s2">&quot;my-project.error.invalid_input&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">input_value</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="s2">"my-project.error.invalid_input"</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">input_value</span><span class="p">))</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="s2">&quot;my-project.info.start_message&quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="s2">"my-project.info.start_message"</span><span class="p">))</span>
     <span class="c1"># Process the data...</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="s2">&quot;my-project.info.complete_message&quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">(</span><span class="s2">"my-project.info.complete_message"</span><span class="p">))</span>
 </code></pre></div></p>
 </li>
 </ol>
@@ -1631,16 +1656,16 @@ csm-orc<span class="w"> </span>run<span class="w"> </span>my_template.json
 
 <span class="k">def</span><span class="w"> </span><span class="nf">validate_translation_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">translations</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✓ </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2"> is valid YAML&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2"> is valid YAML"</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">translations</span>
     <span class="k">except</span> <span class="n">yaml</span><span class="o">.</span><span class="n">YAMLError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✗ Error in </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✗ Error in </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 
 <span class="c1"># Validate a translation file</span>
-<span class="n">validate_translation_file</span><span class="p">(</span><span class="s2">&quot;path/to/translation.yml&quot;</span><span class="p">)</span>
+<span class="n">validate_translation_file</span><span class="p">(</span><span class="s2">"path/to/translation.yml"</span><span class="p">)</span>
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Validation checklist</p>

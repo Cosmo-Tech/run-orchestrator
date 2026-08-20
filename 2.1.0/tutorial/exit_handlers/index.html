@@ -432,6 +432,8 @@
       
         
       
+        
+      
     
     
     
@@ -515,6 +517,29 @@
   
   <span class="md-ellipsis">
     Dependencies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Changelog
     
   </span>
   
@@ -806,6 +831,15 @@
   <a href="#what-do-i-need-to-know-about-those-handlers" class="md-nav__link">
     <span class="md-ellipsis">
       What do I need to know about those handlers ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#skipping-exit-handlers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skipping exit handlers
     </span>
   </a>
   
@@ -1303,6 +1337,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#skipping-exit-handlers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skipping exit handlers
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1339,6 +1382,15 @@ handlers ALL of those will be run.</p>
 more.</p>
 <p>But one environment variable is added to their list by csm-orc : <code>CSM_ORC_IS_SUCCESS</code> which is a boolean value set to
 <code>True</code> if the orchestration was a success, and set to <code>False</code> if ANY step failed.</p>
+<h2 id="skipping-exit-handlers">Skipping exit handlers<a class="headerlink" href="#skipping-exit-handlers" title="Permanent link">&para;</a></h2>
+<p>In some situations you may want to run without executing the exit handlers (e.g. during local development or testing).
+You can disable them with the <code>--no-exit-handlers</code> flag:</p>
+<div class="highlight"><span class="filename">Run without exit handlers</span><pre><span></span><code>csm-orc<span class="w"> </span>run<span class="w"> </span>my_template.json<span class="w"> </span>--no-exit-handlers
+</code></pre></div>
+<p>The same behaviour can be triggered via the <code>CSM_ORCHESTRATOR_USE_EXIT_HANDLERS</code> environment variable:</p>
+<div class="highlight"><span class="filename">Disable exit handlers via env var</span><pre><span></span><code><span class="nv">CSM_ORCHESTRATOR_USE_EXIT_HANDLERS</span><span class="o">=</span><span class="nb">false</span><span class="w"> </span>csm-orc<span class="w"> </span>run<span class="w"> </span>my_template.json
+</code></pre></div>
+<p>Exit handlers are <strong>enabled by default</strong>. Pass <code>--exit-handlers</code> (or set the env var to <code>true</code>) to make the default explicit.</p>
 
 
 

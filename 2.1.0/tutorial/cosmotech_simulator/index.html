@@ -432,6 +432,8 @@
       
         
       
+        
+      
     
     
     
@@ -515,6 +517,29 @@
   
   <span class="md-ellipsis">
     Dependencies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Changelog
     
   </span>
   
@@ -1404,23 +1429,23 @@ Satisfaction is also affected by the satisfaction of surrounding customers.</p>
 <p>To store our parameters we will define a JSON file containing them. </p>
 <div class="highlight"><span class="filename">code/run_templates/orchestrator_tutorial_1/parameters.json</span><pre><span></span><code><span class="p">[</span>
 <span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;parameterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Stock&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span>
+<span class="w">    </span><span class="nt">"parameterId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stock"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span>
 <span class="w">  </span><span class="p">},</span>
 <span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;parameterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RestockQty&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4567</span>
+<span class="w">    </span><span class="nt">"parameterId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RestockQty"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">4567</span>
 <span class="w">  </span><span class="p">},</span>
 <span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;parameterId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NbWaiters&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">89</span>
+<span class="w">    </span><span class="nt">"parameterId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NbWaiters"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">89</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">]</span>
 </code></pre></div>
 <details class="info" open="open">
 <summary>About the JSON file format</summary>
 <p>In prevision of future use, we will define a json format close to the one returned by the command:<br />
-<div class="highlight"><pre><span></span><code>csm-data<span class="w"> </span>api<span class="w"> </span>scenariorun-load-data
+<div class="highlight"><pre><span></span><code>csm-data<span class="w"> </span>api<span class="w"> </span>run-load-data
 </code></pre></div>
 This command will be used later to download data from the Cosmo Tech API.</p>
 </details>
@@ -1445,57 +1470,57 @@ This command will be used later to download data from the Cosmo Tech API.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">csv</span><span class="w"> </span><span class="kn">import</span> <span class="n">DictReader</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">csv</span><span class="w"> </span><span class="kn">import</span> <span class="n">DictWriter</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Parameters apply&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;input_path&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;A path containing our original dataset&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;output_path&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;A path where we will write our updated dataset&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;parameters_path&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">),</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;A path to a parameters.json file&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Parameters apply"</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"input_path"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"A path containing our original dataset"</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"output_path"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"A path where we will write our updated dataset"</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"parameters_path"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">FileType</span><span class="p">(</span><span class="s2">"r"</span><span class="p">),</span> <span class="n">help</span><span class="o">=</span><span class="s2">"A path to a parameters.json file"</span><span class="p">)</span>
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
-    <span class="c1"># Let&#39;s make a copy of our original dataset</span>
+    <span class="c1"># Let's make a copy of our original dataset</span>
     <span class="n">original_dataset_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_path</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">original_dataset_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The folder </span><span class="si">{</span><span class="n">original_dataset_path</span><span class="si">}</span><span class="s2"> &quot;</span> <span class="sa">f</span><span class="s2">&quot;does not exists&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The folder </span><span class="si">{</span><span class="n">original_dataset_path</span><span class="si">}</span><span class="s2"> "</span> <span class="sa">f</span><span class="s2">"does not exists"</span><span class="p">)</span>
 
     <span class="n">dataset_files</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
-    <span class="k">for</span> <span class="n">_file</span> <span class="ow">in</span> <span class="n">original_dataset_path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.csv&quot;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_file</span> <span class="ow">in</span> <span class="n">original_dataset_path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"*.csv"</span><span class="p">):</span>
         <span class="n">_file_name</span> <span class="o">=</span> <span class="n">_file</span><span class="o">.</span><span class="n">name</span>
         <span class="n">dataset_files</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">_file_name</span><span class="p">,</span> <span class="p">[])</span>
-        <span class="k">with</span> <span class="n">_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">_file_content</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">_file_content</span><span class="p">:</span>
             <span class="n">reader</span> <span class="o">=</span> <span class="n">DictReader</span><span class="p">(</span><span class="n">_file_content</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
                 <span class="n">dataset_files</span><span class="p">[</span><span class="n">_file_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
 
-    <span class="c1"># Now that we made a memory copy of our file let&#39;s get our parameters</span>
+    <span class="c1"># Now that we made a memory copy of our file let's get our parameters</span>
 
     <span class="k">with</span> <span class="n">args</span><span class="o">.</span><span class="n">parameters_path</span> <span class="k">as</span> <span class="n">_file_parameters</span><span class="p">:</span>
         <span class="n">parameters</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_file_parameters</span><span class="p">)</span>
-        <span class="n">parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">({</span><span class="n">_p</span><span class="p">[</span><span class="s2">&quot;parameterId&quot;</span><span class="p">]:</span> <span class="n">_p</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">_p</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">})</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">({</span><span class="n">_p</span><span class="p">[</span><span class="s2">"parameterId"</span><span class="p">]:</span> <span class="n">_p</span><span class="p">[</span><span class="s2">"value"</span><span class="p">]</span> <span class="k">for</span> <span class="n">_p</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">})</span>
 
     <span class="c1"># Now we can apply our parameters to our Bar file</span>
-    <span class="k">if</span> <span class="s2">&quot;Bar.csv&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataset_files</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No Bar.csv could be found &quot;</span> <span class="sa">f</span><span class="s2">&quot;in the given input folder&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">"Bar.csv"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataset_files</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No Bar.csv could be found "</span> <span class="sa">f</span><span class="s2">"in the given input folder"</span><span class="p">)</span>
 
-    <span class="n">bars</span> <span class="o">=</span> <span class="n">dataset_files</span><span class="p">[</span><span class="s2">&quot;Bar.csv&quot;</span><span class="p">]</span>
+    <span class="n">bars</span> <span class="o">=</span> <span class="n">dataset_files</span><span class="p">[</span><span class="s2">"Bar.csv"</span><span class="p">]</span>
 
     <span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">bars</span><span class="p">:</span>
-        <span class="n">bar</span><span class="p">[</span><span class="s2">&quot;Stock&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;Stock&quot;</span><span class="p">]</span>
-        <span class="n">bar</span><span class="p">[</span><span class="s2">&quot;NbWaiters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;NbWaiters&quot;</span><span class="p">]</span>
-        <span class="n">bar</span><span class="p">[</span><span class="s2">&quot;RestockQty&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;RestockQty&quot;</span><span class="p">]</span>
+        <span class="n">bar</span><span class="p">[</span><span class="s2">"Stock"</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">"Stock"</span><span class="p">]</span>
+        <span class="n">bar</span><span class="p">[</span><span class="s2">"NbWaiters"</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">"NbWaiters"</span><span class="p">]</span>
+        <span class="n">bar</span><span class="p">[</span><span class="s2">"RestockQty"</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">"RestockQty"</span><span class="p">]</span>
 
     <span class="c1"># and now that our dataset got updated we can write it</span>
 
     <span class="n">target_dataset_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_path</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">target_dataset_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">target_dataset_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">FileExistsError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">target_dataset_path</span><span class="si">}</span><span class="s2"> exists &quot;</span> <span class="sa">f</span><span class="s2">&quot;and is not a directory&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">FileExistsError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">target_dataset_path</span><span class="si">}</span><span class="s2"> exists "</span> <span class="sa">f</span><span class="s2">"and is not a directory"</span><span class="p">)</span>
     <span class="n">target_dataset_path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">_file_name</span><span class="p">,</span> <span class="n">_file_content</span> <span class="ow">in</span> <span class="n">dataset_files</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">_file_path</span> <span class="o">=</span> <span class="n">target_dataset_path</span> <span class="o">/</span> <span class="n">_file_name</span>
-        <span class="k">with</span> <span class="n">_file_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">_file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">_file_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">_file</span><span class="p">:</span>
             <span class="n">writer</span> <span class="o">=</span> <span class="n">DictWriter</span><span class="p">(</span><span class="n">_file</span><span class="p">,</span> <span class="n">_file_content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
             <span class="n">writer</span><span class="o">.</span><span class="n">writeheader</span><span class="p">()</span>
             <span class="n">writer</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="n">_file_content</span><span class="p">)</span>
@@ -1523,64 +1548,58 @@ and need to keep that in mind for future uses.</p>
 <p>For simplicity, we won't be making an effort to keep the old values of possibly existing datasets and will overwrite the content instead.</p>
 <p>It will be attained by using our <code>apply_parameters.py</code> on the same input and output folder (here <code>Simulation/Resource/scenariorun-data</code>)</p>
 <p>A safer way would be to make a back-up of the dataset and to restore it after the run, but we won't go over this possibility in this tutorial.</p>
-<p>To run the simulator we can either make use of <code>csmcli</code>, the <code>csm-simulator</code> executable or <code>csm-orc run-step</code>; we will only cover the <code>csm-orc</code> use in this tutorial.</p>
-<p>By writing our code in the folder <code>code/run_templates/orchestrator_tutorial_1</code> we declared a Run Template named <code>orchestrator_tutorial_1</code> that we can call in <code>csm-orc</code> commands.</p>
-<p>The simulator run can be configured by using some options of the <code>csm-orc run-step</code> command:</p>
-<ul>
-<li><code>--template orchestrator_tutorial_1</code> is necessary to target a run template (dependency for non-simulator run steps)</li>
-<li><code>--steps engine</code> will either look for a file <code>engine/main.py</code> in target run template or (if not found and the environment variable <code>CSM_SIMULATION</code> is set) try to run the simulator using a CoSML simulation file.</li>
-</ul>
+<p>To run the simulator we can either make use of <code>csmcli</code> or the <code>csm-simulator</code> executable; we will only cover the <code>csm-simulator</code> use in this tutorial.</p>
+<p>By writing our code in the folder <code>code/run_templates/orchestrator_tutorial_1</code> we declared a Run Template named <code>orchestrator_tutorial_1</code> that we can reference in our <code>run.json</code>.</p>
+<p>The simulator is invoked with <code>-i &lt;simulation_file&gt;</code> where the simulation file is defined by the environment variable <code>CSM_SIMULATION</code>:</p>
 <p>So the following command will run our <code>CSV_Simulation</code> defined by the <code>Simulation/CSV_Simulation.sml.xml</code>:</p>
-<div class="highlight"><span class="filename">run CSV_Simulation using csm-orc</span><pre><span></span><code><span class="nv">CSM_SIMULATION</span><span class="o">=</span>CSV_Simulation<span class="w"> </span>csm-orc<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>orchestrator_tutorial_1<span class="w"> </span>--steps<span class="w"> </span>engine
+<div class="highlight"><span class="filename">run CSV_Simulation using csm-simulator</span><pre><span></span><code><span class="nv">CSM_SIMULATION</span><span class="o">=</span>CSV_Simulation<span class="w"> </span>csm-simulator<span class="w"> </span>-i<span class="w"> </span><span class="nv">$CSM_SIMULATION</span>
 </code></pre></div>
 <p>Since we did not update our dataset files in place of the original ones (only the <code>engine</code> step was executed) we will get our usual simulation results.</p>
 <p>Now we can simply run both commands to update our dataset then run the updated simulation:</p>
 <div class="highlight"><span class="filename">Apply parameters and run simulation</span><pre><span></span><code>python<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/apply_parameters.py<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>Simulation/Resource/scenariorun-data<span class="w"> </span>code/run_templates/orchestrator_tutorial_1/parameters.json
-<span class="nv">CSM_SIMULATION</span><span class="o">=</span>CSV_Simulation<span class="w"> </span>csm-orc<span class="w"> </span>run-step<span class="w"> </span>--template<span class="w"> </span>orchestrator_tutorial_1<span class="w"> </span>--steps<span class="w"> </span>engine<span class="w"> </span>
+<span class="nv">CSM_SIMULATION</span><span class="o">=</span>CSV_Simulation<span class="w"> </span>csm-simulator<span class="w"> </span>-i<span class="w"> </span><span class="nv">$CSM_SIMULATION</span>
 </code></pre></div>
 <p>A different set of charts should appear this time, corresponding to our updated dataset values..</p>
 <p>Now we can write our <code>run.json</code> file to run those step in a single command.</p>
 <div class="highlight"><span class="filename">code/run_templates/orchestrator_tutorial_1/run.json</span><pre><span></span><code><span class="o">{</span>
-<span class="w">  </span><span class="s2">&quot;steps&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">  </span><span class="s2">"steps"</span>:<span class="w"> </span><span class="o">[</span>
 <span class="w">    </span><span class="o">{</span>
-<span class="w">      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;ApplyParameters&quot;</span>,
-<span class="w">      </span><span class="s2">&quot;command&quot;</span>:<span class="w"> </span><span class="s2">&quot;python&quot;</span>,
-<span class="w">      </span><span class="s2">&quot;arguments&quot;</span>:<span class="w"> </span><span class="o">[</span>
-<span class="w">        </span><span class="s2">&quot;code/run_templates/orchestrator_tutorial_1/apply_parameters.py&quot;</span>,
-<span class="w">        </span><span class="s2">&quot;</span><span class="nv">$DATASET_PATH</span><span class="s2">&quot;</span>,
-<span class="w">        </span><span class="s2">&quot;</span><span class="nv">$DATASET_PATH</span><span class="s2">&quot;</span>,
-<span class="w">        </span><span class="s2">&quot;</span><span class="nv">$PARAMETERS_PATH</span><span class="s2">&quot;</span>
+<span class="w">      </span><span class="s2">"id"</span>:<span class="w"> </span><span class="s2">"ApplyParameters"</span>,
+<span class="w">      </span><span class="s2">"command"</span>:<span class="w"> </span><span class="s2">"python"</span>,
+<span class="w">      </span><span class="s2">"arguments"</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="s2">"code/run_templates/orchestrator_tutorial_1/apply_parameters.py"</span>,
+<span class="w">        </span><span class="s2">"</span><span class="nv">$DATASET_PATH</span><span class="s2">"</span>,
+<span class="w">        </span><span class="s2">"</span><span class="nv">$DATASET_PATH</span><span class="s2">"</span>,
+<span class="w">        </span><span class="s2">"</span><span class="nv">$PARAMETERS_PATH</span><span class="s2">"</span>
 <span class="w">      </span><span class="o">]</span>,
-<span class="w">      </span><span class="s2">&quot;description&quot;</span>:<span class="w"> </span><span class="s2">&quot;Apply our parameters to the dataset&quot;</span>,
-<span class="w">      </span><span class="s2">&quot;environment&quot;</span>:<span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="s2">&quot;DATASET_PATH&quot;</span>:<span class="w"> </span><span class="o">{</span>
-<span class="w">          </span><span class="s2">&quot;description&quot;</span>:<span class="w"> </span><span class="s2">&quot;The path to the dataset to update&quot;</span>,
-<span class="w">          </span><span class="s2">&quot;defaultValue&quot;</span>:<span class="w"> </span><span class="s2">&quot;Simulation/Resource/scenariorun-data&quot;</span>
+<span class="w">      </span><span class="s2">"description"</span>:<span class="w"> </span><span class="s2">"Apply our parameters to the dataset"</span>,
+<span class="w">      </span><span class="s2">"environment"</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="s2">"DATASET_PATH"</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span><span class="s2">"description"</span>:<span class="w"> </span><span class="s2">"The path to the dataset to update"</span>,
+<span class="w">          </span><span class="s2">"defaultValue"</span>:<span class="w"> </span><span class="s2">"Simulation/Resource/scenariorun-data"</span>
 <span class="w">        </span><span class="o">}</span>,
-<span class="w">        </span><span class="s2">&quot;PARAMETERS_PATH&quot;</span>:<span class="w"> </span><span class="o">{</span>
-<span class="w">          </span><span class="s2">&quot;description&quot;</span>:<span class="w"> </span><span class="s2">&quot;The path to parameters json file containing our parameters&quot;</span>,
-<span class="w">          </span><span class="s2">&quot;defaultValue&quot;</span>:<span class="w"> </span><span class="s2">&quot;code/run_templates/orchestrator_tutorial_1/parameters.json&quot;</span>
+<span class="w">        </span><span class="s2">"PARAMETERS_PATH"</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span><span class="s2">"description"</span>:<span class="w"> </span><span class="s2">"The path to parameters json file containing our parameters"</span>,
+<span class="w">          </span><span class="s2">"defaultValue"</span>:<span class="w"> </span><span class="s2">"code/run_templates/orchestrator_tutorial_1/parameters.json"</span>
 <span class="w">        </span><span class="o">}</span>
 <span class="w">      </span><span class="o">}</span>
 <span class="w">    </span><span class="o">}</span>,
 <span class="w">    </span><span class="o">{</span>
-<span class="w">      </span><span class="s2">&quot;id&quot;</span>:<span class="w"> </span><span class="s2">&quot;SimulationRun&quot;</span>,
-<span class="w">      </span><span class="s2">&quot;command&quot;</span>:<span class="w"> </span><span class="s2">&quot;csm-orc&quot;</span>,
-<span class="w">      </span><span class="s2">&quot;arguments&quot;</span>:<span class="w"> </span><span class="o">[</span>
-<span class="w">        </span><span class="s2">&quot;run-step&quot;</span>,
-<span class="w">        </span><span class="s2">&quot;--template&quot;</span>,<span class="w"> </span><span class="s2">&quot;orchestrator_tutorial_1&quot;</span>,
-<span class="w">        </span><span class="s2">&quot;--steps&quot;</span>,<span class="w"> </span><span class="s2">&quot;engine&quot;</span>
+<span class="w">      </span><span class="s2">"id"</span>:<span class="w"> </span><span class="s2">"SimulationRun"</span>,
+<span class="w">      </span><span class="s2">"command"</span>:<span class="w"> </span><span class="s2">"csm-simulator"</span>,
+<span class="w">      </span><span class="s2">"arguments"</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="s2">"-i"</span>,<span class="w"> </span><span class="s2">"</span><span class="nv">$CSM_SIMULATION</span><span class="s2">"</span>
 <span class="w">      </span><span class="o">]</span>,
-<span class="w">      </span><span class="s2">&quot;description&quot;</span>:<span class="w"> </span><span class="s2">&quot;Runs the simulation targeted by CSM_SIMULATION&quot;</span>,
-<span class="w">      </span><span class="s2">&quot;useSystemEnvironment&quot;</span>:<span class="w"> </span>true,
-<span class="w">      </span><span class="s2">&quot;environment&quot;</span>:<span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="s2">&quot;CSM_SIMULATION&quot;</span>:<span class="w"> </span><span class="o">{</span>
-<span class="w">          </span><span class="s2">&quot;description&quot;</span>:<span class="w"> </span><span class="s2">&quot;The simulation file to run&quot;</span>,
-<span class="w">          </span><span class="s2">&quot;defaultValue&quot;</span>:<span class="w"> </span><span class="s2">&quot;CSV_Simulation&quot;</span>
+<span class="w">      </span><span class="s2">"description"</span>:<span class="w"> </span><span class="s2">"Runs the simulation targeted by CSM_SIMULATION"</span>,
+<span class="w">      </span><span class="s2">"useSystemEnvironment"</span>:<span class="w"> </span>true,
+<span class="w">      </span><span class="s2">"environment"</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="s2">"CSM_SIMULATION"</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">          </span><span class="s2">"description"</span>:<span class="w"> </span><span class="s2">"The simulation file to run"</span>,
+<span class="w">          </span><span class="s2">"defaultValue"</span>:<span class="w"> </span><span class="s2">"CSV_Simulation"</span>
 <span class="w">        </span><span class="o">}</span>
 <span class="w">      </span><span class="o">}</span>,
-<span class="w">      </span><span class="s2">&quot;precedents&quot;</span>:<span class="w"> </span><span class="o">[</span>
-<span class="w">        </span><span class="s2">&quot;ApplyParameters&quot;</span>
+<span class="w">      </span><span class="s2">"precedents"</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="s2">"ApplyParameters"</span>
 <span class="w">      </span><span class="o">]</span>
 <span class="w">    </span><span class="o">}</span>
 <span class="w">  </span><span class="o">]</span>
